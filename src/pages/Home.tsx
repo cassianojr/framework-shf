@@ -12,7 +12,7 @@ function Home() {
     description: 'O Framework SHF é uma ferramenta para auxiliar na identificação e análise de fatores humanos e sociais em ecossistemas de software.',
     image,
     button: 'Teste agora!',
-    buttonLink: '#'
+    buttonLink: '/framework'
   }
 
   return (
@@ -38,8 +38,7 @@ function Home() {
                 <li>Identifique os fatores humanos e sociais em seu ecossistema de software;</li>
                 <li>Identifique as características contextuais do seu ecossistema;</li>
                 <li>Aponte as barreiras que você enfrenta;</li>
-                <li>Receba sugestões de estratégias a serem utilizadas;</li>
-                <li>Receba sugestões de mecanismos de enfrentamento para o seu ecossitema;</li>
+                <li>Receba sugestões de estratégias e mecanismos de enfrentamento a serem utilizadas mo seu ecossitema;</li>
               </ol>
             </Typography>
             <Button
