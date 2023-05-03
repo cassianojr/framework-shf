@@ -20,7 +20,7 @@ function Home() {
       <Navbar />
       <Toolbar />
       <Hero {...heroData} />
-      <Container>
+      <Container sx={{minHeight: '100vh' }}>
         <section id="sobre">
           <Box sx={{ my: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>

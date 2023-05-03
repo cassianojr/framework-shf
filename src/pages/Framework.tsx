@@ -153,7 +153,7 @@ export default function Framework() {
     <>
       <Navbar />
       <Toolbar />
-      <Container sx={{ mt: 3 }}>
+      <Container sx={{ mt: 3, minHeight: '100vh' }}>
 
         <StepperComponent steps={steps} suggestions={suggestions} copingMecanisms={copingMecanisms}/>
 
