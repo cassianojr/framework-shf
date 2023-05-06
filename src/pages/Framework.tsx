@@ -1,8 +1,9 @@
-import StepperComponent from "../components/StepperComponent";
+import * as React from 'react';
 import Navbar from "../components/Navbar";
 import { Toolbar } from "@mui/material";
 import { Container } from "@mui/system";
 import Footer from "../components/Footer";
+import StepperComponent from "../components/StepperComponent";
 
 export default function Framework() {
 
@@ -60,7 +61,7 @@ export default function Framework() {
     },
   ];
 
-  
+
   const barriers = [
     {
       id: 1,
@@ -142,20 +143,23 @@ export default function Framework() {
     },
   ];
 
-
   const steps = [
-    { label: 'Selecione os fatores humanos e sociais', listItems: socialHumanFactors },
     { label: 'Selecione as características contextuais', listItems: contextualCharacteristics },
-    { label: 'Selecione as barreiras que você enfrenta',  listItems: barriers },
+    { label: 'Selecione os fatores humanos e sociais', listItems: socialHumanFactors },
+    { label: 'Selecione as barreiras que você enfrenta', listItems: barriers },
+    { label: 'Estratégias para realizar melhorias', listItems: suggestions },
   ];
+
+  const [stepsState, setStepsState] = React.useState(steps);
 
   return (
     <>
       <Navbar />
       <Toolbar />
-      <Container sx={{ mt: 3, minHeight: '100vh' }}>
+      <Container sx={{ mt: 3, minHeight: '81vh' }}>
 
-        <StepperComponent steps={steps} suggestions={suggestions} copingMecanisms={copingMecanisms}/>
+        {/* <StepperComponent steps={steps} suggestions={suggestions} copingMecanisms={copingMecanisms}/> */}
+        <StepperComponent steps={stepsState} setSteps={setStepsState} suggestions={suggestions} copingMecanisms={copingMecanisms}/>
 
       </Container>
       <Footer />
