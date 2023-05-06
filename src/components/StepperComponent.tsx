@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
+import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
 
 interface StepData {
@@ -31,80 +32,107 @@ interface StepData {
     description: string,
     selected: boolean,
   }[],
-
+  setSteps:any
 }
 
+
+
 export default function StepperComponent(props: StepData) {
-  const { steps } = props;
+  const { steps, setSteps } = props;
 
-
+  const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const maxSteps = steps.length;
+
+  const [items, setItems] = React.useState(steps[activeStep].listItems);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setItems(steps[activeStep + 1].listItems);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setItems(steps[activeStep - 1].listItems);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  const handleToggle = (id: number) => () =>{
+    const newListItems = items.map((listItem) => {
+      if (listItem.id === id) {
+        return { ...listItem, selected: !listItem.selected };
+      }
+      return listItem;
+    });
+
+    setItems(newListItems);
+    setSteps((prevSteps: any) => {
+      const newSteps = prevSteps.map((step: any) => {
+        if (step.label === steps[activeStep].label) {
+          return { ...step, listItems: newListItems };
+        }
+        return step;
+      });
+      return newSteps;
+    });
+  }
+
+  React.useEffect(() => {
+    console.log(items);
+    
+  }, [items]);
 
   return (
-    <Paper elevation={3} sx={{p: 3, mb: 3}}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepLabel
-              optional={
-                index === 2 ? (
-                  <Typography variant="caption">Último passo</Typography>
-                ) : null
-              }
-            >
-              {step.label}
-            </StepLabel>
-            <StepContent TransitionProps={{ unmountOnExit: false }}>
-
-              <ListCheckbox title={step.label} listItems={step.listItems} />
-
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? 'Finalizar!' : 'Continuar'}
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Voltar
-                  </Button>
-                </div>
-              </Box>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography variant='h5'>Sugestões e mecanismos de enfrentamento:</Typography>
-
-          <ListCheckbox title='Sugestões' listItems={props.suggestions} />
-          <ListCheckbox title='Mecanismos de enfrentamento' listItems={props.copingMecanisms} />
-
-
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Resetar
+    <Box sx={{ flexGrow: 1 }}>
+      <Paper
+        square
+        elevation={0}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          height: 50,
+          pl: 2,
+          bgcolor: 'background.default',
+        }}
+      >
+        <Typography variant='h4'>{steps[activeStep].label}</Typography>
+      </Paper>
+      <Divider />
+      <Box sx={{ width: '100%', p: 2 }} >
+        <ListCheckbox listItems={items} handleToggle={handleToggle} />
+      </Box>
+      <MobileStepper
+        variant="text"
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        sx={{ width: '50%', margin: 'auto' }}
+        nextButton={
+          <Button
+            size="large"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+            variant='contained'
+          >
+            Próximo
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
           </Button>
-        </Paper>
-      )}
-    </Paper>
+        }
+        backButton={
+          <Button size="large" onClick={handleBack} disabled={activeStep === 0} variant='contained'>
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+            Voltar
+          </Button>
+        }
+      />
+    </Box>
   );
 }
