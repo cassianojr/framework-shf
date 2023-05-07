@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -27,7 +26,6 @@ interface StepData {
 export default function StepperComponent(props: StepData) {
   const { steps, setSteps } = props;
 
-  const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const maxSteps = steps.length;
