@@ -186,7 +186,7 @@
         "id": 1,
         "name": "Definir canais de comunicação centrais entre os múltiplos canais",
         "selected": true,
-        "description": "descrição"
+        "description": "Definir um canal de comunicação no Discord e no WhatsApp para que todos os atores possam interagir. Realizar Reuniões síncronas e assíncronas para que os atores discutam requisitos. Definir o JIRA como canal central de comunicações entre os múltiplos canais de comunicação. Organizar os papéis de cada profissional no canal de comunicação do Discord."
       },
       {
         "id": 2,
