@@ -10,31 +10,18 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
 
-interface StepData {
-  steps: {
-    label: string,
-    listItems: {
-      id: number,
-      name: string,
-      description: string,
-      selected: boolean,
-    }[]
-  }[],
-  suggestions: {
+interface Step {
+  label: string,
+  listItems: {
     id: number,
     name: string,
-    description: string,
     selected: boolean,
-  }[],
-  copingMecanisms: {
-    id: number,
-    name: string,
-    description: string,
-    selected: boolean,
-  }[],
-  setSteps:any
+  }[]
 }
-
+interface StepData {
+  steps: Step[],
+  setSteps: React.Dispatch<React.SetStateAction<Step[]>>
+}
 
 
 export default function StepperComponent(props: StepData) {
@@ -57,7 +44,7 @@ export default function StepperComponent(props: StepData) {
     setItems(steps[activeStep - 1].listItems);
   };
 
-  const handleToggle = (id: number) => () =>{
+  const handleToggle = (id: number) => () => {
     const newListItems = items.map((listItem) => {
       if (listItem.id === id) {
         return { ...listItem, selected: !listItem.selected };
@@ -66,8 +53,8 @@ export default function StepperComponent(props: StepData) {
     });
 
     setItems(newListItems);
-    setSteps((prevSteps: any) => {
-      const newSteps = prevSteps.map((step: any) => {
+    setSteps((prevSteps: Step[]) => {
+      const newSteps = prevSteps.map((step: Step) => {
         if (step.label === steps[activeStep].label) {
           return { ...step, listItems: newListItems };
         }
@@ -77,13 +64,8 @@ export default function StepperComponent(props: StepData) {
     });
   }
 
-  React.useEffect(() => {
-    console.log(items);
-    
-  }, [items]);
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2}>
       <Paper
         square
         elevation={0}
@@ -95,9 +77,9 @@ export default function StepperComponent(props: StepData) {
           bgcolor: 'background.default',
         }}
       >
-        <Typography variant='h4'>{steps[activeStep].label}</Typography>
+        <Typography variant='h4' >{steps[activeStep].label}</Typography>
       </Paper>
-      <Divider />
+      <Divider sx={{ marginTop: '1.5rem' }} />
       <Box sx={{ width: '100%', p: 2 }} >
         <ListCheckbox listItems={items} handleToggle={handleToggle} />
       </Box>
@@ -115,20 +97,12 @@ export default function StepperComponent(props: StepData) {
             variant='contained'
           >
             Próximo
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
+            <KeyboardArrowRight />
           </Button>
         }
         backButton={
           <Button size="large" onClick={handleBack} disabled={activeStep === 0} variant='contained'>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
+            <KeyboardArrowLeft />
             Voltar
           </Button>
         }

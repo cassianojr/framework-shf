@@ -1,0 +1,247 @@
+[
+  {
+    "label": "Quais são as características contextuais da gerência de requisitos no seu ecossistema de software?",
+    "listItems": [
+      {
+        "id": 1,
+        "name": "Armazenamento de requisitos em vários artefatos e repositorios",
+        "selected": false
+      },
+      {
+        "id": 2,
+        "name": "Dependência entre projetos",
+        "selected": false
+      },
+      {
+        "id": 3,
+        "name": "Existência de requisitos emergentes",
+        "selected": false
+      },
+      {
+        "id": 4,
+        "name": "Gerência de requisitos informal e descentralizada",
+        "selected": false
+      },
+      {
+        "id": 5,
+        "name": "Grupos multipartidários de atores",
+        "selected": false
+      },
+      {
+        "id": 6,
+        "name": "Negociação de requisitos colaborativa",
+        "selected": false
+      },
+      {
+        "id": 7,
+        "name": "Preocupação transversal",
+        "selected": false
+      },
+      {
+        "id": 8,
+        "name": "Priorização de requisitos colaborativa",
+        "selected": false
+      },
+      {
+        "id": 9,
+        "name": "Utilização de canais de comunicação abertos",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "label": "Quais os fatores sociais e humanos influenciam a atividade?",
+    "listItems": [
+      {
+        "id": 1,
+        "name": "Comunicação",
+        "selected": false
+      },
+      {
+        "id": 2,
+        "name": "Distância geográfica/fuso horário",
+        "selected": false
+      },
+      {
+        "id": 3,
+        "name": "Atitude",
+        "selected": false
+      },
+      {
+        "id": 4,
+        "name": "Autonomia",
+        "selected": false
+      },
+      {
+        "id": 5,
+        "name": "Compromisso",
+        "selected": false
+      },
+      {
+        "id": 6,
+        "name": "Competitividade",
+        "selected": false
+      },
+      {
+        "id": 7,
+        "name": "Conflitos de Interesses",
+        "selected": false
+      },
+      {
+        "id": 8,
+        "name": "Cooperação",
+        "selected": false
+      },
+      {
+        "id": 9,
+        "name": "Competição",
+        "selected": false
+      },
+      {
+        "id": 10,
+        "name": "Cultura",
+        "selected": false
+      },
+      {
+        "id": 11,
+        "name": "Domínio do Conhecimento",
+        "selected": false
+      },
+      {
+        "id": 12,
+        "name": "Relação de poder",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "label": "Quais barreiras você enfrenta para melhorar esses fatores humanos e sociais?",
+    "listItems": [
+      {
+        "id": 1,
+        "name": "Falta de contato cara a cara e comunicação direta entre os atores",
+        "selected": false
+      },
+      {
+        "id": 2,
+        "name": "Inflexibilidade de horários",
+        "selected": false
+      },
+      {
+        "id": 3,
+        "name": "Diferença linguística",
+        "selected": false
+      },
+      {
+        "id": 4,
+        "name": "Distância sociocultural",
+        "selected": false
+      },
+      {
+        "id": 5,
+        "name": "Negociação de requisitos entre múltiplos atores",
+        "selected": false
+      },
+      {
+        "id": 6,
+        "name": "Dependência entre várias equipes",
+        "selected": false
+      },
+      {
+        "id": 7,
+        "name": "Falta de entendimento mútuo entre os atores sobre os requisitos",
+        "selected": false
+      },
+      {
+        "id": 8,
+        "name": "Descentralização, omissão e confidencialidade das informações",
+        "selected": false
+      },
+      {
+        "id": 9,
+        "name": "Falta de disseminação e documentação dos conhecimentos",
+        "selected": false
+      },
+      {
+        "id": 10,
+        "name": "Dependência hierárcica entre a organização central e os demais atores",
+        "selected": false
+      },
+      {
+        "id": 11,
+        "name": "Abertura do ecossistema de software",
+        "selected": false
+      },
+      {
+        "id": 12,
+        "name": "Dinamismo na entrada e saída dos atores no ecossistema de software",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "label": "Estratégias para realizar melhorias",
+    "listItems": [
+      {
+        "id": 1,
+        "name": "Definir canais de comunicação centrais entre os múltiplos canais",
+        "selected": false
+      },
+      {
+        "id": 2,
+        "name": "Definir repositórios de software centrais entre os múltiplos repositorios",
+        "selected": false
+      },
+      {
+        "id": 3,
+        "name": "Incentivar conversas informais",
+        "selected": false
+      },
+      {
+        "id": 4,
+        "name": "Promover reuniões de integração",
+        "selected": false
+      },
+      {
+        "id": 5,
+        "name": "Criar fóruns de discussão",
+        "selected": false
+      },
+      {
+        "id": 6,
+        "name": "Realizar votação em comunidade",
+        "selected": false
+      },
+      {
+        "id": 7,
+        "name": "Documentar as informações das reuniões",
+        "selected": false
+      },
+      {
+        "id": 8,
+        "name": "Estabelecer horários de trabalho flexíveis",
+        "selected": false
+      },
+      {
+        "id": 9,
+        "name": "Contratar evangelistas/gestores de parcerias",
+        "selected": false
+      },
+      {
+        "id": 10,
+        "name": "Realizar pesquisas para avaliar a satisfação dos atores",
+        "selected": false
+      },
+      {
+        "id": 11,
+        "name": "Usar uma ferramenta para acompanhar o status dos projetos",
+        "selected": false
+      },
+      {
+        "id": 12,
+        "name": "Negociar com os atores-chave",
+        "selected": false
+      }
+    ]
+  }
+]
