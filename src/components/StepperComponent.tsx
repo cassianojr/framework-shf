@@ -8,6 +8,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
+import StrategieComponent from './StrategieComponent';
 
 interface Step {
   label: string,
@@ -15,6 +16,7 @@ interface Step {
     id: number,
     name: string,
     selected: boolean,
+    description?: string,
   }[]
 }
 interface StepData {
@@ -22,24 +24,45 @@ interface StepData {
   setSteps: React.Dispatch<React.SetStateAction<Step[]>>
 }
 
-
 export default function StepperComponent(props: StepData) {
   const { steps, setSteps } = props;
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [items, setItems] = React.useState(steps[activeStep].listItems);
+  const [selectedItems, setSelectedItems] = React.useState(steps.map((step: Step) => {
+    return {
+      step: step.label,
+      selectedItemsInStep: step.listItems.filter((listItem) => listItem.selected)
+    }
+  }));
 
   const maxSteps = steps.length;
 
-  const [items, setItems] = React.useState(steps[activeStep].listItems);
+  const handleSelectedItems = () => {
+    const selectedItemsInSteps = steps.map((step: Step) => {
+      const selectedItemsInStep = step.listItems.filter((listItem) => listItem.selected);
+      return {
+        step: step.label,
+        selectedItemsInStep
+      };
+    }
+    );
+
+    setSelectedItems(selectedItemsInSteps);
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setItems(steps[activeStep + 1].listItems);
+
+    handleSelectedItems();
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setItems(steps[activeStep - 1].listItems);
+
+    handleSelectedItems();
   };
 
   const handleToggle = (id: number) => () => {
@@ -63,7 +86,7 @@ export default function StepperComponent(props: StepData) {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2}>
+    <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2} >
       <Paper
         square
         elevation={0}
@@ -72,17 +95,20 @@ export default function StepperComponent(props: StepData) {
           alignItems: 'center',
           height: 50,
           pl: 2,
-          bgcolor: 'background.default',
         }}
       >
         <Typography variant='h4' >{steps[activeStep].label}</Typography>
       </Paper>
       <Divider sx={{ marginTop: '1.5rem' }} />
       <Box sx={{ width: '100%', p: 2 }} >
-        <ListCheckbox listItems={items} handleToggle={handleToggle} />
+        {(activeStep === maxSteps - 1) ? (
+          <StrategieComponent selectedItems={selectedItems} />
+        ) : (
+          <ListCheckbox listItems={items} handleToggle={handleToggle} />
+        )}
       </Box>
       <MobileStepper
-        variant="text"
+        variant="dots"
         steps={maxSteps}
         position="static"
         activeStep={activeStep}

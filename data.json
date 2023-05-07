@@ -185,62 +185,74 @@
       {
         "id": 1,
         "name": "Definir canais de comunicação centrais entre os múltiplos canais",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 2,
         "name": "Definir repositórios de software centrais entre os múltiplos repositorios",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 3,
         "name": "Incentivar conversas informais",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 4,
         "name": "Promover reuniões de integração",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 5,
         "name": "Criar fóruns de discussão",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 6,
         "name": "Realizar votação em comunidade",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 7,
         "name": "Documentar as informações das reuniões",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 8,
         "name": "Estabelecer horários de trabalho flexíveis",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 9,
         "name": "Contratar evangelistas/gestores de parcerias",
-        "selected": false
+        "selected": false,
+        "description": "descrição"
       },
       {
         "id": 10,
         "name": "Realizar pesquisas para avaliar a satisfação dos atores",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 11,
         "name": "Usar uma ferramenta para acompanhar o status dos projetos",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       },
       {
         "id": 12,
         "name": "Negociar com os atores-chave",
-        "selected": false
+        "selected": true,
+        "description": "descrição"
       }
     ]
   }

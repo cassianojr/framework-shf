@@ -1,4 +1,4 @@
-import { Checkbox, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import { Checkbox, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
 
 
 interface ListData {
@@ -20,9 +20,9 @@ export default function ListCheckbox(props: ListData) {
 
         <List dense sx={{ width: '60%', margin: 'auto' }}>
           {listItems.map((item) => (
-            <>
-              <ListItem key={item.id} disablePadding >
-                <ListItemButton role={undefined} onClick={handleToggle(item.id)}>
+            <Box key={item.id}>
+              <ListItem disablePadding >
+                <ListItemButton role={undefined} onClick={handleToggle(item.id)} >
                   <ListItemIcon>
                     <Checkbox
                       edge="start"
@@ -36,8 +36,7 @@ export default function ListCheckbox(props: ListData) {
                 </ListItemButton>
               </ListItem>
               <Divider />
-            </>
-
+            </Box>
           ))}
 
         </List>
