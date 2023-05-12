@@ -8,6 +8,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
+import Modal from './Modal';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -61,6 +62,12 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const [modalState, setModalState] = React.useState(false);
+  const [modalContent, setModalContent] = React.useState({
+    title: '',
+    body: '',
+  });
+
 
   const { data } = props;
 
@@ -69,8 +76,19 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       setExpanded(newExpanded ? panel : false);
     };
 
+  const handleButtonClick = (name: string, description: string) => {
+    setModalContent({
+      title: name,
+      body: description,
+    });
+
+    setModalState(true);
+  }
+  
+
   return (
-    <div>
+    <>
+      <Modal open={modalState} handleClose={()=>setModalState(false)} modalContent={modalContent} setOpen={setModalState}/>
       {data.map((dataItem) => (
         <Accordion
           expanded={expanded === dataItem.id}
@@ -87,11 +105,11 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             <Typography>{dataItem.label}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AccordionList items={dataItem.items} />
+            <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
           </AccordionDetails>
         </Accordion>
       ))}
 
-    </div>
+    </>
   );
 }

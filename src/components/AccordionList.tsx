@@ -8,17 +8,18 @@ interface ListData {
     id: string,
     name: string,
     description: string
-  }[]
+  }[],
+  handleButtonClick: (name: string, description:string) => void
 }
 export default function AccordionList(props: ListData) {
 
-  const { items } = props;
+  const { items, handleButtonClick } = props;
   return (
     <List>
       {items.map((item) => (
         <ListItem
           secondaryAction={
-            <IconButton edge="end" aria-label="details">
+            <IconButton edge="end" aria-label="details" onClick={()=>handleButtonClick(item.name, item.description)}>
               <InfoRounded />
             </IconButton>
           }
