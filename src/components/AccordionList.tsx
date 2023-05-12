@@ -1,7 +1,5 @@
 import { InfoRounded } from '@mui/icons-material';
 import { IconButton, List, ListItem, ListItemText } from '@mui/material';
-import React from 'react'
-
 
 interface ListData {
   items: {
@@ -24,6 +22,7 @@ export default function AccordionList(props: ListData) {
             </IconButton>
           }
           id={item.id}
+          key={item.id}
         >
           <ListItemText primary={item.name} />
         </ListItem>

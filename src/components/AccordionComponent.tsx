@@ -84,13 +84,14 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
     setModalState(true);
   }
-  
+
 
   return (
     <>
-      <Modal open={modalState} handleClose={()=>setModalState(false)} modalContent={modalContent} setOpen={setModalState}/>
+      <Modal open={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setOpen={setModalState} />
       {data.map((dataItem) => (
         <Accordion
+          key={dataItem.id}
           expanded={expanded === dataItem.id}
           onChange={handleChange(dataItem.id)}
           id={dataItem.id}
