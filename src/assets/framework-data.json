@@ -1,0 +1,507 @@
+[
+  {
+    "id": "item1",
+    "label": "Contextual Characteristics",
+    "headerColor": "#40546c",
+    "items": [
+      {
+        "id": "CG01",
+        "name": "Colaborative requirements negotiation",
+        "description": "description"
+      },
+      {
+        "id": "CG02",
+        "name": "Colaborative requirements prioritization",
+        "description": "description"
+      },
+      {
+        "id": "CG03",
+        "name": "Crossculting concern",
+        "description": "description"
+      },
+      {
+        "id": "CG04",
+        "name": "Existence of emergent requirements",
+        "description": "description"
+      },
+      {
+        "id": "CG05",
+        "name": "Group of multi-party actors",
+        "description": "description"
+      },
+      {
+        "id": "CG06",
+        "name": "Informal and decentralized requirements",
+        "description": "description"
+      },
+      {
+        "id": "CG07",
+        "name": "Inter-project dependencies",
+        "description": "description"
+      },
+      {
+        "id": "CG08",
+        "name": "Storage of requirements in several artifacts and repositories",
+        "description": "description"
+      },
+      {
+        "id": "CG09",
+        "name": "Use of open communication channels",
+        "description": "description"
+      }
+    ]
+  },
+  {
+    "id": "item2",
+    "label": "Social and Human Factors",
+    "headerColor": "#4172c6",
+    "items": [
+      {
+        "id": "SHF01",
+        "name": "Atitude",
+        "description": "description"
+      },
+      {
+        "id": "SHF02",
+        "name": "Autonomy",
+        "description": "description"
+      },
+      {
+        "id": "SHF03",
+        "name": "Commitment",
+        "description": "description"
+      },
+      {
+        "id": "SHF04",
+        "name": "Communication",
+        "description": "description"
+      },
+      {
+        "id": "SHF05",
+        "name": "Competitiveness",
+        "description": "description"
+      },
+      {
+        "id": "SHF06",
+        "name": "Conflite of interest",
+        "description": "description"
+      },
+      {
+        "id": "SHF07",
+        "name": "Cooperation",
+        "description": "description"
+      },
+      {
+        "id": "SHF08",
+        "name": "Competition",
+        "description": "description"
+      },
+      {
+        "id": "SHF09",
+        "name": "Culture",
+        "description": "description"
+      },
+      {
+        "id": "SHF10",
+        "name": "Decision making",
+        "description": "description"
+      },
+      {
+        "id": "SHF11",
+        "name": "Domain Knlowledge",
+        "description": "description"
+      },
+      {
+        "id": "SHF12",
+        "name": "Empathy",
+        "description": "description"
+      },
+      {
+        "id": "SHF13",
+        "name": "Geographic distance/time zone",
+        "description": "description"
+      },
+      {
+        "id": "SHF14",
+        "name": "Hope",
+        "description": "description"
+      },
+      {
+        "id": "SHF15",
+        "name": "Information sharing",
+        "description": "description"
+      },
+      {
+        "id": "SHF16",
+        "name": "Innovation",
+        "description": "description"
+      },
+      {
+        "id": "SHF17",
+        "name": "Leadership",
+        "description": "description"
+      },
+      {
+        "id": "SHF18",
+        "name": "Motivation",
+        "description": "description"
+      },
+      {
+        "id": "SHF19",
+        "name": "Multiple actors",
+        "description": "description"
+      },
+      {
+        "id": "SHF20",
+        "name": "Multiple teams",
+        "description": "description"
+      },
+      {
+        "id": "SHF21",
+        "name": "Negociation skills",
+        "description": "description"
+      },
+      {
+        "id": "SHF22",
+        "name": "Optimism",
+        "description": "description"
+      },
+      {
+        "id": "SHF23",
+        "name": "Personal Experience",
+        "description": "description"
+      },
+      {
+        "id": "SHF24",
+        "name": "Personality",
+        "description": "description"
+      },
+      {
+        "id": "SHF25",
+        "name": "Power relationship",
+        "description": "description"
+      },
+      {
+        "id": "SHF26",
+        "name": "Proactivity",
+        "description": "description"
+      },
+      {
+        "id": "SHF27",
+        "name": "Resilience",
+        "description": "description"
+      },
+      {
+        "id": "SHF28",
+        "name": "Satisfaction",
+        "description": "description"
+      },
+      {
+        "id": "SHF29",
+        "name": "Trust",
+        "description": "description"
+      }
+    ]
+  },
+  {
+    "id": "item3",
+    "label": "Barriers to improving",
+    "headerColor": "#fa832e",
+    "items": [
+      {
+        "id": "BA01",
+        "name": "Decentralization, omission, and confidentiality of information",
+        "description": "description"
+      },
+      {
+        "id": "BA02",
+        "name": "Dependency between multiple teams",
+        "description": "description"
+      },
+      {
+        "id": "BA03",
+        "name": "Diferent leardership styles",
+        "description": "description"
+      },
+      {
+        "id": "BA04",
+        "name": "Dynamism in the entrance and exit of actors in the software ecosystem",
+        "description": "description"
+      },
+      {
+        "id": "BA05",
+        "name": "Hierarchy dependency between keystones and other actors",
+        "description": "description"
+      },
+      {
+        "id": "BA06",
+        "name": "Lack of experience with software ecosystems",
+        "description": "description"
+      },
+      {
+        "id": "BA07",
+        "name": "Lack of face-to-face contact between actors and direct communication channels",
+        "description": "description"
+      },
+      {
+        "id": "BA08",
+        "name": "Lack of mutual understanding between actors about the requirements",
+        "description": "description"
+      },
+      {
+        "id": "BA09",
+        "name": "Lack of disseminating and documenting knowledge",
+        "description": "description"
+      },
+      {
+        "id": "BA10",
+        "name": "Lack of templates of requirements documentation",
+        "description": "description"
+      },
+      {
+        "id": "BA11",
+        "name": "Lack of incentive and interest to deal with SHF",
+        "description": "description"
+      },
+      {
+        "id": "BA12",
+        "name": "Lack of visibility/awereness of the SHF",
+        "description": "description"
+      },
+      {
+        "id": "BA13",
+        "name": "Lack of spedfles methods to deal with SHF",
+        "description": "description"
+      },
+      {
+        "id": "BA14",
+        "name": "Language difference",
+        "description":"description"
+      },
+      {
+        "id": "BA15",
+        "name": "Management of multiple teams and actors",
+        "description":"description"
+      },
+      {
+        "id": "BA16",
+        "name": "Organizational Culture and resistence to change",
+        "description":"description"
+      },
+      {
+        "id": "BA17",
+        "name": "Requirements negotiation between multiple actors",
+        "description":"description"
+      },
+      {
+        "id": "BA18",
+        "name": "Schedule inflexibility",
+        "description":"description"
+      },
+      {
+        "id": "BA19",
+        "name": "Socio-cultural distance",
+        "description":"description"
+      },
+      {
+        "id": "BA20",
+        "name": "Software ecosystem openness",
+        "description":"description"
+      }
+    ]
+  },
+  {
+    "id": "item4",
+    "label": "Strategies",
+    "headerColor": "#6ea144",
+    "items": [
+      {
+        "id": "ST01",
+        "name": "Applying DevOps culture",
+        "description":"description"
+      },
+      {
+        "id": "ST02",
+        "name": "Applying product discovery with benchmark",
+        "description":"description"
+      },
+      {
+        "id": "ST03",
+        "name": "Building self-adaptive systems",
+        "description":"description"
+      },
+      {
+        "id": "ST04",
+        "name": "Building prototypes",
+        "description":"description"
+      },
+      {
+        "id": "ST05",
+        "name": "Capacitating/training the professionals",
+        "description":"description"
+      },
+      {
+        "id": "ST06",
+        "name": "Conducting survayes to evaluate actors satisfaction",
+        "description":"description"
+      },
+      {
+        "id": "ST07",
+        "name": "Creating discussion forums",
+        "description":"description"
+      },
+      {
+        "id": "ST08",
+        "name": "Defining roles and resposibilities",
+        "description":"description"
+      },
+      {
+        "id": "ST09",
+        "name": "Defining central communication channels among multiple channes",
+        "description":"description"
+      },
+      {
+        "id": "ST010",
+        "name": "Defining central software repositoryes among multiple repositories",
+        "description":"description"
+      },
+      {
+        "id": "ST011",
+        "name": "Documenting meetings information",
+        "description":"description"
+      },
+      {
+        "id": "ST012",
+        "name": "Documenting the knowledge and processes",
+        "description":"description"
+      },
+      {
+        "id": "ST013",
+        "name": "Encouraging emergent leadership",
+        "description":"description"
+      },
+      {
+        "id": "ST014",
+        "name": "Encouraging informal conversations",
+        "description":"description"
+      },
+      {
+        "id": "ST015",
+        "name": "Estabilishing flexible working hours",
+        "description":"description"
+      },
+      {
+        "id": "ST016",
+        "name": "Forming mixed teams in terms of experience level",
+        "description":"description"
+      },
+      {
+        "id": "ST017",
+        "name": "Hiring evangelists/partership managers",
+        "description":"description"
+      },
+      {
+        "id": "ST018",
+        "name": "Hiring experienced professionals",
+        "description":"description"
+      },
+      {
+        "id": "ST019",
+        "name": "Applying DevOps culture",
+        "description":"description"
+      },
+      {
+        "id": "ST020",
+        "name": "Negotiating with key actors",
+        "description":"description"
+      },
+      {
+        "id": "ST021",
+        "name": "Observing neighboring software ecosystems",
+        "description":"description"
+      },
+      {
+        "id": "ST022",
+        "name": "Performing community voting",
+        "description":"description"
+      },
+      {
+        "id": "ST023",
+        "name": "Promoting meetings of integration",
+        "description":"description"
+      },
+      {
+        "id": "ST024",
+        "name": "Reflect on the SHF in organizational culture",
+        "description":"description"
+      },
+      {
+        "id": "ST025",
+        "name": "Using a tool to track the status of projects",
+        "description":"description"
+      },
+      {
+        "id": "ST026",
+        "name": "Using Agile methods",
+        "description":"description"
+      },
+      {
+        "id": "ST027",
+        "name": "Using gamification",
+        "description":"description"
+      },
+      {
+        "id": "ST028",
+        "name": "Working in pairs",
+        "description":"description"
+      },
+      {
+        "id": "ST029",
+        "name": "Working on positive psychological capital",
+        "description":"description"
+      },
+      {
+        "id": "ST030",
+        "name": "Working with Key Performance Indicators (KPI)",
+        "description":"description"
+      }
+    ]
+  },
+  {
+    "id": "item5",
+    "label":"Coping mechanisms",
+    "headerColor": "#ffbb00",
+    "items": [
+      {
+        "id": "CM01",
+        "name": "Leaving your job",
+        "description":"description"
+      },
+      {
+        "id": "CM02",
+        "name": "Moving forward",
+        "description":"description"
+      },
+      {
+        "id": "CM03",
+        "name": "Reallocating to another function",
+        "description":"description"
+      },
+      {
+        "id": "CM04",
+        "name": "Recognizing the professional",
+        "description":"description"
+      },
+      {
+        "id": "CM05",
+        "name": "Setting/Being the example",
+        "description":"description"
+      },
+      {
+        "id": "CM06",
+        "name": "Talking to the keystone",
+        "description":"description"
+      }
+    ]
+  }
+]
