@@ -10,7 +10,7 @@ interface ListData {
     description: string
   }[]
 }
-export default function ListItems(props: ListData) {
+export default function AccordionList(props: ListData) {
 
   const { items } = props;
   return (
