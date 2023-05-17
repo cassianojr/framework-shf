@@ -95,17 +95,19 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           expanded={expanded === dataItem.id}
           onChange={handleChange(dataItem.id)}
           id={dataItem.id}
-          sx={{ width: '60%', margin: 'auto', border: '0' }}>
+          
+          >
           <AccordionSummary
-            aria-controles={`${dataItem.id}-content`}
+            aria-controls={`${dataItem.id}-content`}
             id={`${dataItem.id}-header`}
             sx={{
               backgroundColor: dataItem.headerColor,
               color: '#ffff',
+              
             }} >
             <Typography>{dataItem.label}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{zIndex: 999}}>
             <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
           </AccordionDetails>
         </Accordion>

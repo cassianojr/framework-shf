@@ -1,11 +1,10 @@
 import Navbar from "../components/Navbar";
-import { Toolbar } from "@mui/material";
+import { Paper, Toolbar } from "@mui/material";
 import { Container } from "@mui/system";
 import Footer from "../components/Footer";
 import Box from '@mui/material/Paper';
 
-import data from '../../src/assets/framework-data.json';
-import AccordionComponent from '../components/AccordionComponent';
+import FrameworkComponent from "../components/FrameworkComponent";
 
 export default function Framework() {
 
@@ -15,8 +14,8 @@ export default function Framework() {
     <Box sx={{ backgroundColor: '#ebebeb' }}>
       <Navbar />
       <Toolbar />
-      <Container sx={{ minHeight: '100vh' }}>
-        <AccordionComponent data={data} />
+      <Container sx={{ minHeight: '100vh' }} component={Paper} elevation={3} style={{paddingTop: '1%'}}>
+        <FrameworkComponent />
       </Container>
       <Footer />
     </Box>
