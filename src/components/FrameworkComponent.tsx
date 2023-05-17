@@ -4,8 +4,6 @@ import { ArcherContainer, ArcherElement } from 'react-archer';
 import data from '../../src/assets/framework-data.json';
 import AccordionComponent from '../components/AccordionComponent';
 
-const boxStyle = { padding: '10px', border: '1px solid black' };
-
 function FrameworkComponent() {
 
   const contextualCharacteristics = [data[0]];
