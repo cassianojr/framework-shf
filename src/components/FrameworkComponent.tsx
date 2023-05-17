@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Card, Container, Grid, Typography } from '@mui/material';
 import { ArcherContainer, ArcherElement } from 'react-archer';
 
 import data from '../../src/assets/framework-data.json';
@@ -65,7 +65,11 @@ function FrameworkComponent() {
                   style: { strokeDasharray: '5,5' },
                 }]}
               >
-                <div style={{ ...boxStyle, maxWidth: '50%', textAlign: 'center' }}>REQUIREMENTS MANAGMENT IN SECO</div>
+                <Card elevation={8} style={{ maxWidth: '50%', textAlign: 'center', padding: '5%', backgroundColor: '#757173', color: 'white' }}>
+                  <Typography fontWeight={'bold'}>
+                    REQUIREMENTS MANAGMENT IN SECO
+                  </Typography>
+                </Card>
               </ArcherElement>
             </Box>
           </Grid>
