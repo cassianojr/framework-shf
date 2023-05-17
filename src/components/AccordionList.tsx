@@ -44,7 +44,7 @@ export default function AccordionList(props: ListData) {
       <List
         height={300}
         width='100%'
-        itemSize={46}
+        itemSize={80}
         itemData={props}
         itemCount={props.items.length}
         overscanCount={5}>
