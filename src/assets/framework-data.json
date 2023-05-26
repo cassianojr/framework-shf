@@ -6,17 +6,17 @@
     "items": [
       {
         "id": "CG01",
-        "name": "Colaborative requirements negotiation",
+        "name": "Collaborative requirements negotiation",
         "description": "description"
       },
       {
         "id": "CG02",
-        "name": "Colaborative requirements prioritization",
+        "name": "Collaborative requirements prioritization",
         "description": "description"
       },
       {
         "id": "CG03",
-        "name": "Crossculting concern",
+        "name": "Crosscutting concern",
         "description": "description"
       },
       {
@@ -31,7 +31,7 @@
       },
       {
         "id": "CG06",
-        "name": "Informal and decentralized requirements",
+        "name": "Informal and decentralized requirements management",
         "description": "description"
       },
       {
@@ -58,147 +58,147 @@
     "items": [
       {
         "id": "SHF01",
-        "name": "Atitude",
-        "description": "description"
-      },
-      {
-        "id": "SHF02",
         "name": "Autonomy",
         "description": "description"
       },
       {
-        "id": "SHF03",
-        "name": "Commitment",
-        "description": "description"
-      },
-      {
-        "id": "SHF04",
+        "id": "SHF02",
         "name": "Communication",
         "description": "description"
       },
       {
-        "id": "SHF05",
-        "name": "Competitiveness",
-        "description": "description"
-      },
-      {
-        "id": "SHF06",
-        "name": "Conflite of interest",
-        "description": "description"
-      },
-      {
-        "id": "SHF07",
-        "name": "Cooperation",
-        "description": "description"
-      },
-      {
-        "id": "SHF08",
+        "id": "SHF03",
         "name": "Competition",
         "description": "description"
       },
       {
-        "id": "SHF09",
+        "id": "SHF04",
+        "name": "Conflicts of interest",
+        "description": "description"
+      },
+      {
+        "id": "SHF05",
+        "name": "Cooperation",
+        "description": "description"
+      },
+      {
+        "id": "SHF06",
+        "name": "Coopetition",
+        "description": "description"
+      },
+      {
+        "id": "SHF07",
         "name": "Culture",
         "description": "description"
       },
       {
-        "id": "SHF10",
+        "id": "SHF08",
         "name": "Decision making",
         "description": "description"
       },
       {
-        "id": "SHF11",
-        "name": "Domain Knlowledge",
-        "description": "description"
-      },
-      {
-        "id": "SHF12",
+        "id": "SHF09",
         "name": "Empathy",
         "description": "description"
       },
       {
-        "id": "SHF13",
+        "id": "SHF10",
         "name": "Geographic distance/time zone",
         "description": "description"
       },
       {
-        "id": "SHF14",
-        "name": "Hope",
-        "description": "description"
-      },
-      {
-        "id": "SHF15",
-        "name": "Information sharing",
-        "description": "description"
-      },
-      {
-        "id": "SHF16",
+        "id": "SHF11",
         "name": "Innovation",
         "description": "description"
       },
       {
-        "id": "SHF17",
+        "id": "SHF12",
         "name": "Leadership",
         "description": "description"
       },
       {
-        "id": "SHF18",
-        "name": "Motivation",
-        "description": "description"
-      },
-      {
-        "id": "SHF19",
+        "id": "SHF13",
         "name": "Multiple actors",
         "description": "description"
       },
       {
-        "id": "SHF20",
+        "id": "SHF14",
         "name": "Multiple teams",
         "description": "description"
       },
       {
-        "id": "SHF21",
-        "name": "Negociation skills",
-        "description": "description"
-      },
-      {
-        "id": "SHF22",
-        "name": "Optimism",
-        "description": "description"
-      },
-      {
-        "id": "SHF23",
-        "name": "Personal Experience",
-        "description": "description"
-      },
-      {
-        "id": "SHF24",
-        "name": "Personality",
-        "description": "description"
-      },
-      {
-        "id": "SHF25",
+        "id": "SHF15",
         "name": "Power relationship",
         "description": "description"
       },
       {
+        "id": "SHF16",
+        "name": "Information sharing",
+        "description": "description"
+      },
+      {
+        "id": "SHF17",
+        "name": "Trust",
+        "description": "description"
+      },
+      {
+        "id": "SHF18",
+        "name": "Attitude",
+        "description": "description"
+      },
+      {
+        "id": "SHF19",
+        "name": "Commitment",
+        "description": "description"
+      },
+      {
+        "id": "SHF20",
+        "name": "Domain knowledge",
+        "description": "description"
+      },
+      {
+        "id": "SHF21",
+        "name": "Hope",
+        "description": "description"
+      },
+      {
+        "id": "SHF22",
+        "name": "Motivation",
+        "description": "description"
+      },
+      {
+        "id": "SHF23",
+        "name": "Negotiation skills",
+        "description": "description"
+      },
+      {
+        "id": "SHF24",
+        "name": "Optimism",
+        "description": "description"
+      },
+      {
+        "id": "SHF25",
+        "name": "Personal experience",
+        "description": "description"
+      },
+      {
         "id": "SHF26",
-        "name": "Proactivity",
+        "name": "Personality",
         "description": "description"
       },
       {
         "id": "SHF27",
-        "name": "Resilience",
+        "name": "Proactivity",
         "description": "description"
       },
       {
         "id": "SHF28",
-        "name": "Satisfaction",
+        "name": "Resilience",
         "description": "description"
       },
       {
         "id": "SHF29",
-        "name": "Trust",
+        "name": "Satisfaction",
         "description": "description"
       }
     ]
@@ -220,7 +220,7 @@
       },
       {
         "id": "BA03",
-        "name": "Diferent leardership styles",
+        "name": "Different leardership styles",
         "description": "description"
       },
       {
@@ -230,7 +230,7 @@
       },
       {
         "id": "BA05",
-        "name": "Hierarchy dependency between keystones and other actors",
+        "name": "Hierarchical dependency between keystone and other actors",
         "description": "description"
       },
       {
@@ -240,7 +240,7 @@
       },
       {
         "id": "BA07",
-        "name": "Lack of face-to-face contact between actors and direct communication channels",
+        "name": "Lack of face-to-face contact between actors and direct communication",
         "description": "description"
       },
       {
@@ -327,7 +327,7 @@
       },
       {
         "id": "ST03",
-        "name": "Building self-adaptive systems",
+        "name": "Applying self-adaptive systems",
         "description":"description"
       },
       {
@@ -357,12 +357,12 @@
       },
       {
         "id": "ST09",
-        "name": "Defining central communication channels among multiple channes",
+        "name": "Defining central communication channels among multiple channels",
         "description":"description"
       },
       {
         "id": "ST010",
-        "name": "Defining central software repositoryes among multiple repositories",
+        "name": "Defining central software repositories among multiple repositories",
         "description":"description"
       },
       {
@@ -387,27 +387,27 @@
       },
       {
         "id": "ST015",
-        "name": "Estabilishing flexible working hours",
+        "name": "Engaging the actors with a specific purpose",
         "description":"description"
       },
       {
         "id": "ST016",
-        "name": "Forming mixed teams in terms of experience level",
+        "name": "Establishing flexible working hours",
         "description":"description"
       },
       {
         "id": "ST017",
-        "name": "Hiring evangelists/partership managers",
+        "name": "Forming mixed teams in terms of experience level",
         "description":"description"
       },
       {
         "id": "ST018",
-        "name": "Hiring experienced professionals",
+        "name": "Hiring evangelists/partnership managers",
         "description":"description"
       },
       {
         "id": "ST019",
-        "name": "Applying DevOps culture",
+        "name": "Hiring experienced professionals",
         "description":"description"
       },
       {
@@ -432,7 +432,7 @@
       },
       {
         "id": "ST024",
-        "name": "Reflect on the SHF in organizational culture",
+        "name": "Reflecting on the SHF in organizational culture",
         "description":"description"
       },
       {
@@ -484,7 +484,7 @@
       },
       {
         "id": "CM03",
-        "name": "Reallocating to another function",
+        "name": "Relocating to another function",
         "description":"description"
       },
       {
