@@ -8,10 +8,10 @@ import image from '../assets/images/hero.jpg';
 function Home() {
 
   const heroData = {
-    title: 'Explore fatores humanos e sociais',
-    description: 'O Framework SHF é uma ferramenta para auxiliar na identificação e análise de fatores humanos e sociais em ecossistemas de software.',
+    title: 'Explore human and social factors',
+    description: 'The SHF Framework is a tool to help identify and analyze human and social factors in software ecosystems.',
     image,
-    button: 'Teste agora!',
+    button: 'Try now!',
     buttonLink: '/framework'
   }
 
@@ -20,25 +20,25 @@ function Home() {
       <Navbar />
       <Toolbar />
       <Hero {...heroData} />
-      <Container sx={{minHeight: '100vh' }}>
-        <section id="sobre">
+      <Container sx={{ minHeight: '100vh' }}>
+        <section id="about">
           <Box sx={{ my: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>
-              Sobre o Framework
+              About the Framework
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom>
-              Identificar e analisar fatores humanos e sociais em ecossistemas de software é uma tarefa complexa. O Framework SHF ajuda na identificação e análise desses fatores em ecossistemas de software.
+              Identifying and analyzing human and social factors in software ecosystems is a complex task. The SHF Framework helps in identifying and analyzing these factors in software ecosystems.
             </Typography>
 
             <Typography variant="h4" component="h1" gutterBottom>
-              Como usar
+              How to use
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom>
               <ol>
-                <li>Identifique os fatores humanos e sociais em seu ecossistema de software;</li>
-                <li>Identifique as características contextuais do seu ecossistema;</li>
-                <li>Aponte as barreiras que você enfrenta;</li>
-                <li>Receba sugestões de estratégias e mecanismos de enfrentamento a serem utilizadas mo seu ecossitema;</li>
+                <li>Identify the human and social factors in your software ecosystem;</li>
+                <li>Identify the contextual characteristics of your ecosystem;</li>
+                <li>Point out the barriers you face;</li>
+                <li>Receive suggestions for strategies and coping mechanisms to be used in your ecosystem;</li>
               </ol>
             </Typography>
             <Button
@@ -46,7 +46,7 @@ function Home() {
               to={heroData.buttonLink}
               variant="contained"
               sx={{ mt: 3, mr: 2 }}>
-              Teste agora!
+              Try now!
             </Button>
           </Box>
         </section>

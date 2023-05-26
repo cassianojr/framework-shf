@@ -31,12 +31,12 @@ const navItems = [
     path: '/'
   },
   {
-    name: 'Sobre',
-    path: '#sobre',
+    name: 'About',
+    path: '#about',
   },
   {
-    name: 'Contato',
-    path: '/contato',
+    name: 'Contact',
+    path: '/contact',
   }
 ];
 

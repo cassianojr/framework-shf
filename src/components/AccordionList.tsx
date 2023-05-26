@@ -40,9 +40,9 @@ export default function AccordionList(props: ListData) {
 
   return (
     <Box
-      sx={{ minWidth: '335px', maxWidth: '100%', height: 300, bgcolor: 'background.paper' }}>
+      sx={{ minWidth: '335px', maxWidth: '100%', height: 150, bgcolor: 'background.paper' }}>
       <List
-        height={300}
+        height={150}
         width='100%'
         itemSize={50}
         itemData={props}

@@ -16,7 +16,7 @@ function FrameworkComponent() {
     <ArcherContainer strokeColor='black' noCurves >
       <Container sx={{ minHeight: '100vh' }}>
 
-        <Grid container spacing={1} style={{ height: '140vh' }}>
+        <Grid container spacing={1} style={{ height: '90vh' }}>
 
           <Grid container item xs={4}>
             <Box>
