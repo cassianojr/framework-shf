@@ -11,7 +11,7 @@ import AccordionList from './AccordionList';
 import Modal from './Modal';
 
 const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
+  <MuiAccordion disableGutters elevation={0} square {...props}/>
 ))(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
@@ -61,7 +61,9 @@ interface AccordionComponentProps {
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const { data } = props;
+  
+  const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
   const [modalState, setModalState] = React.useState(false);
   const [modalContent, setModalContent] = React.useState({
     title: '',
@@ -69,7 +71,8 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   });
 
 
-  const { data } = props;
+  console.log(data);
+  
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -95,7 +98,6 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           expanded={expanded === dataItem.id}
           onChange={handleChange(dataItem.id)}
           id={dataItem.id}
-          
           >
           <AccordionSummary
             aria-controls={`${dataItem.id}-content`}

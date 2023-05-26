@@ -30,7 +30,7 @@ function renderRow(props: ListChildComponentProps) {
       style={style}
       divider={true}
     >
-      <ListItemText primary={item.name} />
+      <ListItemText primary={`${item.id}: ${item.name}`} />
     </ListItem>
   );
 }
@@ -44,7 +44,7 @@ export default function AccordionList(props: ListData) {
       <List
         height={300}
         width='100%'
-        itemSize={80}
+        itemSize={50}
         itemData={props}
         itemCount={props.items.length}
         overscanCount={5}>

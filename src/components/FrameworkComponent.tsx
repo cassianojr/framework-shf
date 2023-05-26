@@ -16,24 +16,9 @@ function FrameworkComponent() {
     <ArcherContainer strokeColor='black' noCurves >
       <Container sx={{ minHeight: '100vh' }}>
 
-        <Grid container spacing={2} style={{ height: '80vh' }}>
+        <Grid container spacing={1} style={{ height: '140vh' }}>
 
           <Grid container item xs={4}>
-            <Box>
-              <ArcherElement
-                id="contextual-characteristics"
-                relations={[{
-                  targetId: 'framework-shf',
-                  targetAnchor: 'left',
-                  sourceAnchor: 'right',
-                  style: { strokeDasharray: '5,5' },
-                }]}
-              >
-                <div>
-                  <AccordionComponent data={contextualCharacteristics} />
-                </div>
-              </ArcherElement>
-            </Box>
             <Box>
               <ArcherElement
                 id="social-and-human-factors"
@@ -48,10 +33,33 @@ function FrameworkComponent() {
                   <AccordionComponent data={socialHumanFactors} />
                 </div>
               </ArcherElement>
+              <div style={{ width: '105%', backgroundColor: 'red', marginLeft: '200px', marginTop: '60px' }}>
+                <ArcherElement
+                  id="middle-arrow"
+            
+                >
+                  <div></div>
+                </ArcherElement>
+              </div>
+            </Box>
+            <Box sx={{marginTop: '-60px'}}>
+              <ArcherElement
+                id="contextual-characteristics"
+                relations={[{
+                  targetId: 'middle-arrow',
+                  targetAnchor: 'bottom',
+                  sourceAnchor: 'right',
+                  style: { strokeDasharray: '5,5' },
+                }]}
+              >
+                <div>
+                  <AccordionComponent data={contextualCharacteristics} />
+                </div>
+              </ArcherElement>
             </Box>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             {/* Box on the center (vertical and horizontal) */}
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
               <ArcherElement
@@ -63,8 +71,8 @@ function FrameworkComponent() {
                   style: { strokeDasharray: '5,5' },
                 }]}
               >
-                <Card elevation={8} style={{ maxWidth: '50%', textAlign: 'center', padding: '5%', backgroundColor: '#757173', color: 'white' }}>
-                  <Typography fontWeight={'bold'}>
+                <Card elevation={8} style={{ maxWidth: '50%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white' }}>
+                  <Typography >
                     REQUIREMENTS MANAGMENT IN SECO
                   </Typography>
                 </Card>
@@ -72,7 +80,7 @@ function FrameworkComponent() {
             </Box>
           </Grid>
 
-          <Grid container item xs={4}>
+          <Grid container item xs={5}>
             <Box width={'100%'}>
               <ArcherElement
                 id="coping-mechanisms"
