@@ -1,5 +1,5 @@
 import { InfoRounded } from '@mui/icons-material';
-import { Box, IconButton, ListItem, ListItemText } from '@mui/material';
+import { Box, IconButton, ListItem, ListItemText, Typography } from '@mui/material';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 
 interface ListData {
@@ -30,7 +30,12 @@ function renderRow(props: ListChildComponentProps) {
       style={style}
       divider={true}
     >
-      <ListItemText primary={`${item.id}: ${item.name}`} />
+      <ListItemText primary={
+        <Typography>
+          <span style={{fontWeight:'bold'}}>{item.id}: </span>
+          {item.name}
+        </Typography>} />
+      {/* <ListItemText primary={`${item.id}: ${item.name}`} /> */}
     </ListItem>
   );
 }

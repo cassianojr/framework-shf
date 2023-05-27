@@ -70,10 +70,6 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     body: '',
   });
 
-
-  console.log(data);
-  
-
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
@@ -109,7 +105,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             }} >
             <Typography>{dataItem.label}</Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{zIndex: 999}}>
+          <AccordionDetails sx={{padding: '0'}}>
             <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
           </AccordionDetails>
         </Accordion>
