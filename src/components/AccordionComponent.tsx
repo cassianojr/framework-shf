@@ -9,9 +9,15 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
 import Modal from './Modal';
+import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+
+
+import GroupIcon from '@mui/icons-material/Group';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props}/>
+  <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
@@ -62,10 +68,11 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
-  
+
   const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
   const [modalState, setModalState] = React.useState(false);
   const [modalContent, setModalContent] = React.useState({
+    id: '',
     title: '',
     body: '',
   });
@@ -75,8 +82,9 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       setExpanded(newExpanded ? panel : false);
     };
 
-  const handleButtonClick = (name: string, description: string) => {
+  const handleButtonClick = (id: string, name: string, description: string) => {
     setModalContent({
+      id: id,
       title: name,
       body: description,
     });
@@ -84,6 +92,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setModalState(true);
   }
 
+  const [socialGroupOpen, setSocialGroupOpen] = React.useState(true);
+  const handleSocialGroupClick = () => {
+    setSocialGroupOpen(!socialGroupOpen);
+  };
+
+  const [personalGroupOpen, setPersonalGroupOpen] = React.useState(false);
+  const handlePersonalGroupClick = () => {
+    setPersonalGroupOpen(!personalGroupOpen);
+  };
 
   return (
     <>
@@ -94,19 +111,47 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           expanded={expanded === dataItem.id}
           onChange={handleChange(dataItem.id)}
           id={dataItem.id}
-          >
+        >
           <AccordionSummary
             aria-controls={`${dataItem.id}-content`}
             id={`${dataItem.id}-header`}
             sx={{
               backgroundColor: dataItem.headerColor,
               color: '#ffff',
-              
+
             }} >
             <Typography>{dataItem.label}</Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{padding: '0'}}>
-            <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
+          <AccordionDetails sx={{ padding: '0' }}>
+            {dataItem.id === 'item2' ? (
+              <>
+                <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
+                  <ListItemButton onClick={handleSocialGroupClick} divider={true}>
+                    <ListItemIcon>
+                      <GroupIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Social Group" primaryTypographyProps={{fontWeight:'bold'}}/>
+                    {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
+                    <AccordionList items={dataItem.items.slice(0, 17)} handleButtonClick={handleButtonClick} />
+                  </Collapse>
+
+                  <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
+                    <ListItemIcon>
+                      <PersonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Personal Group" primaryTypographyProps={{fontWeight:'bold'}}/>
+                    {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
+                    <AccordionList items={dataItem.items.slice(17)} handleButtonClick={handleButtonClick} />
+                  </Collapse>
+                </List>
+
+              </>) : <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />}
+
+
           </AccordionDetails>
         </Accordion>
       ))}

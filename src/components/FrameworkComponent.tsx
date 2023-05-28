@@ -18,8 +18,8 @@ function FrameworkComponent() {
 
         <Grid container spacing={0} style={{ height: '65vh' }}>
 
-          <Grid container item xs={4} >
-            <Box>
+          <Grid container item xs={4}>
+            <Box width={'100%'}>
               <ArcherElement
                 id="social-and-human-factors"
                 relations={[{
@@ -35,7 +35,7 @@ function FrameworkComponent() {
               </ArcherElement>
 
             </Box>
-            <Box>
+            <Box width={'100%'}>
               <ArcherElement
                 id="contextual-characteristics"
                 relations={[{
@@ -52,7 +52,7 @@ function FrameworkComponent() {
             </Box>
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={3} >
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
               <ArcherElement
                 id="framework-shf"
@@ -74,7 +74,7 @@ function FrameworkComponent() {
               <ArcherElement
               id="middle-target"
               >
-            <div style={{ width: '2%', marginTop: '-32.5vh'}}>
+            <div style={{ width: '15%', marginTop: '-32.5vh'}}>
             </div>
               </ArcherElement>
           </Grid>
