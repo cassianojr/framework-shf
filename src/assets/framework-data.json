@@ -7,47 +7,47 @@
       {
         "id": "CG01",
         "name": "Collaborative requirements negotiation",
-        "description": "description"
+        "description": "Keystone usually orchestrates the requirements negotiation in software ecosystems and counts on the participation of external, interdependent multiple actors (i.e., end-users, third-party developers, and others). "
       },
       {
         "id": "CG02",
         "name": "Collaborative requirements prioritization",
-        "description": "description"
+        "description": "Keystone usually orchestrates the requirements prioritization in software ecosystems and counts on the participation of external, interdependent multiple actors (i.e., end-users, third-party developers, and others). "
       },
       {
         "id": "CG03",
         "name": "Crosscutting concern",
-        "description": "description"
+        "description": "The crosscutting concern occurs because requirements professionals frequently struggle to understand whether the requests of different actors could be addressed generally (closer to the platform) or only specifically (by a peripheral actor)."
       },
       {
         "id": "CG04",
         "name": "Existence of emergent requirements",
-        "description": "description"
+        "description": "Emergent requirements originated from multi-party actors (i.e., end-users, third-party developers, and others) who are not responsible for the requirements but contribute to discussing them beyond organizational boundaries affect requirements management in software ecosystems."
       },
       {
         "id": "CG05",
         "name": "Group of multi-party actors",
-        "description": "description"
+        "description": "Groups of multi-party actors (i.e., keystone, end-users, third-party developers, and others) external to the keystone that requests different products influence requirements management in software ecosystems."
       },
       {
         "id": "CG06",
         "name": "Informal and decentralized requirements management",
-        "description": "description"
+        "description": "Requirements management in software ecosystems is informal, has overlapping practices, and uses informalisms."
       },
       {
         "id": "CG07",
         "name": "Inter-project dependencies",
-        "description": "description"
+        "description": "The existence of multiple interdependent projects that co-evolve in the same environmental influences requirements management in software ecosystems."
       },
       {
         "id": "CG08",
         "name": "Storage of requirements in several artifacts and repositories",
-        "description": "description"
+        "description": "Requirements are not laid out in a central repository, and requirements discussions and implementations are spread across a series of requirements artifacts, each with its own repository."
       },
       {
         "id": "CG09",
         "name": "Use of open communication channels",
-        "description": "description"
+        "description": "Multiple actors  (i.e., keystone, end-users, third-party developers, and others) use multiple open communication channels for requirements communication in software ecosystems. The requirements communication is structured in a network and needs to be performed inside and outside software ecosystems."
       }
     ]
   },
@@ -59,147 +59,147 @@
       {
         "id": "SHF01",
         "name": "Autonomy",
-        "description": "description"
+        "description": "It refers to the ability of a team or an actor (i.e., keystone, third-party developer, and others) responsible for requirements management activities in software ecosystems to act independently, autonomously, and self-determinedly without relying excessively on external influences or authority from others."
       },
       {
         "id": "SHF02",
         "name": "Communication",
-        "description": "description"
+        "description": "It refers to exchanging information, ideas, needs, and expectations among the multiple stakeholders (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF03",
         "name": "Competition",
-        "description": "description"
+        "description": "It refers to the situation where multiple actors (i.e., keystone, end-users, third-party developers, and others) compete in defining and implementing requirements, extending to requirements management activities in software ecosystems."
       },
       {
         "id": "SHF04",
         "name": "Conflicts of interest",
-        "description": "description"
+        "description": "These refer to situations where there are diverging, incompatible, or competing interests among the multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF05",
         "name": "Cooperation",
-        "description": "description"
+        "description": "It refers to collaboration and working together to achieve a common goal among the multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems. It consists of sharing resources, skills, knowledge, and efforts among the actors."
       },
       {
         "id": "SHF06",
         "name": "Coopetition",
-        "description": "description"
+        "description": "It refers to the combination of cooperation and competition among multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems. It allows actors to collaborate in areas of mutual benefit while competing in areas where they wish to excel in the software market."
       },
       {
         "id": "SHF07",
         "name": "Culture",
-        "description": "description"
+        "description": "It refers to the decision-making process in requirements management activities in software ecosystems, which involves analyzing, evaluating, and selecting options related to requirements."
       },
       {
         "id": "SHF08",
         "name": "Decision making",
-        "description": "description"
+        "description": "It refers to the decision-making process in requirements management activities in software ecosystems, which involves analyzing, evaluating, and selecting options related to requirements."
       },
       {
         "id": "SHF09",
         "name": "Empathy",
-        "description": "description"
+        "description": "It refers to the ability to understand and share the feelings, perspectives, and emotional experiences of the multiple stakeholders (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF10",
         "name": "Geographic distance/time zone",
-        "description": "description"
+        "description": "It refers to the physical and temporal separation between the multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems due to their geographical location in different regions or time zones."
       },
       {
         "id": "SHF11",
         "name": "Innovation",
-        "description": "description"
+        "description": "Refers to applying innovative approaches, techniques, and practices in requirements management activities in the software ecosystem. It involves finding creative solutions and introducing something new or different that brings value and benefits to multiple actors (i.e., keystone, end-users, third-party developers, and others)."
       },
       {
         "id": "SHF12",
         "name": "Leadership",
-        "description": "description"
+        "description": "It refers to the ability of a requirements leader or manager to provide direction, guidance, and motivation to the multiple teams involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF13",
         "name": "Multiple actors",
-        "description": "description"
+        "description": "It refers to multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF14",
         "name": "Multiple teams",
-        "description": "description"
+        "description": "Refers to the situation where multiple teams are involved in requirements management activities in software ecosystems. These teams play distinct roles and collaborate to identify, analyze, document, and manage requirements."
       },
       {
         "id": "SHF15",
         "name": "Power relationship",
-        "description": "description"
+        "description": "Refers to the dynamics among multiple actors (i.e., keystone, end-users, third-party developers, and others) regarding influence, control, and authority over requirements management activities in a software ecosystem. It involves the distribution and exercise of power in a social interaction, where some actors may have more power than others."
       },
       {
         "id": "SHF16",
         "name": "Information sharing",
-        "description": "description"
+        "description": "It refers to exchanging and making relevant requirements information available among the multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF17",
         "name": "Trust",
-        "description": "description"
+        "description": "It refers to the belief and security that the multiple actors (i.e., keystone, end-users, third-party developers, and others) have regarding each other's integrity, competence, and commitment to requirements management activities in software ecosystems."
       },
       {
         "id": "SHF18",
         "name": "Attitude",
-        "description": "description"
+        "description": "It refers to the set of dispositions, attitudes, or ways of acting that an actor (i.e., keystone, third-party developer, and others) adopts when dealing with requirements management in a software ecosystem."
       },
       {
         "id": "SHF19",
         "name": "Commitment",
-        "description": "description"
+        "description": "It refers to the dedication and responsibility assumed by an actor (i.e., keystone, end-users, third-party developer, and others) involved in requirements management activities to fulfill the requirements established for software development in software ecosystems."
       },
       {
         "id": "SHF20",
         "name": "Domain knowledge",
-        "description": "description"
+        "description": "It refers to the expertise and in-depth understanding of a given actor (i.e., keystone, end-users, third-party developer, and others) in a software-related field or sector (such as requirements management) being developed in a software ecosystem."
       },
       {
         "id": "SHF21",
         "name": "Hope",
-        "description": "description"
+        "description": "It refers to the expectation or optimism that the defined requirements will be met and that the project's outcome will be successful. Although hope is a subjective emotion, it plays an essential role in the motivation and mindset of the multiple stakeholders (i.e., keystone, end-users, third-party developer, and others) involved in requirements management activities in software ecosystems."
       },
       {
         "id": "SHF22",
         "name": "Motivation",
-        "description": "description"
+        "description": "It refers to the internal or external motivation that drives multiple actors (i.e., keystone, end-users, third-party developers, and others) to engage in requirements management activities in software ecosystems actively. It corresponds to the force that stimulates action, effort, and persistence in achieving the goals defined by the actors."
       },
       {
         "id": "SHF23",
         "name": "Negotiation skills",
-        "description": "description"
+        "description": "Refer to the ability of an involved actor to conduct practical requirements negotiation processes among multiple actors (i.e., keystone, third-party developer, and others) to reach a consensus on software requirements."
       },
       {
         "id": "SHF24",
         "name": "Optimism",
-        "description": "description"
+        "description": "It refers to a positive and hopeful attitude toward requirements management activities and the project's outcome in software ecosystems. It is the belief that goals will be achieved satisfactorily, challenges will be overcome, and solutions will be found, even in the face of uncertainties and difficulties."
       },
       {
         "id": "SHF25",
         "name": "Personal experience",
-        "description": "description"
+        "description": "It refers to a professional's knowledge, skills, and experiences that impact his/her ability to effectively perform requirements management in software ecosystems."
       },
       {
         "id": "SHF26",
         "name": "Personality",
-        "description": "description"
+        "description": "Refers to the individual characteristics, traits, and behaviors of an actor and how they may affect how he/she interacts with other actors (i.e., keystone, end-users, third-party developers, and others) and deals with the challenges of requirements management in software ecosystems."
       },
       {
         "id": "SHF27",
         "name": "Proactivity",
-        "description": "description"
+        "description": "It refers to the initiative of the actor (i.e., keystone, third-party developers, and others) involved in requirements management activities in software ecosystems to anticipate, identify potential problems, look for improvement opportunities, and take preventive measures to avoid or mitigate potential obstacles."
       },
       {
         "id": "SHF28",
         "name": "Resilience",
-        "description": "description"
+        "description": "It refers to the ability of an actor (i.e., keystone, third-party developers, and others) to adapt, recover, and deal effectively with the challenges, changes, and obstacles that arise during requirements management activities in software ecosystems."
       },
       {
         "id": "SHF29",
         "name": "Satisfaction",
-        "description": "description"
+        "description": "It refers to the degree to which the expectations of the multiple actors (i.e., keystone, end-users, third-party developers, and others) involved in requirements management activities in software ecosystems are satisfied and fulfilled."
       }
     ]
   },
@@ -276,37 +276,37 @@
       {
         "id": "BA14",
         "name": "Language difference",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA15",
         "name": "Management of multiple teams and actors",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA16",
         "name": "Organizational Culture and resistence to change",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA17",
         "name": "Requirements negotiation between multiple actors",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA18",
         "name": "Schedule inflexibility",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA19",
         "name": "Socio-cultural distance",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "BA20",
         "name": "Software ecosystem openness",
-        "description":"description"
+        "description": "description"
       }
     ]
   },
@@ -318,189 +318,189 @@
       {
         "id": "ST01",
         "name": "Applying DevOps culture",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST02",
         "name": "Applying product discovery with benchmark",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST03",
         "name": "Applying self-adaptive systems",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST04",
         "name": "Building prototypes",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST05",
         "name": "Capacitating/training the professionals",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST06",
         "name": "Conducting survayes to evaluate actors satisfaction",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST07",
         "name": "Creating discussion forums",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST08",
         "name": "Defining roles and resposibilities",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST09",
         "name": "Defining central communication channels among multiple channels",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST010",
         "name": "Defining central software repositories among multiple repositories",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST011",
         "name": "Documenting meetings information",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST012",
         "name": "Documenting the knowledge and processes",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST013",
         "name": "Encouraging emergent leadership",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST014",
         "name": "Encouraging informal conversations",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST015",
         "name": "Engaging the actors with a specific purpose",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST016",
         "name": "Establishing flexible working hours",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST017",
         "name": "Forming mixed teams in terms of experience level",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST018",
         "name": "Hiring evangelists/partnership managers",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST019",
         "name": "Hiring experienced professionals",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST020",
         "name": "Negotiating with key actors",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST021",
         "name": "Observing neighboring software ecosystems",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST022",
         "name": "Performing community voting",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST023",
         "name": "Promoting meetings of integration",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST024",
         "name": "Reflecting on the SHF in organizational culture",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST025",
         "name": "Using a tool to track the status of projects",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST026",
         "name": "Using Agile methods",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST027",
         "name": "Using gamification",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST028",
         "name": "Working in pairs",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST029",
         "name": "Working on positive psychological capital",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "ST030",
         "name": "Working with Key Performance Indicators (KPI)",
-        "description":"description"
+        "description": "description"
       }
     ]
   },
   {
     "id": "item5",
-    "label":"COPING MECHANISMS",
+    "label": "COPING MECHANISMS",
     "headerColor": "#ffbb00",
     "items": [
       {
         "id": "CM01",
         "name": "Leaving your job",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "CM02",
         "name": "Moving forward",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "CM03",
         "name": "Relocating to another function",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "CM04",
         "name": "Recognizing the professional",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "CM05",
         "name": "Setting/Being the example",
-        "description":"description"
+        "description": "description"
       },
       {
         "id": "CM06",
         "name": "Talking to the keystone",
-        "description":"description"
+        "description": "description"
       }
     ]
   }
