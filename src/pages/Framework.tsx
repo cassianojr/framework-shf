@@ -14,7 +14,7 @@ export default function Framework() {
     <Box sx={{ backgroundColor: '#ebebeb' }}>
       <Navbar />
       <Toolbar />
-      <Container sx={{ minHeight: '100vh' }} component={Paper} elevation={3} style={{paddingTop: '1%'}}>
+      <Container sx={{ minHeight: '100vh' }} component={Paper} elevation={3} style={{paddingTop: '1%'}} maxWidth={false}>
         <FrameworkComponent />
       </Container>
       <Footer />

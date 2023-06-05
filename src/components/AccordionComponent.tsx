@@ -9,12 +9,14 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
 import Modal from './Modal';
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Button, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 
 import GroupIcon from '@mui/icons-material/Group';
+import AddIcon from '@mui/icons-material/Add';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
+import FormModal from './FormModal';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,16 +73,23 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
   const [modalState, setModalState] = React.useState(false);
+  const [modalFormState, setModalFormState] = React.useState(false);
   const [modalContent, setModalContent] = React.useState({
     id: '',
     title: '',
     body: '',
   });
+  const [modalContentForm, setModalContentForm] = React.useState({
+    id: '',
+    title: ''
+  });
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
+      return;
+    }
+    setExpanded(newExpanded ? panel : false);
+  };
 
   const handleButtonClick = (id: string, name: string, description: string) => {
     setModalContent({
@@ -92,7 +101,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setModalState(true);
   }
 
-  const [socialGroupOpen, setSocialGroupOpen] = React.useState(true);
+  const [socialGroupOpen, setSocialGroupOpen] = React.useState(false);
   const handleSocialGroupClick = () => {
     setSocialGroupOpen(!socialGroupOpen);
   };
@@ -102,9 +111,19 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setPersonalGroupOpen(!personalGroupOpen);
   };
 
+  const newSuggestionHandle = (id: string, title: string) => {
+    setModalContentForm({
+      id,
+      title
+    });
+
+    setModalFormState(true);
+  }
+
   return (
     <>
       <Modal open={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setOpen={setModalState} />
+      <FormModal open={modalFormState} handleClose={() => setModalFormState(false)} setOpen={setModalFormState} modalContent={modalContentForm} />
       {data.map((dataItem) => (
         <Accordion
           key={dataItem.id}
@@ -118,19 +137,35 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             sx={{
               backgroundColor: dataItem.headerColor,
               color: '#ffff',
-
-            }} >
-            <Typography>{dataItem.label}</Typography>
+              minHeight: '2.5rem',
+              height: '2.5rem',
+            }}>
+            <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{dataItem.label}</Typography>
+            <Button sx={{
+              marginLeft: 'auto',
+              marginRight: '1rem',
+              fontSize: '.8rem',
+              color: 'white',
+              border: '1px solid white',
+              '&:hover': {
+                color: 'white',
+                border: '1px solid white',
+              }
+            }} variant="outlined" size="small" onClick={() => newSuggestionHandle(dataItem.id, dataItem.label)}>
+              <AddIcon sx={{ fontSize: '1rem' }} />
+              Suggest new
+            </Button>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: '0' }}>
             {dataItem.id === 'item2' ? (
               <>
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
-                  <ListItemButton onClick={handleSocialGroupClick} divider={true}>
+                <List sx={{ width: '100%', bgcolor: 'background.paper', height: '5.3rem' }} >
+
+                  <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '2rem' }}>
                     <ListItemIcon>
                       <GroupIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Social Group" primaryTypographyProps={{fontWeight:'bold'}}/>
+                    <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
                     {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
@@ -141,7 +176,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
                     <ListItemIcon>
                       <PersonIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Personal Group" primaryTypographyProps={{fontWeight:'bold'}}/>
+                    <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
                     {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>

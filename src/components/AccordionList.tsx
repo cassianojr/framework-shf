@@ -30,7 +30,7 @@ function renderRow(props: ListChildComponentProps) {
       divider={true}
     >
       <ListItemText primary={
-        <Typography>
+        <Typography sx={{fontSize: '.9rem'}}>
           <span style={{fontWeight:'bold'}}>{item.id}: </span>
           {item.name}
         </Typography>} />
@@ -39,7 +39,7 @@ function renderRow(props: ListChildComponentProps) {
 }
 
 export default function AccordionList(props: ListData) {
-  const height = window.innerHeight > 768 ? 150 : 100;
+  const height =  80;
 
   return (
     <Box
@@ -47,7 +47,7 @@ export default function AccordionList(props: ListData) {
       <List
         height={height}
         width='100%'
-        itemSize={50}
+        itemSize={40}
         itemData={props}
         itemCount={props.items.length}
         overscanCount={5}>
