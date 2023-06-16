@@ -9,13 +9,10 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
 import Modal from './Modal';
-import { Button, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Button} from '@mui/material';
 
 
-import GroupIcon from '@mui/icons-material/Group';
 import AddIcon from '@mui/icons-material/Add';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import PersonIcon from '@mui/icons-material/Person';
 import FormModal from './FormModal';
 
 const Accordion = styled((props: AccordionProps) => (
@@ -68,7 +65,7 @@ interface AccordionComponentProps {
 
 }
 
-export default function AccordionComponent(props: AccordionComponentProps) {
+export default function FixedAccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
@@ -88,6 +85,8 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
+    
+    
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -101,23 +100,12 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setModalState(true);
   }
 
-  const [socialGroupOpen, setSocialGroupOpen] = React.useState(false);
-  const handleSocialGroupClick = () => {
-    setSocialGroupOpen(!socialGroupOpen);
-  };
-
-  const [personalGroupOpen, setPersonalGroupOpen] = React.useState(false);
-  const handlePersonalGroupClick = () => {
-    setPersonalGroupOpen(!personalGroupOpen);
-  };
 
   const newSuggestionHandle = (id: string, title: string) => {
-    
     setModalContentForm({
       id,
-      title:  Singularizer.singularizeSentence(title)
+      title: Singularizer.singularizeSentence(title)
     });
-
     setModalFormState(true);
   }
 
@@ -128,7 +116,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       {data.map((dataItem) => (
         <Accordion
           key={dataItem.id}
-          expanded={expanded === dataItem.id}
+          expanded={true}
           onChange={handleChange(dataItem.id)}
           id={dataItem.id}
         >
@@ -158,36 +146,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             </Button>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: '0' }}>
-            {dataItem.id === 'item2' ? (
-              <>
-                <List sx={{ width: '100%', bgcolor: 'background.paper', height: '5.3rem' }} >
-
-                  <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '2rem' }}>
-                    <ListItemIcon>
-                      <GroupIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
-                    {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-                    <AccordionList items={dataItem.items.slice(0, 17)} handleButtonClick={handleButtonClick} />
-                  </Collapse>
-
-                  <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
-                    <ListItemIcon>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
-                    {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
-                    <AccordionList items={dataItem.items.slice(17)} handleButtonClick={handleButtonClick} />
-                  </Collapse>
-                </List>
-
-              </>) : <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />}
-
-
+            <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
           </AccordionDetails>
         </Accordion>
       ))}

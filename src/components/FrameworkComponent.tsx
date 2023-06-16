@@ -3,6 +3,7 @@ import { ArcherContainer, ArcherElement } from 'react-archer';
 
 import data from '../../src/assets/framework-data.json';
 import AccordionComponent from '../components/AccordionComponent';
+import FixedAccordionComponent from './FixedAccordionComponent';
 
 function FrameworkComponent() {
 
@@ -46,7 +47,7 @@ function FrameworkComponent() {
                 }]}
               >
                 <div>
-                  <AccordionComponent data={contextualCharacteristics} />
+                  <FixedAccordionComponent data={contextualCharacteristics} />
                 </div>
               </ArcherElement>
             </Box>
