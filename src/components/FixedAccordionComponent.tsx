@@ -14,6 +14,7 @@ import { Button} from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import FormModal from './FormModal';
+import ListModal from './ListModal';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,6 +72,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
   const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
   const [modalState, setModalState] = React.useState(false);
   const [modalFormState, setModalFormState] = React.useState(false);
+  const [listModalState, setListModalState] = React.useState(false);
   const [modalContent, setModalContent] = React.useState({
     id: '',
     title: '',
@@ -80,14 +82,27 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
     id: '',
     title: ''
   });
+  const [listModalContent, setListModalContent] = React.useState({
+    id: '',
+    title: '',
+    items: [{
+      id: '',
+      name: '',
+      description: ''
+    }]
+  });
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
-    
-    
-    setExpanded(newExpanded ? panel : false);
+    setListModalContent({
+      id: data.filter((item) => item.id === panel)[0].id,
+      title: data.filter((item) => item.id === panel)[0].label,
+      items: data.filter((item) => item.id === panel)[0].items
+    });
+    setListModalState(true);
+    // setExpanded(newExpanded ? panel : false);
   };
 
   const handleButtonClick = (id: string, name: string, description: string) => {
@@ -112,6 +127,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
   return (
     <>
       <Modal open={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setOpen={setModalState} />
+      <ListModal open={listModalState} handleClose={()=>setListModalState(false)} setOpen={setListModalState} modalContent={listModalContent}/>
       <FormModal open={modalFormState} handleClose={() => setModalFormState(false)} setOpen={setModalFormState} modalContent={modalContentForm} />
       {data.map((dataItem) => (
         <Accordion
