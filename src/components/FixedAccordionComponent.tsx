@@ -61,7 +61,7 @@ interface AccordionComponentProps {
       name: string,
       description: string
     }[]
-  }[]
+  }
 
 }
 
@@ -93,14 +93,14 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
     }]
   });
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent) => {
+  const handleChange = () => (event: React.SyntheticEvent) => {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
     setListModalContent({
-      id: data.filter((item) => item.id === panel)[0].id,
-      title: data.filter((item) => item.id === panel)[0].label,
-      items: data.filter((item) => item.id === panel)[0].items
+      id: data.id,
+      title: data.label,
+      items: data.items
     });
     setListModalState(true);
     // setExpanded(newExpanded ? panel : false);
@@ -131,23 +131,23 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
       <TextModal modalState={itemDescriptionModalState} setModalState={setItemDescriptionModalState} handleClose={()=>setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent}/>
       <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick}/>
       <FormModal formModalState={modalFormState} handleClose={()=>setModalFormState(false)} setFormModalState={setModalFormState} modalContentForm={modalContentForm} />
-      {data.map((dataItem) => (
+     
         <Accordion
-          key={dataItem.id}
+          key={data.id}
           expanded={true}
-          onChange={handleChange(dataItem.id)}
-          id={dataItem.id}
+          onChange={handleChange()}
+          id={data.id}
         >
           <AccordionSummary
-            aria-controls={`${dataItem.id}-content`}
-            id={`${dataItem.id}-header`}
+            aria-controls={`${data.id}-content`}
+            id={`${data.id}-header`}
             sx={{
-              backgroundColor: dataItem.headerColor,
+              backgroundColor: data.headerColor,
               color: '#ffff',
-              minHeight: '2.5rem',
-              height: '2.5rem',
+              minHeight: '2rem',
+              height: '2rem',
             }}>
-            <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{dataItem.label}</Typography>
+            <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{data.label}</Typography>
             <Button sx={{
               marginLeft: 'auto',
               marginRight: '1rem',
@@ -158,17 +158,15 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
                 color: 'white',
                 border: '1px solid white',
               }
-            }} variant="outlined" size="small" onClick={() => newSuggestionHandle(dataItem.id, dataItem.label)}>
+            }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
               <AddIcon sx={{ fontSize: '1rem' }} />
               Suggest new
             </Button>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: '0' }}>
-            <VirtualizedList items={dataItem.items} handleListItemClick={handleListItemClick} height={160}/>
+            <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={120}/>
           </AccordionDetails>
         </Accordion>
-      ))}
-
     </>
   );
 }

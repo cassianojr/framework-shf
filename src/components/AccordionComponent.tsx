@@ -9,14 +9,11 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import VirtualizedList from './VirtualizedList';
 import TextModal from './TextModal';
-import { Button, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Button } from '@mui/material';
 import Singularizer from '../util/Singularizer';
 
-
-import GroupIcon from '@mui/icons-material/Group';
 import AddIcon from '@mui/icons-material/Add';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import PersonIcon from '@mui/icons-material/Person';
+
 import FormModal from './FormModal';
 
 const Accordion = styled((props: AccordionProps) => (
@@ -65,27 +62,30 @@ interface AccordionComponentProps {
       name: string,
       description: string
     }[]
-  }[]
+  },
+  children?: JSX.Element
 
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
 
-  const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
-  const [modalState, setModalState] = React.useState(false);
-  const [modalFormState, setModalFormState] = React.useState(false);
-  const [modalContent, setModalContent] = React.useState({
+  const [expanded, setExpanded] = React.useState<string | false>(data.id);
+  
+  const [itemDescriptionModalState, setItemDescriptionModalState] = React.useState(false);
+  const [itemDescriptionModalContent, setItemDescriptionModalContent] = React.useState({
     id: '',
     title: '',
     body: '',
   });
-  const [modalContentForm, setModalContentForm] = React.useState({
+  
+  const [formModalState, setFormModalState] = React.useState(false);
+  const [formModalContent, setFormModalContent] = React.useState({
     id: '',
     title: ''
   });
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
@@ -93,105 +93,67 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   };
 
   const handleButtonClick = (id: string, name: string, description: string) => {
-    setModalContent({
+    setItemDescriptionModalContent({
       id: id,
       title: name,
       body: description,
     });
 
-    setModalState(true);
+    setItemDescriptionModalState(true);
   }
-
-  const [socialGroupOpen, setSocialGroupOpen] = React.useState(false);
-  const handleSocialGroupClick = () => {
-    setSocialGroupOpen(!socialGroupOpen);
-  };
-
-  const [personalGroupOpen, setPersonalGroupOpen] = React.useState(false);
-  const handlePersonalGroupClick = () => {
-    setPersonalGroupOpen(!personalGroupOpen);
-  };
 
   const newSuggestionHandle = (id: string, title: string) => {
-    
-    setModalContentForm({
+
+    setFormModalContent({
       id,
-      title:  Singularizer.singularizeSentence(title)
+      title: Singularizer.singularizeSentence(title)
     });
 
-    setModalFormState(true);
+    setFormModalState(true);
   }
+
+  const childWithHandleItemClick = (props.children) ? React.cloneElement(props.children, { handleListItemClick: handleButtonClick }) : null;
 
   return (
     <>
-      <TextModal modalState={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setModalState={setModalState} />
-      <FormModal formModalState={modalFormState} handleClose={() => setModalFormState(false)} setFormModalState={setModalFormState} modalContentForm={modalContentForm} />
-      {data.map((dataItem) => (
-        <Accordion
-          key={dataItem.id}
-          expanded={expanded === dataItem.id}
-          onChange={handleChange(dataItem.id)}
-          id={dataItem.id}
-        >
-          <AccordionSummary
-            aria-controls={`${dataItem.id}-content`}
-            id={`${dataItem.id}-header`}
-            sx={{
-              backgroundColor: dataItem.headerColor,
-              color: '#ffff',
-              minHeight: '2.5rem',
-              height: '2.5rem',
-            }}>
-            <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{dataItem.label}</Typography>
-            <Button sx={{
-              marginLeft: 'auto',
-              marginRight: '1rem',
-              fontSize: '.8rem',
+      <TextModal modalState={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
+      <FormModal formModalState={formModalState} handleClose={() => setFormModalState(false)} setFormModalState={setFormModalState} modalContentForm={formModalContent} />
+      <Accordion
+        key={data.id}
+        expanded={expanded === data.id}
+        onChange={handleAccordionChange(data.id)}
+        id={data.id}
+      >
+        <AccordionSummary
+          aria-controls={`${data.id}-content`}
+          id={`${data.id}-header`}
+          sx={{
+            backgroundColor: data.headerColor,
+            color: '#ffff',
+            minHeight: '2rem',
+            height: '2rem',
+          }}>
+          <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{data.label}</Typography>
+          <Button sx={{
+            marginLeft: 'auto',
+            marginRight: '1rem',
+            fontSize: '.8rem',
+            color: 'white',
+            border: '1px solid white',
+            '&:hover': {
               color: 'white',
               border: '1px solid white',
-              '&:hover': {
-                color: 'white',
-                border: '1px solid white',
-              }
-            }} variant="outlined" size="small" onClick={() => newSuggestionHandle(dataItem.id, dataItem.label)}>
-              <AddIcon sx={{ fontSize: '1rem' }} />
-              Suggest new
-            </Button>
-          </AccordionSummary>
-          <AccordionDetails sx={{ padding: '0' }}>
-            {dataItem.id === 'item2' ? (
-              <>
-                <List sx={{ width: '100%', bgcolor: 'background.paper', height: '5.3rem' }} >
+            }
+          }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
+            <AddIcon sx={{ fontSize: '1rem' }} />
+            Suggest new
+          </Button>
+        </AccordionSummary>
+        <AccordionDetails sx={{ padding: '0' }}>
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleButtonClick} height={120} />}
 
-                  <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '2rem' }}>
-                    <ListItemIcon>
-                      <GroupIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
-                    {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-                    <VirtualizedList items={dataItem.items.slice(0, 17)} handleListItemClick={handleButtonClick} />
-                  </Collapse>
-
-                  <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
-                    <ListItemIcon>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
-                    {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
-                    <VirtualizedList items={dataItem.items.slice(17)} handleListItemClick={handleButtonClick} />
-                  </Collapse>
-                </List>
-
-              </>) : <VirtualizedList items={dataItem.items} handleListItemClick={handleButtonClick} />}
-
-
-          </AccordionDetails>
-        </Accordion>
-      ))}
+        </AccordionDetails>
+      </Accordion>
 
     </>
   );
