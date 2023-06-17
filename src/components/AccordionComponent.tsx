@@ -12,9 +12,11 @@ import TextModal from './TextModal';
 import { Button } from '@mui/material';
 import Singularizer from '../util/Singularizer';
 
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import AddIcon from '@mui/icons-material/Add';
 
 import FormModal from './FormModal';
+import ListModal from './ListModal';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,28 +73,41 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
-  
+
   const [itemDescriptionModalState, setItemDescriptionModalState] = React.useState(false);
   const [itemDescriptionModalContent, setItemDescriptionModalContent] = React.useState({
     id: '',
     title: '',
     body: '',
   });
-  
+
   const [formModalState, setFormModalState] = React.useState(false);
   const [formModalContent, setFormModalContent] = React.useState({
     id: '',
     title: ''
   });
 
+  const [listModalState, setListModalState] = React.useState(false);
+
+  const [listModalContent, setListModalContent] = React.useState({
+    id: '',
+    title: '',
+    items: [{
+      id: '',
+      name: '',
+      description: ''
+    }]
+  });
+
   const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
+
     setExpanded(newExpanded ? panel : false);
   };
 
-  const handleButtonClick = (id: string, name: string, description: string) => {
+  const handleListItemClick = (id: string, name: string, description: string) => {
     setItemDescriptionModalContent({
       id: id,
       title: name,
@@ -112,12 +127,24 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setFormModalState(true);
   }
 
-  const childWithHandleItemClick = (props.children) ? React.cloneElement(props.children, { handleListItemClick: handleButtonClick }) : null;
+  const handleViewAll = () =>{
+    setListModalContent({
+      id: data.id,
+      title: data.label,
+      items: data.items
+    });
+    setListModalState(true);
+
+  }
+
+  const childWithHandleItemClick = (props.children) ? React.cloneElement(props.children, { handleListItemClick }) : null;
 
   return (
     <>
       <TextModal modalState={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
       <FormModal formModalState={formModalState} handleClose={() => setFormModalState(false)} setFormModalState={setFormModalState} modalContentForm={formModalContent} />
+      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick}/>
+      
       <Accordion
         key={data.id}
         expanded={expanded === data.id}
@@ -140,6 +167,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             fontSize: '.8rem',
             color: 'white',
             border: '1px solid white',
+            height: '1.5rem',
             '&:hover': {
               color: 'white',
               border: '1px solid white',
@@ -150,11 +178,34 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           </Button>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleButtonClick} height={120} />}
-
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={120} />}
         </AccordionDetails>
       </Accordion>
-
+      <AccordionSummary
+        sx={{
+          backgroundColor: data.headerColor,
+          color: '#ffff',
+          minHeight: '2rem',
+          height: '2rem',
+        }}
+        expandIcon={<></>}
+      >
+        <Button sx={{
+          marginLeft: 'auto',
+          marginRight: '1rem',
+          fontSize: '.8rem',
+          color: 'white',
+          height: '1.5rem',
+          border: '1px solid white',
+          '&:hover': {
+            color: 'white',
+            border: '1px solid white',
+          }
+        }} variant="outlined" size="small" onClick={handleViewAll}>
+          <FullscreenIcon sx={{ fontSize: '1rem' }} />
+          View All
+        </Button>
+      </AccordionSummary>
     </>
   );
 }

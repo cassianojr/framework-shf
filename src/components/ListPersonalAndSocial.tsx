@@ -35,7 +35,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   const handleListClick = handleListItemClick ?? ((id: string, name: string, description: string) => { });
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper', height: '5.3rem' }} >
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
 
       <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '2rem' }}>
         <ListItemIcon>
@@ -45,7 +45,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={39} />
+        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={40} />
       </Collapse>
 
       <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
