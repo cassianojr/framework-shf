@@ -1,22 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, ListItem, Slide } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+import {IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-}
-
-);
+import Modal from './Modal';
+import { InfoRounded } from '@mui/icons-material';
 
 interface ModalProps {
-  open: boolean,
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  modalState: boolean,
+  setModalstate: React.Dispatch<React.SetStateAction<boolean>>
   handleClose: () => void,
   modalContent: {
     id: string,
@@ -26,41 +15,41 @@ interface ModalProps {
       name: string,
       description: string
     }[]
-  }
+  },
+  handleItemClick: (id: string, name: string, description: string) => void
 }
-
+// handleButtonClick(item.id, item.name, item.description)
 export default function ListModal(props: ModalProps) {
-  const { open, handleClose, modalContent } = props;
+  const { modalState, modalContent, setModalstate, handleItemClick } = props;
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      TransitionComponent={Transition}
-      maxWidth='sm'
-      keepMounted
-      fullWidth
-    >
-      <DialogTitle id={`alert-dialog-title-${modalContent.id}`}>
-        {modalContent.title}
-      </DialogTitle>
-      <Divider />
-      <DialogContent>
+    <Modal
+      open={modalState}
+      handleClose={() => setModalstate(false)}
+      modalContent={modalContent}
+      setOpen={setModalstate}
+      >
+      <List dense>
         {modalContent.items.map((item) => (
-          
-          <ListItem key={item.id}>
-            {item.name}
+          <ListItem
+            secondaryAction={
+              <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.id, item.name, item.description)}>
+                <InfoRounded />
+              </IconButton>
+            }
+            id={item.id}
+            key={item.id}
+            divider={true}
+          >
+            <ListItemText primary={
+              <Typography sx={{ fontSize: '.9rem' }}>
+                <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
+                {item.name}
+              </Typography>} />
           </ListItem>
         ))}
-
-      </DialogContent>
-      <Divider />
-      <DialogActions >
-        <Button onClick={handleClose}>Cancel</Button>
-      </DialogActions>
-    </Dialog>
+      </List>
+    </Modal>
   );
 
 

@@ -8,13 +8,12 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
-import Modal from './Modal';
-import { Button} from '@mui/material';
-
-
 import AddIcon from '@mui/icons-material/Add';
 import FormModal from './FormModal';
+import Singularizer from '../util/Singularizer';
 import ListModal from './ListModal';
+import TextModal from './TextModal';
+import { Button } from '@mui/material';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -69,11 +68,13 @@ interface AccordionComponentProps {
 export default function FixedAccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
 
-  const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
-  const [modalState, setModalState] = React.useState(false);
+  // const [expanded, setExpanded] = React.useState<string | false>(data[0].id);
+  const [itemDescriptionModalState, setItemDescriptionModalState] = React.useState(false);
+
   const [modalFormState, setModalFormState] = React.useState(false);
   const [listModalState, setListModalState] = React.useState(false);
-  const [modalContent, setModalContent] = React.useState({
+
+  const [itemDescriptionModalContent, setItemDescriptionModalContent] = React.useState({
     id: '',
     title: '',
     body: '',
@@ -92,7 +93,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
     }]
   });
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  const handleChange = (panel: string) => (event: React.SyntheticEvent) => {
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
@@ -106,13 +107,14 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
   };
 
   const handleButtonClick = (id: string, name: string, description: string) => {
-    setModalContent({
+    setItemDescriptionModalContent({
       id: id,
       title: name,
       body: description,
     });
 
-    setModalState(true);
+    setListModalState(false);
+    setItemDescriptionModalState(true);
   }
 
 
@@ -126,9 +128,9 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
 
   return (
     <>
-      <Modal open={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setOpen={setModalState} />
-      <ListModal open={listModalState} handleClose={()=>setListModalState(false)} setOpen={setListModalState} modalContent={listModalContent}/>
-      <FormModal open={modalFormState} handleClose={() => setModalFormState(false)} setOpen={setModalFormState} modalContent={modalContentForm} />
+      <TextModal modalState={itemDescriptionModalState} setModalState={setItemDescriptionModalState} handleClose={()=>setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent}/>
+      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleButtonClick}/>
+      <FormModal formModalState={modalFormState} handleClose={()=>setModalFormState(false)} setFormModalState={setModalFormState} modalContentForm={modalContentForm} />
       {data.map((dataItem) => (
         <Accordion
           key={dataItem.id}

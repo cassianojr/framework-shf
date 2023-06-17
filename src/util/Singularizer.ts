@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class Singularizer {
+export default class Singularizer {
   private static endings: { [key: string]: string } = {
     ves: 'fe',
     ies: 'y',

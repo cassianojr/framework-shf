@@ -8,8 +8,9 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AccordionList from './AccordionList';
-import Modal from './Modal';
+import TextModal from './TextModal';
 import { Button, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import Singularizer from '../util/Singularizer';
 
 
 import GroupIcon from '@mui/icons-material/Group';
@@ -123,8 +124,8 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   return (
     <>
-      <Modal open={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setOpen={setModalState} />
-      <FormModal open={modalFormState} handleClose={() => setModalFormState(false)} setOpen={setModalFormState} modalContent={modalContentForm} />
+      <TextModal modalState={modalState} handleClose={() => setModalState(false)} modalContent={modalContent} setModalState={setModalState} />
+      <FormModal formModalState={modalFormState} handleClose={() => setModalFormState(false)} setFormModalState={setModalFormState} modalContentForm={modalContentForm} />
       {data.map((dataItem) => (
         <Accordion
           key={dataItem.id}

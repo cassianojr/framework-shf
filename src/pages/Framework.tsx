@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import { Paper, Toolbar } from "@mui/material";
 import { Container } from "@mui/system";
 import Footer from "../components/Footer";
-import Box from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
 import FrameworkComponent from "../components/FrameworkComponent";
 
