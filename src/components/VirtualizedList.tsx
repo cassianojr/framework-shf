@@ -8,7 +8,8 @@ interface ListData {
     name: string,
     description: string
   }[],
-  handleButtonClick: (id: string, name: string, description: string) => void
+  handleListItemClick: (id: string, name: string, description: string) => void,
+  height?: number
 }
 
 
@@ -16,11 +17,11 @@ function renderRow(props: ListChildComponentProps) {
   const { index, style, data } = props;
 
   const item = data.items[index];
-  const handleButtonClick = data.handleButtonClick;
+  const handleListItemClick = data.handleListItemClick;
   return (
     <ListItem
       secondaryAction={
-        <IconButton edge="end" aria-label="details" onClick={() => handleButtonClick(item.id, item.name, item.description)}>
+        <IconButton edge="end" aria-label="details" onClick={() => handleListItemClick(item.id, item.name, item.description)}>
           <InfoRounded />
         </IconButton>
       }
@@ -38,8 +39,8 @@ function renderRow(props: ListChildComponentProps) {
   );
 }
 
-export default function AccordionList(props: ListData) {
-  const height =  80;
+export default function VirtualizedList(props: ListData) {
+  const height = props.height??80;
 
   return (
     <Box

@@ -7,7 +7,7 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import AccordionList from './AccordionList';
+import VirtualizedList from './VirtualizedList';
 import TextModal from './TextModal';
 import { Button, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Singularizer from '../util/Singularizer';
@@ -171,7 +171,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
                     {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-                    <AccordionList items={dataItem.items.slice(0, 17)} handleButtonClick={handleButtonClick} />
+                    <VirtualizedList items={dataItem.items.slice(0, 17)} handleListItemClick={handleButtonClick} />
                   </Collapse>
 
                   <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
@@ -182,11 +182,11 @@ export default function AccordionComponent(props: AccordionComponentProps) {
                     {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
-                    <AccordionList items={dataItem.items.slice(17)} handleButtonClick={handleButtonClick} />
+                    <VirtualizedList items={dataItem.items.slice(17)} handleListItemClick={handleButtonClick} />
                   </Collapse>
                 </List>
 
-              </>) : <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />}
+              </>) : <VirtualizedList items={dataItem.items} handleListItemClick={handleButtonClick} />}
 
 
           </AccordionDetails>

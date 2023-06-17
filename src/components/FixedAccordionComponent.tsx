@@ -7,7 +7,7 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import AccordionList from './AccordionList';
+import VirtualizedList from './VirtualizedList';
 import AddIcon from '@mui/icons-material/Add';
 import FormModal from './FormModal';
 import Singularizer from '../util/Singularizer';
@@ -106,7 +106,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
     // setExpanded(newExpanded ? panel : false);
   };
 
-  const handleButtonClick = (id: string, name: string, description: string) => {
+  const handleListItemClick = (id: string, name: string, description: string) => {
     setItemDescriptionModalContent({
       id: id,
       title: name,
@@ -129,7 +129,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
   return (
     <>
       <TextModal modalState={itemDescriptionModalState} setModalState={setItemDescriptionModalState} handleClose={()=>setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent}/>
-      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleButtonClick}/>
+      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick}/>
       <FormModal formModalState={modalFormState} handleClose={()=>setModalFormState(false)} setFormModalState={setModalFormState} modalContentForm={modalContentForm} />
       {data.map((dataItem) => (
         <Accordion
@@ -164,7 +164,7 @@ export default function FixedAccordionComponent(props: AccordionComponentProps) 
             </Button>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: '0' }}>
-            <AccordionList items={dataItem.items} handleButtonClick={handleButtonClick} />
+            <VirtualizedList items={dataItem.items} handleListItemClick={handleListItemClick} height={160}/>
           </AccordionDetails>
         </Accordion>
       ))}
