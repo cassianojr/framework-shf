@@ -114,6 +114,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       body: description,
     });
 
+    setListModalState(false);
     setItemDescriptionModalState(true);
   }
 
