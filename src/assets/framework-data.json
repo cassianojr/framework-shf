@@ -5,47 +5,47 @@
     "headerColor": "#40546c",
     "items": [
       {
-        "id": "CG01",
+        "id": "CC01",
         "name": "Collaborative requirements negotiation",
         "description": "Keystone usually orchestrates the requirements negotiation in software ecosystems and counts on the participation of external, interdependent multiple actors (i.e., end-users, third-party developers, and others). "
       },
       {
-        "id": "CG02",
+        "id": "CC02",
         "name": "Collaborative requirements prioritization",
         "description": "Keystone usually orchestrates the requirements prioritization in software ecosystems and counts on the participation of external, interdependent multiple actors (i.e., end-users, third-party developers, and others). "
       },
       {
-        "id": "CG03",
+        "id": "CC03",
         "name": "Crosscutting concern",
         "description": "The crosscutting concern occurs because requirements professionals frequently struggle to understand whether the requests of different actors could be addressed generally (closer to the platform) or only specifically (by a peripheral actor)."
       },
       {
-        "id": "CG04",
+        "id": "CC04",
         "name": "Existence of emergent requirements",
         "description": "Emergent requirements originated from multi-party actors (i.e., end-users, third-party developers, and others) who are not responsible for the requirements but contribute to discussing them beyond organizational boundaries affect requirements management in software ecosystems."
       },
       {
-        "id": "CG05",
+        "id": "CC05",
         "name": "Group of multi-party actors",
         "description": "Groups of multi-party actors (i.e., keystone, end-users, third-party developers, and others) external to the keystone that requests different products influence requirements management in software ecosystems."
       },
       {
-        "id": "CG06",
+        "id": "CC06",
         "name": "Informal and decentralized requirements management",
         "description": "Requirements management in software ecosystems is informal, has overlapping practices, and uses informalisms."
       },
       {
-        "id": "CG07",
+        "id": "CC07",
         "name": "Inter-project dependencies",
         "description": "The existence of multiple interdependent projects that co-evolve in the same environmental influences requirements management in software ecosystems."
       },
       {
-        "id": "CG08",
+        "id": "CC08",
         "name": "Storage of requirements in several artifacts and repositories",
         "description": "Requirements are not laid out in a central repository, and requirements discussions and implementations are spread across a series of requirements artifacts, each with its own repository."
       },
       {
-        "id": "CG09",
+        "id": "CC09",
         "name": "Use of open communication channels",
         "description": "Multiple actors  (i.e., keystone, end-users, third-party developers, and others) use multiple open communication channels for requirements communication in software ecosystems. The requirements communication is structured in a network and needs to be performed inside and outside software ecosystems."
       }
@@ -211,259 +211,244 @@
       {
         "id": "BA01",
         "name": "Decentralization, omission, and confidentiality of information",
-        "description": "description"
+        "description": "The distribution of information in different communication channels and the lack of disclosure of strategic information to external actors (i.e., end-users, third-party developers, and others) are barriers that prevent the implementation of improvements in social and human factors during requirements management activities in software ecosystems. In addition, the protection of strategic keystone points also contributes to this barrier."
       },
       {
         "id": "BA02",
         "name": "Dependency between multiple teams",
-        "description": "description"
+        "description": "Lack of effective communication and difficulties in team interactions hinder the progress and efficiency of requirements management in software ecosystems. This dependency between teams can result in delays, misunderstandings, and coordination problems, making the implementation of improvements related to social and human factors during requirements management activities challenging within such environments."
       },
       {
         "id": "BA03",
         "name": "Different leardership styles",
-        "description": "description"
+        "description": "The lack of consensus on the role of leadership can create obstacles in implementing improvements in social and human factors during requirements management activities in software ecosystems. This is because different priorities among leaders can negatively affect the alignment of goals among teams, making it difficult to make these improvements."
       },
       {
         "id": "BA04",
         "name": "Dynamism in the entrance and exit of actors in the software ecosystem",
-        "description": "description"
+        "description": "The lack of control over the flow of actors in software ecosystems poses challenges in improving social and human factors during requirements management activities. The exit of experienced professionals results in knowledge loss, while the entrance of new professionals introduces uncertainty and requires time for integration. "
       },
       {
         "id": "BA05",
         "name": "Hierarchical dependency between keystone and other actors",
-        "description": "description"
+        "description": "Hierarchical dependency can negatively impact improvement actions on social and human factors during requirements management in software ecosystems. It limits practitioners' ability to make decisions and implement improvements, affecting the progress and efficiency of requirements management activities."
       },
       {
         "id": "BA06",
         "name": "Lack of experience with software ecosystems",
-        "description": "description"
+        "description": "The scarcity of professionals capable of fully comprehending the software ecosystem and its interactions with social and human factors poses a challenge to improving these factors during requirements management activities. Developing an ecosystem view requires cognitive resources and a holistic perspective, requiring time and investment."
       },
       {
         "id": "BA07",
-        "name": "Lack of face-to-face contact between actors and direct communication",
-        "description": "description"
+        "name": "Lack of face-to-face contact and direct communication between actors",
+        "description": "The remote nature of the work and the reliance on virtual meetings make it difficult to establish personal connections and exchange information in real time, hindering the improvement of social and human factors during requirements management activities in software ecosystems."
       },
       {
         "id": "BA08",
         "name": "Lack of mutual understanding between actors about the requirements",
-        "description": "description"
+        "description": "Differences in experience, culture, and knowledge among actors (i.e., end-users, third-party developers, and others) in software ecosystems can hinder communication and understanding of requirements, posing a challenge to improving social and human factors during requirements management activities."
       },
       {
         "id": "BA09",
         "name": "Lack of disseminating and documenting knowledge",
-        "description": "description"
+        "description": "The knowledge retention by experienced professionals and the reluctance to share this knowledge with new employees restricts learning and growth in the software ecosystem. The resistance to documenting experiences and knowledge hampers the creation of a shared repository accessible to all, thus hindering improvements in social and human factors during requirements management activities."
       },
       {
         "id": "BA10",
-        "name": "Lack of templates of requirements documentation",
-        "description": "description"
+        "name": "Lack of incentive and interest to deal with SHF",
+        "description": "When actors, especially the keystone (i.e., third-party developers and others), do not recognize the importance of or provide the support needed to address social and human factors, practitioners may feel unmotivated or discouraged to invest time and effort to improve factors during requirements management activities in software ecosystems."
       },
       {
         "id": "BA11",
-        "name": "Lack of incentive and interest to deal with SHF",
-        "description": "description"
+        "name": "Lack of visibility/awereness of the SHF",
+        "description": "When actors (i.e., Keystone, third-party developers, and others) do not openly share the social and human factors influencing requirements management in software ecosystems, it becomes difficult to identify patterns, find common solutions, and implement actions to improve factors."
       },
       {
         "id": "BA12",
-        "name": "Lack of visibility/awereness of the SHF",
-        "description": "description"
+        "name": "Lack of specifics methods to deal with SHF",
+        "description": "Current methods cannot adequately handle the complexity and dynamics of software ecosystems, where the interaction between actors is intense, and demands constantly change, making it difficult to implement improvements in social and human factors during requirements management activities. "
       },
       {
         "id": "BA13",
-        "name": "Lack of spedfles methods to deal with SHF",
-        "description": "description"
+        "name": "Language differences",
+        "description": "Language barriers hinder effective communication and mutual understanding of requirements among actors (i.e., Keystone, third-party developers, and others) in software ecosystems. This makes implementing social and human factors improvements during requirements management activities challenging. "
       },
       {
         "id": "BA14",
-        "name": "Language difference",
-        "description": "description"
+        "name": "Management of multiple teams and actors",
+        "description": "The presence of multiple actors with different profiles and objectives makes collaboration and harmonization among teams difficult. Coordination and alignment of activities, communication, and goals can be challenging, especially when teams are geographically distant. This can create obstacles to improvements in social and human factors during requirements management in software ecosystems."
       },
       {
         "id": "BA15",
-        "name": "Management of multiple teams and actors",
-        "description": "description"
+        "name": "Organizational Culture and resistance to change",
+        "description": "The lack of appreciation and prioritization of social and human factors in requirements management in software ecosystems can hinder the implementation of improvements. Resistance to change can prevent adopting new ideas, processes, or technologies to improve requirements management and collaboration among actors (i.e., keystone, third-party developers, and others)."
       },
       {
         "id": "BA16",
-        "name": "Organizational Culture and resistence to change",
-        "description": "description"
+        "name": "Schedule inflexibility",
+        "description": "Lack of flexibility in work schedules and difficulty in finding convenient times for the team can hinder improvements in social and human factors in requirements management in software ecosystems. This can lead to delays, improper interpretation of requirements, and errors during software development."
       },
       {
         "id": "BA17",
-        "name": "Requirements negotiation between multiple actors",
-        "description": "description"
+        "name": "Socio-cultural distance",
+        "description": "Cultural diversity among the actors (i.e., Keystone, third-party developers, and others) involved in requirements management in software ecosystems can hinder communication and understanding of requirements, impacting the implementation of social and human factors improvements."
       },
       {
         "id": "BA18",
-        "name": "Schedule inflexibility",
-        "description": "description"
-      },
-      {
-        "id": "BA19",
-        "name": "Socio-cultural distance",
-        "description": "description"
-      },
-      {
-        "id": "BA20",
         "name": "Software ecosystem openness",
-        "description": "description"
+        "description": "Software ecosystem openness can make it challenging to coordinate, collaborate and manage the interactions between the actors (i.e., keystone, third-party developers, and others) involved in requirements management in software ecosystems. This can make it difficult to form stable teams and retain talented and experienced contributors, which can impact improving social and human factors during requirements management activities."
       }
     ]
   },
   {
     "id": "item4",
-    "label": "STRATEGIES",
+    "label": "IMPROVEMENT STRATEGIES",
     "headerColor": "#6ea144",
     "items": [
       {
         "id": "ST01",
-        "name": "Applying DevOps culture",
-        "description": "description"
+        "name": "Applying agile software development",
+        "description": "Agile methods emphasize frequent communication, and iterative development, which create an environment that promotes trust-building and information exchange among team members. Adopting this strategy can overcome barriers and improve social and human factors by fostering a more inclusive, participative, and efficient work culture during requirements management activities in software ecosystems."
       },
       {
         "id": "ST02",
-        "name": "Applying product discovery with benchmark",
-        "description": "description"
+        "name": "Applying DevOps culture",
+        "description":"The DevOps culture and version control helps improve the interaction between actors during requirements management activities. Adopting a DevOps culture can standardize requirements management and development processes, ensuring efficiency and quality."
       },
       {
         "id": "ST03",
-        "name": "Applying self-adaptive systems",
-        "description": "description"
+        "name": "Applying gamification",
+        "description": "Gamification entails creating online murals to gather feedback from various actors, including customers, developers, and requirements analysts. This approach enables the planning of strategies to overcome barriers and improvements in social and human factors during requirements management activities in software ecosystems."
       },
       {
         "id": "ST04",
         "name": "Building prototypes",
-        "description": "description"
+        "description": "The building of prototypes assists in identifying and resolving problems, resulting in greater efficiency and reduced errors or ambiguities during requirements management in software ecosystems. By using prototypes, it is possible to overcome barriers and promote a more harmonious collaboration between actors, ensuring the success of improvements in social and human factors."
       },
       {
         "id": "ST05",
         "name": "Capacitating/training the professionals",
-        "description": "description"
+        "description": "Empowering professionals through training is a strategy aimed at overcoming cultural barriers and fostering innovation in the software ecosystem. Refresher training serves as a means to make professionals aware of the social and human factors inherent in management activities within the software ecosystem, thereby equipping them to effectively handle these factors and contribute to overcoming barriers through improvement efforts."
       },
       {
         "id": "ST06",
-        "name": "Conducting survayes to evaluate actors satisfaction",
-        "description": "description"
+        "name": "Conducting surveys to evaluate actors satisfaction",
+        "description": "Conduct surveys using organizational research tools can be sided with the teams regularly to assess their satisfaction. Measuring customer satisfaction through annual surveys and indicators such as system renewal or new feature purchases is essential. These measures provide practical insight into customer satisfaction and help improve requirements management activities, fostering a more collaborative and satisfying environment for all actors."
       },
       {
         "id": "ST07",
         "name": "Creating discussion forums",
-        "description": "description"
+        "description": "Creating discussion forums in organizations through online events and chats is one way to demonstrate the importance of social and human factors in requirements management in software ecosystems. These forums enable professionals to discuss and develop approaches to address these factors, encouraging contribution and evolution in work and promoting interaction between team members and leadership."
       },
       {
         "id": "ST08",
-        "name": "Defining roles and resposibilities",
-        "description": "description"
+        "name": "Defining central communication channels among multiple channels",
+        "description": "Defining central communication channels among multiple channels is crucial for the ecosystem, as it facilitates the overcoming of barriers and enhances social and human factors during requirements management in software ecosystems. By centralizing communication, it becomes possible to have an overview of the project, leading to improved communication and information sharing for all actors involved in the ecosystem. "
       },
       {
         "id": "ST09",
-        "name": "Defining central communication channels among multiple channels",
-        "description": "description"
-      },
-      {
-        "id": "ST010",
         "name": "Defining central software repositories among multiple repositories",
-        "description": "description"
+        "description": "Defining central software repositories among multiple repositories enables the concentration of information and prevents dispersion and disorganization of data. This strategy facilitates access and collaboration for all actors involved in the ecosystem, replacing the need for individual emails. By making these repositories available to ecosystem partners, information sharing is enhanced, creating opportunities for future partnerships. "
       },
       {
-        "id": "ST011",
+        "id": "ST10",
+        "name": "Defining roles and resposibilities",
+        "description": "Defining roles and responsibilities through formal documents is crucial for decision-making, overcoming barriers, and improving social and human factors in requirements management activities in software ecosystems. This practice promotes transparency and accountability in the decision-making process during requirements management, ensuring that all actors are aware of their responsibilities and can contribute effectively to the project's overall success."
+      },
+      {
+        "id": "ST11",
         "name": "Documenting meetings information",
-        "description": "description"
+        "description": "Documenting meetings information from meetings is a way to present the details discussed and agreed upon during requirements management activities in software ecosystems. This practice helps to avoid unwanted changes in requirements and problems related to social and human factors. Documentation serves as a clear record of what was negotiated, enabling better organization and tracking of requirements. "
       },
       {
-        "id": "ST012",
-        "name": "Documenting the knowledge and processes",
-        "description": "description"
+        "id": "ST12",
+        "name": "Documenting the knowledge, processes, and SHF",
+        "description": "Documenting the knowledge, processes, and social and human factors involved in requirements management activities in software ecosystems is crucial for promoting knowledge sharing. Establishing a Wiki or another form of registry helps creates a comprehensive knowledge base that can be referenced by other contributors, facilitating collaboration and ensuring that valuable insights and experiences are shared among team members. "
       },
       {
-        "id": "ST013",
+        "id": "ST13",
         "name": "Encouraging emergent leadership",
-        "description": "description"
+        "description": "Encouraging emergent leadership recognizes and values employees who make important decisions, regardless of whether they have formal leadership positions. Fostering a culture of informal leadership, where everyone is encouraged to contribute and take the initiative, helps improve the social and human factors during requirements management activities in software ecosystems. This creates a collaborative environment and promotes innovative solutions in the ecosystem."
       },
       {
-        "id": "ST014",
+        "id": "ST14",
         "name": "Encouraging informal conversations",
-        "description": "description"
+        "description": "Encouraging informal conversations is one strategy to promote team members' satisfaction and engagement. Allocating time and space for relaxed interactions allows stakeholders to share their culture and express genuine and honest opinions about the social and human factors that occur in requirements management in software ecosystems. This creates a welcoming and collaborative environment, strengthening the relationship between team members and improving the quality of the work."
       },
       {
-        "id": "ST015",
+        "id": "ST15",
         "name": "Engaging the actors with a specific purpose",
-        "description": "description"
+        "description": "Engaging the actors with a specific purpose is essential to promote motivation and engagement during requirements management in software ecosystems. Establishing a common purpose for software development and requirements teams increases employee dedication and commitment. This strategy promotes a more productive work environment where everyone is aligned and focused on achieving the established goals."
       },
       {
-        "id": "ST016",
+        "id": "ST16",
         "name": "Establishing flexible working hours",
-        "description": "description"
+        "description": "Establishing flexible work schedules is essential for resolving time zone conflicts and ensuring effective communication. Adjusting work schedules helps minimize problems caused by geographic distance, facilitating collaboration and goal alignment among actors."
       },
       {
-        "id": "ST017",
+        "id": "ST17",
         "name": "Forming mixed teams in terms of experience level",
-        "description": "description"
+        "description": "Having experienced professionals with less experienced professionals allows newcomers to learn from the more experienced and understand the fundamental role of a requirements analyst. The interaction between team members, regardless of experience level, is essential to motivate newcomers to feel part of the ecosystem and encourage them to develop professionally."
       },
       {
-        "id": "ST018",
+        "id": "ST18",
         "name": "Hiring evangelists/partnership managers",
-        "description": "description"
+        "description": "Hiring evangelists/partnership managers is an effective strategy for sharing information and managing partnerships in software ecosystems. Evangelists convey relevant information to actors, while partnership managers handle conflicts and communicate closely with partners. These roles are crucial in overcoming barriers and improving social and human factors during requirements management activities."
       },
       {
-        "id": "ST019",
+        "id": "ST19",
         "name": "Hiring experienced professionals",
-        "description": "description"
+        "description": "Professionals with experience in software ecosystems possess the knowledge and skills to naturally improve the social and human factors during requirements management activities. Leveraging the expertise of experienced professionals helps create a conducive environment for effective requirements management, where valuable insights, best practices, and lessons learned can be shared and applied, ultimately leading to better outcomes in software ecosystem projects."
       },
       {
-        "id": "ST020",
-        "name": "Negotiating with key actors",
-        "description": "description"
-      },
-      {
-        "id": "ST021",
+        "id": "ST20",
         "name": "Observing neighboring software ecosystems",
-        "description": "description"
+        "description": "Observing neighboring software ecosystems is a strategy to identify talented professionals who can contribute to the ecosystem. Analyzing metrics such as the number of contributions and forum participation allows it to identify external collaborators that can be brought into the environment. This strategy aims to strengthen teams and promote a broader and more diverse knowledge exchange between the actors involved in requirements management activities in software ecosystems."
       },
       {
-        "id": "ST022",
+        "id": "ST21",
         "name": "Performing community voting",
-        "description": "description"
+        "description": "Performing community voting is a way to balance power and involve actors in prioritizing requirements. Through ongoing meetings or sending out forms, customers and other stakeholders can vote and decide which requirements will be prioritized. This strategy decentralizes power and meets the community's needs, ensuring a more balanced and collaborative view of requirements management activities in software ecosystems."
       },
       {
-        "id": "ST023",
+        "id": "ST22",
         "name": "Promoting meetings of integration",
-        "description": "description"
+        "description": "Promoting meetings of integration, such as workshops and brainstorming sessions, is essential for overcoming barriers and improving social and human factors during requirements management activities in software ecosystems. One-on-one meetings between the leader and team members help to stimulate participation and the exchange of ideas. These practices contribute to a cooperative and inclusive environment."
       },
       {
-        "id": "ST024",
+        "id": "ST23",
         "name": "Reflecting on the SHF in organizational culture",
-        "description": "description"
+        "description": "Reflecting on organizational culture's social and human factors is important, especially concerning leadership principles that encourage calculated risk-based decision-making grounded in data, metrics, and customer feedback. By knowing and understanding the organization's culture, professionals involved in requirements management activities can develop action plans to overcome barriers and improve the factors."
       },
       {
-        "id": "ST025",
+        "id": "ST24",
         "name": "Using a tool to track the status of projects",
-        "description": "description"
+        "description": "Using a tool to track the status of projects is a strategy that can be adopted during software ecosystem requirements management activities, allowing customers to track the progress of their projects. This strengthens the trust between the team and the customers and allows for feedback on customer satisfaction."
       },
       {
-        "id": "ST026",
-        "name": "Using Agile methods",
-        "description": "description"
+        "id": "ST25",
+        "name": "Using product discovery with benchmark",
+        "description": "Using product discovery with benchmarks as part of enhancing the ecosystem view of a project is an effective strategy for improving the social and human factors in requirements management in software ecosystems. This involves using journey maps and benchmarking to identify past and future relationships with artifacts and actors in the ecosystem. This strategy aids in preventing conflicts of interest and in making requirements-related decisions."
       },
       {
-        "id": "ST027",
-        "name": "Using gamification",
-        "description": "description"
+        "id": "ST26",
+        "name": "Using self-adaptive systems",
+        "description": "The organization can use self-adaptive systems to improve decision-making in software ecosystem projects. This strategy acknowledges the complexity of changes in ecosystem requirements and the interactions between these changes. It allows for the analysis and understanding of the dynamics of the ecosystem, which leads to more robust decision-making processes."
       },
       {
-        "id": "ST028",
+        "id": "ST27",
         "name": "Working in pairs",
-        "description": "description"
+        "description": "Dividing the requirements team into pairs or trios promotes collaboration, effective communication, and knowledge sharing. This creates an environment of trust and mutual support, resulting in a more practical approach to identifying and meeting requirements."
       },
       {
-        "id": "ST029",
+        "id": "ST28",
         "name": "Working on positive psychological capital",
-        "description": "description"
+        "description": "Working on positive psychological capital involves valuing optimism, resilience, hope, and self-efficacy. When forming teams, one should map the professionals with these human characteristics to create a more positive and productive work environment. This approach aims to strengthen employees' ability to face challenges and promote more significant interaction and collaboration."
       },
       {
-        "id": "ST030",
+        "id": "ST29",
         "name": "Working with Key Performance Indicators (KPI)",
-        "description": "description"
+        "description": "Measurable and specific goals are established for each individual by utilizing Key Performance Indicators (KPI), taking into account the social and human factors of team members. These goals emphasize the value of factors, promoting cooperation, effective communication, and team engagement. This approach cultivates a more productive work environment that aligns with the organizational goals. "
       }
     ]
   },
@@ -474,33 +459,23 @@
     "items": [
       {
         "id": "CM01",
-        "name": "Leaving your job",
-        "description": "description"
+        "name": "Leaving their job ",
+        "description": "Leaving their job is considered a last resort to deal with the lack of effectiveness in strategies to improve the work environment. This is due to the exhaustion experienced by actors working in software ecosystems where the barriers are not overcome, and social and human factors are neglected or are not improved enough."
       },
       {
         "id": "CM02",
         "name": "Moving forward",
-        "description": "description"
+        "description": "When there is not enough improvement in the social and human factors, fatigue arises, making it difficult to continue the improvement process, thus, it is necessary to live with the barriers and the influence of the factors to move forward in requirements management activities. This situation occurs due to the exhaustion of the actors in dealing daily with barriers that are not overcome and factors that are not sufficiently improved."
       },
       {
         "id": "CM03",
         "name": "Relocating to another function",
-        "description": "description"
+        "description": "When a professional is not able to negotiate with stakeholders, it is recommended to reassign them to another role. In this sense, it is essential to explore the competencies of this professional and identify in which area they can excel, whether as a developer or as responsible for requirements documentation, for example. The search for a function in which they can contribute more effectively would be more advantageous."
       },
       {
         "id": "CM04",
-        "name": "Recognizing the professional",
-        "description": "description"
-      },
-      {
-        "id": "CM05",
-        "name": "Setting/Being the example",
-        "description": "description"
-      },
-      {
-        "id": "CM06",
         "name": "Talking to the keystone",
-        "description": "description"
+        "description": "Talk to the managers, keystone, and bosses responsible for requirements management when there is insufficient improvement in the social and human factors. The dialog with managers and supervisors makes it possible to align expectations and to get financial support to implement changes to improve the factors related to requirements management."
       }
     ]
   }
