@@ -3,18 +3,23 @@ import { ArcherContainer, ArcherElement } from 'react-archer';
 
 import data from '../../src/assets/framework-data.json';
 import AccordionComponent from '../components/AccordionComponent';
+import ListPersonalAndSocial from './ListPersonalAndSocial';
 
 function FrameworkComponent() {
 
-  const contextualCharacteristics = [data[0]];
-  const socialHumanFactors = [data[1]];
-  const barriersToImproving = [data[2]];
-  const strategies = [data[3]];
-  const copingMechanisms = [data[4]];
+  const contextualCharacteristics = data[0];
+  const socialHumanFactors = data[1];
+  const barriersToImproving = data[2];
+  const strategies = data[3];
+  const copingMechanisms = data[4];
+
+
+  const socialGroupItems = socialHumanFactors.items.slice(0, 17);
+  const personalGroupItems = socialHumanFactors.items.slice(17);
 
   return (
     <ArcherContainer strokeColor='black' noCurves >
-      <Box sx={{paddingTop: '1%'}}>
+      <Box sx={{ paddingTop: '1%' }}>
 
         <Grid container spacing={0} style={{ height: '65vh' }}>
 
@@ -30,7 +35,9 @@ function FrameworkComponent() {
                 }]}
               >
                 <div>
-                  <AccordionComponent data={socialHumanFactors} />
+                  <AccordionComponent data={socialHumanFactors}>
+                    <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} />
+                  </AccordionComponent>
                 </div>
               </ArcherElement>
 
@@ -64,19 +71,19 @@ function FrameworkComponent() {
                 }]}
               >
                 <Card elevation={8} style={{ maxWidth: '35%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white' }}>
-                  <Typography sx={{fontSize: '.8rem'}}>
+                  <Typography sx={{ fontSize: '.8rem' }}>
                     REQUIREMENTS MANAGMENT IN SECO
                   </Typography>
                 </Card>
               </ArcherElement>
 
             </Box>
-              <ArcherElement
+            <ArcherElement
               id="middle-target"
-              >
-            <div style={{ width: '29%', marginTop: '-32.5vh'}}>
-            </div>
-              </ArcherElement>
+            >
+              <div style={{ width: '29%', marginTop: '-32.5vh' }}>
+              </div>
+            </ArcherElement>
           </Grid>
 
           <Grid container item xs={5}>

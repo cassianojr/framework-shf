@@ -5,18 +5,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { Box, DialogContent, Divider, Grid, Typography } from '@mui/material';
-import RatingComponent from './RatingComponent';
+import { DialogContent, Divider} from '@mui/material';
 
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children: React.ReactElement<any, any>;
+    children: React.ReactElement;
   },
   ref: React.Ref<unknown>,
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
 
 interface ModalProps {
   open: boolean,
@@ -25,13 +25,15 @@ interface ModalProps {
   modalContent: {
     id: string,
     title: string,
-    body: string,
-  }
+   
+  },
+  children: JSX.Element,
+  action?: JSX.Element
 
 }
 
 export default function Modal(props: ModalProps) {
-  const { open, handleClose, modalContent } = props;
+  const { open, handleClose, modalContent, children } = props;
 
   return (
     <Dialog
@@ -47,18 +49,13 @@ export default function Modal(props: ModalProps) {
       <DialogTitle id={`alert-dialog-title-${modalContent.id}`}>
         {modalContent.title}
       </DialogTitle>
+      <Divider />
       <DialogContent>
-        {modalContent.body}
+        {children}
       </DialogContent>
       <Divider />
       <DialogActions >
-        <Grid container justifyContent='space-between' alignItems='center'>
-          <Box>
-            <Typography>Was this helpful?</Typography>
-            <RatingComponent id={modalContent.id}/>
-          </Box>
-          <Button onClick={handleClose}>Close</Button>
-        </Grid>
+        {props.action??<Button onClick={handleClose}>Close</Button>}
       </DialogActions>
     </Dialog>
   );
