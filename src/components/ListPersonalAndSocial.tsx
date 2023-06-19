@@ -27,7 +27,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
     setSocialGroupOpen(!socialGroupOpen);
   };
 
-  const [personalGroupOpen, setPersonalGroupOpen] = React.useState(false);
+  const [personalGroupOpen, setPersonalGroupOpen] = React.useState(true);
   const handlePersonalGroupClick = () => {
     setPersonalGroupOpen(!personalGroupOpen);
   };
@@ -37,26 +37,26 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
 
-      <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '2rem' }}>
+      <ListItemButton onClick={handleSocialGroupClick} divider={true} sx={{ height: '1.5rem' }}>
         <ListItemIcon>
-          <GroupIcon />
+          <GroupIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
+        <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.6rem' }} />
         {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={40} />
+        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={25} />
       </Collapse>
 
-      <ListItemButton onClick={handlePersonalGroupClick} divider={true} >
+      <ListItemButton onClick={handlePersonalGroupClick} divider={true} sx={{ height: '1.5rem' }}>
         <ListItemIcon>
-          <PersonIcon />
+          <PersonIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.9rem' }} />
+        <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.6rem' }} />
         {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
-        <VirtualizedList items={personalGroupItems} handleListItemClick={handleListClick} height={40} />
+        <VirtualizedList items={personalGroupItems} handleListItemClick={handleListClick} height={25} />
       </Collapse>
     </List>
   )

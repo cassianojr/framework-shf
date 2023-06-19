@@ -159,16 +159,16 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             backgroundColor: data.headerColor,
             color: '#ffff',
             minHeight: '2rem',
-            height: '2rem',
+            height: '1.5rem',
           }}>
-          <Typography sx={{ fontSize: '.8rem', display: 'flex', alignItems: 'center' }}>{data.label}</Typography>
+          <Typography sx={{ fontSize: '.6rem', display: 'flex', alignItems: 'center' }}>{data.label}</Typography>
           <Button sx={{
             marginLeft: 'auto',
             marginRight: '1rem',
-            fontSize: '.8rem',
+            fontSize: '.6rem',
             color: 'white',
             border: '1px solid white',
-            height: '1.5rem',
+            height: '1.2rem',
             '&:hover': {
               color: 'white',
               border: '1px solid white',
@@ -179,24 +179,24 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           </Button>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={120} />}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} />}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary
         sx={{
           backgroundColor: data.headerColor,
           color: '#ffff',
-          minHeight: '2rem',
-          height: '2rem',
+          minHeight: '1.5rem',
+          height: '1.5rem',
         }}
         expandIcon={<></>}
       >
         <Button sx={{
           marginLeft: 'auto',
           marginRight: '1rem',
-          fontSize: '.8rem',
+          fontSize: '.6rem',
           color: 'white',
-          height: '1.5rem',
+          height: '1.2rem',
           border: '1px solid white',
           '&:hover': {
             color: 'white',

@@ -22,8 +22,8 @@ function renderRow(props: ListChildComponentProps) {
     <ListItem
       dense
       secondaryAction={
-        <IconButton edge="end" aria-label="details" onClick={() => handleListItemClick(item.id, item.name, item.description)}>
-          <InfoRounded />
+        <IconButton  edge="end" aria-label="details" onClick={() => handleListItemClick(item.id, item.name, item.description)}>
+          <InfoRounded sx={{fontSize: '1.2rem'}} />
         </IconButton>
       }
       id={item.id}
@@ -32,7 +32,7 @@ function renderRow(props: ListChildComponentProps) {
       divider={true}
     >
       <ListItemText primary={
-        <Typography sx={{ fontSize: '.8rem' }}>
+        <Typography sx={{ fontSize: '.6rem' }}>
           <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
           {item.name}
         </Typography>} />
@@ -49,7 +49,7 @@ export default function VirtualizedList(props: ListData) {
       <List
         height={height}
         width='100%'
-        itemSize={40}
+        itemSize={25}
         itemData={props}
         itemCount={props.items.length}
         overscanCount={5}>
