@@ -43,7 +43,7 @@ export default function Hero(props: HeroData) {
         />
 
         <Grid container>
-          <Grid item md={6}>
+          <Grid item md={8}>
             <Box
               sx={{
                 position: 'relative',
@@ -59,7 +59,7 @@ export default function Hero(props: HeroData) {
               >
                 {title}
               </Typography>
-              <Typography variant="h5" color="inherit" paragraph >
+              <Typography variant="h5" color="inherit" paragraph sx={{textAlign:'justify'}}>
                 {description}
               </Typography>
               <Button
