@@ -33,7 +33,7 @@ export default function TextModal(props: ModalProps) {
             <Button onClick={() => setModalState(false)}>Close</Button>
           </Grid>
         }>
-        <Typography>{modalContent.body}</Typography>
+        <Typography sx={{textAlign:'justify'}}>{modalContent.body}</Typography>
       </Modal>
   );
 }

@@ -9,7 +9,7 @@ function Home() {
 
   const heroData = {
     title: 'Explore human and social factors',
-    description: 'The SHF Framework is a tool to help identify and analyze human and social factors in software ecosystems.',
+    description: 'The SHF Framework is a tool to help identify and improve social and human factors in requirements management in software ecosystems.',
     image,
     button: 'Try now!',
     buttonLink: '/framework'
@@ -26,19 +26,19 @@ function Home() {
             <Typography variant="h4" component="h1" gutterBottom>
               About the Framework
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Identifying and analyzing human and social factors in software ecosystems is a complex task. The SHF Framework helps in identifying and analyzing these factors in software ecosystems.
+            <Typography variant="h5" component="h2" gutterBottom sx={{textAlign:'justify'}}>
+              Identifying and improving social and human factors in requirements management in software ecosystems is a challenge. The SHF Framework supports identifying and improving these factors during requirements management activities in software ecosystems.
             </Typography>
 
             <Typography variant="h4" component="h1" gutterBottom>
-              How to use
+              Get a 360 view of social and human factors
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom sx={{textAlign:'justify'}}>
               <ol>
-                <li>Identify the human and social factors in your software ecosystem;</li>
-                <li>Identify the contextual characteristics of your ecosystem;</li>
-                <li>Point out the barriers you face;</li>
-                <li>Receive suggestions for strategies and coping mechanisms to be used in your ecosystem;</li>
+                <li>Identify the social and human factors that influence requirements management activities in your software ecosystem; </li>
+                <li>Identify the contextual characteristics of requirements management in your software ecosystem;</li>
+                <li>Point out the barriers you face to improving social and human factors;</li>
+                <li>Get suggestions for strategies and coping mechanisms to use for requirements management in your software ecosystem;</li>
               </ol>
             </Typography>
             <Button
