@@ -28,12 +28,15 @@ interface ModalProps {
    
   },
   children: JSX.Element,
-  action?: JSX.Element
+  action?: JSX.Element,
+  dense?: boolean
 
 }
 
 export default function Modal(props: ModalProps) {
-  const { open, handleClose, modalContent, children } = props;
+  const { open, handleClose, modalContent, children, dense } = props;
+
+  const denseStyle = dense ? {padding: 0} : {};
 
   return (
     <Dialog
@@ -50,7 +53,7 @@ export default function Modal(props: ModalProps) {
         {modalContent.title}
       </DialogTitle>
       <Divider />
-      <DialogContent>
+      <DialogContent sx={denseStyle}>
         {children}
       </DialogContent>
       <Divider />

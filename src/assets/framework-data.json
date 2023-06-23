@@ -2,6 +2,7 @@
   {
     "id": "item1",
     "label": "CONTEXTUAL CHARACTERISTICS",
+    "description": "description",
     "headerColor": "#40546c",
     "items": [
       {
@@ -54,6 +55,7 @@
   {
     "id": "item2",
     "label": "SOCIAL AND HUMAN FACTORS",
+    "description": "description",
     "headerColor": "#4172c6",
     "items": [
       {
@@ -206,6 +208,7 @@
   {
     "id": "item3",
     "label": "BARRIERS TO IMPROVING ",
+    "description": "description",
     "headerColor": "#fa832e",
     "items": [
       {
@@ -303,6 +306,7 @@
   {
     "id": "item4",
     "label": "IMPROVEMENT STRATEGIES",
+    "description": "description",
     "headerColor": "#6ea144",
     "items": [
       {
@@ -455,6 +459,7 @@
   {
     "id": "item5",
     "label": "COPING MECHANISMS",
+    "description": "description",
     "headerColor": "#ffbb00",
     "items": [
       {

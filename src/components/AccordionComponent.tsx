@@ -6,7 +6,6 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import VirtualizedList from './VirtualizedList';
 import TextModal from './TextModal';
 import { Button } from '@mui/material';
@@ -59,6 +58,7 @@ interface AccordionComponentProps {
     id: string,
     label: string,
     headerColor: string,
+    description: string,
     items: {
       id: string,
       name: string,
@@ -99,7 +99,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     }]
   });
 
+  const [descriptionModalState, setDescriptionModalState] = React.useState(false);
+  const [descriptionModalContent, setDescriptionModalContent] = React.useState({
+    id: '',
+    title: '',
+    body: '',
+  });
+
   const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
       return;
     }
@@ -128,7 +136,17 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setFormModalState(true);
   }
 
-  const handleViewAll = () =>{
+  const descriptionModalHandle = (id: string, title: string, description: string) => {
+    setDescriptionModalContent({
+      id,
+      title,
+      body: description
+    });
+
+    setDescriptionModalState(true);
+  }
+
+  const handleViewAll = () => {
     setListModalContent({
       id: data.id,
       title: data.label,
@@ -140,12 +158,25 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const childWithHandleItemClick = (props.children) ? React.cloneElement(props.children, { handleListItemClick }) : null;
 
+  const buttonStyle = {
+    marginRight: '1rem',
+    fontSize: '.6rem',
+    color: 'white',
+    border: '1px solid white',
+    height: '1.2rem',
+    '&:hover': {
+      color: 'white',
+      border: '1px solid white',
+    }
+  }
+
   return (
     <>
       <TextModal modalState={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
       <FormModal formModalState={formModalState} handleClose={() => setFormModalState(false)} setFormModalState={setFormModalState} modalContentForm={formModalContent} />
-      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={()=>setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick}/>
-      
+      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={() => setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick} />
+      <TextModal modalState={descriptionModalState}  setModalState={setDescriptionModalState} handleClose={() => setDescriptionModalState(false)} modalContent={descriptionModalContent} />
+
       <Accordion
         key={data.id}
         expanded={expanded === data.id}
@@ -161,19 +192,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             minHeight: '2rem',
             height: '1.5rem',
           }}>
-          <Typography sx={{ fontSize: '.6rem', display: 'flex', alignItems: 'center' }}>{data.label}</Typography>
-          <Button sx={{
-            marginLeft: 'auto',
-            marginRight: '1rem',
-            fontSize: '.6rem',
-            color: 'white',
-            border: '1px solid white',
-            height: '1.2rem',
-            '&:hover': {
-              color: 'white',
-              border: '1px solid white',
-            }
-          }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
+          <Button sx={{ ...buttonStyle, fontSize: '.7rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
+            {data.label}
+          </Button>
+          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
             <AddIcon sx={{ fontSize: '1rem' }} />
             Suggest new
           </Button>
@@ -191,18 +213,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
         }}
         expandIcon={<></>}
       >
-        <Button sx={{
-          marginLeft: 'auto',
-          marginRight: '1rem',
-          fontSize: '.6rem',
-          color: 'white',
-          height: '1.2rem',
-          border: '1px solid white',
-          '&:hover': {
-            color: 'white',
-            border: '1px solid white',
-          }
-        }} variant="outlined" size="small" onClick={handleViewAll}>
+        <Button sx={{...buttonStyle, marginLeft: 'auto'}} variant="outlined" size="small" onClick={handleViewAll}>
           <FullscreenIcon sx={{ fontSize: '1rem' }} />
           View All
         </Button>

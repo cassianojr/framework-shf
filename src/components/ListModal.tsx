@@ -28,10 +28,11 @@ export default function ListModal(props: ModalProps) {
       handleClose={() => setModalstate(false)}
       modalContent={modalContent}
       setOpen={setModalstate}
+      dense
       >
-      <List dense>
+      <List dense >
         {modalContent.items.map((item) => (
-          <ListItem
+          <ListItem dense
             secondaryAction={
               <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.id, item.name, item.description)}>
                 <InfoRounded />
