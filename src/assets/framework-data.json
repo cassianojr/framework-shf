@@ -2,7 +2,7 @@
   {
     "id": "item1",
     "label": "CONTEXTUAL CHARACTERISTICS",
-    "description": "description",
+    "description": "Contextual characteristics of requirements management in software ecosystems differentiate it from traditional software development, making certain social and human factors more or less important and impactful.",
     "headerColor": "#40546c",
     "items": [
       {
@@ -55,7 +55,7 @@
   {
     "id": "item2",
     "label": "SOCIAL AND HUMAN FACTORS",
-    "description": "description",
+    "description": "Social and human factors is related to environmental, organizational, and work factors encompassing social interactions and individuals' human characteristics of individuals (personal, interpersonal, cognitive, effective, and psychological).",
     "headerColor": "#4172c6",
     "items": [
       {
@@ -208,7 +208,7 @@
   {
     "id": "item3",
     "label": "BARRIERS TO IMPROVING ",
-    "description": "description",
+    "description": "Barriers that crosscut the factors and hinder requirements professionals from improving social and human factors in requirements management in SECO.",
     "headerColor": "#fa832e",
     "items": [
       {
@@ -306,7 +306,7 @@
   {
     "id": "item4",
     "label": "IMPROVEMENT STRATEGIES",
-    "description": "description",
+    "description": "Strategies that requirements professionals they can use to overcome the barriers and improve social and human factors in requirements management in SECO.",
     "headerColor": "#6ea144",
     "items": [
       {
@@ -459,7 +459,7 @@
   {
     "id": "item5",
     "label": "COPING MECHANISMS",
-    "description": "description",
+    "description": "Coping mechanisms that requirements professionals can use when improvement strategies do not work, i.e., when the barriers and social and human factors that impact requirements management in SECO are not sufficiently overcome/improved.",
     "headerColor": "#ffbb00",
     "items": [
       {
