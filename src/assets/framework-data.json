@@ -208,7 +208,7 @@
   {
     "id": "item3",
     "label": "BARRIERS TO IMPROVING ",
-    "description": "Barriers that crosscut the factors and hinder requirements professionals from improving social and human factors in requirements management in SECO.",
+    "description": "Barriers that crosscut the factors and hinder requirements professionals from improving social and human factors in requirements management in software ecosystems.",
     "headerColor": "#fa832e",
     "items": [
       {
@@ -306,7 +306,7 @@
   {
     "id": "item4",
     "label": "IMPROVEMENT STRATEGIES",
-    "description": "Strategies that requirements professionals they can use to overcome the barriers and improve social and human factors in requirements management in SECO.",
+    "description": "Strategies that requirements professionals they can use to overcome the barriers and improve social and human factors in requirements management in software ecosystems..",
     "headerColor": "#6ea144",
     "items": [
       {
@@ -459,7 +459,7 @@
   {
     "id": "item5",
     "label": "COPING MECHANISMS",
-    "description": "Coping mechanisms that requirements professionals can use when improvement strategies do not work, i.e., when the barriers and social and human factors that impact requirements management in SECO are not sufficiently overcome/improved.",
+    "description": "Coping mechanisms that requirements professionals can use when improvement strategies do not work, i.e., when the barriers and social and human factors that impact requirements management in software ecosystems. are not sufficiently overcome/improved.",
     "headerColor": "#ffbb00",
     "items": [
       {
