@@ -172,7 +172,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   return (
     <>
-      <TextModal modalState={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
+      <TextModal modalState={itemDescriptionModalState} showEvaluate handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
       <FormModal formModalState={formModalState} handleClose={() => setFormModalState(false)} setFormModalState={setFormModalState} modalContentForm={formModalContent} />
       <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={() => setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick} />
       <TextModal modalState={descriptionModalState}  setModalState={setDescriptionModalState} handleClose={() => setDescriptionModalState(false)} modalContent={descriptionModalContent} />

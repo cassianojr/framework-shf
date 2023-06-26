@@ -12,28 +12,31 @@ interface ModalProps {
     id: string,
     title: string,
     body: string,
-  }
+  },
+  showEvaluate?: boolean
 }
 
 export default function TextModal(props: ModalProps) {
-  const { modalState, handleClose, modalContent, setModalState } = props;
+  const { modalState, handleClose, modalContent, setModalState, showEvaluate } = props;
 
   return (
     <Modal
-        open={modalState}
-        handleClose={handleClose}
-        modalContent={modalContent}
-        setOpen={setModalState}
-        action={
-          <Grid container justifyContent='space-between' alignItems='center' >
+      open={modalState}
+      handleClose={handleClose}
+      modalContent={modalContent}
+      setOpen={setModalState}
+      action={
+        <Grid container justifyContent='space-between' alignItems='center' >
+          {showEvaluate&&(
             <Box>
               <Typography>Was this helpful?</Typography>
               <RatingComponent id={modalContent.id} />
             </Box>
-            <Button onClick={() => setModalState(false)}>Close</Button>
-          </Grid>
-        }>
-        <Typography sx={{textAlign:'justify'}}>{modalContent.body}</Typography>
-      </Modal>
+          )}
+          <Button onClick={() => setModalState(false)}>Close</Button>
+        </Grid>
+      }>
+      <Typography sx={{ textAlign: 'justify' }}>{modalContent.body}</Typography>
+    </Modal>
   );
 }
