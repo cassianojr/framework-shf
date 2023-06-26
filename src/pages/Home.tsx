@@ -9,7 +9,7 @@ function Home() {
 
   const heroData = {
     title: 'Explore human and social factors',
-    description: 'The SHF Framework is a tool to help identify and improve social and human factors in requirements management in software ecosystems.',
+    description: 'The Framework SHF-RM-SECO is a tool to help identify and improve social and human factors in requirements management in software ecosystems.',
     image,
     button: 'Try now!',
     buttonLink: '/framework'
@@ -27,7 +27,7 @@ function Home() {
               About the Framework
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{textAlign:'justify'}}>
-              Identifying and improving social and human factors in requirements management in software ecosystems is a challenge. The SHF Framework supports identifying and improving these factors during requirements management activities in software ecosystems.
+              Identifying and improving social and human factors in requirements management in software ecosystems is a challenge. The Framework SHF-RM-SECO supports identifying and improving these factors during requirements management activities in software ecosystems.
             </Typography>
 
             <Typography variant="h4" component="h1" gutterBottom>
