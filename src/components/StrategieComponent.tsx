@@ -83,7 +83,7 @@ export default function StrategieComponent(props: SelectedItems) {
     <>
       <DialogComponent open={dialogOpen} type={dialogType} setOpen={setDialogOpen} dialogData={dialogData} handleSuccess={handleDialogSuccess} handleClose={handleDialogClose} />
       <AlertDialog open={alertDialogOpen} setOpen={setAlertDialogOpen} handleSuccess={openCopingMechanism} handleClose={handleAlertClose} />
-      <SnackBarComponent snackBarState={snackBarOpen} setSnackBarState={setSnackBarOpen} />
+      <SnackBarComponent severity='success' text="Obrigado!" snackBarState={snackBarOpen} setSnackBarState={setSnackBarOpen} />
 
       <Grid container spacing={2}>
 
