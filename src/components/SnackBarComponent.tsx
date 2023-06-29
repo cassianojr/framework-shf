@@ -3,8 +3,10 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 interface SnackBarProps {
-  open: boolean,
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  snackBarState: boolean,
+  setSnackBarState: React.Dispatch<React.SetStateAction<boolean>>,
+  text: string,
+  severity: 'success' | 'info' | 'warning' | 'error'
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -16,25 +18,25 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 
 export default function SnackBarComponent(props: SnackBarProps) {
-  const { open, setOpen } = props;
+  const { snackBarState, setSnackBarState, text, severity } = props;
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setOpen(false);
+    setSnackBarState(false);
   };
 
 
   return (
     <Snackbar
-      open={open}
+      open={snackBarState}
       autoHideDuration={3000}
       onClose={handleClose}
     >
-      <Alert onClose={handleClose} severity='success' sx={{ widows: '100%' }}>
-        Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.
+      <Alert onClose={handleClose} severity={severity} sx={{ widows: '100%' }}>
+        {text}
       </Alert>
     </Snackbar>
   );

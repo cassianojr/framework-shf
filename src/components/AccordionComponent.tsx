@@ -71,7 +71,7 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
-
+  
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
 
   const [itemDescriptionModalState, setItemDescriptionModalState] = React.useState(false);
