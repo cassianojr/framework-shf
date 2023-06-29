@@ -56,9 +56,11 @@ export default function FormModal(props: ModalProps) {
     );
   }
 
+  const snackBarText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+
   return (
     <>
-    <SnackBarComponent open={snackBarState} setOpen={setSnackBarState}/>
+    <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={snackBarText} severity='success'/>
       <Modal
         open={formModalState}
         handleClose={() => setFormModalState(false)}
