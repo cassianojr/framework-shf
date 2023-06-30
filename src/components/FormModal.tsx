@@ -2,6 +2,9 @@ import { Button, Grid, TextField } from '@mui/material';
 
 import React from 'react';
 import Modal from './Modal';
+import { db } from '../services/firebaseConfig';
+import { addDoc, collection } from 'firebase/firestore';
+import SnackBarComponent from './SnackBarComponent';
 
 interface ModalProps {
   formModalState: boolean,
@@ -16,61 +19,107 @@ interface ModalProps {
 export default function FormModal(props: ModalProps) {
   const { formModalState, setFormModalState, modalContentForm } = props;
 
+  const [snackBarState, setSnackBarState] = React.useState(false);
+
+  const [formState, setFormState] = React.useState({
+    type: modalContentForm.title,
+    title: '',
+    description: ''
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = {
+      ...formState,
+      type: modalContentForm.title
+    }
+
+    addDoc(collection(db, "suggestions"), formData).then(() => {
+      setFormState({
+        type: modalContentForm.title,
+        title: '',
+        description: ''
+      });
+      setFormModalState(false);
+      setSnackBarState(true);
+    }
+    ).catch((error) => {
+      console.error("Error adding document: ", error);
+    }
+    );
+  }
+
+  const snackBarText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+
   return (
-    <Modal
-      open={formModalState}
-      handleClose={() => setFormModalState(false)}
-      modalContent={modalContentForm}
-      setOpen={setFormModalState}
-    >
-      <form>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sx={{ marginTop: '1%' }}>
-            <TextField
-              fullWidth
-              required
-              id="type"
-              name="type"
-              label="Type"
-              autoFocus
-              disabled
-              value={modalContentForm.title}
-            />
+    <>
+    <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={snackBarText} severity='success'/>
+      <Modal
+        open={formModalState}
+        handleClose={() => setFormModalState(false)}
+        modalContent={modalContentForm}
+        setOpen={setFormModalState}
+      >
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sx={{ marginTop: '1%' }}>
+              <TextField
+                fullWidth
+                required
+                id="type"
+                name="type"
+                label="Type"
+                autoFocus
+                disabled
+                value={modalContentForm.title}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                required
+                id="title"
+                name="title"
+                label="Title"
+                onChange={handleFormChange}
+                value={formState.title}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                required
+                id="description"
+                name="description"
+                label="Description"
+                onChange={handleFormChange}
+                value={formState.description}
+                multiline
+                rows={4}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              required
-              id="title"
-              name="title"
-              label="Title"
-              autoFocus
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              required
-              id="description"
-              name="description"
-              label="Description"
-              multiline
-              rows={4}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Modal>
+        </form>
+      </Modal>
+    </>
   );
 
 
