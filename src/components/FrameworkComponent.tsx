@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from '@mui/material';
+import { Box, Card, Divider, Grid, Typography } from '@mui/material';
 import { ArcherContainer, ArcherElement } from 'react-archer';
 
 
@@ -9,7 +9,7 @@ import { Framework } from '../types/Framework.type';
 import AccordionComponent from '../components/AccordionComponent';
 import ListPersonalAndSocial from './ListPersonalAndSocial';
 import React from 'react';
-import Modal from './Modal';
+import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
 
 function FrameworkComponent() {
@@ -27,7 +27,6 @@ function FrameworkComponent() {
           id: doc.id,
           ...doc.data(),
         })) as Framework[];
-        // setFrameworkData(data);
         setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
         setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
         setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
@@ -39,14 +38,8 @@ function FrameworkComponent() {
     getFrameworkData();
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
 
-  // console.log(contextualCharacteristics);
-
-
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
-
-  // console.log(socialHumanFactors1.items);
-
 
   const [centerModalState, setCenterModalState] = React.useState(false);
 
@@ -55,25 +48,23 @@ function FrameworkComponent() {
     title: 'REQUIREMENTS MANAGMENT IN SECO'
   }
 
-
   return (
     <>
       {socialHumanFactors == {} as Framework ? <h1>Loading...</h1> : (
         <>
-          <Modal
-            open={centerModalState}
-            setOpen={setCenterModalState}
-            handleClose={() => setCenterModalState(false)}
-            modalContent={centerModalContent}>
-            <>
+          <Modal.Root state={centerModalState} {...centerModalContent} handleClose={() => setCenterModalState(false)}>
+            <Modal.Text>
               <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
                 Requirements management is “a process that accompanies the planning and development of a system by capturing and mapping the source and context of change” (WIEGERS; BEATTY, 2013). In this way, requirements management is considered an organized process of documentation, analysis (negotiation), traceability, prioritization, change control, version control, and requirements communication (ISO/IEC/IEEE 29148, 2018).
               </Typography>
               <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
                 A software ecosystem can be analyzed from a project perspective: “A software ecosystem is a collection of software projects which are developed and evolve together in the same environment” (LUGUN et al. 2010).
               </Typography>
-            </>
-          </Modal>
+            </Modal.Text>
+            <Divider />
+            <Modal.Actions handleClose={() => setCenterModalState(false)} />
+          </Modal.Root>
+
           <ArcherContainer strokeColor='black' noCurves >
             <Box sx={{ paddingTop: '1%' }}>
 

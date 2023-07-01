@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 
 import { Link } from 'react-router-dom';
-import TextModal from './TextModal';
+import { Modal } from './Modal';
 
 interface Props {
   window?: () => Window;
@@ -83,7 +83,10 @@ export default function DrawerAppBar(props: Props) {
 
   return (
     <>
-      <TextModal modalState={frameworkDescriptionModalState} handleClose={() => setFrameworkDescriptionmodalState(false)} modalContent={frameworkDescriptionModalContent} setModalState={setFrameworkDescriptionmodalState} />
+      <Modal.Root state={frameworkDescriptionModalState} handleClose={() => setFrameworkDescriptionmodalState(false)} id={frameworkDescriptionModalContent.id} title={frameworkDescriptionModalContent.title} >
+        <Modal.Text content={frameworkDescriptionModalContent.body} />
+        <Modal.Actions handleClose={() => setFrameworkDescriptionmodalState(false)} />
+      </Modal.Root>
       <Box sx={{ display: 'flex' }}>
         <AppBar component="nav">
           <Container fixed>
@@ -100,7 +103,7 @@ export default function DrawerAppBar(props: Props) {
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', cursor:'pointer' } }}
+                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', cursor: 'pointer' } }}
                 onClick={() => setFrameworkDescriptionmodalState(true)}
               >
                 Framework SHF-RM-SECO

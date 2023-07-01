@@ -38,12 +38,6 @@ export default function RatingComponent(props: RatingComponentProps) {
   const [snackBarErrorState, setSnackBarErrorState] = React.useState(false);
   const [snackBarSuccessState, setSnackBarSuccessState] = React.useState(false);
 
-
-
-  // The rating will like this:
-  // First look on localStorage if there is a rating for this id
-  // If there is, set the value to that rating
-  // If there isn't, set the value to null
   React.useEffect(() => {
     const getRating = () => {
       const rating = localStorage.getItem(id);
@@ -61,7 +55,6 @@ export default function RatingComponent(props: RatingComponentProps) {
     updateDoc(doc(db, "ratings", docRef), {
       rating: newValue
     }).then(() => {
-      console.log("Document successfully updated!");
       setSnackBarSuccessState(true);
     }).catch((error) => {
       console.error("Error updating document: ", error);
@@ -93,8 +86,6 @@ export default function RatingComponent(props: RatingComponentProps) {
 
     createRatingOnFirebase(newValue);
   }
-
-  
 
   return (
     <>
