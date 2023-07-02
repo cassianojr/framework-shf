@@ -134,6 +134,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     });
 
     setListModalState(false);
+    setModalPersonalsocialState(false)
     setItemDescriptionModalState(true);
   }
 

@@ -48,4 +48,24 @@ export class FirebaseService {
       callBack(data);
     });
   }
+
+  public static getRatings(callBack:(ratings: RatingType[])=>void): void {
+    onSnapshot(collection(db, "ratings"), (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as RatingType[];
+      callBack(data);
+    });
+  }
+
+  public static getSuggestions(callBack:(suggestions: Suggestion[])=>void): void {
+    onSnapshot(collection(db, "suggestions"), (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Suggestion[];
+      callBack(data);
+    });
+  }
 }
