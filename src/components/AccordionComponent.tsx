@@ -7,15 +7,18 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import VirtualizedList from './VirtualizedList';
-import TextModal from './TextModal';
-import { Button } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import Singularizer from '../util/Singularizer';
 
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import AddIcon from '@mui/icons-material/Add';
 
-import FormModal from './FormModal';
-import ListModal from './ListModal';
+import { Modal } from './Modal';
+import SnackBarComponent from './SnackBarComponent';
+import { FrameworkItem } from '../types/Framework.type';
+
+import GroupIcon from '@mui/icons-material/Group';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,7 +74,7 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
-  
+
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
 
   const [itemDescriptionModalState, setItemDescriptionModalState] = React.useState(false);
@@ -104,6 +107,14 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     id: '',
     title: '',
     body: '',
+  });
+
+  const [modalPersonalsocialState, setModalPersonalsocialState] = React.useState(false);
+  const [modalPersonalsocialContent, setModalPersonalsocialContent] = React.useState({
+    id: '',
+    title: '',
+    personalGroup: [] as FrameworkItem[],
+    socialGroup: [] as FrameworkItem[]
   });
 
   const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -147,6 +158,18 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   }
 
   const handleViewAll = () => {
+    if(data.id === 'social-human-factors'){
+      setModalPersonalsocialContent({
+        id: data.id,
+        title: data.label,
+        personalGroup: data.items.slice(17),
+        socialGroup: data.items.slice(0,17)
+      });
+
+      setModalPersonalsocialState(true);
+      return;
+    }
+    
     setListModalContent({
       id: data.id,
       title: data.label,
@@ -160,7 +183,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const buttonStyle = {
     marginRight: '1rem',
-    fontSize: '.6rem',
+    fontSize: '.8rem',
     color: 'white',
     border: '1px solid white',
     height: '1.2rem',
@@ -170,12 +193,59 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     }
   }
 
+  const descriptionModal = (
+    <Modal.Root state={descriptionModalState} handleClose={() => setDescriptionModalState(false)} id={descriptionModalContent.id} title={descriptionModalContent.title}>
+      <Divider />
+      <Modal.Text content={descriptionModalContent.body} />
+      <Modal.Actions handleClose={() => setDescriptionModalState(false)} />
+    </Modal.Root>
+  );
+
+  const itemDescriptionModal = (
+    <Modal.Root state={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} id={itemDescriptionModalContent.id} title={itemDescriptionModalContent.title}>
+      <Modal.Text content={itemDescriptionModalContent.body} />
+      <Divider />
+      <Modal.Actions handleClose={() => setItemDescriptionModalState(false)}>
+        <Modal.EvaluateAction id={itemDescriptionModalContent.id} setModalState={setItemDescriptionModalState} />
+      </Modal.Actions>
+    </Modal.Root>
+  );
+
+  const listModal = (
+    <Modal.Root state={listModalState} handleClose={() => setListModalState(false)} id={listModalContent.id} title={listModalContent.title}>
+      <Modal.List items={listModalContent.items} handleItemClick={handleListItemClick} />
+      <Divider />
+      <Modal.Actions handleClose={() => setListModalState(false)} />
+    </Modal.Root>
+  );
+
+  const modalPersonalsocial = (
+    <Modal.Root state={modalPersonalsocialState} handleClose={() => setModalPersonalsocialState(false)} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
+      <Typography variant='h6' style={{paddingInline:'1rem'}}><GroupIcon  sx={{fontSize: '1.2rem'}} /> Social Group</Typography>
+      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListItemClick} />
+      <Typography variant='h6' style={{paddingInline:'1rem'}}><PersonIcon  sx={{fontSize: '1.2rem'}}  /> Personal Group</Typography>
+      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListItemClick} />
+      <Divider />
+      <Modal.Actions handleClose={() => setModalPersonalsocialState(false)} />
+    </Modal.Root>
+  );
+
+  const snackBarText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+  const [snackBarState, setSnackBarState] = React.useState(false);
+  const formModal = (
+    <Modal.Root state={formModalState} handleClose={() => setFormModalState(false)} id={formModalContent.id} title={formModalContent.title}>
+      <Modal.Form setFormModalState={setFormModalState} title={formModalContent.title} setSnackBarState={setSnackBarState}/>
+      <Modal.Actions handleClose={() => setFormModalState(false)} />
+    </Modal.Root>
+  );
   return (
     <>
-      <TextModal modalState={itemDescriptionModalState} showEvaluate handleClose={() => setItemDescriptionModalState(false)} modalContent={itemDescriptionModalContent} setModalState={setItemDescriptionModalState} />
-      <FormModal formModalState={formModalState} handleClose={() => setFormModalState(false)} setFormModalState={setFormModalState} modalContentForm={formModalContent} />
-      <ListModal modalState={listModalState} setModalstate={setListModalState} handleClose={() => setListModalState(false)} modalContent={listModalContent} handleItemClick={handleListItemClick} />
-      <TextModal modalState={descriptionModalState}  setModalState={setDescriptionModalState} handleClose={() => setDescriptionModalState(false)} modalContent={descriptionModalContent} />
+      <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={snackBarText} severity='success'/>
+      {itemDescriptionModal}
+      {formModal}
+      {listModal}
+      {modalPersonalsocial}
+      {descriptionModal}
 
       <Accordion
         key={data.id}
@@ -190,7 +260,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             backgroundColor: data.headerColor,
             color: '#ffff',
             minHeight: '2rem',
-            height: '1.5rem',
+            height: '2rem',
           }}>
           <Button sx={{ ...buttonStyle, fontSize: '.7rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
             {data.label}
@@ -213,7 +283,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
         }}
         expandIcon={<></>}
       >
-        <Button sx={{...buttonStyle, marginLeft: 'auto'}} variant="outlined" size="small" onClick={handleViewAll}>
+        <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={handleViewAll}>
           <FullscreenIcon sx={{ fontSize: '1rem' }} />
           View All
         </Button>
