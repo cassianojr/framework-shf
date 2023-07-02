@@ -32,7 +32,7 @@ function renderRow(props: ListChildComponentProps) {
       divider={true}
     >
       <ListItemText primary={
-        <Typography sx={{ fontSize: '.6rem' }}>
+        <Typography sx={{ fontSize: '.8rem' }}>
           <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
           {item.name}
         </Typography>} />
