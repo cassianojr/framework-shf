@@ -1,6 +1,6 @@
 interface RatingType {
   id: string;
-  name: string;
+  name?: string;
   rating: number | null;
 }
 
