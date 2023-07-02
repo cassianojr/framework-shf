@@ -2,9 +2,8 @@ import * as React from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
-import { db } from '../services/firebaseConfig';
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import SnackBarComponent from './SnackBarComponent';
+import { FirebaseService } from '../services/FirebaseService';
 
 const labels: { [index: string]: string } = {
   0.5: 'Useless',
@@ -41,7 +40,7 @@ export default function RatingComponent(props: RatingComponentProps) {
   React.useEffect(() => {
     const getRating = () => {
       const rating = localStorage.getItem(id);
-      if(rating){
+      if (rating) {
         return setValue(JSON.parse(rating)?.value || null);
       }
 
@@ -51,28 +50,20 @@ export default function RatingComponent(props: RatingComponentProps) {
   }, [id, setValue]);
 
   function updateRating(rating: string, newValue: number | null) {
-    const { docRef } = JSON.parse(rating);
-    updateDoc(doc(db, "ratings", docRef), {
-      rating: newValue
-    }).then(() => {
+    const { docRef: ratingId } = JSON.parse(rating);
+    FirebaseService.updateRating(newValue, ratingId, () => {
       setSnackBarSuccessState(true);
-    }).catch((error) => {
-      console.error("Error updating document: ", error);
+    }, () => {
       setSnackBarErrorState(true);
     });
-    return;
   }
 
   function createRatingOnFirebase(newValue: number | null) {
-    addDoc(collection(db, "ratings"), {
-      name: id,
-      rating: newValue
-    }).then((docRef) => {
+    const ratingValue = { id, rating: newValue };
+    FirebaseService.saveRating(ratingValue, (docRef) => {
       localStorage.setItem(id, JSON.stringify({ value: newValue, docRef: docRef.id }));
       setSnackBarSuccessState(true);
-      console.log("Document written with ID: ", docRef.id);
-    }).catch((error) => {
-      console.error("Error adding document: ", error);
+    }, () => {
       setSnackBarErrorState(true);
     });
   }

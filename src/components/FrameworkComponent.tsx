@@ -1,9 +1,6 @@
 import { Box, Card, Divider, Grid, Typography } from '@mui/material';
 import { ArcherContainer, ArcherElement } from 'react-archer';
 
-
-import { db } from '../services/firebaseConfig';
-import { collection, onSnapshot } from 'firebase/firestore';
 import { Framework } from '../types/Framework.type';
 
 import AccordionComponent from '../components/AccordionComponent';
@@ -11,6 +8,7 @@ import ListPersonalAndSocial from './ListPersonalAndSocial';
 import React from 'react';
 import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
+import { FirebaseService } from '../services/FirebaseService';
 
 function FrameworkComponent() {
 
@@ -21,21 +19,15 @@ function FrameworkComponent() {
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
   React.useEffect(() => {
-    function getFrameworkData() {
-      onSnapshot(collection(db, "framework-items"), (snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Framework[];
-        setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
-        setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
-        setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
-        setBarriersToImproving(data.filter((item) => item.id === "barriers-to-improving")[0]);
-        setStrategies(data.filter((item) => item.id === "strategies")[0]);
-      });
-    }
 
-    getFrameworkData();
+    FirebaseService.getFrameworkData((data: Framework[]) => {
+      setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
+      setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
+      setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
+      setBarriersToImproving(data.filter((item) => item.id === "barriers-to-improving")[0]);
+      setStrategies(data.filter((item) => item.id === "strategies")[0]);
+    });
+
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
 
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
