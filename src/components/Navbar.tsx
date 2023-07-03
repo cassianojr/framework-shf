@@ -38,6 +38,10 @@ const navItems = [
   {
     name: 'Framework',
     path: '/framework',
+  },
+  {
+    name: 'View Feedback',
+    path: '/view-feedback',
   }
 ];
 
