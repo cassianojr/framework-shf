@@ -263,7 +263,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             minHeight: '2rem',
             height: '2rem',
           }}>
-          <Button sx={{ ...buttonStyle, fontSize: '.7rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
+          <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
             {data.label}
           </Button>
           <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
