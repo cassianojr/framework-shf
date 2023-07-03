@@ -4,7 +4,7 @@ import { Box, Container, Paper, Toolbar, Typography } from '@mui/material';
 import SuggestionTable from '../components/SuggestionsTable';
 import FrameworkRatings from '../components/FrameworkRatings';
 
-export default function ViewData() {
+export default function ViewFeedback() {
 
   return (
     <Box sx={{ backgroundColor: '#f5f5f5' }}>
