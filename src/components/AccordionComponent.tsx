@@ -192,6 +192,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   }
 
+  const handleClose = () =>{
+    setModalPersonalsocialState(false);
+    setBackToListModalState(false);
+    setBackToPersonalSocialListModalState(false);
+    setListModalState(false);
+    setDescriptionModalState(false);
+    setItemDescriptionModalState(false);
+  }
+
   const childWithHandleItemClick = (props.children) ? React.cloneElement(props.children, { handleListItemClick }) : null;
 
   const buttonStyle = {
@@ -210,15 +219,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     <Modal.Root state={descriptionModalState} handleClose={() => setDescriptionModalState(false)} id={descriptionModalContent.id} title={descriptionModalContent.title}>
       <Divider />
       <Modal.Text content={descriptionModalContent.body} />
-      <Modal.Actions handleClose={() => setDescriptionModalState(false)} />
+      <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
   );
 
   const itemDescriptionModal = (
-    <Modal.Root state={itemDescriptionModalState} handleClose={() => setItemDescriptionModalState(false)} id={itemDescriptionModalContent.id} title={itemDescriptionModalContent.title}>
+    <Modal.Root state={itemDescriptionModalState} handleClose={handleClose} id={itemDescriptionModalContent.id} title={itemDescriptionModalContent.title}>
       <Modal.Text content={itemDescriptionModalContent.body} />
       <Divider />
-      <Modal.Actions handleClose={() => setItemDescriptionModalState(false)}>
+      <Modal.Actions handleClose={handleClose}>
 
         <Modal.EvaluateAction id={itemDescriptionModalContent.id} handleClose={()=>{
           setItemDescriptionModalState(false);
@@ -247,21 +256,21 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   );
 
   const listModal = (
-    <Modal.Root state={listModalState} handleClose={() => setListModalState(false)} id={listModalContent.id} title={listModalContent.title}>
+    <Modal.Root state={listModalState} handleClose={handleClose} id={listModalContent.id} title={listModalContent.title}>
       <Modal.List items={listModalContent.items} handleItemClick={handleListItemModalClick} />
       <Divider />
-      <Modal.Actions handleClose={() => setListModalState(false)} />
+      <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
   );
 
   const modalPersonalsocial = (
-    <Modal.Root state={modalPersonalsocialState} handleClose={() => setModalPersonalsocialState(false)} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
+    <Modal.Root state={modalPersonalsocialState} handleClose={handleClose} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> Social Group</Typography>
       <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> Personal Group</Typography>
       <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
       <Divider />
-      <Modal.Actions handleClose={() => setModalPersonalsocialState(false)} />
+      <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
   );
 
