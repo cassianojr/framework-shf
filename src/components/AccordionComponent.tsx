@@ -117,6 +117,9 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     socialGroup: [] as FrameworkItem[]
   });
 
+  const [backToListModalState, setBackToListModalState] = React.useState(false);
+  const [backToPersonalSocialListModalState, setBackToPersonalSocialListModalState] = React.useState(false);
+
   const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
 
     if ((event.target as HTMLDivElement).tagName === 'BUTTON') {
@@ -136,6 +139,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     setListModalState(false);
     setModalPersonalsocialState(false)
     setItemDescriptionModalState(true);
+  }
+  const handleListItemModalClick = (id: string, name: string, description: string) => {
+    setBackToListModalState(true);
+    handleListItemClick(id, name, description);
+  }
+
+  const handleListPersonalSocialItemModalClick = (id: string, name: string, description: string) => {
+    setBackToPersonalSocialListModalState(true);
+    handleListItemClick(id, name, description);
   }
 
   const newSuggestionHandle = (id: string, title: string) => {
@@ -159,18 +171,18 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   }
 
   const handleViewAll = () => {
-    if(data.id === 'social-human-factors'){
+    if (data.id === 'social-human-factors') {
       setModalPersonalsocialContent({
         id: data.id,
         title: data.label,
         personalGroup: data.items.slice(17),
-        socialGroup: data.items.slice(0,17)
+        socialGroup: data.items.slice(0, 17)
       });
 
       setModalPersonalsocialState(true);
       return;
     }
-    
+
     setListModalContent({
       id: data.id,
       title: data.label,
@@ -207,14 +219,36 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       <Modal.Text content={itemDescriptionModalContent.body} />
       <Divider />
       <Modal.Actions handleClose={() => setItemDescriptionModalState(false)}>
-        <Modal.EvaluateAction id={itemDescriptionModalContent.id} setModalState={setItemDescriptionModalState} />
+
+        <Modal.EvaluateAction id={itemDescriptionModalContent.id} handleClose={()=>{
+          setItemDescriptionModalState(false);
+          setBackToListModalState(false);
+          setBackToPersonalSocialListModalState(false);
+        }}>
+          {(backToListModalState || backToPersonalSocialListModalState)?
+            <Button variant="outlined" size="small" onClick={() => {
+              setItemDescriptionModalState(false);
+              if(backToPersonalSocialListModalState){
+                setModalPersonalsocialState(true);
+                return;
+              }
+
+              setBackToListModalState(false);
+              setBackToPersonalSocialListModalState(false);
+
+              setListModalState(true);
+            }}>
+              Back </Button>
+          :<></>}
+
+        </Modal.EvaluateAction>
       </Modal.Actions>
     </Modal.Root>
   );
 
   const listModal = (
     <Modal.Root state={listModalState} handleClose={() => setListModalState(false)} id={listModalContent.id} title={listModalContent.title}>
-      <Modal.List items={listModalContent.items} handleItemClick={handleListItemClick} />
+      <Modal.List items={listModalContent.items} handleItemClick={handleListItemModalClick} />
       <Divider />
       <Modal.Actions handleClose={() => setListModalState(false)} />
     </Modal.Root>
@@ -222,10 +256,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const modalPersonalsocial = (
     <Modal.Root state={modalPersonalsocialState} handleClose={() => setModalPersonalsocialState(false)} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
-      <Typography variant='h6' style={{paddingInline:'1rem'}}><GroupIcon  sx={{fontSize: '1.2rem'}} /> Social Group</Typography>
-      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListItemClick} />
-      <Typography variant='h6' style={{paddingInline:'1rem'}}><PersonIcon  sx={{fontSize: '1.2rem'}}  /> Personal Group</Typography>
-      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListItemClick} />
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> Social Group</Typography>
+      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> Personal Group</Typography>
+      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
       <Divider />
       <Modal.Actions handleClose={() => setModalPersonalsocialState(false)} />
     </Modal.Root>
@@ -235,13 +269,13 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   const [snackBarState, setSnackBarState] = React.useState(false);
   const formModal = (
     <Modal.Root state={formModalState} handleClose={() => setFormModalState(false)} id={formModalContent.id} title={formModalContent.title}>
-      <Modal.Form setFormModalState={setFormModalState} title={formModalContent.title} setSnackBarState={setSnackBarState}/>
+      <Modal.Form setFormModalState={setFormModalState} title={formModalContent.title} setSnackBarState={setSnackBarState} />
       <Modal.Actions handleClose={() => setFormModalState(false)} />
     </Modal.Root>
   );
   return (
     <>
-      <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={snackBarText} severity='success'/>
+      <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={snackBarText} severity='success' />
       {itemDescriptionModal}
       {formModal}
       {listModal}
