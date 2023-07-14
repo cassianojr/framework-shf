@@ -3,19 +3,23 @@ import React from 'react'
 import RatingComponent from '../RatingComponent'
 
 
-interface EvaluateActionProps{
+interface EvaluateActionProps {
   id: string,
-  setModalState: React.Dispatch<React.SetStateAction<boolean>>
+  handleClose: () => void,
+  children?: React.ReactNode
 }
 
-export function ModalEvaluateAction({id, setModalState}: EvaluateActionProps) {
+export function ModalEvaluateAction({ id, children, handleClose }: EvaluateActionProps) {
   return (
     <Grid container justifyContent='space-between' alignItems='center' >
       <Box>
         <Typography>Was this helpful?</Typography>
         <RatingComponent id={id} />
       </Box>
-      <Button onClick={() => setModalState(false)}>Close</Button>
+      <Box>
+        {children ?? <></>}
+        <Button onClick={handleClose}>Close</Button>
+      </Box>
     </Grid>
   )
 }
