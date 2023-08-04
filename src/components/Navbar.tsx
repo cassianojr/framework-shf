@@ -80,8 +80,8 @@ export default function DrawerAppBar(props: Props) {
   const [frameworkDescriptionModalState, setFrameworkDescriptionmodalState] = React.useState(false);
   const frameworkDescriptionModalContent = {
     id: 'framework-shf-description',
-    title: 'Framework SHF-RM-SECO',
-    body: 'About the framework terminology, SHF is the acronym for social and human factors, RM is the acronym for requirements management, and SECO is the acronym for software Ecosystems. The acronyms together form the name Framework SHF-RM-SECO.',
+    title: 'Framework SHFiRM-SECO',
+    body: 'About the framework terminology, SHF is the acronym for social and human factors, RM is the acronym for requirements management, and SECO is the acronym for software Ecosystems. The acronyms together form the name Framework SHFiRM-SECO.',
   };
 
 
@@ -110,7 +110,7 @@ export default function DrawerAppBar(props: Props) {
                 sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', cursor: 'pointer' } }}
                 onClick={() => setFrameworkDescriptionmodalState(true)}
               >
-                Framework SHF-RM-SECO
+                Framework SHFiRM-SECO
               </Typography>
               <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 {navItems.map((item) => (

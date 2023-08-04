@@ -11,7 +11,7 @@ export default function Footer() {
     }}>
       <Container maxWidth="sm">
         <Typography variant="h6" align="center" gutterBottom>
-          Copyringt &copy; {new Date().getFullYear()} -  Framework SHF-RM-SECO
+          Copyringt &copy; {new Date().getFullYear()} -  Framework SHFiRM-SECO
         </Typography>
       </Container>
     </Box>
