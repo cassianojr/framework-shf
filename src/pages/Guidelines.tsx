@@ -18,7 +18,7 @@ function Guidelines() {
         <section id="about">
           <Box sx={{ my: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>
-              Guidelines for using the Framework SHF-RM-SECO
+              Guidelines for using the Framework SHFiRM-SECO
             </Typography>
             <Typography sx={typographyStyle}>
               <i style={{fontWeight:'bold'}}>Ask:</i> make problems visible. The first step in assessing the social and human factors that influences requirements management in software ecosystems is to learn about the day-to-day factors of the professionals working in requirements management activities. With this, ask the professionals on the team what factors they have already faced, present the list of barriers, and understand if they have met some of them in their activities of the requirements management in software ecosystems. It is essential that this step is done individually, and you can also use online forms if you prefer.
