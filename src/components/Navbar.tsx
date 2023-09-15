@@ -46,6 +46,10 @@ const navItems = [
   {
     name: 'Sign Up',
     path: '/sign-up',
+  },
+  {
+    name: 'Sign In',
+    path: '/sign-in'
   }
 ];
 

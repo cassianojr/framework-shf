@@ -5,6 +5,7 @@ import Framework from './pages/Framework'
 import Guidelines from './pages/Guidelines'
 import ViewFeedback from './pages/ViewFeedback'
 import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/guidelines" element={<Guidelines />} />
           <Route path="/view-feedback" element={<ViewFeedback />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-in" element={<SignIn />} />
         </Routes>
       </Router>
     </>
