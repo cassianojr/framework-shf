@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Navbar from '../components/Navbar';
 import { Toolbar } from '@mui/material';
+import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -26,14 +28,32 @@ function Copyright(props: any) {
 }
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const navigate = useNavigate();
+
+  const {signed, createUserEmailPassword} = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
+    const name = data.get('name')?.toString();
+    if(!name) return alert('Name is required');
+
+    const email = data.get('email')?.toString();
+    if(!email) return alert('Email is required');
+    
+    const password = data.get('password')?.toString();
+    if(!password) return alert('Password is required');
+
+    const success = await createUserEmailPassword(email, password, name);
+    if(!success){
+      alert('Error creating user');
+    }
   };
+
+  if(!signed) navigate('/');
 
   return (
     <>
@@ -60,10 +80,10 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   autoComplete="name"
-                  name="fullName"
+                  name="name"
                   required
                   fullWidth
-                  id="fullName"
+                  id="name"
                   label="Name"
                   autoFocus
                 />
