@@ -13,35 +13,43 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Toolbar } from '@mui/material';
 import Navbar from '../components/Navbar';
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © 2023 '}
-      <Link color="inherit" href="https://framework-shf.vercel.app/">
-        Framework SHFiRM-SECO
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
+import Footer from '../components/Footer';
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const navigate = useNavigate();
+
+  const { signed, signInEmailPassword } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const email = data.get('email')?.toString();
+    if (!email) return alert('Email is required');
+
+    const password = data.get('password')?.toString();
+    if (!password) return alert('Password is required');
+
+    const success = await signInEmailPassword(email, password);
+    if (!success) {
+      alert('Error signing in');
+    }
+
+    navigate('/dashboard');
+
   };
+
+  if (signed) navigate('/dashboard');
 
   return (
     <>
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem'}}>
         <CssBaseline />
         <Box
           sx={{
@@ -66,6 +74,7 @@ export default function SignIn() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              type='email'
               autoFocus
             />
             <TextField
@@ -104,8 +113,8 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <Footer />
     </>
   );
 }

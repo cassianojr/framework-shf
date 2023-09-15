@@ -7,6 +7,7 @@ import ViewFeedback from './pages/ViewFeedback'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import AuthenticationProvider from './context/authenticationContext'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/view-feedback" element={<ViewFeedback />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </AuthenticationProvider>
       </Router>

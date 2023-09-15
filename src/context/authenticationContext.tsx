@@ -12,8 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 import { auth } from "../services/firebaseConfig";
 
-
-
 interface AuthenticationProviderProps {
   children?: React.ReactNode,
 }
@@ -84,7 +82,7 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
 
         //redirect to /
-        return navigate('/');
+        return navigate('/dashboard');
 
       }).catch((err) => console.log(err));
 

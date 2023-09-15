@@ -13,53 +13,42 @@ import Navbar from '../components/Navbar';
 import { Toolbar } from '@mui/material';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © 2023 '}
-      <Link color="inherit" href="https://framework-shf.vercel.app/">
-        Framework SHFiRM-SECO
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const {signed, createUserEmailPassword} = React.useContext(AuthenticationContext) as AuthenticationContextType;
+  const { signed, createUserEmailPassword } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+
     const name = data.get('name')?.toString();
-    if(!name) return alert('Name is required');
+    if (!name) return alert('Name is required');
 
     const email = data.get('email')?.toString();
-    if(!email) return alert('Email is required');
-    
+    if (!email) return alert('Email is required');
+
     const password = data.get('password')?.toString();
-    if(!password) return alert('Password is required');
+    if (!password) return alert('Password is required');
 
     const success = await createUserEmailPassword(email, password, name);
-    if(!success){
+    if (!success) {
       alert('Error creating user');
     }
   };
 
-  if(!signed) navigate('/');
+  if (signed) navigate('/dashboard');
 
   return (
     <>
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem'}}>
         <CssBaseline />
         <Box
           sx={{
@@ -96,6 +85,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  type='email'
                 />
               </Grid>
               <Grid item xs={12}>
@@ -127,8 +117,8 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Footer />
     </>
 
   );
