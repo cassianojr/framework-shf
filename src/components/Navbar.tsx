@@ -42,6 +42,10 @@ const navItems = [
   {
     name: 'View Feedback',
     path: '/view-feedback',
+  },
+  {
+    name: 'Sign Up',
+    path: '/sign-up',
   }
 ];
 
