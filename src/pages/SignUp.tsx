@@ -48,7 +48,7 @@ export default function SignUp() {
     <>
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem'}}>
+      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem', height:'75vh'}}>
         <CssBaseline />
         <Box
           sx={{

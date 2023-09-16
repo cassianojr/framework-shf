@@ -9,13 +9,31 @@ import Deposits from '../components/Dashboard/Deposits';
 import Orders from '../components/Dashboard/Orders';
 import Footer from '../components/Footer';
 import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
+import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
+import React from "react";
+
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const [appLoading, setAppLoading] = React.useState(true);
+
+  const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  const user = getUser();
+
+  React.useEffect(() => {
+    
+    if (!loading && !signed) navigate('/sign-in');
+    if (!loading && signed) setAppLoading(false);
+
+  }, [signed, navigate, loading]);
+
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    !appLoading&&<Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <DashboardAppbar />
+      <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} />
       <Box
         component="main"
         sx={{

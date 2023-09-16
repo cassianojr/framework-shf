@@ -1,9 +1,8 @@
-import { Badge, Toolbar, Typography, styled } from "@mui/material";
+import { Toolbar, Typography, styled } from "@mui/material";
 import React from "react";
 import IconButton from '@mui/material/IconButton';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import AppDrawer from "./AppDrawer";
 import AccountMenu from "./AccountMenu";
 
@@ -30,7 +29,13 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-export default function DashboardAppbar() {
+interface DashboardAppbarProps {
+  handleSignOut: () => void,
+  displayName: string | null
+}
+
+export default function DashboardAppbar({handleSignOut, displayName}: DashboardAppbarProps) {
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -63,15 +68,10 @@ export default function DashboardAppbar() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            Welcome, {displayName}!
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
 
-          <AccountMenu />
+          <AccountMenu handleSignOut={handleSignOut} displayName={displayName}/>
           
         </Toolbar>
       </AppBar>

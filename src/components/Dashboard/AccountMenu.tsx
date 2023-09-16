@@ -9,19 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
-import { useNavigate } from 'react-router-dom';
 
-export default function AccountMenu() {
-  const navigate = useNavigate();
+interface AccountMenuProps {
+  handleSignOut: () => void,
+  displayName: string | null
+}
 
-  const { signed, signOutFromApp } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+export default function AccountMenu({handleSignOut, displayName}: AccountMenuProps) {
 
-  React.useEffect(() => {
-    if (!signed) navigate('/sign-in');
 
-  }, [signed, navigate]);
-  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,12 +26,6 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleLogout = async () => {
-    await signOutFromApp();
-    navigate('/sign-in');
-  }
-
 
   return (
     <React.Fragment>
@@ -49,7 +39,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{displayName?.charAt(0)}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -98,7 +88,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleLogout}>
+        <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

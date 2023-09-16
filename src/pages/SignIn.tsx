@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -43,13 +41,16 @@ export default function SignIn() {
 
   };
 
-  if (signed) navigate('/dashboard');
+  React.useEffect(() => {
+    if (signed) navigate('/dashboard');
+  }, [signed, navigate]);
+
 
   return (
     <>
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem'}}>
+      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem', height:'75vh'}}>
         <CssBaseline />
         <Box
           sx={{
@@ -87,10 +88,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -99,18 +97,14 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="sign-up" variant="body2">
+                Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
+
           </Box>
         </Box>
       </Container>

@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../services/firebaseConfig";
+import { User } from "../types/User.type";
 
 interface AuthenticationProviderProps {
   children?: React.ReactNode,
@@ -18,7 +19,8 @@ interface AuthenticationProviderProps {
 
 export interface AuthenticationContextType{
   signed: boolean,
-  user: any,
+  loading: boolean,
+  getUser: () => User,
   signOutFromApp: () => void,
   signInGoogle: () => void,
   createUserEmailPassword: (email: string, password: string, name: string) => Promise<boolean | undefined>,
@@ -29,7 +31,8 @@ const provider = new GoogleAuthProvider();
 export const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
 
 const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
-  const [user, setUser] = useState(null as any);
+  const [user, setUser] = useState(null as string | null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -44,7 +47,9 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
     };
 
     loadStoreAuth();
-  });
+    setLoading(false);
+  }, [user, setUser, setLoading]);
+
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
@@ -55,7 +60,7 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
         // The signed-in user info.
         const user = result.user;
 
-        setUser(user);
+        setUser(JSON.stringify(user));
 
         sessionStorage.setItem("@AuthFirebase:token", token);
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
@@ -76,12 +81,11 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
       }
 
       updateProfile(auth.currentUser, { displayName: name }).then(() => {
-        setUser(user);
+        setUser(JSON.stringify(user));
 
         sessionStorage.setItem("@AuthFirebase:token", token);
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
 
-        //redirect to /
         return navigate('/dashboard');
 
       }).catch((err) => console.log(err));
@@ -99,7 +103,7 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
       const token = await credential.user.getIdToken();
       const user = credential.user;
 
-      setUser(user);
+      setUser(JSON.stringify(user));
 
       sessionStorage.setItem("@AuthFirebase:token", token);
       sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
@@ -113,10 +117,10 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
     signOut(auth).then(() => {
       sessionStorage.clear();
       setUser(null);
-      return navigate('/');
+      return navigate('/sign-in');
     }).catch((error) => {
       console.log(error);
-      return navigate('/');
+      return navigate('/dashboard');
     });
   }
 
@@ -124,7 +128,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
     <AuthenticationContext.Provider
       value={{
         signed: !!user,
-        user,
+        loading,
+        getUser: () => JSON.parse(user as string) as User??"",
         signOutFromApp,
         signInGoogle,
         createUserEmailPassword,
