@@ -14,12 +14,13 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import Footer from '../components/Footer';
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function SignIn() {
 
   const navigate = useNavigate();
 
-  const { signed, signInEmailPassword } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+  const { signed, signInEmailPassword, signInGoogle } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -96,6 +97,10 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <Button fullWidth variant="outlined" sx={{ mb: 2 }} onClick={signInGoogle}>
+              <GoogleIcon sx={{ mr: 1 }} />
+              Sign In with Google
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

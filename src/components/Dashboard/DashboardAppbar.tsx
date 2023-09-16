@@ -31,10 +31,11 @@ const AppBar = styled(MuiAppBar, {
 
 interface DashboardAppbarProps {
   handleSignOut: () => void,
-  displayName: string | null
+  displayName: string | null,
+  photoURL: string | null
 }
 
-export default function DashboardAppbar({handleSignOut, displayName}: DashboardAppbarProps) {
+export default function DashboardAppbar({handleSignOut, displayName, photoURL}: DashboardAppbarProps) {
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -71,7 +72,7 @@ export default function DashboardAppbar({handleSignOut, displayName}: DashboardA
             Welcome, {displayName}!
           </Typography>
 
-          <AccountMenu handleSignOut={handleSignOut} displayName={displayName}/>
+          <AccountMenu handleSignOut={handleSignOut} displayName={displayName} photoURL={photoURL}/>
           
         </Toolbar>
       </AppBar>

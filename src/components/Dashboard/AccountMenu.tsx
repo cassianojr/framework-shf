@@ -12,10 +12,11 @@ import Logout from '@mui/icons-material/Logout';
 
 interface AccountMenuProps {
   handleSignOut: () => void,
-  displayName: string | null
+  displayName: string | null,
+  photoURL: string | null
 }
 
-export default function AccountMenu({handleSignOut, displayName}: AccountMenuProps) {
+export default function AccountMenu({ handleSignOut, displayName, photoURL }: AccountMenuProps) {
 
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,6 +27,14 @@ export default function AccountMenu({handleSignOut, displayName}: AccountMenuPro
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const ProfileAvatar = () => {
+    if (photoURL) {
+      return <Avatar src={photoURL} />
+    } else {
+      return <Avatar>{displayName?.charAt(0)}</Avatar>
+    }
+  }
 
   return (
     <React.Fragment>
@@ -39,7 +48,7 @@ export default function AccountMenu({handleSignOut, displayName}: AccountMenuPro
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{displayName?.charAt(0)}</Avatar>
+            <ProfileAvatar />
           </IconButton>
         </Tooltip>
       </Box>
@@ -79,7 +88,7 @@ export default function AccountMenu({handleSignOut, displayName}: AccountMenuPro
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
+        <ProfileAvatar /> My Profile
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

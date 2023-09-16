@@ -35,7 +35,7 @@ export default function Dashboard() {
   return (
     !appLoading && <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} />
+      <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL}/>
       <Box
         component="main"
         sx={{
