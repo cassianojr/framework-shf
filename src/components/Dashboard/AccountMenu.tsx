@@ -9,8 +9,19 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountMenu() {
+  const navigate = useNavigate();
+
+  const { signed, signOutFromApp } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  React.useEffect(() => {
+    if (!signed) navigate('/sign-in');
+
+  }, [signed, navigate]);
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -19,6 +30,13 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = async () => {
+    await signOutFromApp();
+    navigate('/sign-in');
+  }
+
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -80,7 +98,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
