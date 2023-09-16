@@ -4,15 +4,17 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from '../components/Dashboard/Chart';
-import Deposits from '../components/Dashboard/Deposits';
-import Orders from '../components/Dashboard/Orders';
 import Footer from '../components/Footer';
 import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
+import { Button, Link, Stack } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
+const btnStyle = {
+  p: 1.5
+}
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ export default function Dashboard() {
   const user = getUser();
 
   React.useEffect(() => {
-    
+
     if (!loading && !signed) navigate('/sign-in');
     if (!loading && signed) setAppLoading(false);
 
@@ -31,7 +33,7 @@ export default function Dashboard() {
 
 
   return (
-    !appLoading&&<Box sx={{ display: 'flex' }}>
+    !appLoading && <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} />
       <Box
@@ -47,38 +49,23 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, height: '79vh' }}>
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item sm={12}>
               <Paper
                 sx={{
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 240,
+                  height: '75vh',
                 }}
               >
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 240,
-                }}
-              >
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                <Orders />
+                <Stack direction="row" spacing={2}>
+                  <Button component={Link} variant='outlined' href='#' sx={btnStyle}>ECOS 1</Button>
+                  
+                  <Button variant='contained' component={Link} href='#' sx={btnStyle}><AddIcon/> Add new ECOS</Button>
+                </Stack>
               </Paper>
             </Grid>
           </Grid>

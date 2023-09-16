@@ -2,7 +2,7 @@ import { Divider, List, Toolbar, styled } from "@mui/material";
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 
 
 const drawerWidth = 240;
@@ -57,8 +57,6 @@ export default function AppDrawer({open, toggleDrawer}:AppDrawerProps){
         <Divider />
         <List component="nav">
           {mainListItems}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
         </List>
       </Drawer>
   );
