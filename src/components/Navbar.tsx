@@ -20,6 +20,7 @@ import {
 
 import { Link } from 'react-router-dom';
 import { Modal } from './Modal';
+import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 
 interface Props {
   window?: () => Window;
@@ -29,19 +30,44 @@ const drawerWidth = 240;
 const navItems = [
   {
     name: 'Home',
-    path: '/'
+    path: '/',
+    onClick: () => window.scrollTo(0, 0)
   },
   {
     name: 'Guidelines',
-    path: '/guidelines',
+    path: '/guidelines'
   },
   {
     name: 'Framework',
-    path: '/framework',
+    path: '/framework'
   },
   {
     name: 'View Feedback',
-    path: '/view-feedback',
+    path: '/view-feedback'
+  }
+];
+
+const notLoggedLinks = [
+  ...navItems,
+  {
+    name: 'Sign Up',
+    path: '/sign-up',
+  },
+  {
+    name: 'Sign In',
+    path: '/sign-in'
+  }
+];
+
+const loggedLinks = [
+  ...navItems,
+  {
+    name: 'Dashboard',
+    path: '/dashboard'
+  },
+  {
+    name: 'Sign Out',
+    path: '#'
   }
 ];
 
@@ -53,6 +79,9 @@ export default function DrawerAppBar(props: Props) {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const { signed, signOutFromApp } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  const links = signed ? loggedLinks : notLoggedLinks;
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -61,7 +90,7 @@ export default function DrawerAppBar(props: Props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {links.map((item) => (
           <MuiLink component={Link} to={item.path} key={item.name} underline='none' color='inherit'>
             <ListItem key={item.name} disablePadding>
               <ListItemButton sx={{ textAlign: 'center' }}>
@@ -84,6 +113,13 @@ export default function DrawerAppBar(props: Props) {
     body: 'About the framework terminology, SHF is the acronym for social and human factors, RM is the acronym for requirements management, and SECO is the acronym for software Ecosystems. The acronyms together form the name Framework SHFiRM-SECO.',
   };
 
+
+
+  const handleSignOut = (itemName:string) => {
+    if(itemName !== 'Sign Out') return;
+    signOutFromApp();
+    handleDrawerToggle();
+  }
 
   return (
     <>
@@ -113,8 +149,8 @@ export default function DrawerAppBar(props: Props) {
                 Framework SHFiRM-SECO
               </Typography>
               <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                {navItems.map((item) => (
-                  <Link to={item.path} key={item.name}>
+                {links.map((item) => (
+                  <Link to={item.path} key={item.name} onClick={()=>handleSignOut(item.name)}>
                     <Button sx={{ color: '#fff' }}>
                       {item.name}
                     </Button>
