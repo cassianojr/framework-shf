@@ -68,4 +68,5 @@ export class FirebaseService {
       callBack(data);
     });
   }
+
 }
