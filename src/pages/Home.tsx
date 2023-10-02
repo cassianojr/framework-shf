@@ -9,7 +9,7 @@ function Home() {
 
   const heroData = {
     title: 'Explore fatores sociais e humanos',
-    description: 'O framework SHFiRM-SECO é uma ferramenta para ajudar a identificação e a melhoria dos fatores sociais e humanos em gerência de requisitos em ecossistemas de software.',
+    description: 'O framework SHFiRM-SECO é uma ferramenta para auxiliar na identificação e melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de software.',
     image,
     button: 'Teste agora!',
     buttonLink: '/framework'
@@ -31,7 +31,7 @@ function Home() {
             </Typography>
 
             <Typography variant="h4" component="h1" gutterBottom>
-              Tenha uma visão 360 dos fatores sociais e humanos
+              Obtenha uma visão 360 dos fatores sociais e humanos na Gerência de Requisitos
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>

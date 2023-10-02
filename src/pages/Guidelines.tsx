@@ -18,17 +18,17 @@ function Guidelines() {
         <section id="about">
           <Box sx={{ my: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>
-              Guidelines for using the Framework SHFiRM-SECO
+              Diretrizes para Utilização
             </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>Ask:</i> make problems visible. The first step in assessing the social and human factors that influence requirements management in software ecosystems is to learn about the day-to-day factors of the professionals working in requirements management activities. With this, ask the professionals on the team what factors they have already faced, present the list of barriers, and understand if they have met some of them in their activities of the requirements management in software ecosystems. It is essential that this step is done individually, and you can also use online forms if you prefer.
+              <i style={{fontWeight:'bold'}}>Pergunte (Ask):</i> A primeira etapa é identificar os problemas. O primeiro passo para avaliar os FSH que influenciam a gerência de requisitos em ECOS é conhecer os fatores do dia a dia dos profissionais que atuam nas atividades da gerência de requisitos. Com isso, pergunte aos profissionais da equipe quais fatores eles já enfrentaram, apresente a lista de barreiras e entenda se eles já encontraram algumas delas em suas atividades da gerência de requisitos em ECOS. É fundamental que esta etapa seja feita individualmente, podendo também utilizar formulários on-line se preferir.
             </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>Plan:</i>  the improvement strategies should occur at the individual team and organizational level, depending on the identified factors and barriers. After collecting feedback, the responses must be evaluated to determine which barriers and factors require prioritization for improvement. One must plan improvement strategies and allocate financial resources for rectification if necessary.
-            </Typography>
+              <i style={{fontWeight:'bold'}}>Planeje (Plan):</i> As estratégias de melhoria devem ocorrer no nível individual da equipe e organizacional, dependendo dos fatores e barreiras identificados. Após coletar feedback, as respostas devem ser avaliadas para determinar quais barrerias e fatores requerem a priorização para melhoria. Deve-se planejar estratégias de melhoria e alocar recursos financeiros para retificação, se necessário.
+              </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>Action:</i> continuous, minor improvements are key. Gradually implement the improvement strategies and assess if they effectively address the barriers and factors. Monitoring the strategy’s success is essential for overcoming barriers and improving social and human factors. Once the planned improvements are implemented, repeat this three-step process to sustain progress and address the following factors and barriers, thereby maintaining a continuous improvement process.
-            </Typography>
+              <i style={{fontWeight:'bold'}}>Execute (Act):</i> Pequenas melhorias contínuas e iterativas são fundamentais. Implemente gradualmente as estratégias de melhoria e avalie se elas efetivamente abordam as barreiras e os fatores. Acompanhar o sucesso das estratégias é fundamental para superar as barreiras e melhorar os FSH. Depos que as melhorias planejadas forem implementadas, repita esse processo de três etapas iterativamente para sustentar o progresso e abordar os seguintes fatores e barreiras, mantendo assim um processo de melhoria contínua.
+              </Typography>
 
           </Box>
         </section>

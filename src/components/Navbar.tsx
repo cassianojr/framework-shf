@@ -42,7 +42,7 @@ const navItems = [
     path: '/framework'
   },
   {
-    name: 'Visualizar feedback',
+    name: 'Visualizar sugestões',
     path: '/view-feedback'
   }
 ];
@@ -50,11 +50,11 @@ const navItems = [
 const notLoggedLinks = [
   ...navItems,
   {
-    name: 'Login',
+    name: 'Entrar',
     path: '/sign-up',
   },
   {
-    name: 'Registre-se',
+    name: 'Cadastre-se',
     path: '/sign-in'
   }
 ];
