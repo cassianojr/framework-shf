@@ -8,7 +8,7 @@ import image from '../assets/images/hero.jpg';
 function Home() {
 
   const heroData = {
-    title: 'Explore social and human factors',
+    title: 'Explore fatores sociais e humanos',
     description: 'The framework SHFiRM-SECO is a tool to help the identification and improvement of social and human factors in requirements management in software ecosystems.',
     image,
     button: 'Try now!',
