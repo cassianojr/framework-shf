@@ -48,7 +48,6 @@ export default function ECOSDashboard() {
 
   }, [signed, navigate, loading, user.uid, ecosId]);
 
-
   return (
     !appLoading &&
     <>

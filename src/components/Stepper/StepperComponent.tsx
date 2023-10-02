@@ -8,19 +8,12 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
+import { Step, StepType } from '../../types/Step.type';
+import CorrelateComponent from './CorrelateComponent';
 
-export interface Step {
-  label: string,
-  listItems: {
-    id: string,
-    name: string,
-    selected: boolean,
-    description?: string,
-  }[]
-}
 interface StepData {
   steps: Step[],
-  setSteps: React.Dispatch<React.SetStateAction<any[]>>
+  setSteps: React.Dispatch<React.SetStateAction<Step[]>>
 }
 
 export default function StepperComponent(props: StepData) {
@@ -30,6 +23,7 @@ export default function StepperComponent(props: StepData) {
   const [items, setItems] = React.useState(steps[activeStep].listItems);
   const [selectedItems, setSelectedItems] = React.useState(steps.map((step: Step) => {
     return {
+      id: step.id,
       step: step.label,
       selectedItemsInStep: step.listItems.filter((listItem) => listItem.selected)
     }
@@ -40,16 +34,33 @@ export default function StepperComponent(props: StepData) {
   const handleSelectedItems = () => {
     const selectedItemsInSteps = steps.map((step: Step) => {
       const selectedItemsInStep = step.listItems.filter((listItem) => listItem.selected);
+
       return {
+        id: step.id,
         step: step.label,
         selectedItemsInStep
       };
-    }
-    );
+    });
+
+    steps.map((step: Step) => {
+      if (step.type != StepType.correlate) {
+        return step;
+      }
+      selectedItemsInSteps.map((selectedItemsInStep) => {
+        if (selectedItemsInStep.id == step?.correlateId) {
+          step.correlateWith = selectedItemsInStep.selectedItemsInStep;
+        }
+
+        if (selectedItemsInStep.id == step?.correlatedToId) {
+          step.itemsToCorrelate = selectedItemsInStep.selectedItemsInStep;
+        }
+      });
+      return step;
+    });
 
     setSelectedItems(selectedItemsInSteps);
   }
-
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setItems(steps[activeStep + 1].listItems);
@@ -84,9 +95,6 @@ export default function StepperComponent(props: StepData) {
     });
   }
 
-  console.log(selectedItems);
-  
-
   return (
     <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2} >
       <Paper
@@ -99,14 +107,14 @@ export default function StepperComponent(props: StepData) {
           pl: 2,
         }}
       >
-        <Typography variant='h4' sx={{textAlign:'center',width:'100%'}}>{steps[activeStep].label}</Typography>
+        <Typography variant='h4' sx={{ textAlign: 'center', width: '100%' }}>{steps[activeStep].label}</Typography>
       </Paper>
       <Divider sx={{ marginTop: '1.5rem' }} />
       <Box sx={{ width: '100%', p: 2 }} >
-        {(activeStep === maxSteps - 1) ? (
-          <Typography>fim</Typography>
+        {(activeStep === maxSteps) ? (
+          <Typography>{selectedItems[0].id}</Typography>
         ) : (
-          <ListCheckbox listItems={items} handleToggle={handleToggle} />
+          ((steps[activeStep].type == StepType.listSelect) ? <ListCheckbox listItems={items} handleToggle={handleToggle} /> : <CorrelateComponent items={steps[activeStep]} />)
         )}
       </Box>
       <MobileStepper
