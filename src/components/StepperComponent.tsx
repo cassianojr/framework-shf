@@ -84,6 +84,9 @@ export default function StepperComponent(props: StepData) {
     });
   }
 
+  console.log(selectedItems);
+  
+
   return (
     <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2} >
       <Paper

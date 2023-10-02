@@ -8,8 +8,8 @@ import image from '../assets/images/hero.jpg';
 function Home() {
 
   const heroData = {
-    title: 'Explore human and social factors',
-    description: 'The Framework SHFiRM-SECO is a tool to help identify and improve social and human factors in requirements management in software ecosystems.',
+    title: 'Explore social and human factors',
+    description: 'The framework SHFiRM-SECO is a tool to help the identification and improvement of social and human factors in requirements management in software ecosystems.',
     image,
     button: 'Try now!',
     buttonLink: '/framework'
@@ -24,16 +24,16 @@ function Home() {
         <section id="about">
           <Box sx={{ my: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>
-              About the Framework
+              ABOUT the Framework
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom sx={{textAlign:'justify'}}>
-              Identifying and improving social and human factors in requirements management in software ecosystems is a challenge. The Framework SHFiRM-SECO supports identifying and improving these factors during requirements management activities in software ecosystems.
+            <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
+              Identifying and improving social and human factors in requirements management in software ecosystems is challenging. The Framework SHFiRM-SECO supports identifying and improving social and human factors in requirements management in software ecosystems.
             </Typography>
 
             <Typography variant="h4" component="h1" gutterBottom>
               Get a 360 view of social and human factors
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom sx={{textAlign:'justify'}}>
+            <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>
                 <li>Identify the social and human factors that influence requirements management activities in your software ecosystem; </li>
                 <li>Identify the contextual characteristics of requirements management in your software ecosystem;</li>
