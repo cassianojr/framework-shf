@@ -35,10 +35,10 @@ function Home() {
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>
-                <li>Identifique os Fatores Sociais e Humanos que influenciam as atividades de Gerência de Requisitos em seu Ecossistema de Software;</li>
-                <li>Identifique as características contextuais da Gerência de Requisitos em seu Ecossistema de Software;</li>
-                <li>Aponte as barreiras que você enfrenta para melhorar os Fatores Sociais e Humanos;</li>
-                <li>Receba sugestões para estratégias e mecanismos de enfrentamento para usar na Gerência de Requisitos em seu Ecossistema de Software;</li>
+                <li>Identifique os fatores sociais e humanos que influenciam as atividades da gerência de requisitos em seu ecossistema de software;</li>
+                <li>Identifique as características contextuais da gerência de requisitos em seu ecossistema de software;</li>
+                <li>Aponte as barreiras que você enfrenta para melhorar os fatores sociais e humanos na gerência de requisitos em seu ecossistema de software;</li>
+                <li>Obtenha sugestões de estratégias de melhoria e mecanismos de enfrentamento para usar durante as atividades da gerência de requisitos em seu ecossistema de software.</li>
               </ol>
             </Typography>
             <Button

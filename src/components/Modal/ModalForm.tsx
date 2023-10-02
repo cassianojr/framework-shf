@@ -53,7 +53,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="type"
               name="type"
-              label="Type"
+              label="Tipo"
               autoFocus
               disabled
               value={title}
@@ -65,7 +65,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="title"
               name="title"
-              label="Title"
+              label="Título"
               onChange={handleFormChange}
               value={formState.title}
               autoFocus
@@ -77,7 +77,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="description"
               name="description"
-              label="Description"
+              label="Descrição"
               onChange={handleFormChange}
               value={formState.description}
               multiline
