@@ -8,14 +8,23 @@ import Footer from '../components/Footer';
 import StepperComponent from '../components/StepperComponent';
 import { Framework } from '../types/Framework.type';
 import { FirebaseService } from '../services/FirebaseService';
+import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function EcosSurvey() {
 
-  const [loading, setLoading] = React.useState(true);
-
   const [steps, setSteps] = React.useState([] as any[]);
+  const [appLoading, setAppLoading] = React.useState(true);
+  const navigate = useNavigate();
+
+  const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
   React.useEffect(() => {
+
+    if (loading) return;
+
+    if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
+
     const questions = [
       {
         questionId: 'contextual-characteristics',
@@ -62,10 +71,11 @@ export default function EcosSurvey() {
           }
       }));
 
-      setLoading(false);
     });
 
-  }, [setLoading, setSteps]);
+    setAppLoading(false);
+
+  },[loading, navigate, signed, setAppLoading, setSteps]);
 
   steps.sort((a, b) => a.order - b.order);
   return (
@@ -75,7 +85,7 @@ export default function EcosSurvey() {
       <Container component="main" style={{ marginBottom: '1rem', minHeight: '75vh' }}>
         <CssBaseline />
         <Box sx={{ marginTop: 8 }}>
-          {!loading && <StepperComponent steps={steps} setSteps={setSteps} />}
+          {(!appLoading && steps.length != 0) && <StepperComponent steps={steps} setSteps={setSteps} />}
         </Box>
       </Container>
       <Footer />

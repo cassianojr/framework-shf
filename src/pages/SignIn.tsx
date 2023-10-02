@@ -22,6 +22,9 @@ export default function SignIn() {
 
   const { signed, signInEmailPassword, signInGoogle } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
+  const queryParams = new URLSearchParams(window.location.search);
+  const redirect = queryParams.get('redirect');
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,13 +41,13 @@ export default function SignIn() {
       alert('Error signing in');
     }
 
-    navigate('/dashboard');
+    navigate((!redirect)?'/dashboard':redirect);
 
   };
 
   React.useEffect(() => {
-    if (signed) navigate('/dashboard');
-  }, [signed, navigate]);
+    if (signed) navigate((!redirect)?'/dashboard':redirect);
+  }, [signed, navigate, redirect]);
 
 
   return (
@@ -104,7 +107,7 @@ export default function SignIn() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="sign-up" variant="body2">
+                <Link href={`sign-up?${queryParams}`} variant="body2">
                 Don't have an account? Sign Up
                 </Link>
               </Grid>

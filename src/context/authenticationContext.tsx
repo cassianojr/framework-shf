@@ -76,8 +76,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
       const user = credential.user;
 
       if (!auth || !auth.currentUser) {
-        console.log("bug");
-        return;
+        console.log("user not logged in");
+        return false;
       }
 
       updateProfile(auth.currentUser, { displayName: name }).then(() => {
@@ -85,8 +85,6 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
         sessionStorage.setItem("@AuthFirebase:token", token);
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
-
-        return navigate('/dashboard');
 
       }).catch((err) => console.log(err));
 

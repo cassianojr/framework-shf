@@ -20,8 +20,10 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const { signed, createUserEmailPassword, signInGoogle } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+  const { signed, createUserEmailPassword, signInGoogle, signInEmailPassword } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
+  const queryParams = new URLSearchParams(window.location.search);
+  const redirect = queryParams.get('redirect');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,10 +41,23 @@ export default function SignUp() {
     const success = await createUserEmailPassword(email, password, name);
     if (!success) {
       alert('Error creating user');
+      return;
     }
+
+    signInEmailPassword(email, password).then((success) => {
+      if (!success) {
+        alert('Error signing in');
+        return;
+      }
+      navigate((!redirect)?'/dashboard':redirect);
+    });
+
   };
 
-  if (signed) navigate('/dashboard');
+  React.useEffect(() => {
+    if (signed) navigate((!redirect)?'/dashboard':redirect);
+  }, [signed, navigate, redirect]);
+
 
   return (
     <>
