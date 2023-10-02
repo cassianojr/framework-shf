@@ -7,7 +7,7 @@ interface ModalProps {
 export function ModalActions({ handleClose, children }: ModalProps) {
   return (
     <DialogActions>
-      {children??<Button onClick={handleClose}>Close</Button>}
+      {children??<Button onClick={handleClose}>Fechar</Button>}
     </DialogActions>
   )
 }

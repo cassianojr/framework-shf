@@ -13,12 +13,12 @@ export function ModalEvaluateAction({ id, children, handleClose }: EvaluateActio
   return (
     <Grid container justifyContent='space-between' alignItems='center' >
       <Box>
-        <Typography>Was this helpful?</Typography>
+        <Typography>Isso foi útil?</Typography>
         <RatingComponent id={id} />
       </Box>
       <Box>
         {children ?? <></>}
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose}>Fechar</Button>
       </Box>
     </Grid>
   )

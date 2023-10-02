@@ -91,7 +91,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               color="primary"
               type="submit"
             >
-              Submit
+              Enviar
             </Button>
           </Grid>
         </Grid>

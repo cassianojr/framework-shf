@@ -37,7 +37,7 @@ function FrameworkComponent() {
 
   const centerModalContent = {
     id: 'requirements-management in SECO',
-    title: 'REQUIREMENTS MANAGMENT IN SECO'
+    title: 'GERÊNCIA DE REQUISITOS EM ECOS'
   }
 
   return (
@@ -115,7 +115,7 @@ function FrameworkComponent() {
                     >
                       <Card elevation={8} style={{ maxWidth: '40%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white', cursor: 'pointer' }} onClick={() => setCenterModalState(true)}>
                         <Typography sx={{ fontSize: '.8rem', border: '1px solid white', borderRadius: '.1rem', padding: '.3rem' }}>
-                          REQUIREMENTS MANAGMENT IN SECO
+                          GERÊNCIA DE REQUISITOS EM ECOS
                         </Typography>
                       </Card>
                     </ArcherElement>

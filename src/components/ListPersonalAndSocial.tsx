@@ -41,7 +41,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         <ListItemIcon>
           <GroupIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
+        <ListItemText primary="Grupo Social" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
         {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
@@ -52,7 +52,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         <ListItemIcon>
           <PersonIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
+        <ListItemText primary="Grupo Pessoal" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
         {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>

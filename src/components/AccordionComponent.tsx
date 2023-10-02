@@ -311,7 +311,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           </Button>
           <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
             <AddIcon sx={{ fontSize: '1rem' }} />
-            Suggest new
+            Sugerir Novo
           </Button>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
@@ -329,7 +329,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       >
         <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={handleViewAll}>
           <FullscreenIcon sx={{ fontSize: '1rem' }} />
-          View All
+          Visualizar Todos
         </Button>
       </AccordionSummary>
     </>

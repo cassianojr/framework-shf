@@ -31,7 +31,7 @@ function Home() {
             </Typography> */}
 
             <Typography variant="h4" component="h1" gutterBottom>
-              Obtenha uma visão 360º dos Fatores Sociais e Humanos na gerência de requisitos
+              Obtenha uma Visão 360º dos Fatores Sociais e Humanos na Gerência de Requisitos
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>
