@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import AuthenticationProvider from './context/authenticationContext'
 import Dashboard from './pages/Dashboard'
+import ECOSDashboard from './pages/ECOSDashboard'
+import EcosSurvey from './pages/EcosSurvey'
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/ecos-dashboard/:ecosId" element={<ECOSDashboard />} />
+            <Route path="/ecos-survey/:ecosId" element={<EcosSurvey />} />
           </Routes>
         </AuthenticationProvider>
       </Router>

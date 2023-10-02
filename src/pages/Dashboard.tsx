@@ -12,6 +12,8 @@ import React from "react";
 import { Button, Divider, Link, Stack, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../components/Modal';
+import EcosystemService from '../services/EcosystemService';
+import { Ecosystem } from '../types/Ecosystem.type';
 
 const btnStyle = {
   p: 1.5
@@ -21,6 +23,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
   const [addEcosModalState, setAddEcosModalState] = React.useState(false);
+  const [userEcos, setUserEcos] = React.useState([] as Ecosystem[]);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -28,15 +31,33 @@ export default function Dashboard() {
 
   React.useEffect(() => {
 
-    if (!loading && !signed) navigate('/sign-in');
-    if (!loading && signed) setAppLoading(false);
+    if (loading) return;
 
-  }, [signed, navigate, loading]);
+    if (!signed) navigate('/sign-in');
+    if (signed) setAppLoading(false);
+
+    EcosystemService.getEcosystems(user.uid, (ecos) => {
+      setUserEcos(ecos);
+    });
+
+
+  }, [signed, navigate, loading, user.uid]);
 
   const handleAddEcosSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('submit');
+    const organization_name = e.currentTarget.orgName.value as string;
+    const ecosystem = {
+      organization_name,
+      admin_id: user.uid,
+      responses: 0,
+    } as Ecosystem;
 
+    setAddEcosModalState(false);
+    EcosystemService.createEcosystem(ecosystem, (ecos) => {
+      navigate(`/ecos-dashboard/${ecos.id}`);
+    }, () => {
+      console.log('error');
+    });
   }
 
   const AddNewEcosModal = () => {
@@ -110,7 +131,11 @@ export default function Dashboard() {
                   }}
                 >
                   <Stack direction="row" spacing={2}>
-                    <Button component={Link} variant='outlined' href='#' sx={btnStyle}>ECOS 1</Button>
+                    {userEcos.map((ecos) => {
+                      return (
+                        <Button component={Link} variant='outlined' key={ecos.id} href={`/ecos-dashboard/${ecos.id}`} sx={btnStyle}>{ecos.organization_name}</Button>
+                      );
+                    })}
 
                     <Button variant='contained' onClick={() => setAddEcosModalState(true)} sx={btnStyle}><AddIcon /> Add new ECOS</Button>
                   </Stack>
@@ -120,6 +145,7 @@ export default function Dashboard() {
           </Container>
           <Footer />
         </Box>
-      </Box></>
+      </Box>
+    </>
   );
 }
