@@ -12,12 +12,12 @@ export default function ViewFeedback() {
       <Toolbar />
       <Container sx={{ minHeight: '83.9vh' }}>
         <Box component={Paper} elevation={3} sx={{ marginTop: '2rem' }}>
-          <Typography variant="h5" sx={{ padding: '1rem' }} color='primary'>Framework Ratings</Typography>
+          <Typography variant="h5" sx={{ padding: '1rem' }} color='primary'>Avaliações do Framework</Typography>
           <FrameworkRatings />
         </Box>
 
         <Box component={Paper} elevation={3} sx={{ marginTop: '2rem' }}>
-          <Typography variant="h5" sx={{ padding: '1rem' }} color='primary'>Framework suggestions</Typography>
+          <Typography variant="h5" sx={{ padding: '1rem' }} color='primary'>Sugestões ao Framework</Typography>
           <SuggestionTable />
         </Box>
 

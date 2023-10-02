@@ -23,9 +23,9 @@ export default function SuggestionTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold' }}>Type</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Title</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Tipo</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Título</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Descrição</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
