@@ -34,7 +34,7 @@ const navItems = [
     onClick: () => window.scrollTo(0, 0)
   },
   {
-    name: 'Guidelines',
+    name: 'Diretrizes',
     path: '/guidelines'
   },
   {
@@ -42,7 +42,7 @@ const navItems = [
     path: '/framework'
   },
   {
-    name: 'View Feedback',
+    name: 'Visualizar feedback',
     path: '/view-feedback'
   }
 ];
@@ -50,11 +50,11 @@ const navItems = [
 const notLoggedLinks = [
   ...navItems,
   {
-    name: 'Sign Up',
+    name: 'Login',
     path: '/sign-up',
   },
   {
-    name: 'Sign In',
+    name: 'Registre-se',
     path: '/sign-in'
   }
 ];
@@ -66,7 +66,7 @@ const loggedLinks = [
     path: '/dashboard'
   },
   {
-    name: 'Sign Out',
+    name: 'Logout',
     path: '#'
   }
 ];
@@ -110,7 +110,7 @@ export default function DrawerAppBar(props: Props) {
   const frameworkDescriptionModalContent = {
     id: 'framework-shf-description',
     title: 'Framework SHFiRM-SECO',
-    body: 'About the framework terminology, SHF is the acronym for social and human factors, RM is the acronym for requirements management, and SECO is the acronym for software Ecosystems. The acronyms together form the name Framework SHFiRM-SECO.',
+    body: 'Sobre a terminologia do framework, SHF é a sigla para social and human factors, RM é a sigla para requirements management, e SECO é a sigla para software Ecosystems. As siglas juntas formam o nome Framework SHFiRM-SECO.'
   };
 
 
