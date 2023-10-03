@@ -1,10 +1,14 @@
 import { Avatar, Button } from '@mui/material'
 import i18next from 'i18next';
 
+import br_flag from '../assets/images/br-flag.png';
+import us_flag from '../assets/images/us-flag.png';
+
+
 export default  function LanguageButton() {
   const flags = {
-    pt_br: 'src/assets/images/br-flag.png',
-    en: 'src/assets/images/us-flag.png'
+    pt_br: br_flag,
+    en: us_flag
   }
 
   return (
