@@ -22,6 +22,8 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import {useTranslation} from "react-i18next";
 
+import i18next from 'i18next';
+
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -62,8 +64,14 @@ interface AccordionComponentProps {
   data: {
     id: string,
     label: string,
+    labels: {
+      [key: string]: string
+    },
     headerColor: string,
     description: string,
+    descriptions: {
+      [key: string]: string
+    },
     items: {
       id: string,
       name: string,
@@ -179,7 +187,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     if (data.id === 'social-human-factors') {
       setModalPersonalsocialContent({
         id: data.id,
-        title: data.label,
+        title: data.labels[i18next.language],
         personalGroup: data.items.slice(17),
         socialGroup: data.items.slice(0, 17)
       });
@@ -190,7 +198,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
     setListModalContent({
       id: data.id,
-      title: data.label,
+      title: data.labels[i18next.language],
       items: data.items
     });
     setListModalState(true);
@@ -311,10 +319,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             minHeight: '2rem',
             height: '2rem',
           }}>
-          <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
-            {data.label}
+          <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.labels[i18next.language], data.descriptions[i18next.language])}>
+            {data.labels[i18next.language]}
           </Button>
-          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
+          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.labels[i18next.language])}>
             <AddIcon sx={{ fontSize: '1rem' }} />
             {t('suggest_new_button')}
           </Button>

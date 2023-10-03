@@ -33,6 +33,10 @@ function FrameworkComponent() {
 
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
 
+  // if(copingMechanisms?.descriptions !== undefined){
+  //   console.log(copingMechanisms?.descriptions[i18next.language]);
+  // }
+
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
 
