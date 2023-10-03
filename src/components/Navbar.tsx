@@ -22,6 +22,9 @@ import { Link } from 'react-router-dom';
 import { Modal } from './Modal';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import { useTranslation } from "react-i18next";
+import LanguageButton from './LanguageButton';
+
+
 
 interface Props {
   window?: () => Window;
@@ -164,6 +167,7 @@ export default function DrawerAppBar(props: Props) {
                     </Button>
                   </Link>
                 ))}
+                <LanguageButton />
               </Box>
             </Toolbar>
           </Container >
