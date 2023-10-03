@@ -8,9 +8,11 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
 import {Suggestion} from '../types/Suggestion.type';
 import { FirebaseService } from '../services/FirebaseService';
-
+import { useTranslation } from 'react-i18next';
 
 export default function SuggestionTable() {
+
+  const {t} = useTranslation('view_feedback');
 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 
@@ -23,9 +25,9 @@ export default function SuggestionTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold' }}>Tipo</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Título</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Descrição</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>{t('framework_suggestions_table.type')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>{t('framework_suggestions_table.title')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>{t('framework_suggestions_table.description')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -1,0 +1,9 @@
+{
+	"framework_ratings": "Avaliações do Framework",
+	"framework_suggestions": "Sugestões ao Framework",
+	"framework_suggestions_table": {
+		"description": "Descrição",
+		"title": "Título",
+		"type": "Tipo"
+	}
+}
