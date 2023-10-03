@@ -4,14 +4,17 @@ import Navbar from '../components/Navbar';
 import { Box, Button, Container, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import image from '../assets/images/hero.jpg';
+import {useTranslation} from "react-i18next";
 
 function Home() {
 
+  const {t} = useTranslation('home');
+
   const heroData = {
-    title: 'Explore Fatores Sociais e Humanos',
-    description: 'O framework SHFiRM-SECO é uma ferramenta para auxiliar na identificação e melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de Software.',
+    title: t('hero.title'),
+    description: t('hero.description'),
     image,
-    button: 'Teste agora!',
+    button: t('hero.button_try_now'),
     buttonLink: '/framework'
   }
 
@@ -31,14 +34,14 @@ function Home() {
             </Typography> */}
 
             <Typography variant="h4" component="h1" gutterBottom>
-              Obtenha uma Visão 360º dos Fatores Sociais e Humanos na Gerência de Requisitos
+              {t('main.title')}
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>
-                <li>Identifique os fatores sociais e humanos que influenciam as atividades da gerência de requisitos em seu ecossistema de software;</li>
-                <li>Identifique as características contextuais da gerência de requisitos em seu ecossistema de software;</li>
-                <li>Aponte as barreiras que você enfrenta para melhorar os fatores sociais e humanos na gerência de requisitos em seu ecossistema de software;</li>
-                <li>Obtenha sugestões de estratégias de melhoria e mecanismos de enfrentamento para usar durante as atividades da gerência de requisitos em seu ecossistema de software.</li>
+                <li>{t('main.list_item.1')}</li>
+                <li>{t('main.list_item.2')}</li>
+                <li>{t('main.list_item.3')}</li>
+                <li>{t('main.list_item.4')}</li>
               </ol>
             </Typography>
             <Button
@@ -46,7 +49,7 @@ function Home() {
               to={heroData.buttonLink}
               variant="contained"
               sx={{ mt: 3, mr: 2 }}>
-              Teste agora!
+              {t('hero.button_try_now')}
             </Button>
           </Box>
         </section>
