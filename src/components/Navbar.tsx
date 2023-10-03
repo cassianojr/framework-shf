@@ -21,57 +21,65 @@ import {
 import { Link } from 'react-router-dom';
 import { Modal } from './Modal';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
+import { useTranslation } from "react-i18next";
 
 interface Props {
   window?: () => Window;
 }
 
+
 const drawerWidth = 240;
-const navItems = [
-  {
-    name: 'Home',
-    path: '/',
-    onClick: () => window.scrollTo(0, 0)
-  },
-  {
-    name: 'Diretrizes',
-    path: '/guidelines'
-  },
-  {
-    name: 'Framework',
-    path: '/framework'
-  },
-  {
-    name: 'Visualizar sugestões',
-    path: '/view-feedback'
-  }
-];
-
-const notLoggedLinks = [
-  ...navItems,
-  {
-    name: 'Entrar',
-    path: '/sign-up',
-  },
-  {
-    name: 'Cadastre-se',
-    path: '/sign-in'
-  }
-];
-
-const loggedLinks = [
-  ...navItems,
-  {
-    name: 'Dashboard',
-    path: '/dashboard'
-  },
-  {
-    name: 'Logout',
-    path: '#'
-  }
-];
+const scroll_to = () => window.scrollTo(0, 0);
 
 export default function DrawerAppBar(props: Props) {
+
+  const { t } = useTranslation('menu');
+
+  const navItems = [
+    {
+      name: 'Home',
+      path: '/',
+      onClick: () => scroll_to()
+    },
+    {
+      name: t('guidelines'),
+      path: '/guidelines'
+    },
+    {
+      name: 'Framework',
+      path: '/framework'
+    },
+    {
+      name: t('view_suggestions'),
+      path: '/view-feedback'
+    }
+  ];
+
+  const notLoggedLinks = [
+    ...navItems,
+    {
+      name: t('sign_up'),
+      path: '/sign-up',
+    },
+    {
+      name: t('sign_in'),
+      path: '/sign-in'
+    }
+  ];
+
+  const loggedLinks = [
+    ...navItems,
+    {
+      name: 'Dashboard',
+      path: '/dashboard'
+    },
+    {
+      name: 'Logout',
+      path: '#'
+    }
+  ];
+
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -110,13 +118,13 @@ export default function DrawerAppBar(props: Props) {
   const frameworkDescriptionModalContent = {
     id: 'framework-shf-description',
     title: 'Framework SHFiRM-SECO',
-    body: 'Sobre a terminologia do framework, SHF é a sigla para social and human factors, RM é a sigla para requirements management, e SECO é a sigla para software Ecosystems. As siglas juntas formam o nome Framework SHFiRM-SECO.'
+    body: t('framework_description')
   };
 
 
 
-  const handleSignOut = (itemName:string) => {
-    if(itemName !== 'Sign Out') return;
+  const handleSignOut = (itemName: string) => {
+    if (itemName !== 'Sign Out') return;
     signOutFromApp();
     handleDrawerToggle();
   }
@@ -150,7 +158,7 @@ export default function DrawerAppBar(props: Props) {
               </Typography>
               <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 {links.map((item) => (
-                  <Link to={item.path} key={item.name} onClick={()=>handleSignOut(item.name)}>
+                  <Link to={item.path} key={item.name} onClick={() => handleSignOut(item.name)}>
                     <Button sx={{ color: '#fff' }}>
                       {item.name}
                     </Button>

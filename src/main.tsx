@@ -5,7 +5,12 @@ import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 
 import home_en from "./translations/en/home.json";
+import menu_en from "./translations/en/menu.json";
+import common_en from './translations/en/common.json';
+
 import home_pt_br from './translations/pt_br/home.json';
+import menu_pt_br from './translations/pt_br/menu.json';
+import common_pt_br from './translations/pt_br/common.json';
 
 
 i18next.init({
@@ -13,10 +18,14 @@ i18next.init({
   lng: 'pt_br',
   resources: {
     en: {
-      home: home_en
+      home: home_en,
+      menu: menu_en,
+      common: common_en
     },
     pt_br: {
-      home: home_pt_br
+      home: home_pt_br,
+      menu: menu_pt_br,
+      common: common_pt_br
     },
   },
 })
