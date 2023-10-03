@@ -9,8 +9,11 @@ import React from 'react';
 import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
 import { FirebaseService } from '../services/FirebaseService';
+import {useTranslation} from "react-i18next";
 
 function FrameworkComponent() {
+  
+  const {t} = useTranslation('framework');
 
   const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
   const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
@@ -37,7 +40,7 @@ function FrameworkComponent() {
 
   const centerModalContent = {
     id: 'requirements-management in SECO',
-    title: 'GERÊNCIA DE REQUISITOS EM ECOS'
+    title: t('center_button')
   }
 
   return (
@@ -47,11 +50,11 @@ function FrameworkComponent() {
           <Modal.Root state={centerModalState} {...centerModalContent} handleClose={() => setCenterModalState(false)}>
             <Modal.Text>
               <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-                Requirements management is “a process that accompanies the planning and development of a system by capturing and mapping the source and context of change” (WIEGERS; BEATTY, 2013). In this way, requirements management is considered an organized process of documentation, analysis (negotiation), traceability, prioritization, change control, version control, and requirements communication (ISO/IEC/IEEE 29148, 2018).
+                  {t('center_description.p1')}
               </Typography>
               <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-                A software ecosystem can be analyzed from a project perspective: “A software ecosystem is a collection of software projects which are developed and evolve together in the same environment” (LUGUN et al. 2010).
-              </Typography>
+                  {t('center_description.p2')}
+               </Typography>
             </Modal.Text>
             <Divider />
             <Modal.Actions handleClose={() => setCenterModalState(false)} />
@@ -115,7 +118,8 @@ function FrameworkComponent() {
                     >
                       <Card elevation={8} style={{ maxWidth: '40%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white', cursor: 'pointer' }} onClick={() => setCenterModalState(true)}>
                         <Typography sx={{ fontSize: '.8rem', border: '1px solid white', borderRadius: '.1rem', padding: '.3rem' }}>
-                          GERÊNCIA DE REQUISITOS EM ECOS
+                        {t('center_button')}
+
                         </Typography>
                       </Card>
                     </ArcherElement>

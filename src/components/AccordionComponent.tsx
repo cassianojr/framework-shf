@@ -20,6 +20,8 @@ import { FrameworkItem } from '../types/Framework.type';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 
+import {useTranslation} from "react-i18next";
+
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -74,6 +76,8 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
+
+  const {t} = useTranslation(['framework', 'common']);
 
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
 
@@ -248,7 +252,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
               setListModalState(true);
             }}>
-              Back </Button>
+              {t('common:back_button')} </Button>
           :<></>}
 
         </Modal.EvaluateAction>
@@ -266,16 +270,16 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const modalPersonalsocial = (
     <Modal.Root state={modalPersonalsocialState} handleClose={handleClose} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
-      <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> Social Group</Typography>
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> {t('social_group_label')}</Typography>
       <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
-      <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> Personal Group</Typography>
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> {t('personal_group_label')}</Typography>
       <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
   );
 
-  const snackBarText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+  const snackBarText = t('snackbar_text');
   const [snackBarState, setSnackBarState] = React.useState(false);
   const formModal = (
     <Modal.Root state={formModalState} handleClose={() => setFormModalState(false)} id={formModalContent.id} title={formModalContent.title}>
@@ -312,7 +316,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           </Button>
           <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
             <AddIcon sx={{ fontSize: '1rem' }} />
-            Sugerir Novo
+            {t('suggest_new_button')}
           </Button>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
@@ -330,7 +334,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       >
         <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={handleViewAll}>
           <FullscreenIcon sx={{ fontSize: '1rem' }} />
-          Visualizar Todos
+          {t('view_all_button')}
         </Button>
       </AccordionSummary>
     </>
