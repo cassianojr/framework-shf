@@ -15,8 +15,12 @@ import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import Footer from '../components/Footer';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useTranslation } from 'react-i18next';
+
 
 export default function SignIn() {
+
+  const { t } = useTranslation('sign_in');
 
   const navigate = useNavigate();
 
@@ -68,7 +72,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {t('title')}
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -76,7 +80,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('email_field')}
               name="email"
               autoComplete="email"
               type='email'
@@ -87,7 +91,7 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('password_field')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -99,16 +103,16 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {t('sign_in_button')}
             </Button>
             <Button fullWidth variant="outlined" sx={{ mb: 2 }} onClick={signInGoogle}>
               <GoogleIcon sx={{ mr: 1 }} />
-              Sign In with Google
+              {t('google_button')}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={`sign-up?${queryParams}`} variant="body2">
-                Don't have an account? Sign Up
+                {t('sign_up_link')}
                 </Link>
               </Grid>
             </Grid>
