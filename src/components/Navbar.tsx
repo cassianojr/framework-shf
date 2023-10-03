@@ -58,12 +58,12 @@ export default function DrawerAppBar(props: Props) {
   const notLoggedLinks = [
     ...navItems,
     {
-      name: t('sign_up'),
-      path: '/sign-up',
-    },
-    {
       name: t('sign_in'),
       path: '/sign-in'
+    },
+    {
+      name: t('sign_up'),
+      path: '/sign-up',
     }
   ];
 
