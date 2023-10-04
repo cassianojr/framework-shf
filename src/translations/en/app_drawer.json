@@ -1,0 +1,5 @@
+{
+	"fullFrameworkItem": "Full Framework",
+	"guidelinesItem": "Guidelines",
+	"welcome_message": "Welcome, {{user}}"
+}

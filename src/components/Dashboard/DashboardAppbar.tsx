@@ -5,6 +5,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppDrawer from "./AppDrawer";
 import AccountMenu from "./AccountMenu";
+import { useTranslation } from "react-i18next";
 
 interface AppBarProps {
   open: boolean;
@@ -37,6 +38,8 @@ interface DashboardAppbarProps {
 
 export default function DashboardAppbar({handleSignOut, displayName, photoURL}: DashboardAppbarProps) {
 
+  const { t } = useTranslation('app_drawer');
+  
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -69,7 +72,7 @@ export default function DashboardAppbar({handleSignOut, displayName, photoURL}: 
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Welcome, {displayName}!
+            {t('welcome_message', {user: displayName})}!
           </Typography>
 
           <AccountMenu handleSignOut={handleSignOut} displayName={displayName} photoURL={photoURL}/>

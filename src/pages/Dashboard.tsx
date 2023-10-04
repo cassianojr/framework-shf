@@ -14,12 +14,14 @@ import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../components/Modal';
 import EcosystemService from '../services/EcosystemService';
 import { Ecosystem } from '../types/Ecosystem.type';
+import { useTranslation } from "react-i18next";
 
 const btnStyle = {
   p: 1.5
 }
 
 export default function Dashboard() {
+  const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
   const [addEcosModalState, setAddEcosModalState] = React.useState(false);
@@ -62,18 +64,16 @@ export default function Dashboard() {
 
   const AddNewEcosModal = () => {
     return (
-      <Modal.Root state={addEcosModalState} id="addNewEcos" title="Add new ECOS" handleClose={() => setAddEcosModalState(false)}>
+      <Modal.Root state={addEcosModalState} id="addNewEcos" title={t('add_ecos_btn')} handleClose={() => setAddEcosModalState(false)}>
         <form onSubmit={handleAddEcosSubmit}>
           <Modal.Text>
             <Grid container spacing={2}>
               <Grid item xs={12} sx={{ marginTop: '1%' }}>
                 <Typography>
-                  The parsing function can be very useful for instantiating your custom version of the framework.
-                  Allowing you to select which factors appear in your organization, suggesting new factors and
-                  mainly correlating barriers to improvement with social human factors. Adding a new perspective on your organization's SHFs.
+                  {t('modal_text.txt1')}
                 </Typography>
                 <Typography>
-                  To start, please type the name of your organization:
+                  {t('modal_text.txt2')}
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -82,7 +82,7 @@ export default function Dashboard() {
                   required
                   id="orgName"
                   name="orgName"
-                  label="Organization Name"
+                  label={t('modal_text.label_name')}
                   autoFocus
                 />
               </Grid>
@@ -91,8 +91,8 @@ export default function Dashboard() {
           </Modal.Text>
           <Divider />
           <Modal.Actions handleClose={() => setAddEcosModalState(false)}>
-            <Button variant="contained" type="submit"><AddIcon /> Add new ECOS</Button>
-            <Button variant="outlined" onClick={() => setAddEcosModalState(false)}>Cancel</Button>
+            <Button variant="contained" type="submit"><AddIcon /> {t('add_ecos_btn')}</Button>
+            <Button variant="outlined" onClick={() => setAddEcosModalState(false)}>{t('modal_text.cancel_btn')}</Button>
           </Modal.Actions>
         </form>
       </Modal.Root >
@@ -137,7 +137,7 @@ export default function Dashboard() {
                       );
                     })}
 
-                    <Button variant='contained' onClick={() => setAddEcosModalState(true)} sx={btnStyle}><AddIcon /> Add new ECOS</Button>
+                    <Button variant='contained' onClick={() => setAddEcosModalState(true)} sx={btnStyle}><AddIcon /> {t('add_ecos_btn')}</Button>
                   </Stack>
                 </Paper>
               </Grid>

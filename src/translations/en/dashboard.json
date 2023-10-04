@@ -1,0 +1,9 @@
+{
+	"add_ecos_btn": "ADD NEW ECOS",
+	"modal_text": {
+		"cancel_btn": "Cancel",
+		"label_name": "Organization Name",
+		"txt1": " The parsing function can be very useful for instantiating your custom version of the framework.\n                  Allowing you to select which factors appear in your organization, suggesting new factors and\n                  mainly correlating barriers to improvement with social human factors. Adding a new perspective on your organization's SHFs.",
+		"txt2": "To start, please type the name of your organization:"
+	}
+}
