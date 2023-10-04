@@ -1,0 +1,14 @@
+{
+	"back_btn": "BACK",
+	"next_btn": "NEXT",
+	"questions": {
+		"barriers": "Select the barriers to improving the SHF on your organization",
+		"contextual_characteristics": "Select the contextual characteristics of your organization",
+		"copy_mechanisms": "Select the coping mechanisms that you find useful on your organization",
+		"correlate_barriers_with_shf": "For each factor you selected, indicate which of the barriers influence that factor",
+		"correlate_barriers_with_strategies": "For each barrier you selected, indicate which of the improvement strategies influence that factor",
+		"correlate_coping_mechanisms_with_barriers": "For each coping mechanisms you selected, indicate which of the barriers influence that mechanism",
+		"shf": "Select the social and human factors that affects your organization",
+		"strategies": "Select the Improvement Strategies that you find useful on your organization"
+	}
+}

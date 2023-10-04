@@ -1,0 +1,12 @@
+{
+	"center_button": "GERÊNCIA DE REQUISITOS EM ECOS",
+	"center_description": {
+		"p1": "O gerenciamento de requisitos é “um processo que acompanha o planejamento e desenvolvimento de um sistema, capturando e mapeando a fonte e o contexto da mudança” (WIEGERS; BEATTY, 2013). Dessa forma, o gerenciamento de requisitos é considerado um processo organizado de documentação, análise (negociação), rastreabilidade, priorização, controle de mudanças, controle de versão e comunicação de requisitos (ISO/IEC/IEEE 29148, 2018).",
+		"p2": "Um ecossistema de software pode ser analisado a partir de uma perspectiva de projeto: “Um ecossistema de software é uma coleção de projetos de software que são desenvolvidos e evoluem juntos no mesmo ambiente” (LUGUN et al. 2010)."
+	},
+	"personal_group_label": "Grupo Pessoal",
+	"snackbar_text": "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.",
+	"social_group_label": "Grupo Social",
+	"suggest_new_button": "SUGERIR NOVO",
+	"view_all_button": " Visualizar Todos"
+}

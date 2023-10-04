@@ -15,8 +15,10 @@ import Chart from '../components/Dashboard/Chart';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
 import { Ecosystem } from '../types/Ecosystem.type';
+import { useTranslation } from "react-i18next";
 
 export default function ECOSDashboard() {
+  const { t } = useTranslation('ecos_dashboard');
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
@@ -51,7 +53,7 @@ export default function ECOSDashboard() {
   return (
     !appLoading &&
     <>
-      <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text='Link Copied' severity='success' />
+      <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL} />
@@ -81,8 +83,8 @@ export default function ECOSDashboard() {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                   }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>ECOS Link: <Link href={frameworkLink} target='_blank'>{frameworkLink}</Link></Typography>
-                  <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>Copy Link</Button>
+                  <Typography sx={{ fontWeight: 'bold' }}>{t('ecos_link')}<Link href={frameworkLink} target='_blank'>{frameworkLink}</Link></Typography>
+                  <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
                 </Paper>
               </Grid>
 
@@ -93,7 +95,7 @@ export default function ECOSDashboard() {
                     display: 'flex',
                     flexDirection: 'column',
                   }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>Responses: {ecos.responses}</Typography>
+                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {ecos.responses}</Typography>
                 </Paper>
               </Grid>
               <Grid item lg={9}>

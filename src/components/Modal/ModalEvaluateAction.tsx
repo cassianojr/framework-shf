@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import RatingComponent from '../RatingComponent'
+import {useTranslation} from "react-i18next";
 
 
 interface EvaluateActionProps {
@@ -10,15 +11,18 @@ interface EvaluateActionProps {
 }
 
 export function ModalEvaluateAction({ id, children, handleClose }: EvaluateActionProps) {
+
+const {t} = useTranslation('common');
+
   return (
     <Grid container justifyContent='space-between' alignItems='center' >
       <Box>
-        <Typography>Was this helpful?</Typography>
+        <Typography>{t('feedback_label')}</Typography>
         <RatingComponent id={id} />
       </Box>
       <Box>
         {children ?? <></>}
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose}>{t('close_button')}</Button>
       </Box>
     </Grid>
   )

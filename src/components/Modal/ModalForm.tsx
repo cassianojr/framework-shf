@@ -8,8 +8,12 @@ interface ModalProps {
   setSnackBarState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+import {useTranslation} from "react-i18next";
+
+
 export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalProps) {
 
+  const {t} = useTranslation('modal_form');
 
   const [formState, setFormState] = React.useState({
     type: title,
@@ -53,7 +57,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="type"
               name="type"
-              label="Type"
+              label={t('type_label')}
               autoFocus
               disabled
               value={title}
@@ -65,7 +69,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="title"
               name="title"
-              label="Title"
+              label={t('title_label')}
               onChange={handleFormChange}
               value={formState.title}
               autoFocus
@@ -77,7 +81,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               required
               id="description"
               name="description"
-              label="Description"
+              label={t('description_label')}
               onChange={handleFormChange}
               value={formState.description}
               multiline
@@ -91,7 +95,7 @@ export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalP
               color="primary"
               type="submit"
             >
-              Submit
+              {t('submit_button')}
             </Button>
           </Grid>
         </Grid>

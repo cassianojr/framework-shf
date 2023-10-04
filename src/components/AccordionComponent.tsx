@@ -20,6 +20,10 @@ import { FrameworkItem } from '../types/Framework.type';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 
+import {useTranslation} from "react-i18next";
+
+import i18next from 'i18next';
+
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -60,12 +64,27 @@ interface AccordionComponentProps {
   data: {
     id: string,
     label: string,
+    labels: {
+      [key: string]: string
+    },
     headerColor: string,
     description: string,
+    descriptions: {
+      [key: string]: string
+    },
     items: {
       id: string,
       name: string,
-      description: string
+      description: string,
+      ids: {
+        [key: string]: string
+      },
+      names:{
+        [key: string]: string
+      },
+      descriptions:{
+        [key: string]: string
+      },
     }[]
   },
   children?: JSX.Element
@@ -74,6 +93,8 @@ interface AccordionComponentProps {
 
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data } = props;
+
+  const {t} = useTranslation(['framework', 'common']);
 
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
 
@@ -98,7 +119,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     items: [{
       id: '',
       name: '',
-      description: ''
+      description: '',
+      ids: {},
+      names: {},
+      descriptions: {}
     }]
   });
 
@@ -151,7 +175,6 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   }
 
   const newSuggestionHandle = (id: string, title: string) => {
-
     setFormModalContent({
       id,
       title: Singularizer.singularizeSentence(title)
@@ -174,7 +197,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     if (data.id === 'social-human-factors') {
       setModalPersonalsocialContent({
         id: data.id,
-        title: data.label,
+        title: data.labels[i18next.language],
         personalGroup: data.items.slice(17),
         socialGroup: data.items.slice(0, 17)
       });
@@ -185,7 +208,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
     setListModalContent({
       id: data.id,
-      title: data.label,
+      title: data.labels[i18next.language],
       items: data.items
     });
     setListModalState(true);
@@ -247,7 +270,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
               setListModalState(true);
             }}>
-              Back </Button>
+              {t('common:back_button')} </Button>
           :<></>}
 
         </Modal.EvaluateAction>
@@ -265,16 +288,16 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const modalPersonalsocial = (
     <Modal.Root state={modalPersonalsocialState} handleClose={handleClose} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
-      <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> Social Group</Typography>
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> {t('social_group_label')}</Typography>
       <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
-      <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> Personal Group</Typography>
+      <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> {t('personal_group_label')}</Typography>
       <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
   );
 
-  const snackBarText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+  const snackBarText = t('snackbar_text');
   const [snackBarState, setSnackBarState] = React.useState(false);
   const formModal = (
     <Modal.Root state={formModalState} handleClose={() => setFormModalState(false)} id={formModalContent.id} title={formModalContent.title}>
@@ -306,12 +329,12 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             minHeight: '2rem',
             height: '2rem',
           }}>
-          <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.label, data.description)}>
-            {data.label}
+          <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.labels[i18next.language], data.descriptions[i18next.language])}>
+            {data.labels[i18next.language]}
           </Button>
-          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.label)}>
+          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.labels[i18next.language])}>
             <AddIcon sx={{ fontSize: '1rem' }} />
-            Suggest new
+            {t('suggest_new_button')}
           </Button>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
@@ -329,7 +352,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       >
         <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={handleViewAll}>
           <FullscreenIcon sx={{ fontSize: '1rem' }} />
-          View All
+          {t('view_all_button')}
         </Button>
       </AccordionSummary>
     </>

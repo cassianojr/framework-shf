@@ -5,12 +5,21 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import React from 'react'
 import VirtualizedList from './VirtualizedList'
-
+import {useTranslation} from "react-i18next";
 
 interface Items {
   id: string,
   name: string,
-  description: string
+  description: string,
+  ids: {
+    [key: string]: string
+  },
+  names:{
+    [key: string]: string
+  },
+  descriptions:{
+    [key: string]: string
+  }
 }
 interface ListPersonalAndSocialProps {
   personalGroupItems: Items[],
@@ -20,6 +29,9 @@ interface ListPersonalAndSocialProps {
 
 
 export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps) {
+
+  const {t} = useTranslation('framework');
+
   const { personalGroupItems, socialGroupItems, handleListItemClick } = props
 
   const [socialGroupOpen, setSocialGroupOpen] = React.useState(true);
@@ -41,7 +53,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         <ListItemIcon>
           <GroupIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Social Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
+        <ListItemText primary={t('social_group_label')} primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
         {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
@@ -52,7 +64,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         <ListItemIcon>
           <PersonIcon  sx={{fontSize: '1.2rem'}}  />
         </ListItemIcon>
-        <ListItemText primary="Personal Group" primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
+        <ListItemText primary={t('personal_group_label')} primaryTypographyProps={{ fontWeight: 'bold', fontSize: '.8rem' }} />
         {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>

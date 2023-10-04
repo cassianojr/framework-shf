@@ -1,0 +1,16 @@
+{
+	"hero": {
+		"button_try_now": "Try Now!",
+		"description": "The framework SHFiRM-SECO is a tool to help the identification and improvement of social and human factors in requirements management in software ecosystems.",
+		"title": "Explore Social and Human Factors"
+	},
+	"main": {
+		"list_item": {
+			"1": "Identify the social and human factors that influence requirements management activities in your software ecosystem;",
+			"2": "Identify the contextual characteristics of requirements management in your software ecosystem;",
+			"3": "Point out the barriers you face to improving social and human factors;",
+			"4": "Get suggestions for strategies and coping mechanisms to use for requirements management in your software ecosystem;"
+		},
+		"title": "Get a 360º view of social and human factors"
+	}
+}

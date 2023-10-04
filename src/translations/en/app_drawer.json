@@ -1,0 +1,10 @@
+{
+	"account_menu": {
+		"logout_opt": "Logout",
+		"profile_opt": "My Profile",
+		"settings_opt": "Settings"
+	},
+	"fullFrameworkItem": "Full Framework",
+	"guidelinesItem": "Guidelines",
+	"welcome_message": "Welcome, {{user}}"
+}

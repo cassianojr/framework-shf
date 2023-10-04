@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { useTranslation } from "react-i18next";
 
 interface AccountMenuProps {
   handleSignOut: () => void,
@@ -17,6 +18,7 @@ interface AccountMenuProps {
 }
 
 export default function AccountMenu({ handleSignOut, displayName, photoURL }: AccountMenuProps) {
+  const { t } = useTranslation('app_drawer');
 
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -88,20 +90,20 @@ export default function AccountMenu({ handleSignOut, displayName, photoURL }: Ac
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-        <ProfileAvatar /> My Profile
+        <ProfileAvatar /> {t('account_menu.profile_opt')}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          {t('account_menu.settings_opt')}
         </MenuItem>
         <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t('account_menu.logout_opt')}
         </MenuItem>
       </Menu>
     </React.Fragment>
