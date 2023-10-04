@@ -10,7 +10,16 @@ import {useTranslation} from "react-i18next";
 interface Items {
   id: string,
   name: string,
-  description: string
+  description: string,
+  ids: {
+    [key: string]: string
+  },
+  names:{
+    [key: string]: string
+  },
+  descriptions:{
+    [key: string]: string
+  }
 }
 interface ListPersonalAndSocialProps {
   personalGroupItems: Items[],

@@ -75,7 +75,16 @@ interface AccordionComponentProps {
     items: {
       id: string,
       name: string,
-      description: string
+      description: string,
+      ids: {
+        [key: string]: string
+      },
+      names:{
+        [key: string]: string
+      },
+      descriptions:{
+        [key: string]: string
+      },
     }[]
   },
   children?: JSX.Element
@@ -110,7 +119,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     items: [{
       id: '',
       name: '',
-      description: ''
+      description: '',
+      ids: {},
+      names: {},
+      descriptions: {}
     }]
   });
 
@@ -163,8 +175,6 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   }
 
   const newSuggestionHandle = (id: string, title: string) => {
-    console.log(title);
-    
     setFormModalContent({
       id,
       title: Singularizer.singularizeSentence(title)

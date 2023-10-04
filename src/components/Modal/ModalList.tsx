@@ -1,13 +1,23 @@
 import { InfoRounded } from "@mui/icons-material";
 import { IconButton, List, ListItem, ListItemText, Typography } from "@mui/material";
+import i18next from "i18next";
 
 interface ModalProps {
   items: {
     id: string,
     name: string,
-    description: string
+    description: string,
+    ids:{
+      [key: string]: string
+    },
+    names:{
+      [key: string]: string
+    },
+    descriptions:{
+      [key: string]: string
+    }
   }[]
-  handleItemClick: (id: string, name: string, description: string) => void
+  handleItemClick: (ids: string, name: string, description: string) => void
 }
 
 export function ModalList({ items, handleItemClick }: ModalProps) {
@@ -16,7 +26,7 @@ export function ModalList({ items, handleItemClick }: ModalProps) {
       {items.map((item) => (
         <ListItem dense
           secondaryAction={
-            <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.id, item.name, item.description)}>
+            <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
               <InfoRounded />
             </IconButton>
           }
@@ -26,8 +36,8 @@ export function ModalList({ items, handleItemClick }: ModalProps) {
         >
           <ListItemText primary={
             <Typography sx={{ fontSize: '.9rem' }}>
-              <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
-              {item.name}
+              <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
+              {item.names[i18next.language]}
             </Typography>} />
         </ListItem>
       ))}

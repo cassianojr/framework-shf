@@ -1,7 +1,16 @@
 interface FrameworkItem {
   id: string,
+  ids:{
+    [key: string]: string
+  },
   name: string,
+  names:{
+    [key: string]: string
+  },
   description: string,
+  descriptions:{
+    [key: string]: string
+  },
   rating?: number,
 }
 

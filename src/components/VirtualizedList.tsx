@@ -1,12 +1,22 @@
 import { InfoRounded } from '@mui/icons-material';
 import { Box, IconButton, ListItem, ListItemText, Typography } from '@mui/material';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
+import i18next from 'i18next';
 
 interface ListData {
   items: {
     id: string,
     name: string,
-    description: string
+    description: string,
+    ids: {
+      [key: string]: string
+    },
+    names:{
+      [key: string]: string
+    },
+    descriptions:{
+      [key: string]: string
+    }
   }[],
   handleListItemClick: (id: string, name: string, description: string) => void,
   height?: number
@@ -22,19 +32,19 @@ function renderRow(props: ListChildComponentProps) {
     <ListItem
       dense
       secondaryAction={
-        <IconButton  edge="end" aria-label="details" onClick={() => handleListItemClick(item.id, item.name, item.description)}>
+        <IconButton  edge="end" aria-label="details" onClick={() => handleListItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
           <InfoRounded sx={{fontSize: '1.2rem'}} />
         </IconButton>
       }
-      id={item.id}
-      key={item.id}
+      id={item.ids[i18next.language]}
+      key={item.ids[i18next.language]}
       style={style}
       divider={true}
     >
       <ListItemText primary={
         <Typography sx={{ fontSize: '.8rem' }}>
-          <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
-          {item.name}
+          <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
+          {item.names[i18next.language]}
         </Typography>} />
     </ListItem>
   );

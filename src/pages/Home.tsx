@@ -17,6 +17,7 @@ function Home() {
     button: t('hero.button_try_now'),
     buttonLink: '/framework'
   }
+  
 
   return (
     <>

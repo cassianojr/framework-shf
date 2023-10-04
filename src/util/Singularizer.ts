@@ -1,5 +1,7 @@
+import i18next from 'i18next';
+
 export default class Singularizer {
-  private static endings: { [key: string]: string } = {
+  private static endings_pt_br: { [key: string]: string } = {
     "ões": "ão",
     "ães": "ão",
     "res": "r",
@@ -23,10 +25,24 @@ export default class Singularizer {
     "ias":"ia"
   };
 
+  private static endings_en: { [key: string]: string } = {
+    ves: 'fe',
+    ies: 'y',
+    i: 'us',
+    zes: 'ze',
+    ses: 's',
+    es: 'e',
+    s: '',
+    rs: 'r',
+    cs: 'c',
+    ms: 'm'
+  };
+
   public static singularize(word: string): string {
+    const endings = i18next.language === 'pt_br' ? Singularizer.endings_pt_br : Singularizer.endings_en;
     return word.replace(
-      new RegExp(`(${Object.keys(Singularizer.endings).join('|')})$`, "i"),
-      (r: string) => Singularizer.endings[r.toLowerCase()] || r
+      new RegExp(`(${Object.keys(endings).join('|')})$`, "i"),
+      (r: string) => endings[r.toLowerCase()] || r
     );
   }
 
