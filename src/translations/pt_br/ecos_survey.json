@@ -1,0 +1,14 @@
+{
+	"back_btn": "VOLTAR",
+	"next_btn": "PRÓXIMO",
+	"questions": {
+		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
+		"contextual_characteristics": "Selecione as características contextuais da sua organização",
+		"copy_mechanisms": "Selecione os mecanismos de enfrentamento que você considera úteis em sua organização",
+		"correlate_barriers_with_shf": "Para cada fator selecionado, indique quais das barreiras influenciam esse fator",
+		"correlate_barriers_with_strategies": "Para cada barreira selecionada, indique quais das estratégias de melhoria influenciam esse fator",
+		"correlate_coping_mechanisms_with_barriers": "Para cada mecanismo de enfrentamento selecionado, indique quais das barreiras influenciam esse mecanismo",
+		"shf": "Selecione os fatores sociais e humanos que afetam sua organização",
+		"strategies": "Selecione as estratégias de melhoria que você considera úteis para sua organização"
+	}
+}

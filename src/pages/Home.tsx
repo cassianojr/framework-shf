@@ -4,16 +4,20 @@ import Navbar from '../components/Navbar';
 import { Box, Button, Container, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import image from '../assets/images/hero.jpg';
+import {useTranslation} from "react-i18next";
 
 function Home() {
 
+  const {t} = useTranslation('home');
+
   const heroData = {
-    title: 'Explore social and human factors',
-    description: 'The framework SHFiRM-SECO is a tool to help the identification and improvement of social and human factors in requirements management in software ecosystems.',
+    title: t('hero.title'),
+    description: t('hero.description'),
     image,
-    button: 'Try now!',
+    button: t('hero.button_try_now'),
     buttonLink: '/framework'
   }
+  
 
   return (
     <>
@@ -23,22 +27,22 @@ function Home() {
       <Container sx={{ minHeight: '100vh' }}>
         <section id="about">
           <Box sx={{ my: 4 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              ABOUT the Framework
+            {/* <Typography variant="h4" component="h1" gutterBottom>
+              Sobre o Framework
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
-              Identifying and improving social and human factors in requirements management in software ecosystems is challenging. The Framework SHFiRM-SECO supports identifying and improving social and human factors in requirements management in software ecosystems.
-            </Typography>
+              Identificar e melhorar fatores sociais e humanos em gerência de requisitos em ecossistemas de software é desafiador. O framework SHFiRM-SECO auxilia a identificar e melhorar os fatores humanos e sociais em gerência de requisitos em ecossistemas de software.
+            </Typography> */}
 
             <Typography variant="h4" component="h1" gutterBottom>
-              Get a 360 view of social and human factors
+              {t('main.title')}
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ textAlign: 'justify' }}>
               <ol>
-                <li>Identify the social and human factors that influence requirements management activities in your software ecosystem; </li>
-                <li>Identify the contextual characteristics of requirements management in your software ecosystem;</li>
-                <li>Point out the barriers you face to improving social and human factors;</li>
-                <li>Get suggestions for strategies and coping mechanisms to use for requirements management in your software ecosystem;</li>
+                <li>{t('main.list_item.1')}</li>
+                <li>{t('main.list_item.2')}</li>
+                <li>{t('main.list_item.3')}</li>
+                <li>{t('main.list_item.4')}</li>
               </ol>
             </Typography>
             <Button
@@ -46,7 +50,7 @@ function Home() {
               to={heroData.buttonLink}
               variant="contained"
               sx={{ mt: 3, mr: 2 }}>
-              Try now!
+              {t('hero.button_try_now')}
             </Button>
           </Box>
         </section>

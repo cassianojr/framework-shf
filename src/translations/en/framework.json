@@ -1,0 +1,12 @@
+{
+	"center_button": "REQUIREMENTS MANAGMENT IN SECO",
+	"center_description": {
+		"p1": "Requirements management is “a process that accompanies the planning and development of a system by capturing and mapping the source and context of change” (WIEGERS; BEATTY, 2013). In this way, requirements management is considered an organized process of documentation, analysis (negotiation), traceability, prioritization, change control, version control, and requirements communication (ISO/IEC/IEEE 29148, 2018).",
+		"p2": "A software ecosystem can be analyzed from a project perspective: “A software ecosystem is a collection of software projects which are developed and evolve together in the same environment” (LUGUN et al. 2010)."
+	},
+	"personal_group_label": "Personal Group",
+	"snackbar_text": "Thanks for your response! Take the opportunity to evaluate other requirements management activities.",
+	"social_group_label": "Social Group",
+	"suggest_new_button": "SUGGEST NEW",
+	"view_all_button": "View All"
+}

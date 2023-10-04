@@ -10,6 +10,7 @@ import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
 import { Step, StepType } from '../../types/Step.type';
 import CorrelateComponent from './CorrelateComponent';
+import { useTranslation } from "react-i18next";
 
 interface StepData {
   steps: Step[],
@@ -17,6 +18,8 @@ interface StepData {
 }
 
 export default function StepperComponent(props: StepData) {
+  const { t } = useTranslation('ecos_survey');
+
   const { steps, setSteps } = props;
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -130,14 +133,14 @@ export default function StepperComponent(props: StepData) {
             disabled={activeStep === maxSteps - 1}
             variant='contained'
           >
-            Próximo
+            {t('next_btn')}
             <KeyboardArrowRight />
           </Button>
         }
         backButton={
           <Button size="large" onClick={handleBack} disabled={activeStep === 0} variant='contained'>
             <KeyboardArrowLeft />
-            Voltar
+            {t('back_btn')}
           </Button>
         }
       />

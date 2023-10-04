@@ -15,8 +15,11 @@ import { AuthenticationContext, AuthenticationContextType } from '../context/aut
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
+  
+  const { t } = useTranslation('sign_up');
 
   const navigate = useNavigate();
 
@@ -77,7 +80,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            {t('title')}
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -88,7 +91,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  label="Name"
+                  label={t('name_field')}
                   autoFocus
                 />
               </Grid>
@@ -97,7 +100,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('email_field')}
                   name="email"
                   autoComplete="email"
                   type='email'
@@ -108,7 +111,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('password_field')}
                   type="password"
                   id="password"
                   inputProps={{"minLength":6}}
@@ -122,16 +125,16 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+             {t('sign_up_button')}
             </Button>
             <Button fullWidth variant="outlined" sx={{ mb: 2 }} onClick={signInGoogle}>
               <GoogleIcon sx={{ mr: 1 }} />
-              Sign Up with Google
+              {t('google_button')}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="sign-in" variant="body2">
-                  Already have an account? Sign in
+                  {t('sign_in_link')}
                 </Link>
               </Grid>
             </Grid>

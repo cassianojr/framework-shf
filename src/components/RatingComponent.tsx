@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import SnackBarComponent from './SnackBarComponent';
 import { FirebaseService } from '../services/FirebaseService';
+import {useTranslation} from "react-i18next";
 
 const labels: { [index: string]: string } = {
   0.5: 'Useless',
@@ -31,8 +32,10 @@ export default function RatingComponent(props: RatingComponentProps) {
   const [value, setValue] = React.useState<number | null>(null);
   const [hover, setHover] = React.useState(-1);
 
-  const snackBarErrorText = "Ocorreu um erro ao salvar a avaliação. Por favor, tente novamente mais tarde.";
-  const snackBarSuccessText = "Obrigado pela sua resposta! Aproveite para avaliar as outras atividades da gerência de requisitos.";
+  const {t} = useTranslation('rating');
+
+  const snackBarErrorText = t('snackbar_error');
+  const snackBarSuccessText = t('snackbar_success');
 
   const [snackBarErrorState, setSnackBarErrorState] = React.useState(false);
   const [snackBarSuccessState, setSnackBarSuccessState] = React.useState(false);

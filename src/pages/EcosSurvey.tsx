@@ -11,9 +11,13 @@ import { FirebaseService } from '../services/FirebaseService';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import { useNavigate } from 'react-router-dom';
 import { Step, StepType } from '../types/Step.type';
+import { useTranslation } from "react-i18next";
+import i18next from 'i18next';
+
 
 export default function EcosSurvey() {
 
+  const { t } = useTranslation('ecos_survey');
 
   const [steps, setSteps] = React.useState([] as Step[]);
   const [appLoading, setAppLoading] = React.useState(true);
@@ -30,27 +34,27 @@ export default function EcosSurvey() {
     const questions = [
       {
         questionId: 'contextual-characteristics',
-        label: 'Select the contextual characteristics of your organization',
+        label: t('questions.contextual_characteristics'),
         order: 0,
       },
       {
         questionId: 'social-human-factors',
-        label: 'Select the social and human factors that affects your organization',
+        label: t('questions.shf'),
         order: 1,
       },
       {
         questionId: 'barriers-to-improving',
-        label: 'Select the barriers to improving the SHF on your organization',
+        label:  t('questions.barriers'),
         order: 2,
       },
       {
         questionId: 'strategies',
-        label: 'Select the Improvement Strategies that you find useful on your organization',
+        label: t('questions.strategies'),
         order: 4,
       },
       {
         questionId: 'coping-mechanisms',
-        label: 'Select the coping mechanisms that you find useful on your organization',
+        label: t('questions.copy_mechanisms'),
         order: 6,
       }
     ]
@@ -58,7 +62,7 @@ export default function EcosSurvey() {
     FirebaseService.getFrameworkData((data: Framework[]) => {
       const correlateBarriersWithSHF = {
         id: 'correlate-barriers-with-shf',
-        label: 'For each factor you selected, indicate which of the barriers influence that factor',
+        label: t('questions.correlate_barriers_with_shf'),
         order: 3,
         type: StepType.correlate,
         correlateId: 'social-human-factors',
@@ -71,7 +75,7 @@ export default function EcosSurvey() {
 
       const correlateBarriersWithStrategies = {
         id: 'correlate-barriers-with-strategies',
-        label: 'For each barrier you selected, indicate which of the improvement strategies influence that factor',
+        label: t('questions.correlate_barriers_with_strategies'),
         order: 5,
         type: StepType.correlate,
         correlateId: 'barriers-to-improving',
@@ -83,7 +87,7 @@ export default function EcosSurvey() {
 
       const correlateCopingMechanismsWithBarriers = {
         id: 'correlate-coping-mechanisms-with-barriers',
-        label: 'For each coping mechanisms you selected, indicate which of the barriers influence that mechanism',
+        label: t('questions.correlate_coping_mechanisms_with_barriers'),
         order: 7,
         type: StepType.correlate,
         correlateId: 'coping-mechanisms',
@@ -105,9 +109,9 @@ export default function EcosSurvey() {
           listItems: item.items?.map((listItem) => {
             return {
               id: listItem.id,
-              name: listItem.name,
+              name: listItem.names[i18next.language],
               selected: false,
-              description: listItem.description,
+              description: listItem.descriptions[i18next.language],
             }
           }) ?? []
         }
@@ -117,7 +121,7 @@ export default function EcosSurvey() {
 
     setAppLoading(false);
 
-  }, [loading, navigate, signed, setAppLoading, setSteps]);
+  }, [loading, navigate, signed, setAppLoading, setSteps, t]);
 
   steps.sort((a, b) => a.order - b.order);
 

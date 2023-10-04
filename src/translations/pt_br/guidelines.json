@@ -1,0 +1,17 @@
+{
+	"list": {
+		"1": {
+			"description": "A primeira etapa é identificar os problemas. O primeiro passo para avaliar os FSH que influenciam a gerência de requisitos em ECOS é conhecer os fatores do dia a dia dos profissionais que atuam nas atividades da gerência de requisitos. Com isso, pergunte aos profissionais da equipe quais fatores eles já enfrentaram, apresente a lista de barreiras e entenda se eles já encontraram algumas delas em suas atividades da gerência de requisitos em ECOS. É fundamental que esta etapa seja feita individualmente, podendo também utilizar formulários on-line se preferir.",
+			"title": "Pergunte (Ask):"
+		},
+		"2": {
+			"description": " As estratégias de melhoria devem ocorrer no nível individual da equipe e organizacional, dependendo dos fatores e barreiras identificados. Após coletar feedback, as respostas devem ser avaliadas para determinar quais barrerias e fatores requerem a priorização para melhoria. Deve-se planejar estratégias de melhoria e alocar recursos financeiros para retificação, se necessário.",
+			"title": "Planeje (Plan):"
+		},
+		"3": {
+			"description": "Pequenas melhorias contínuas e iterativas são fundamentais. Implemente gradualmente as estratégias de melhoria e avalie se elas efetivamente abordam as barreiras e os fatores. Acompanhar o sucesso das estratégias é fundamental para superar as barreiras e melhorar os FSH. Depos que as melhorias planejadas forem implementadas, repita esse processo de três etapas iterativamente para sustentar o progresso e abordar os seguintes fatores e barreiras, mantendo assim um processo de melhoria contínua.",
+			"title": "Execute (Act):"
+		}
+	},
+	"title": "Diretrizes para Utilização"
+}

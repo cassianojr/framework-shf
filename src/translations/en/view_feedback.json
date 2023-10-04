@@ -1,0 +1,9 @@
+{
+	"framework_ratings": "Framework Ratings",
+	"framework_suggestions": "Framework suggestions",
+	"framework_suggestions_table": {
+		"description": "Description",
+		"title": "Title",
+		"type": "Type"
+	}
+}
