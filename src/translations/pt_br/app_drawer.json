@@ -1,4 +1,9 @@
 {
+	"account_menu": {
+		"logout_opt": "Sair",
+		"profile_opt": "Meu Perfil",
+		"settings_opt": "Configurações"
+	},
 	"fullFrameworkItem": "Framework Completo",
 	"guidelinesItem": "Diretrizes",
 	"welcome_message": "Bem vindo, {{user}}"

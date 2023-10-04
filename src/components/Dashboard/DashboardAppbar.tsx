@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AppDrawer from "./AppDrawer";
 import AccountMenu from "./AccountMenu";
 import { useTranslation } from "react-i18next";
+import LanguageButton from "../LanguageButton";
 
 interface AppBarProps {
   open: boolean;
@@ -39,7 +40,7 @@ interface DashboardAppbarProps {
 export default function DashboardAppbar({handleSignOut, displayName, photoURL}: DashboardAppbarProps) {
 
   const { t } = useTranslation('app_drawer');
-  
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -76,7 +77,7 @@ export default function DashboardAppbar({handleSignOut, displayName, photoURL}: 
           </Typography>
 
           <AccountMenu handleSignOut={handleSignOut} displayName={displayName} photoURL={photoURL}/>
-          
+          <LanguageButton />
         </Toolbar>
       </AppBar>
       <AppDrawer open={open} toggleDrawer={toggleDrawer} />
