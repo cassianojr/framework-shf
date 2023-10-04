@@ -13,6 +13,7 @@ import rating_en from './en/rating.json';
 import app_drawer_en from './en/app_drawer.json';
 import dashboard_en from './en/dashboard.json';
 import ecos_dashboard_en from './en/ecos_dashboard.json';
+import ecos_survey_en from './en/ecos_survey.json';
 
 import home_pt_br from './pt_br/home.json';
 import menu_pt_br from './pt_br/menu.json';
@@ -27,6 +28,7 @@ import rating_pt_br from './pt_br/rating.json';
 import app_drawer_pt_br from './pt_br/app_drawer.json';
 import dashboard_pt_br from './pt_br/dashboard.json';
 import ecos_dashboard_pt_br from './pt_br/ecos_dashboard.json';
+import ecos_survey_pt_br from './pt_br/ecos_survey.json';
 
 const navigatorLanguage = navigator.language.toLocaleLowerCase().replace('-', '_');
 i18next.init({
@@ -46,7 +48,8 @@ i18next.init({
       rating: rating_en,
       app_drawer: app_drawer_en,
       dashboard: dashboard_en,
-      ecos_dashboard: ecos_dashboard_en
+      ecos_dashboard: ecos_dashboard_en,
+      ecos_survey: ecos_survey_en
     },
     pt_br: {
       home: home_pt_br,
@@ -61,7 +64,8 @@ i18next.init({
       rating: rating_pt_br,
       app_drawer: app_drawer_pt_br,
       dashboard: dashboard_pt_br,
-      ecos_dashboard: ecos_dashboard_pt_br
+      ecos_dashboard: ecos_dashboard_pt_br,
+      ecos_survey: ecos_survey_pt_br
     },
   },
 });
