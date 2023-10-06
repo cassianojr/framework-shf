@@ -1,41 +1,42 @@
-import { collection, doc, onSnapshot } from "firebase/firestore";
-import { Question } from "../types/Question.type";
+import { collection, onSnapshot } from "firebase/firestore";
+import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
-import { Framework } from "../types/Framework.type";
+import { FirebaseService } from "./FirebaseService";
 
 export class QuestionService {
 
   public static getQuestions(callBack: (questions: Question[]) => void): void {
     onSnapshot(collection(db, "questions"), (snapshot) => {
+
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Question[];
 
-      const questions_data = data.map((question) => {
-        if (question.items_id === undefined) return question;
+      QuestionService.getQuestionsListItems(data, (questions) => {
+        callBack(questions);
+      });
+    });
+  }
 
-        const { items_id } = question;
+  private static getQuestionsListItems(questions: Question[], callBack: (questions: Question[]) => void): void {
+    questions.map((question) => {
+      if (question.items_id === undefined) return question;
 
-        const frameworkItemsRef = doc(db, "framework-items", items_id);
-        onSnapshot(frameworkItemsRef, (snapshot) => {
-          const data = snapshot.data() as Framework;
-          question.framework_items = data;
-          question.listItems = data.items.map((item) => {
-            return {
-              id: item.id,
-              names: item.names,
-              descriptions: item.descriptions,
-              selected: false
-            }
-          });
-          
+      const { items_id } = question;
+      FirebaseService.getFrameworkById(items_id).then((framework) => {
+        question.framework_items = framework;
+        question.listItems = framework.items.map((item) => {
+          return {
+            id: item.id,
+            names: item.names,
+            descriptions: item.descriptions,
+            selected: false
+          } as QuestionListItems;
         });
-        return question;
-      }) as Question[];
-
-
-      callBack(questions_data);
+      }).then(() => {
+        callBack(questions);
+      });
     });
   }
 

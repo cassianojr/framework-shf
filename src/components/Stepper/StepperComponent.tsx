@@ -13,8 +13,9 @@ import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
 import { Grid, TextField } from '@mui/material';
-import { Question, QuestionType } from '../../types/Question.type';
+import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
+import Singularizer from '../../util/Singularizer';
 
 interface StepData {
   questions: Question[],
@@ -22,13 +23,14 @@ interface StepData {
 }
 
 export default function StepperComponent(props: StepData) {
-  const { t } = useTranslation('ecos_survey');
+  const { t } = useTranslation(['ecos_survey', 'dashboard']);
 
   const { questions, setQuestions } = props;
-  
-  
+
+
   const [activeStep, setActiveStep] = React.useState(0);
-  const [items, setItems] = React.useState(questions[activeStep].listItems);
+  const [items, setItems] = React.useState([] as QuestionListItems[]);
+
   const [suggestNewModalState, setSuggestNewModalState] = React.useState(false);
 
 
@@ -40,11 +42,12 @@ export default function StepperComponent(props: StepData) {
     }
   }));
 
+
   const maxSteps = questions.length;
 
   const handleSelectedItems = () => {
     const selectedItemsInQuestion = questions.map((question: Question) => {
-      const selectedItemsInQuestion = question.listItems.filter((listItem) => listItem.selected);
+      const selectedItemsInQuestion = question.listItems?.filter((listItem) => listItem.selected);
 
       return {
         id: question.framework_items?.id,
@@ -111,18 +114,23 @@ export default function StepperComponent(props: StepData) {
     e.preventDefault();
   }
 
+  React.useEffect(() => {
+    setItems(questions[activeStep].listItems);
+  }, [setItems, activeStep, questions])
+
+
   const SuggestNewModal = () => {
+    const title = questions[activeStep]?.suggest_title?.[i18next.language] ?? '';
+    const description = questions[activeStep]?.suggest_description?.[i18next.language] ?? '';
+    const item_name = questions[activeStep]?.framework_items?.labels?.[i18next.language] ?? '';
     return (
-      <Modal.Root state={suggestNewModalState} id="suggestNew" title={t('add_ecos_btn')} handleClose={() => setSuggestNewModalState(false)}>
+      <Modal.Root state={suggestNewModalState} id="suggestNew" title={title} handleClose={() => setSuggestNewModalState(false)}>
         <form onSubmit={handleSuggestNew}>
           <Modal.Text>
             <Grid container spacing={2}>
               <Grid item xs={12} sx={{ marginTop: '1%' }}>
                 <Typography>
-                  {t('modal_text.txt1')}
-                </Typography>
-                <Typography>
-                  {t('modal_text.txt2')}
+                  {description}
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -131,17 +139,16 @@ export default function StepperComponent(props: StepData) {
                   required
                   id="orgName"
                   name="orgName"
-                  label={t('modal_text.label_name')}
+                  label={Singularizer.singularizeSentence(item_name)}
                   autoFocus
                 />
               </Grid>
-
             </Grid>
           </Modal.Text>
           <Divider />
           <Modal.Actions handleClose={() => setSuggestNewModalState(false)}>
-            <Button variant="contained" type="submit"><AddIcon /> {t('add_ecos_btn')}</Button>
-            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('modal_text.cancel_btn')}</Button>
+            <Button variant="contained" type="submit"><AddIcon /> {title}</Button>
+            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('dashboard:modal_text.cancel_btn')}</Button>
           </Modal.Actions>
         </form>
       </Modal.Root>
@@ -170,11 +177,17 @@ export default function StepperComponent(props: StepData) {
           {(activeStep === maxSteps) ? (
             <Typography>{selectedItems[0].id}</Typography>
           ) : (
-            ((questions[activeStep].type == QuestionType.select) ? <ListCheckbox listItems={items} handleToggle={handleToggle} /> : <CorrelateComponent items={questions[activeStep]} />)
+            ((questions[activeStep].type == QuestionType.select)
+              ?
+              <>
+                <ListCheckbox listItems={items} handleToggle={handleToggle} />
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button variant='contained' sx={{ margin: 'auto', marginTop: '1.3rem' }} onClick={() => setSuggestNewModalState(true)}><AddIcon /> {t('suggest_new_btn')}</Button>
+                </Box>
+              </>
+              : <CorrelateComponent items={questions[activeStep]} />)
           )}
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button variant='contained' sx={{ margin: 'auto', marginTop: '1.3rem' }} onClick={()=>setSuggestNewModalState(true)}><AddIcon /> {t('suggest_new_btn')}</Button>
-          </Box>
+
         </Box>
         <MobileStepper
           variant="dots"

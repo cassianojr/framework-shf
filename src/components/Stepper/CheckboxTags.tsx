@@ -5,6 +5,8 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { QuestionListItems } from '../../types/Question.type';
 import i18next from 'i18next';
+import { useTranslation } from "react-i18next";
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -16,6 +18,8 @@ interface CheckboxTagsData {
 }
 
 export default function CheckboxesTags({ itemName, itemId, options }: CheckboxTagsData) {
+
+  const {t} = useTranslation('ecos_survey');
 
   return (
     <Autocomplete
@@ -36,7 +40,7 @@ export default function CheckboxesTags({ itemName, itemId, options }: CheckboxTa
         </li>
       )}
       renderInput={(params) => (
-        <TextField {...params} label={itemName} placeholder={itemName} />
+        <TextField {...params} label={`${itemName}  ${t('checkbox_tags_text')}`} placeholder={`${itemName}  ${t('checkbox_tags_text')}`} />
       )}
     />
   );

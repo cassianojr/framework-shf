@@ -1,4 +1,4 @@
-import { Framework, FrameworkItem } from "./Framework.type"
+import { Framework } from "./Framework.type"
 
 interface Question {
   id: string,
@@ -29,8 +29,8 @@ interface Question {
 }
 
 export enum QuestionType{
-  select,
-  correlate
+  select = "select",
+  correlate = "correlate"
 }
 
 interface QuestionListItems{
