@@ -3,7 +3,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { StepItem } from '../../types/Step.type';
+import { QuestionListItems } from '../../types/Question.type';
+import i18next from 'i18next';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -11,7 +12,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 interface CheckboxTagsData {
   itemName: string,
   itemId: string,
-  options: StepItem[],
+  options: QuestionListItems[],
 }
 
 export default function CheckboxesTags({ itemName, itemId, options }: CheckboxTagsData) {
@@ -22,7 +23,7 @@ export default function CheckboxesTags({ itemName, itemId, options }: CheckboxTa
       id={itemId}
       options={options}
       disableCloseOnSelect
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.names[i18next.language]}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
@@ -31,7 +32,7 @@ export default function CheckboxesTags({ itemName, itemId, options }: CheckboxTa
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.name}
+          {option.names[i18next.language]}
         </li>
       )}
       renderInput={(params) => (

@@ -1,10 +1,13 @@
 import { Checkbox, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
+import i18next from 'i18next';
 
 
 interface ListData {
   listItems: {
     id: string,
-    name: string,
+    names:{
+      [key: string]: string
+    },
     selected: boolean,
   }[],
   handleToggle: (id: string) => () => void
@@ -29,10 +32,10 @@ export default function ListCheckbox(props: ListData) {
                       checked={item.selected}
                       tabIndex={-1}
                       disableRipple
-                      inputProps={{ 'aria-labelledby': item.name }}
+                      inputProps={{ 'aria-labelledby': item.names[i18next.language] }}
                     />
                   </ListItemIcon>
-                  <ListItemText id={item.name} primary={item.name} />
+                  <ListItemText id={item.names[i18next.language]} primary={item.names[i18next.language]} />
                 </ListItemButton>
               </ListItem>
               <Divider />

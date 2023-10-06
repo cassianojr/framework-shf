@@ -1,6 +1,7 @@
 {
 	"back_btn": "BACK",
 	"next_btn": "NEXT",
+  "suggest_new_btn": "SUGGEST NEW",
 	"questions": {
 		"barriers": "Select the barriers to improving the SHF on your organization",
 		"contextual_characteristics": "Select the contextual characteristics of your organization",

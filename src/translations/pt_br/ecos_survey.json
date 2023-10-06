@@ -1,6 +1,7 @@
 {
 	"back_btn": "VOLTAR",
 	"next_btn": "PRÓXIMO",
+  "suggest_new_btn": "SUGERIR NOVO",
 	"questions": {
 		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
 		"contextual_characteristics": "Selecione as características contextuais da sua organização",
