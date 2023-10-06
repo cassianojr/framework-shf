@@ -1,7 +1,6 @@
 {
 	"back_btn": "BACK",
 	"checkbox_tags_text": "are related to...",
-	"new_suggestion_btn": "Suggest {{item_name}}",
 	"next_btn": "NEXT",
 	"questions": {
 		"barriers": "Select the barriers to improving the SHF on your organization",

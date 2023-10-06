@@ -1,7 +1,6 @@
 {
 	"back_btn": "VOLTAR",
 	"checkbox_tags_text": "está relacionado com...",
-	"new_suggestion_btn": "Sugerir {{item_name}}",
 	"next_btn": "PRÓXIMO",
 	"questions": {
 		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
