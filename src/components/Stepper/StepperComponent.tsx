@@ -12,7 +12,7 @@ import CorrelateComponent from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
-import { Grid, TextField } from '@mui/material';
+import { Fab, Grid, TextField } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import Singularizer from '../../util/Singularizer';
@@ -23,7 +23,7 @@ interface StepData {
 }
 
 export default function StepperComponent(props: StepData) {
-  const { t } = useTranslation(['ecos_survey', 'dashboard']);
+  const { t } = useTranslation(['ecos_survey', 'dashboard', 'common']);
 
   const { questions, setQuestions } = props;
 
@@ -32,6 +32,7 @@ export default function StepperComponent(props: StepData) {
   const [items, setItems] = React.useState([] as QuestionListItems[]);
 
   const [suggestNewModalState, setSuggestNewModalState] = React.useState(false);
+  const [descriptionModalState, setDescriptionModalState] = React.useState(false);
 
 
   const [selectedItems, setSelectedItems] = React.useState(questions.map((question: Question) => {
@@ -148,17 +149,39 @@ export default function StepperComponent(props: StepData) {
           <Divider />
           <Modal.Actions handleClose={() => setSuggestNewModalState(false)}>
             <Button variant="contained" type="submit"><AddIcon /> {title}</Button>
-            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('dashboard:modal_text.cancel_btn')}</Button>
+            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('common:modal_text.cancel_btn')}</Button>
           </Modal.Actions>
         </form>
       </Modal.Root>
     );
+  }
 
+  const DescriptionModal = () => {
+    const title = questions[activeStep]?.description_title?.[i18next.language] ?? '';
+    const description = questions[activeStep]?.description?.[i18next.language] ?? '';
+    return (
+      <Modal.Root state={descriptionModalState} id="descriptionModal" title={title} handleClose={() => setSuggestNewModalState(false)}>
+        <Modal.Text>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sx={{ marginTop: '1%' }}>
+              <Typography>
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Modal.Text>
+        <Divider />
+        <Modal.Actions handleClose={() => setDescriptionModalState(false)}>
+          <Button variant="outlined" onClick={() => setDescriptionModalState(false)}>{t('common:close_button')}</Button>
+        </Modal.Actions>
+      </Modal.Root>
+    );
   }
 
   return (
     <>
       <SuggestNewModal />
+      <DescriptionModal />
       <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2} >
         <Paper
           square
@@ -172,6 +195,11 @@ export default function StepperComponent(props: StepData) {
         >
           <Typography variant='h4' sx={{ textAlign: 'center', width: '100%' }}>{questions[activeStep].title[i18next.language]}</Typography>
         </Paper>
+        <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+          <Fab color="primary" variant="extended" aria-label="help" onClick={()=>setDescriptionModalState(true)}>
+            {questions[activeStep].description_title[i18next.language]}
+          </Fab>
+        </Box>
         <Divider sx={{ marginTop: '1.5rem' }} />
         <Box sx={{ width: '100%', p: 2 }} >
           {(activeStep === maxSteps) ? (
@@ -187,8 +215,9 @@ export default function StepperComponent(props: StepData) {
               </>
               : <CorrelateComponent items={questions[activeStep]} />)
           )}
-
         </Box>
+
+
         <MobileStepper
           variant="dots"
           steps={maxSteps}
