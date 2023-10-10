@@ -197,7 +197,7 @@ export default function StepperComponent(props: StepData) {
         </Paper>
         <Box sx={{ display: 'flex', justifyContent: 'right' }}>
           <Fab color="primary" variant="extended" aria-label="help" onClick={()=>setDescriptionModalState(true)}>
-            {questions[activeStep].description_title[i18next.language]}
+            {questions[activeStep]?.description_title?.[i18next.language] ?? ''}
           </Fab>
         </Box>
         <Divider sx={{ marginTop: '1.5rem' }} />
