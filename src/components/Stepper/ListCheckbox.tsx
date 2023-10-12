@@ -7,14 +7,19 @@ import { useTranslation } from 'react-i18next';
 
 
 interface ListData {
-  listItems: {
-    id: string,
-    names: {
-      [key: string]: string
-    },
-    selected: boolean,
-  }[],
+  listItems: ItemType[],
   handleToggle: (id: string) => () => void
+}
+
+interface ItemType {
+  id: string,
+  names: {
+    [key: string]: string
+  },
+  descriptions: {
+    [key: string]: string
+  },
+  selected: boolean,
 }
 
 interface InfoModalContentType {
@@ -42,7 +47,7 @@ export default function ListCheckbox(props: ListData) {
     }
   } as InfoModalContentType);
 
-  const handleInfoClick = (item: any) => {
+  const handleInfoClick = (item: ItemType) => {
     setInfoModalContent(item);
     setInfoModalState(true);
   }
