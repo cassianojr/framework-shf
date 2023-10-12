@@ -12,7 +12,7 @@ import CorrelateComponent from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
-import { Fab, Grid, TextField } from '@mui/material';
+import { Grid, Link, TextField } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import Singularizer from '../../util/Singularizer';
@@ -196,9 +196,9 @@ export default function StepperComponent(props: StepData) {
           <Typography variant='h4' sx={{ textAlign: 'center', width: '100%' }}>{questions[activeStep].title[i18next.language]}</Typography>
         </Paper>
         <Box sx={{ display: 'flex', justifyContent: 'right' }}>
-          <Fab color="primary" variant="extended" aria-label="help" onClick={()=>setDescriptionModalState(true)}>
-            {questions[activeStep]?.description_title?.[i18next.language] ?? ''}
-          </Fab>
+          <Link color="primary" aria-label="help" onClick={()=>setDescriptionModalState(true)}>
+            <Typography variant='h6' sx={{cursor:'pointer'}}>{questions[activeStep]?.description_title?.[i18next.language] ?? ''}</Typography>
+          </Link>
         </Box>
         <Divider sx={{ marginTop: '1.5rem' }} />
         <Box sx={{ width: '100%', p: 2 }} >
