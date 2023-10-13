@@ -12,10 +12,10 @@ import CorrelateComponent from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
-import { Grid, Link, TextField, TextareaAutosize } from '@mui/material';
+import { Grid, Link } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
-import Singularizer from '../../util/Singularizer';
+import SuggestNewModal from './SuggestNewModal';
 
 interface StepData {
   questions: Question[],
@@ -27,7 +27,6 @@ export default function StepperComponent(props: StepData) {
 
   const { questions, setQuestions } = props;
 
-
   const [activeStep, setActiveStep] = React.useState(0);
   const [items, setItems] = React.useState([] as QuestionListItems[]);
 
@@ -38,7 +37,6 @@ export default function StepperComponent(props: StepData) {
     description: ''
   });
 
-
   const [selectedItems, setSelectedItems] = React.useState(questions.map((question: Question) => {
     return {
       id: question.framework_items?.id,
@@ -46,7 +44,6 @@ export default function StepperComponent(props: StepData) {
       selectedItemsInQuestion: (question.listItems) ? question.listItems.filter((listItem) => listItem.selected) : []
     }
   }));
-
 
   const maxSteps = questions.length;
 
@@ -115,7 +112,6 @@ export default function StepperComponent(props: StepData) {
     });
   }
 
-
   const handleDeleteSuggestion = (id: string) => {
     const newListItems = items.filter((listItem) => listItem.id !== id);
     setItems(newListItems);
@@ -143,117 +139,6 @@ export default function StepperComponent(props: StepData) {
     setSuggestNewModalState(true);
   }
 
-
-  const SuggestNewModal = () => {
-    const title = questions[activeStep]?.suggest_title?.[i18next.language] ?? '';
-    const description = questions[activeStep]?.suggest_description?.[i18next.language] ?? '';
-    const item_name = questions[activeStep]?.framework_items?.labels?.[i18next.language] ?? '';
-
-    const [suggestionName, setSuggestionName] = React.useState(editSuggestionValues.name);
-    const [descriptionValue, setDescriptionValue] = React.useState(editSuggestionValues.description);
-
-    const isEdit = (editSuggestionValues.name !== '' && editSuggestionValues.description !== '')
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-      setSuggestionName(name === 'suggestionName' ? value : suggestionName);
-      setDescriptionValue(name === 'description' ? value : descriptionValue);
-    }
-
-    const handleEditSuggestion = (suggestName: string, suggestDescription: string) => {
-      if (!isEdit) {
-        return undefined;
-      }
-
-      const itemToEdit = items.find((item) => item.id === editSuggestionValues.name);
-
-      if (itemToEdit === undefined) return;
-
-      itemToEdit.id = suggestName;
-      itemToEdit.names['pt_br'] = suggestName;
-      itemToEdit.names['en'] = suggestName;
-
-      itemToEdit.descriptions['pt_br'] = suggestDescription;
-      itemToEdit.descriptions['en'] = suggestDescription;
-
-      setSuggestionName('');
-      setDescriptionValue('');
-
-      return itemToEdit;
-    }
-
-    const handleSuggestNew = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const suggestName = e.currentTarget.suggestionName.value;
-      const description = e.currentTarget.description.value;
-
-      const itemToEdit = handleEditSuggestion(suggestName, description);
-      const newListItems = [...items, { id: suggestName, names: { en: suggestName, pt_br: suggestName }, descriptions: { en: description, pt_br: description }, selected: true, suggestion: true }];
-
-      const item = (!isEdit && !itemToEdit) ? newListItems : items;
-
-      setItems(item);
-      setQuestions((prevQuestions: Question[]) => {
-        const newQuestion = prevQuestions.map((question: Question) => {
-          if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
-            return { ...question, listItems: item };
-          }
-          return question;
-        });
-        return newQuestion;
-      });
-
-      setSuggestNewModalState(false);
-
-      setSuggestionName('');
-      setDescriptionValue('');
-    }
-
-
-    return (
-      <Modal.Root state={suggestNewModalState} id="suggestNew" title={title} handleClose={() => setSuggestNewModalState(false)}>
-        <form onSubmit={handleSuggestNew}>
-          <Modal.Text>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sx={{ marginTop: '1%' }}>
-                <Typography>
-                  {description}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sx={{ marginTop: '1%' }}>
-                <TextField
-                  fullWidth
-                  required
-                  id="suggestionName"
-                  name="suggestionName"
-                  value={suggestionName}
-                  label={Singularizer.singularizeSentence(item_name)}
-                  onChange={handleChange}
-                  autoFocus
-                />
-                <TextareaAutosize
-                  style={{ width: '100%', marginTop: '1rem' }}
-                  minRows={3}
-                  placeholder={t('common:textarea_placeholder')}
-                  id="description"
-                  name="description"
-                  value={descriptionValue}
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-          </Modal.Text>
-          <Divider />
-          <Modal.Actions handleClose={() => setSuggestNewModalState(false)}>
-            <Button variant="contained" type="submit"><AddIcon /> {(isEdit) ? t('common:save_btn') : title}</Button>
-            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('common:close_button')}</Button>
-          </Modal.Actions>
-        </form>
-      </Modal.Root>
-    );
-  }
-
   const DescriptionModal = () => {
     const title = questions[activeStep]?.description_title?.[i18next.language] ?? '';
     const description = questions[activeStep]?.description?.[i18next.language] ?? '';
@@ -278,7 +163,16 @@ export default function StepperComponent(props: StepData) {
 
   return (
     <>
-      <SuggestNewModal />
+      <SuggestNewModal
+        suggestNewModalState={suggestNewModalState}
+        setSuggestNewModalState={setSuggestNewModalState}
+        activeStep={activeStep}
+        questions={questions}
+        setQuestions={setQuestions}
+        items={items}
+        setItems={setItems}
+        editSuggestionValues={editSuggestionValues}
+      />
       <DescriptionModal />
       <Box sx={{ flexGrow: 1, padding: '2rem' }} component={Paper} elevation={2} >
         <Paper
