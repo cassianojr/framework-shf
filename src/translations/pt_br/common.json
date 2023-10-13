@@ -1,5 +1,6 @@
 {
 	"back_button": "Voltar",
 	"close_button": "FECHAR",
-	"feedback_label": "Isso foi útil?"
+	"feedback_label": "Isso foi útil?",
+	"textarea_placeholder": "Digite a descrição da sua sugestão"
 }

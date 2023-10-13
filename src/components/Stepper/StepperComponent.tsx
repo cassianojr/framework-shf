@@ -12,7 +12,7 @@ import CorrelateComponent from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
-import { Grid, Link, TextField } from '@mui/material';
+import { Grid, Link, TextField, TextareaAutosize } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import Singularizer from '../../util/Singularizer';
@@ -113,6 +113,20 @@ export default function StepperComponent(props: StepData) {
 
   const handleSuggestNew = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const orgName = e.currentTarget.orgName.value;
+    const description = e.currentTarget.description.value;
+    const newListItems = [...items, { id: orgName, names: { en: orgName, pt_br: orgName }, descriptions: { en: description, pt_br: description }, selected: true }];
+    setItems(newListItems);
+    setQuestions((prevQuestions: Question[]) => {
+      const newQuestion = prevQuestions.map((question: Question) => {
+        if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
+          return { ...question, listItems: newListItems };
+        }
+        return question;
+      });
+      return newQuestion;
+    });
+    setSuggestNewModalState(false);
   }
 
   React.useEffect(() => {
@@ -143,13 +157,20 @@ export default function StepperComponent(props: StepData) {
                   label={Singularizer.singularizeSentence(item_name)}
                   autoFocus
                 />
+                <TextareaAutosize
+                  style={{ width: '100%', marginTop: '1rem' }}
+                  minRows={3}
+                  placeholder={t('common:textarea_placeholder')}
+                  id="description"
+                  name="description"
+                />
               </Grid>
             </Grid>
           </Modal.Text>
           <Divider />
           <Modal.Actions handleClose={() => setSuggestNewModalState(false)}>
             <Button variant="contained" type="submit"><AddIcon /> {title}</Button>
-            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('common:modal_text.cancel_btn')}</Button>
+            <Button variant="outlined" onClick={() => setSuggestNewModalState(false)}>{t('common:close_button')}</Button>
           </Modal.Actions>
         </form>
       </Modal.Root>
