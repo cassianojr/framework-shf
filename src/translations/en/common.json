@@ -1,5 +1,7 @@
 {
 	"back_button": "Back",
 	"close_button": "CLOSE",
-	"feedback_label": "Was this helpful?"
+	"feedback_label": "Was this helpful?",
+	"textarea_placeholder": "Enter your description suggestion",
+	"save_btn": "Save"
 }

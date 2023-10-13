@@ -9,7 +9,6 @@ import MapIcon from '@mui/icons-material/Map';
 import { Link } from '@mui/material';
 import { useTranslation } from "react-i18next";
 
-
 export default function MainMenuItems() {
   const { t } = useTranslation('app_drawer');
   const menuItems = [
@@ -46,16 +45,3 @@ export default function MainMenuItems() {
     ))}
   </React.Fragment>);
 }
-// export const mainListItems = (
-
-//   <React.Fragment>
-//     {menuItems.map((item, index) => (
-//       <ListItemButton key={index} LinkComponent={Link} href={item.path}>
-//         <ListItemIcon>
-//           {item.icon}
-//         </ListItemIcon>
-//         <ListItemText primary={item.name} />
-//       </ListItemButton>
-//     ))}
-//   </React.Fragment>
-// );

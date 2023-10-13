@@ -1,5 +1,6 @@
 {
 	"back_btn": "VOLTAR",
+	"checkbox_tags_text": "está relacionado com...",
 	"next_btn": "PRÓXIMO",
 	"questions": {
 		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
@@ -10,5 +11,6 @@
 		"correlate_coping_mechanisms_with_barriers": "Para cada mecanismo de enfrentamento selecionado, indique quais das barreiras influenciam esse mecanismo",
 		"shf": "Selecione os fatores sociais e humanos que afetam sua organização",
 		"strategies": "Selecione as estratégias de melhoria que você considera úteis para sua organização"
-	}
+	},
+	"suggest_new_btn": "SUGERIR NOVO"
 }

@@ -14,8 +14,8 @@ export class FirebaseService {
     });
   }
 
-  public static saveRating(rating: RatingType, successCallback: (docRef:DocumentReference<DocumentData>) => void, errorCallback: ()=> void): void {
-    const {id, rating: newValue} = rating;
+  public static saveRating(rating: RatingType, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
+    const { id, rating: newValue } = rating;
     addDoc(collection(db, "ratings"), {
       name: id,
       rating: newValue
@@ -27,7 +27,7 @@ export class FirebaseService {
     });
   }
 
-  public static updateRating(rating: number | null, docRef:string, successCallback: () => void, errorCallback: ()=> void): void {
+  public static updateRating(rating: number | null, docRef: string, successCallback: () => void, errorCallback: () => void): void {
     updateDoc(doc(db, "ratings", docRef), {
       rating
     }).then(() => {
@@ -39,7 +39,7 @@ export class FirebaseService {
     return;
   }
 
-  public static getFrameworkData(callBack:(frameworkData: Framework[])=>void): void {
+  public static getFrameworkData(callBack: (frameworkData: Framework[]) => void): void {
     onSnapshot(collection(db, "framework-items"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -49,7 +49,7 @@ export class FirebaseService {
     });
   }
 
-  public static getRatings(callBack:(ratings: RatingType[])=>void): void {
+  public static getRatings(callBack: (ratings: RatingType[]) => void): void {
     onSnapshot(collection(db, "ratings"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -59,13 +59,34 @@ export class FirebaseService {
     });
   }
 
-  public static getSuggestions(callBack:(suggestions: Suggestion[])=>void): void {
+  public static getSuggestions(callBack: (suggestions: Suggestion[]) => void): void {
     onSnapshot(collection(db, "suggestions"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Suggestion[];
       callBack(data);
+    });
+  }
+
+  public static async getFrameworkById(idFramework: string): Promise<Framework> {
+    const frameworkItemsRef = doc(db, "framework-items", idFramework);
+
+    return new Promise<Framework>((resolve, reject) => {
+      const unsubscribe = onSnapshot(frameworkItemsRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data() as Framework;
+          resolve(data);
+        }else{
+          unsubscribe();
+          reject("No such document!");
+        }
+      },(error)=>{
+        console.log(error);
+        unsubscribe();
+        reject(error);
+      });
+
     });
   }
 
