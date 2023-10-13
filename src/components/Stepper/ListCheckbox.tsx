@@ -4,11 +4,15 @@ import i18next from 'i18next';
 import { Modal } from '../Modal';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 interface ListData {
   listItems: ItemType[],
-  handleToggle: (id: string) => () => void
+  handleToggle: (id: string) => () => void,
+  handleDelete: (id: string) => void,
+  handleEdit: (id: string) => void
 }
 
 interface ItemType {
@@ -20,6 +24,7 @@ interface ItemType {
     [key: string]: string
   },
   selected: boolean,
+  suggestion: boolean
 }
 
 interface InfoModalContentType {
@@ -34,7 +39,7 @@ interface InfoModalContentType {
 export default function ListCheckbox(props: ListData) {
   const { t } = useTranslation('common');
 
-  const { listItems, handleToggle } = props;
+  const { listItems, handleToggle, handleDelete, handleEdit } = props;
   const [infoModalState, setInfoModalState] = React.useState(false);
   const [infoModalContent, setInfoModalContent] = React.useState({
     names: {
@@ -75,6 +80,24 @@ export default function ListCheckbox(props: ListData) {
     );
   }
 
+  interface SuggestionActionsProps {
+    item: ItemType;
+  }
+
+  const SuggestionActions = ({ item }: SuggestionActionsProps) => {
+    //suggestion actions have two buttons: delete and edit icons with their respective actions
+    return (
+      <ListItemButton role={undefined} sx={{ padding: 0 }}>
+        <IconButton edge="end" aria-label="edit" onClick={()=>handleEdit(item.id)}>
+          <EditIcon sx={{ fontSize: '1.2rem' }} />
+        </IconButton>
+        <IconButton edge="end" aria-label="delete" onClick={()=>handleDelete(item.id)}>
+          <DeleteIcon sx={{ fontSize: '1.2rem' }} />
+        </IconButton>
+      </ListItemButton>
+    )
+  }
+
   return (
     <>
       <InfoModal />
@@ -82,7 +105,7 @@ export default function ListCheckbox(props: ListData) {
         <List dense disablePadding sx={{ width: '60%', margin: 'auto' }}>
           {listItems.map((item) => (
             <Box key={item.id}>
-              <ListItem disablePadding disableGutters>
+              <ListItem disablePadding disableGutters secondaryAction={item.suggestion && <SuggestionActions item={item}/>}>
                 <ListItemButton role={undefined} sx={{ padding: 0 }}>
                   <ListItemIcon>
                     <Checkbox
@@ -90,7 +113,7 @@ export default function ListCheckbox(props: ListData) {
                       checked={item.selected}
                       tabIndex={-1}
                       disableRipple
-                      onClick={handleToggle(item.id)} 
+                      onClick={handleToggle(item.id)}
                       inputProps={{ 'aria-labelledby': item.names[i18next.language] }}
                     />
                   </ListItemIcon>
@@ -101,13 +124,11 @@ export default function ListCheckbox(props: ListData) {
                         <InfoRounded sx={{ fontSize: '1.2rem' }} />
                       </IconButton>
                     </>} />
-
                 </ListItemButton>
               </ListItem>
               <Divider />
             </Box>
           ))}
-
         </List>
 
       </Container>

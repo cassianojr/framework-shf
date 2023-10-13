@@ -31,7 +31,8 @@ export class QuestionService {
             id: item.id,
             names: item.names,
             descriptions: item.descriptions,
-            selected: false
+            selected: false,
+            suggestion: false
           } as QuestionListItems;
         });
       }).then(() => {

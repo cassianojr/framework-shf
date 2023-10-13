@@ -26,6 +26,7 @@ interface Question {
   correlateWith?: QuestionListItems[],
   itemsToCorrelate?: QuestionListItems[],
   listItems: QuestionListItems[],
+  suggestion: boolean
 }
 
 export enum QuestionType{
@@ -42,6 +43,7 @@ interface QuestionListItems{
   descriptions:{
     [key: string]: string
   },
+  suggestion:boolean
 }
 
 export type {Question, QuestionListItems};
