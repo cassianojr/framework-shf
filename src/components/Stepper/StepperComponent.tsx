@@ -8,7 +8,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
-import CorrelateComponent from './CorrelateComponent';
+import CorrelateComponent, { CorrelateItems, CorrelateValues } from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
@@ -16,6 +16,8 @@ import { Grid, Link } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import SuggestNewModal from './SuggestNewModal';
+import { Answer } from '../../types/Answer.type';
+import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
 
 interface StepData {
   questions: Question[],
@@ -24,6 +26,9 @@ interface StepData {
 
 export default function StepperComponent(props: StepData) {
   const { t } = useTranslation(['ecos_survey', 'dashboard', 'common']);
+  const { getUser } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  const user = getUser();
 
   const { questions, setQuestions } = props;
 
@@ -37,6 +42,12 @@ export default function StepperComponent(props: StepData) {
     description: ''
   });
 
+  const [correlateValues, setCorrelateValues] = React.useState<CorrelateValues[]>([]);
+
+  const ecos_id = window.location.pathname.split('/')[2];
+
+  const [answers, setAnswers] = React.useState([] as Answer[]);
+
   const [selectedItems, setSelectedItems] = React.useState(questions.map((question: Question) => {
     return {
       id: question.framework_items?.id,
@@ -47,8 +58,57 @@ export default function StepperComponent(props: StepData) {
 
   const maxSteps = questions.length;
 
+
+  function handleAnswers(selectedItems: { id: string | undefined; question: string; selectedItemsInQuestion: QuestionListItems[]; }[]) {
+    let newAnser = {} as Answer;
+
+    if (questions[activeStep].type != QuestionType.correlate) {
+
+      newAnser = {
+        question_id: questions[activeStep].id,
+        ecossystem_id: ecos_id,
+        user_id: user.uid,
+        selected_items: selectedItems[activeStep].selectedItemsInQuestion.map((item) => item.id),
+      } as Answer;
+
+    }else if (questions[activeStep].type == QuestionType.correlate) {
+
+      const correlations = correlateValues.map((correlation) => {
+        return {
+          item: correlation.correlateWith.id,
+          correlation_to: correlation.itemsToCorrelate.map((item) => item.id)
+        }
+      });
+
+      newAnser = {
+        question_id: questions[activeStep].id,
+        ecossystem_id: ecos_id,
+        user_id: user.uid,
+        correlations
+      } as Answer;
+    }
+
+
+    setAnswers((prevAnswers) => {
+      const newAnswers = prevAnswers.map((answer) => {
+        if (answer.question_id == newAnser.question_id) {
+          return newAnser;
+        }
+        return answer;
+      });
+
+      if (newAnswers.filter((answer) => answer.question_id == newAnser.question_id).length == 0) {
+        newAnswers.push(newAnser);
+      }
+
+      return newAnswers;
+    });
+
+    console.log(answers);
+  }
+
   const handleSelectedItems = () => {
-    const selectedItemsInQuestion = questions.map((question: Question) => {
+    const selectedItems = questions.map((question: Question) => {
       const selectedItemsInQuestion = question.listItems?.filter((listItem) => listItem.selected);
 
       return {
@@ -58,12 +118,12 @@ export default function StepperComponent(props: StepData) {
       };
     });
 
-    questions.map((question: Question) => {
+    questions.forEach((question: Question) => {
       if (question.type != QuestionType.correlate) {
         return question;
       }
 
-      selectedItemsInQuestion.map((selectedItems) => {
+      selectedItems.map((selectedItems) => {
         if (selectedItems.id == question?.correlateWithId) {
           question.correlateWith = selectedItems.selectedItemsInQuestion;
         }
@@ -73,9 +133,12 @@ export default function StepperComponent(props: StepData) {
         }
       });
       return question;
+
     });
 
-    setSelectedItems(selectedItemsInQuestion);
+    handleAnswers(selectedItems);
+
+    setSelectedItems(selectedItems);
   }
 
   const handleNext = () => {
@@ -205,7 +268,7 @@ export default function StepperComponent(props: StepData) {
                   <Button variant='contained' sx={{ margin: 'auto', marginTop: '1.3rem' }} onClick={() => { setSuggestNewModalState(true); setEditSuggestionValues({ name: '', description: '' }) }}><AddIcon /> {t('suggest_new_btn')}</Button>
                 </Box>
               </>
-              : <CorrelateComponent items={questions[activeStep]} />)
+              : <CorrelateComponent items={questions[activeStep] as CorrelateItems} values={correlateValues} setValues={setCorrelateValues} />)
           )}
         </Box>
 
@@ -236,4 +299,5 @@ export default function StepperComponent(props: StepData) {
       </Box>
     </>
   );
+
 }
