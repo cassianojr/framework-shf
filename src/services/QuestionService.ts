@@ -1,7 +1,8 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { DocumentData, DocumentReference, addDoc, collection, onSnapshot } from "firebase/firestore";
 import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
 import { FirebaseService } from "./FirebaseService";
+import { Answer } from "../types/Answer.type";
 
 export class QuestionService {
 
@@ -17,6 +18,20 @@ export class QuestionService {
         callBack(questions);
       });
     });
+  }
+
+  public static saveAnswers(answers: Answer[], successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
+    
+    answers.forEach((answer) => {
+
+      addDoc(collection(db, "answers"), answer).then((docRef) => {
+        successCallback(docRef);
+      }).catch((error) => {
+        console.log("Error adding document: ", error);
+        errorCallback();
+      });
+    });
+
   }
 
   private static getQuestionsListItems(questions: Question[], callBack: (questions: Question[]) => void): void {
