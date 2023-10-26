@@ -12,5 +12,6 @@
 		"shf": "Select the social and human factors that affects your organization",
 		"strategies": "Select the Improvement Strategies that you find useful on your organization"
 	},
-	"suggest_new_btn": "SUGGEST NEW"
+	"suggest_new_btn": "SUGGEST NEW",
+  "snackbar_text": "Thanks for your answer!"
 }

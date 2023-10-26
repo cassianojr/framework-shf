@@ -19,6 +19,7 @@ import SuggestNewModal from './SuggestNewModal';
 import { Answer } from '../../types/Answer.type';
 import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
 import { QuestionService } from '../../services/QuestionService';
+import SnackBarComponent from '../SnackBarComponent';
 
 interface StepData {
   questions: Question[],
@@ -43,6 +44,8 @@ export default function StepperComponent(props: StepData) {
     name: '',
     description: ''
   });
+
+  const [snackBarState, setSnackBarState] = React.useState(false);
 
   const [correlateValues, setCorrelateValues] = React.useState<CorrelateValues[]>([]);
 
@@ -164,8 +167,11 @@ export default function StepperComponent(props: StepData) {
   const handleSave = () => {    
     const answers = handleAnswers(selectedItems);
 
-    QuestionService.saveAnswers(answers, (response) => {
-      console.log(response);
+    QuestionService.saveAnswers(answers, () => {
+      setSnackBarState(true);
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 2000);
     }, () => console.log('error'));
   }
 
@@ -207,6 +213,7 @@ export default function StepperComponent(props: StepData) {
 
   return (
     (items != undefined && items.length == 0) ? <></> : <>
+    <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={t('snackbar_text')} severity='success'/>
       <SuggestNewModal
         suggestNewModalState={suggestNewModalState}
         setSuggestNewModalState={setSuggestNewModalState}

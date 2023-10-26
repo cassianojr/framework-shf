@@ -11,11 +11,12 @@ import { AuthenticationContext, AuthenticationContextType } from '../context/aut
 import React from "react";
 import { Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Chart from '../components/Dashboard/Chart';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
 import { Ecosystem } from '../types/Ecosystem.type';
 import { useTranslation } from "react-i18next";
+import FrameworkComponent from '../components/FrameworkComponent';
+import Title from '../components/Dashboard/Title';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -43,8 +44,8 @@ export default function ECOSDashboard() {
     if (!signed) navigate('/sign-in');
     if (signed) setAppLoading(false);
 
-    EcosystemService.getEcosystem(ecosId??"", (ecos) => {
-      if(ecos.admin_id !== user.uid) navigate('/');
+    EcosystemService.getEcosystem(ecosId ?? "", (ecos) => {
+      if (ecos.admin_id !== user.uid) navigate('/');
       setEcos(ecos);
     });
 
@@ -98,24 +99,25 @@ export default function ECOSDashboard() {
                   <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {ecos.responses}</Typography>
                 </Paper>
               </Grid>
-              <Grid item lg={9}>
+              <Grid item lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '240px',
+                    height: '100%',
                   }}
                 >
-                  <Chart />
+                  <Title>Resultados no Framework</Title>
+                  <FrameworkComponent showSuggestions={false} />
                 </Paper>
               </Grid>
 
             </Grid>
           </Container>
-          <Footer />
         </Box>
       </Box>
+      <Footer />
     </>
   );
 }

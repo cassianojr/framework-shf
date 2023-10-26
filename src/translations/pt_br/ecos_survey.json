@@ -12,5 +12,6 @@
 		"shf": "Selecione os fatores sociais e humanos que afetam sua organização",
 		"strategies": "Selecione as estratégias de melhoria que você considera úteis para sua organização"
 	},
-	"suggest_new_btn": "SUGERIR NOVO"
+	"suggest_new_btn": "SUGERIR NOVO",
+  "snackbar_text": "Obrigado pela sua resposta!"
 }

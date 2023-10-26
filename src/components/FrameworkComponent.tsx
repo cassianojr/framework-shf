@@ -9,11 +9,15 @@ import React from 'react';
 import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
 import { FirebaseService } from '../services/FirebaseService';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-function FrameworkComponent() {
-  
-  const {t} = useTranslation('framework');
+interface FrameworkComponentProps {
+  showSuggestions?: boolean;
+}
+
+function FrameworkComponent({ showSuggestions = true }: FrameworkComponentProps = {}) {
+
+  const { t } = useTranslation('framework');
 
   const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
   const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
@@ -54,11 +58,11 @@ function FrameworkComponent() {
           <Modal.Root state={centerModalState} {...centerModalContent} handleClose={() => setCenterModalState(false)}>
             <Modal.Text>
               <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-                  {t('center_description.p1')}
+                {t('center_description.p1')}
               </Typography>
               <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-                  {t('center_description.p2')}
-               </Typography>
+                {t('center_description.p2')}
+              </Typography>
             </Modal.Text>
             <Divider />
             <Modal.Actions handleClose={() => setCenterModalState(false)} />
@@ -82,7 +86,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {socialHumanFactors == undefined || socialGroupItems == undefined || personalGroupItems == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={socialHumanFactors}>
+                          <AccordionComponent showSuggestions={showSuggestions} data={socialHumanFactors}>
                             <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} />
                           </AccordionComponent>
                         }
@@ -102,7 +106,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {contextualCharacteristics == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={contextualCharacteristics} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={contextualCharacteristics} />
                         }
                       </div>
                     </ArcherElement>
@@ -122,7 +126,7 @@ function FrameworkComponent() {
                     >
                       <Card elevation={8} style={{ maxWidth: '40%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white', cursor: 'pointer' }} onClick={() => setCenterModalState(true)}>
                         <Typography sx={{ fontSize: '.8rem', border: '1px solid white', borderRadius: '.1rem', padding: '.3rem' }}>
-                        {t('center_button')}
+                          {t('center_button')}
 
                         </Typography>
                       </Card>
@@ -144,7 +148,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {copingMechanisms == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={copingMechanisms} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={copingMechanisms} />
                         }
                       </div>
                     </ArcherElement>
@@ -168,7 +172,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {barriersToImproving == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={barriersToImproving} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={barriersToImproving} />
                         }
                       </div>
                     </ArcherElement>
@@ -181,7 +185,7 @@ function FrameworkComponent() {
                 <ArcherElement id='strategies'>
                   <div>
                     {strategies == undefined ? <SkeletonComponent /> :
-                      <AccordionComponent data={strategies} />
+                      <AccordionComponent showSuggestions={showSuggestions} data={strategies} />
                     }
                   </div>
                 </ArcherElement>
