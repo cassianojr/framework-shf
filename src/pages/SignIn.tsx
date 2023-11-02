@@ -9,18 +9,19 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Toolbar } from '@mui/material';
+import { Divider, Toolbar } from '@mui/material';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import Footer from '../components/Footer';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useTranslation } from 'react-i18next';
+import { Modal } from '../components/Modal';
 
 
 export default function SignIn() {
 
-  const { t } = useTranslation('sign_in');
+  const { t } = useTranslation(['sign_in', 'survey_instructions']);
 
   const navigate = useNavigate();
 
@@ -53,9 +54,26 @@ export default function SignIn() {
     if (signed) navigate((!redirect)?'/dashboard':redirect);
   }, [signed, navigate, redirect]);
 
+  const SurveyInstructionsModal = () =>{
+    const [modalState, setModalState] = React.useState(true);
+
+    return (
+      <Modal.Root state={modalState} handleClose={()=>setModalState(false)} title={t('survey_instructions:title')} id="survey-instructions-modal">
+        <Modal.Text>
+          {t('survey_instructions:paragraph1')}
+        </Modal.Text>
+        <Modal.Text>
+          {t('survey_instructions:paragraph2')}
+        </Modal.Text>
+        <Divider />
+        <Modal.Actions handleClose={() =>setModalState(false)} />
+      </Modal.Root>
+    );
+  }
 
   return (
     <>
+    {redirect && <SurveyInstructionsModal />}
       <Navbar />
       <Toolbar />
       <Container component="main" maxWidth="xs" style={{marginBottom:'1rem', height:'75vh'}}>
