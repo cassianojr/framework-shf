@@ -16,7 +16,7 @@ import { Grid, Link } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import SuggestNewModal from './SuggestNewModal';
-import { Answer } from '../../types/Answer.type';
+import { Answer, Answers, Correlation } from '../../types/Answer.type';
 import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
 import { QuestionService } from '../../services/QuestionService';
 import SnackBarComponent from '../SnackBarComponent';
@@ -71,24 +71,20 @@ export default function StepperComponent(props: StepData) {
 
       newAnswer = {
         question_id: questions[activeStep].id,
-        ecossystem_id: ecos_id,
-        user_id: user.uid,
-        selected_items: selectedItems[activeStep].selectedItemsInQuestion.map((item) => `${item.id} - ${item.names[i18next.language]}`),
+        selected_items: selectedItems[activeStep],
       } as Answer;
 
     } else if (questions[activeStep].type == QuestionType.correlate) {
 
       const correlations = correlateValues.map((correlation) => {
         return {
-          item: `${correlation.correlateWith.id} - ${correlation.correlateWith.names[i18next.language]}`,
-          correlation_to: correlation.itemsToCorrelate.map((item) => `${item.id} - ${item.names[i18next.language]}`)
+          item: correlation.correlateWith,
+          correlation_to: correlation.itemsToCorrelate
         }
-      });
+      }) as Correlation[];
 
       newAnswer = {
         question_id: questions[activeStep].id,
-        ecossystem_id: ecos_id,
-        user_id: user.uid,
         correlations
       } as Answer;
     }
@@ -167,7 +163,13 @@ export default function StepperComponent(props: StepData) {
   const handleSave = () => {    
     const answers = handleAnswers(selectedItems);
 
-    QuestionService.saveAnswers(answers, () => {
+    const answer = {
+      user_id: user.uid,
+      ecossystem_id: ecos_id,
+      answers
+    } as Answers;
+
+    QuestionService.saveAnswers(answer, () => {
       setSnackBarState(true);
       setTimeout(() => {
         window.location.href = '/dashboard';

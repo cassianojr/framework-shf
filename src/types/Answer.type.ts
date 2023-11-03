@@ -1,15 +1,21 @@
-interface Answer{
+import { QuestionListItems } from "./Question.type";
+
+interface Answers{
     id?: string,
-    question_id: string,
-    ecossystem_id: string,
     user_id: string,
-    selectedItems?: string[],
+    ecossystem_id: string,
+    answers:Answer[]
+}
+
+interface Answer{
+    question_id: string,
+    selectedItems?: QuestionListItems[],
     correlations?: Correlation[]
 }
 
 interface Correlation{
-    item: string,
-    correlation_to: string[]
+    item: QuestionListItems,
+    correlation_to: QuestionListItems[]
 }
 
-export type {Answer};
+export type {Answers, Answer, Correlation};

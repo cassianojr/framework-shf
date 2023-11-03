@@ -2,7 +2,7 @@ import { DocumentData, DocumentReference, addDoc, collection, onSnapshot } from 
 import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
 import { FirebaseService } from "./FirebaseService";
-import { Answer } from "../types/Answer.type";
+import { Answers } from "../types/Answer.type";
 
 export class QuestionService {
 
@@ -20,16 +20,13 @@ export class QuestionService {
     });
   }
 
-  public static saveAnswers(answers: Answer[], successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
-    
-    answers.forEach((answer) => {
+  public static saveAnswers(answers: Answers, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
 
-      addDoc(collection(db, "answers"), answer).then((docRef) => {
-        successCallback(docRef);
-      }).catch((error) => {
-        console.log("Error adding document: ", error);
-        errorCallback();
-      });
+    addDoc(collection(db, "answers"), answers).then((docRef) => {
+      successCallback(docRef);
+    }).catch((error) => {
+      console.log("Error adding document: ", error);
+      errorCallback();
     });
 
   }
