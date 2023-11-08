@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, addDoc, collection, onSnapshot } from "firebase/firestore";
+import { DocumentData, DocumentReference, addDoc, collection, onSnapshot, query, where } from "firebase/firestore";
 import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
 import { FirebaseService } from "./FirebaseService";
@@ -29,6 +29,20 @@ export class QuestionService {
       errorCallback();
     });
 
+  }
+
+  public static getAnswers(ecosId: string, successCallback: (answers: Answers[]) => void, errorCallback: () => void): void {
+    const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));
+    onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Answers[];
+      successCallback(data);
+    }, (error) => {
+      console.log("Error getting documents: ", error);
+      errorCallback();
+    });
   }
 
   private static getQuestionsListItems(questions: Question[], callBack: (questions: Question[]) => void): void {

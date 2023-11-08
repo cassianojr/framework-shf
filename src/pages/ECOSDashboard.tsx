@@ -17,6 +17,8 @@ import { Ecosystem } from '../types/Ecosystem.type';
 import { useTranslation } from "react-i18next";
 import FrameworkComponent from '../components/FrameworkComponent';
 import Title from '../components/Dashboard/Title';
+import { QuestionService } from '../services/QuestionService';
+import { Answers } from '../types/Answer.type';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -24,6 +26,7 @@ export default function ECOSDashboard() {
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
   const [ecos, setEcos] = React.useState({} as Ecosystem);
+  const [answers, setAnswers] = React.useState([] as Answers[]);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -47,9 +50,18 @@ export default function ECOSDashboard() {
     EcosystemService.getEcosystem(ecosId ?? "", (ecos) => {
       if (ecos.admin_id !== user.uid) navigate('/');
       setEcos(ecos);
+
+      if(!ecos.id) return;
+
+      QuestionService.getAnswers(ecos.id, (answers) => {
+        setAnswers(answers);
+        console.log(answers);
+        
+      }, ()=> console.log('error'));
+
     });
 
-  }, [signed, navigate, loading, user.uid, ecosId]);
+  }, [signed, navigate, loading, user.uid, ecosId, setAnswers]);
 
   return (
     !appLoading &&
@@ -96,7 +108,7 @@ export default function ECOSDashboard() {
                     display: 'flex',
                     flexDirection: 'column',
                   }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {ecos.responses}</Typography>
+                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {answers.length}</Typography>
                 </Paper>
               </Grid>
               <Grid item lg={12}>
