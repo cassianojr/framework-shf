@@ -169,10 +169,11 @@ export default function StepperComponent(props: StepData) {
       answers
     } as Answers;
 
-    QuestionService.saveAnswers(answer, () => {
+    QuestionService.saveAnswers(answer, (answerRef) => {
       setSnackBarState(true);
+
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        window.location.href = `/ecos-framework/${answerRef.id}`;
       }, 2000);
     }, () => console.log('error'));
   }

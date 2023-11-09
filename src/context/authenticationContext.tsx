@@ -38,8 +38,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
   useEffect(() => {
     const loadStoreAuth = () => {
-      const sessionToken = sessionStorage.getItem("@AuthFirebase:token");
-      const sessionUser = sessionStorage.getItem("@AuthFirebase:user");
+      const sessionToken = localStorage.getItem("@AuthFirebase:token");
+      const sessionUser = localStorage.getItem("@AuthFirebase:user");
 
       if (sessionToken && sessionUser) {
         setUser(sessionUser);
@@ -62,8 +62,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
         setUser(JSON.stringify(user));
 
-        sessionStorage.setItem("@AuthFirebase:token", token);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+        localStorage.setItem("@AuthFirebase:token", token);
+        localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
       }).catch((error) => {
         console.log(error);
       });
@@ -83,8 +83,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
       updateProfile(auth.currentUser, { displayName: name }).then(() => {
         setUser(JSON.stringify(user));
 
-        sessionStorage.setItem("@AuthFirebase:token", token);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+        localStorage.setItem("@AuthFirebase:token", token);
+        localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
 
       }).catch((err) => console.log(err));
 
@@ -103,8 +103,8 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
       setUser(JSON.stringify(user));
 
-      sessionStorage.setItem("@AuthFirebase:token", token);
-      sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+      localStorage.setItem("@AuthFirebase:token", token);
+      localStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
       return true;
     } catch (error) {
       return false;
@@ -113,7 +113,7 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
   function signOutFromApp() {
     signOut(auth).then(() => {
-      sessionStorage.clear();
+      localStorage.clear();
       setUser(null);
       return navigate('/sign-in');
     }).catch((error) => {

@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, addDoc, collection, onSnapshot, query, where } from "firebase/firestore";
+import { DocumentData, DocumentReference, addDoc, collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
 import { FirebaseService } from "./FirebaseService";
@@ -31,7 +31,26 @@ export class QuestionService {
 
   }
 
-  public static getAnswers(ecosId: string): Promise<Answers[]> {
+  public static getAnswers(answerId: string): Promise<Answers> {
+    return new Promise((resolve, reject) => {
+      const answerRef = doc(db, "answers", answerId);
+      const unsubscribe = onSnapshot(answerRef, (snapshot) => {
+        if (!snapshot.exists()) {
+          unsubscribe();
+          reject("No such document!");
+        } else {
+          const data = snapshot.data() as Answers;
+          resolve(data);
+        }
+      }, (error) => {
+        console.log("Error getting documents: ", error);
+        unsubscribe();
+        reject(error);
+      });
+    });
+  }
+
+  public static getEcosAnswers(ecosId: string): Promise<Answers[]> {
     return new Promise((resolve, reject) => {
       const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));
       const unsubscribe = onSnapshot(q, (snapshot) => {

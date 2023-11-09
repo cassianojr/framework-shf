@@ -10,6 +10,7 @@ import AuthenticationProvider from './context/authenticationContext';
 import Dashboard from './pages/Dashboard';
 import ECOSDashboard from './pages/ECOSDashboard';
 import EcosSurvey from './pages/EcosSurvey';
+import EcosFramework from './pages/EcosFramework';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/ecos-dashboard/:ecosId" element={<ECOSDashboard />} />
             <Route path="/ecos-survey/:ecosId" element={<EcosSurvey />} />
+            <Route path="/ecos-framework/:answerId" element={<EcosFramework />} />
           </Routes>
         </AuthenticationProvider>
       </Router>
