@@ -31,17 +31,25 @@ export class QuestionService {
 
   }
 
-  public static getAnswers(ecosId: string, successCallback: (answers: Answers[]) => void, errorCallback: () => void): void {
-    const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));
-    onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Answers[];
-      successCallback(data);
-    }, (error) => {
-      console.log("Error getting documents: ", error);
-      errorCallback();
+  public static getAnswers(ecosId: string): Promise<Answers[]> {
+    return new Promise((resolve, reject) => {
+      const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) {
+          unsubscribe();
+          reject("No such document!");
+        } else {
+          const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as Answers[];
+          resolve(data);
+        }
+      }, (error) => {
+        console.log("Error getting documents: ", error);
+        unsubscribe();
+        reject(error);
+      });
     });
   }
 

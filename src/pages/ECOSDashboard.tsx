@@ -19,6 +19,7 @@ import FrameworkComponent from '../components/FrameworkComponent';
 import Title from '../components/Dashboard/Title';
 import { QuestionService } from '../services/QuestionService';
 import { Answers } from '../types/Answer.type';
+import { FirebaseService } from '../services/FirebaseService';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -47,19 +48,22 @@ export default function ECOSDashboard() {
     if (!signed) navigate('/sign-in');
     if (signed) setAppLoading(false);
 
-    EcosystemService.getEcosystem(ecosId ?? "", (ecos) => {
-      if (ecos.admin_id !== user.uid) navigate('/');
-      setEcos(ecos);
+    const fetchData = async () => {
 
-      if(!ecos.id) return;
+      const ecosData = await EcosystemService.getEcosystem(ecosId ?? "");
+      setEcos(ecosData);
+      
+      if(ecosData.id === undefined) return;
+      const answersData = await QuestionService.getAnswers(ecosData.id);
+      setAnswers(answersData);
 
-      QuestionService.getAnswers(ecos.id, (answers) => {
-        setAnswers(answers);
-        console.log(answers);
-        
-      }, ()=> console.log('error'));
+      FirebaseService.getFrameworkData((frameworkData)=>{
+        console.log(frameworkData);
+      });
+      console.log(answersData);
+    }
 
-    });
+    fetchData();
 
   }, [signed, navigate, loading, user.uid, ecosId, setAnswers]);
 
