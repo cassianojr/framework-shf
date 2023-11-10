@@ -11,15 +11,16 @@ interface ListData {
     ids: {
       [key: string]: string
     },
-    names:{
+    names: {
       [key: string]: string
     },
-    descriptions:{
+    descriptions: {
       [key: string]: string
     }
   }[],
   handleListItemClick: (id: string, name: string, description: string) => void,
   height?: number
+  showVotes?: boolean
 }
 
 
@@ -32,20 +33,25 @@ function renderRow(props: ListChildComponentProps) {
     <ListItem
       dense
       secondaryAction={
-        <IconButton  edge="end" aria-label="details" onClick={() => handleListItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
-          <InfoRounded sx={{fontSize: '1.2rem'}} />
+        <>
+        {data.showVotes &&item.votes}
+        <IconButton edge="end" aria-label="details" onClick={() => handleListItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
+          <InfoRounded sx={{ fontSize: '1.2rem' }} />
         </IconButton>
+        </>
       }
       id={item.ids[i18next.language]}
       key={item.ids[i18next.language]}
       style={style}
       divider={true}
     >
-      <ListItemText primary={
-        <Typography sx={{ fontSize: '.8rem' }}>
-          <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
-          {item.names[i18next.language]}
-        </Typography>} />
+      <>
+        <ListItemText primary={
+          <Typography sx={{ fontSize: '.8rem' }}>
+            <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
+            {item.names[i18next.language]}
+          </Typography>} />
+      </>
     </ListItem>
   );
 }

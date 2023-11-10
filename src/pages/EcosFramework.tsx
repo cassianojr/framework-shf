@@ -16,6 +16,8 @@ import { QuestionService } from '../services/QuestionService';
 import EcosystemService from '../services/EcosystemService';
 import Title from '../components/Dashboard/Title';
 import { Divider } from '@mui/material';
+import { FirebaseService } from '../services/FirebaseService';
+import { Framework } from '../types/Framework.type';
 
 
 export default function EcosFramework() {
@@ -28,6 +30,12 @@ export default function EcosFramework() {
     const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
     const answerId = useParams().answerId ?? '';
 
+
+    const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
+    const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
+    const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
+    const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
+    const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
     const user = getUser();
 
@@ -49,10 +57,31 @@ export default function EcosFramework() {
 
         if (signed) setAppLoading(false);
 
-    }, [signed, navigate, loading, user.uid, answerId, setAnswers, setEcosName]);
+        FirebaseService.getFrameworkData((data: Framework[]) => {
+            setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
+            setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
+            setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
+            setBarriersToImproving(data.filter((item) => item.id === "barriers-to-improving")[0]);
+            setStrategies(data.filter((item) => item.id === "strategies")[0]);
+        });
+
+    }, [
+        signed,
+        navigate,
+        loading,
+        user.uid,
+        answerId,
+        setAnswers,
+        setEcosName,
+        setStrategies,
+        setCopingMechanisms,
+        setContextualCharacteristics,
+        setSocialHumanFactors,
+        setBarriersToImproving
+    ]);
 
     console.log(answers);
-    
+
 
     return (
         !appLoading &&
@@ -85,7 +114,14 @@ export default function EcosFramework() {
                                 >
                                     <Title>{ecosName}</Title>
                                     <Divider />
-                                    <FrameworkComponent showSuggestions={false} />
+                                    <FrameworkComponent
+                                        showSuggestions={false}
+                                        copingMechanisms={copingMechanisms}
+                                        contextualCharacteristics={contextualCharacteristics}
+                                        socialHumanFactors={socialHumanFactors}
+                                        barriersToImproving={barriersToImproving}
+                                        strategies={strategies}
+                                    />
                                 </Paper>
                             </Grid>
                         </Grid>

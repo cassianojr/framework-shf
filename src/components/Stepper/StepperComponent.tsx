@@ -71,7 +71,8 @@ export default function StepperComponent(props: StepData) {
 
       newAnswer = {
         question_id: questions[activeStep].id,
-        selected_items: selectedItems[activeStep],
+        selectedItems: selectedItems[activeStep].selectedItemsInQuestion as QuestionListItems[],
+        questionName: selectedItems[activeStep].id
       } as Answer;
 
     } else if (questions[activeStep].type == QuestionType.correlate) {

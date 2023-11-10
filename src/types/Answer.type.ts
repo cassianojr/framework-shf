@@ -10,6 +10,7 @@ interface Answers{
 interface Answer{
     question_id: string,
     selectedItems?: QuestionListItems[],
+    questionName?: string,
     correlations?: Correlation[]
 }
 
