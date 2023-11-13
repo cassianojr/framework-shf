@@ -8,7 +8,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider';
 import ListCheckbox from './ListCheckbox';
-import CorrelateComponent from './CorrelateComponent';
+import CorrelateComponent, { CorrelateItems, CorrelateValues } from './CorrelateComponent';
 import { useTranslation } from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../Modal';
@@ -16,6 +16,10 @@ import { Grid, Link } from '@mui/material';
 import { Question, QuestionListItems, QuestionType } from '../../types/Question.type';
 import i18next from 'i18next';
 import SuggestNewModal from './SuggestNewModal';
+import { Answer, Answers, Correlation } from '../../types/Answer.type';
+import { AuthenticationContext, AuthenticationContextType } from '../../context/authenticationContext';
+import { QuestionService } from '../../services/QuestionService';
+import SnackBarComponent from '../SnackBarComponent';
 
 interface StepData {
   questions: Question[],
@@ -24,8 +28,12 @@ interface StepData {
 
 export default function StepperComponent(props: StepData) {
   const { t } = useTranslation(['ecos_survey', 'dashboard', 'common']);
+  const { getUser } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  const user = getUser();
 
   const { questions, setQuestions } = props;
+
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [items, setItems] = React.useState([] as QuestionListItems[]);
@@ -37,6 +45,14 @@ export default function StepperComponent(props: StepData) {
     description: ''
   });
 
+  const [snackBarState, setSnackBarState] = React.useState(false);
+
+  const [correlateValues, setCorrelateValues] = React.useState<CorrelateValues[]>([]);
+
+  const ecos_id = window.location.pathname.split('/')[2];
+
+  const [answers, setAnswers] = React.useState([] as Answer[]);
+
   const [selectedItems, setSelectedItems] = React.useState(questions.map((question: Question) => {
     return {
       id: question.framework_items?.id,
@@ -47,8 +63,56 @@ export default function StepperComponent(props: StepData) {
 
   const maxSteps = questions.length;
 
+
+  function handleAnswers(selectedItems: { id: string | undefined; question: string; selectedItemsInQuestion: QuestionListItems[]; }[]) : Answer[] {
+    let newAnswer = {} as Answer;
+
+    if (questions[activeStep].type != QuestionType.correlate) {
+
+      newAnswer = {
+        question_id: questions[activeStep].id,
+        selectedItems: selectedItems[activeStep].selectedItemsInQuestion as QuestionListItems[],
+        questionName: selectedItems[activeStep].id
+      } as Answer;
+
+    } else if (questions[activeStep].type == QuestionType.correlate) {
+
+      const correlations = correlateValues.map((correlation) => {
+        return {
+          item: correlation.correlateWith,
+          correlation_to: correlation.itemsToCorrelate
+        }
+      }) as Correlation[];
+
+      newAnswer = {
+        question_id: questions[activeStep].id,
+        correlations
+      } as Answer;
+    }
+
+    if (answers.length == 0) {
+      setAnswers([newAnswer]);
+    }
+
+    const updatedAnswers = answers.map((answer) => {
+      if (answer.question_id == newAnswer.question_id) {
+        return newAnswer;
+      }
+      return answer;
+    });
+
+    // If the answer for the current question doesn't exist, add it
+    if (!updatedAnswers.some((answer) => answer.question_id === newAnswer.question_id)) {
+      updatedAnswers.push(newAnswer);
+    }
+
+    setAnswers(updatedAnswers);
+    
+    return updatedAnswers;
+  }
+
   const handleSelectedItems = () => {
-    const selectedItemsInQuestion = questions.map((question: Question) => {
+    const newSelectedItems = questions.map((question: Question) => {
       const selectedItemsInQuestion = question.listItems?.filter((listItem) => listItem.selected);
 
       return {
@@ -58,12 +122,12 @@ export default function StepperComponent(props: StepData) {
       };
     });
 
-    questions.map((question: Question) => {
+    const newQuestions = questions.map((question: Question) => {
       if (question.type != QuestionType.correlate) {
         return question;
       }
 
-      selectedItemsInQuestion.map((selectedItems) => {
+      newSelectedItems.map((selectedItems) => {
         if (selectedItems.id == question?.correlateWithId) {
           question.correlateWith = selectedItems.selectedItemsInQuestion;
         }
@@ -73,16 +137,21 @@ export default function StepperComponent(props: StepData) {
         }
       });
       return question;
+
     });
 
-    setSelectedItems(selectedItemsInQuestion);
+    setQuestions(newQuestions);
+    setSelectedItems(newSelectedItems);
+
+    handleAnswers(newSelectedItems);
+
   }
 
   const handleNext = () => {
+    handleSelectedItems();
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setItems(questions[activeStep + 1].listItems);
-
-    handleSelectedItems();
   };
 
   const handleBack = () => {
@@ -92,43 +161,28 @@ export default function StepperComponent(props: StepData) {
     handleSelectedItems();
   };
 
-  const handleToggle = (id: string) => () => {
-    const newListItems = items?.map((listItem) => {
-      if (listItem.id === id) {
-        return { ...listItem, selected: !listItem.selected };
-      }
-      return listItem;
-    });
+  const handleSave = () => {    
+    const answers = handleAnswers(selectedItems);
 
-    setItems(newListItems);
-    setQuestions((prevQuestions: Question[]) => {
-      const newQuestion = prevQuestions.map((question: Question) => {
-        if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
-          return { ...question, listItems: newListItems };
-        }
-        return question;
-      });
-      return newQuestion;
-    });
-  }
+    const answer = {
+      user_id: user.uid,
+      ecossystem_id: ecos_id,
+      answers
+    } as Answers;
 
-  const handleDeleteSuggestion = (id: string) => {
-    const newListItems = items.filter((listItem) => listItem.id !== id);
-    setItems(newListItems);
-    setQuestions((prevQuestions: Question[]) => {
-      const newQuestion = prevQuestions.map((question: Question) => {
-        if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
-          return { ...question, listItems: newListItems };
-        }
-        return question;
-      });
-      return newQuestion;
-    });
+    QuestionService.saveAnswers(answer, (answerRef) => {
+      setSnackBarState(true);
+
+      setTimeout(() => {
+        window.location.href = `/ecos-framework/${answerRef.id}`;
+      }, 2000);
+    }, () => console.log('error'));
   }
 
   React.useEffect(() => {
     setItems(questions[activeStep].listItems);
-  }, [setItems, activeStep, questions])
+
+  }, [setItems, activeStep, questions, answers])
 
   const handleOpenEditSuggestionModal = (id: string) => {
     const item = items.find((item) => item.id === id);
@@ -162,7 +216,8 @@ export default function StepperComponent(props: StepData) {
   }
 
   return (
-    <>
+    (items != undefined && items.length == 0) ? <></> : <>
+    <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={t('snackbar_text')} severity='success'/>
       <SuggestNewModal
         suggestNewModalState={suggestNewModalState}
         setSuggestNewModalState={setSuggestNewModalState}
@@ -200,15 +255,14 @@ export default function StepperComponent(props: StepData) {
             ((questions[activeStep].type == QuestionType.select)
               ?
               <>
-                <ListCheckbox listItems={items} handleToggle={handleToggle} handleDelete={handleDeleteSuggestion} handleEdit={handleOpenEditSuggestionModal} />
+                <ListCheckbox listItems={items} setItems={setItems} questions={questions} setQuestions={setQuestions} activeStep={activeStep} handleEdit={handleOpenEditSuggestionModal} />
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Button variant='contained' sx={{ margin: 'auto', marginTop: '1.3rem' }} onClick={() => { setSuggestNewModalState(true); setEditSuggestionValues({ name: '', description: '' }) }}><AddIcon /> {t('suggest_new_btn')}</Button>
                 </Box>
               </>
-              : <CorrelateComponent items={questions[activeStep]} />)
+              : <CorrelateComponent items={questions[activeStep] as CorrelateItems} values={correlateValues} setValues={setCorrelateValues} />)
           )}
         </Box>
-
         <MobileStepper
           variant="dots"
           steps={maxSteps}
@@ -216,7 +270,7 @@ export default function StepperComponent(props: StepData) {
           activeStep={activeStep}
           sx={{ width: '50%', margin: 'auto' }}
           nextButton={
-            <Button
+            !(activeStep === maxSteps - 1) ? (<Button
               size="large"
               onClick={handleNext}
               disabled={activeStep === maxSteps - 1}
@@ -224,6 +278,11 @@ export default function StepperComponent(props: StepData) {
             >
               {t('next_btn')}
               <KeyboardArrowRight />
+            </Button>) : <Button
+              size="large"
+              onClick={handleSave}
+              variant='contained'>
+              Salvar
             </Button>
           }
           backButton={
@@ -236,4 +295,5 @@ export default function StepperComponent(props: StepData) {
       </Box>
     </>
   );
+
 }

@@ -11,11 +11,16 @@ import { AuthenticationContext, AuthenticationContextType } from '../context/aut
 import React from "react";
 import { Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Chart from '../components/Dashboard/Chart';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
 import { Ecosystem } from '../types/Ecosystem.type';
 import { useTranslation } from "react-i18next";
+import FrameworkComponent from '../components/FrameworkComponent';
+import Title from '../components/Dashboard/Title';
+import { QuestionService } from '../services/QuestionService';
+import { Answer, Answers } from '../types/Answer.type';
+import { FirebaseService } from '../services/FirebaseService';
+import { Framework } from '../types/Framework.type';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -23,8 +28,16 @@ export default function ECOSDashboard() {
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
   const [ecos, setEcos] = React.useState({} as Ecosystem);
+  const [answers, setAnswers] = React.useState([] as Answers[]);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+
+  const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
+  const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
+  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
+  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
+  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+
 
   const ecosId = useParams().ecosId;
 
@@ -43,12 +56,62 @@ export default function ECOSDashboard() {
     if (!signed) navigate('/sign-in');
     if (signed) setAppLoading(false);
 
-    EcosystemService.getEcosystem(ecosId??"", (ecos) => {
-      if(ecos.admin_id !== user.uid) navigate('/');
-      setEcos(ecos);
-    });
+    const countAnswers = (answer: Answer, itemToCount: Framework) => {
+      if (answer.questionName === itemToCount.id) {
+        answer.selectedItems?.forEach((item) => {
 
-  }, [signed, navigate, loading, user.uid, ecosId]);
+          itemToCount.items?.forEach((itemToCount) => {
+            if (item.id == itemToCount.id) {
+              itemToCount.votes = itemToCount.votes ? itemToCount.votes + 1 : 1;
+            } else {
+              itemToCount.votes = itemToCount.votes ? itemToCount.votes : 0;
+            }
+          });
+        });
+      }
+    }
+
+    const handleFrameworkData = (answersData: Answers[], data: Framework[]) => {
+      answersData.forEach((answers) => {
+        answers.answers.forEach((answer) => {
+          data.forEach((itemToCount) => {
+            countAnswers(answer, itemToCount);
+            if(itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
+          });
+        });
+      });
+
+      const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
+      setCopingMechanisms(copingMechanisms);
+      
+      const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
+      setContextualCharacteristics(contextualCharacteristics);
+
+      const socialHumanFactors = data.filter((item) => item.id === "social-human-factors")[0];
+      setSocialHumanFactors(socialHumanFactors);
+
+      const barriersToImproving = data.filter((item) => item.id === "barriers-to-improving")[0];
+      setBarriersToImproving(barriersToImproving);
+
+      const strategies = data.filter((item) => item.id === "strategies")[0];
+      setStrategies(strategies);
+    }
+
+    const fetchData = async () => {
+      const ecosData = await EcosystemService.getEcosystem(ecosId ?? "");
+      setEcos(ecosData);
+
+      if (ecosData.id === undefined) return;
+      const answersData = await QuestionService.getEcosAnswers(ecosData.id);
+      setAnswers(answersData);
+      FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));
+
+    }
+
+    fetchData();
+
+  }, [signed, navigate, loading, user.uid, ecosId, setAnswers]);
+
 
   return (
     !appLoading &&
@@ -95,27 +158,35 @@ export default function ECOSDashboard() {
                     display: 'flex',
                     flexDirection: 'column',
                   }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {ecos.responses}</Typography>
+                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {answers.length}</Typography>
                 </Paper>
               </Grid>
-              <Grid item lg={9}>
+              <Grid item lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '240px',
+                    height: '100%',
                   }}
                 >
-                  <Chart />
+                  <Title>Resultados no Framework</Title>
+                  <FrameworkComponent
+                    showSuggestions={false}
+                    copingMechanisms={copingMechanisms}
+                    contextualCharacteristics={contextualCharacteristics}
+                    socialHumanFactors={socialHumanFactors}
+                    barriersToImproving={barriersToImproving}
+                    strategies={strategies}
+                  />
                 </Paper>
               </Grid>
 
             </Grid>
           </Container>
-          <Footer />
         </Box>
       </Box>
+      <Footer />
     </>
   );
 }

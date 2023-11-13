@@ -87,12 +87,14 @@ interface AccordionComponentProps {
       },
     }[]
   },
-  children?: JSX.Element
+  showSuggestions: boolean,
+  children?: JSX.Element,
+  showVotes?: boolean
 
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
-  const { data } = props;
+  const { data, showSuggestions, showVotes } = props;
 
   const {t} = useTranslation(['framework', 'common']);
 
@@ -280,7 +282,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const listModal = (
     <Modal.Root state={listModalState} handleClose={handleClose} id={listModalContent.id} title={listModalContent.title}>
-      <Modal.List items={listModalContent.items} handleItemClick={handleListItemModalClick} />
+      <Modal.List items={listModalContent.items} handleItemClick={handleListItemModalClick} showVotes={showVotes} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
@@ -289,9 +291,9 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   const modalPersonalsocial = (
     <Modal.Root state={modalPersonalsocialState} handleClose={handleClose} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> {t('social_group_label')}</Typography>
-      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
+      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> {t('personal_group_label')}</Typography>
-      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} />
+      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes}/>
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
@@ -332,13 +334,14 @@ export default function AccordionComponent(props: AccordionComponentProps) {
           <Button sx={{ ...buttonStyle, fontSize: '.68rem', display: 'flex', alignItems: 'center', fontWeight: 'bold' }} variant="outlined" size="small" onClick={() => descriptionModalHandle(data.id, data.labels[i18next.language], data.descriptions[i18next.language])}>
             {data.labels[i18next.language]}
           </Button>
-          <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.labels[i18next.language])}>
+          {showSuggestions ? <Button sx={{ ...buttonStyle, marginLeft: 'auto' }} variant="outlined" size="small" onClick={() => newSuggestionHandle(data.id, data.labels[i18next.language])}>
             <AddIcon sx={{ fontSize: '1rem' }} />
             {t('suggest_new_button')}
-          </Button>
+          </Button> : <></>}
+          
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} />}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes}/>}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary

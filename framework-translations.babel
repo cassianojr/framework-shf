@@ -168,7 +168,22 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>zxfsd</name>
+								<name>save_btn</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-BR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>textarea_placeholder</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -507,6 +522,21 @@
 									</concept_node>
 								</children>
 							</folder_node>
+							<concept_node>
+								<name>snackbar_text</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-BR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
 							<concept_node>
 								<name>suggest_new_btn</name>
 								<description/>
@@ -1292,6 +1322,26 @@
 									</translation>
 								</translations>
 							</concept_node>
+							<concept_node>
+								<name>title</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-BR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+						</children>
+					</file_node>
+					<file_node>
+						<name>survey_instructions</name>
+						<children>
 							<concept_node>
 								<name>title</name>
 								<description/>

@@ -7,28 +7,33 @@ interface ModalProps {
     id: string,
     name: string,
     description: string,
-    ids:{
+    ids: {
       [key: string]: string
     },
-    names:{
+    names: {
       [key: string]: string
     },
-    descriptions:{
+    descriptions: {
       [key: string]: string
-    }
+    },
+    votes?: number
   }[]
-  handleItemClick: (ids: string, name: string, description: string) => void
+  handleItemClick: (ids: string, name: string, description: string) => void,
+  showVotes?: boolean
 }
 
-export function ModalList({ items, handleItemClick }: ModalProps) {
+export function ModalList({ items, handleItemClick, showVotes }: ModalProps) {
   return (
     <List dense >
       {items.map((item) => (
         <ListItem dense
           secondaryAction={
-            <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
-              <InfoRounded />
-            </IconButton>
+            <>
+              {showVotes && item.votes}
+              <IconButton edge="end" aria-label="details" onClick={() => handleItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
+                <InfoRounded />
+              </IconButton>
+            </>
           }
           id={item.id}
           key={item.id}

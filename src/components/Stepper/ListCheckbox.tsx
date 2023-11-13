@@ -6,12 +6,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Question } from '../../types/Question.type';
 
 
 interface ListData {
   listItems: ItemType[],
-  handleToggle: (id: string) => () => void,
-  handleDelete: (id: string) => void,
+  setItems: React.Dispatch<React.SetStateAction<ItemType[]>>,
+  questions: Question[],
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>,
+  activeStep: number,
   handleEdit: (id: string) => void
 }
 
@@ -39,7 +42,7 @@ interface InfoModalContentType {
 export default function ListCheckbox(props: ListData) {
   const { t } = useTranslation('common');
 
-  const { listItems, handleToggle, handleDelete, handleEdit } = props;
+  const { listItems, setItems, questions, setQuestions, handleEdit, activeStep } = props;
   const [infoModalState, setInfoModalState] = React.useState(false);
   const [infoModalContent, setInfoModalContent] = React.useState({
     names: {
@@ -51,6 +54,40 @@ export default function ListCheckbox(props: ListData) {
       pt_br: ''
     }
   } as InfoModalContentType);
+
+  const handleToggle = (id: string) => () => {
+    const newListItems = listItems?.map((listItem) => {
+      if (listItem.id === id) {
+        return { ...listItem, selected: !listItem.selected };
+      }
+      return listItem;
+    });
+
+    setItems(newListItems);
+    setQuestions((prevQuestions: Question[]) => {
+      const newQuestion = prevQuestions.map((question: Question) => {
+        if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
+          return { ...question, listItems: newListItems };
+        }
+        return question;
+      });
+      return newQuestion;
+    });
+  }
+
+  const handleDelete = (id: string) => {
+    const newListItems = listItems.filter((listItem) => listItem.id !== id);
+    setItems(newListItems);
+    setQuestions((prevQuestions: Question[]) => {
+      const newQuestion = prevQuestions.map((question: Question) => {
+        if (question.title[i18next.language] === questions[activeStep].title[i18next.language]) {
+          return { ...question, listItems: newListItems };
+        }
+        return question;
+      });
+      return newQuestion;
+    });
+  }
 
   const handleInfoClick = (item: ItemType) => {
     setInfoModalContent(item);
@@ -88,10 +125,10 @@ export default function ListCheckbox(props: ListData) {
     //suggestion actions have two buttons: delete and edit icons with their respective actions
     return (
       <ListItemButton role={undefined} sx={{ padding: 0 }}>
-        <IconButton edge="end" aria-label="edit" onClick={()=>handleEdit(item.id)}>
+        <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(item.id)}>
           <EditIcon sx={{ fontSize: '1.2rem' }} />
         </IconButton>
-        <IconButton edge="end" aria-label="delete" onClick={()=>handleDelete(item.id)}>
+        <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(item.id)}>
           <DeleteIcon sx={{ fontSize: '1.2rem' }} />
         </IconButton>
       </ListItemButton>
@@ -105,7 +142,7 @@ export default function ListCheckbox(props: ListData) {
         <List dense disablePadding sx={{ width: '60%', margin: 'auto' }}>
           {listItems.map((item) => (
             <Box key={item.id}>
-              <ListItem disablePadding disableGutters secondaryAction={item.suggestion && <SuggestionActions item={item}/>}>
+              <ListItem disablePadding disableGutters secondaryAction={item.suggestion && <SuggestionActions item={item} />}>
                 <ListItemButton role={undefined} sx={{ padding: 0 }}>
                   <ListItemIcon>
                     <Checkbox

@@ -8,37 +8,32 @@ import ListPersonalAndSocial from './ListPersonalAndSocial';
 import React from 'react';
 import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
-import { FirebaseService } from '../services/FirebaseService';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-function FrameworkComponent() {
+interface FrameworkComponentProps {
+  showSuggestions?: boolean,
+  copingMechanisms?: Framework,
+  contextualCharacteristics?: Framework,
+  socialHumanFactors?: Framework,
+  barriersToImproving?: Framework,
+  strategies?: Framework
+}
+
+function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
+
+  const { t } = useTranslation('framework');
+
   
-  const {t} = useTranslation('framework');
-
-  const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
-  const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
-  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
-  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
-  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
-
-  React.useEffect(() => {
-
-    FirebaseService.getFrameworkData((data: Framework[]) => {
-      setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
-      setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
-      setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
-      setBarriersToImproving(data.filter((item) => item.id === "barriers-to-improving")[0]);
-      setStrategies(data.filter((item) => item.id === "strategies")[0]);
-    });
-
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
-
-  // if(copingMechanisms?.descriptions !== undefined){
-  //   console.log(copingMechanisms?.descriptions[i18next.language]);
-  // }
-
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
+
+  if(socialGroupItems?.[0].votes != undefined){
+    socialGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
+  }
+
+  if(personalGroupItems?.[0].votes != undefined){
+    personalGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
+  }
 
   const [centerModalState, setCenterModalState] = React.useState(false);
 
@@ -54,11 +49,11 @@ function FrameworkComponent() {
           <Modal.Root state={centerModalState} {...centerModalContent} handleClose={() => setCenterModalState(false)}>
             <Modal.Text>
               <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-                  {t('center_description.p1')}
+                {t('center_description.p1')}
               </Typography>
               <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-                  {t('center_description.p2')}
-               </Typography>
+                {t('center_description.p2')}
+              </Typography>
             </Modal.Text>
             <Divider />
             <Modal.Actions handleClose={() => setCenterModalState(false)} />
@@ -82,8 +77,8 @@ function FrameworkComponent() {
                     >
                       <div>
                         {socialHumanFactors == undefined || socialGroupItems == undefined || personalGroupItems == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={socialHumanFactors}>
-                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={socialHumanFactors} showVotes={true} >
+                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} showVotes={true}/>
                           </AccordionComponent>
                         }
                       </div>
@@ -102,7 +97,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {contextualCharacteristics == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={contextualCharacteristics} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={contextualCharacteristics} showVotes={true} />
                         }
                       </div>
                     </ArcherElement>
@@ -122,7 +117,7 @@ function FrameworkComponent() {
                     >
                       <Card elevation={8} style={{ maxWidth: '40%', textAlign: 'center', padding: '1%', backgroundColor: '#757173', color: 'white', cursor: 'pointer' }} onClick={() => setCenterModalState(true)}>
                         <Typography sx={{ fontSize: '.8rem', border: '1px solid white', borderRadius: '.1rem', padding: '.3rem' }}>
-                        {t('center_button')}
+                          {t('center_button')}
 
                         </Typography>
                       </Card>
@@ -144,7 +139,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {copingMechanisms == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={copingMechanisms} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={copingMechanisms} showVotes={true} />
                         }
                       </div>
                     </ArcherElement>
@@ -168,7 +163,7 @@ function FrameworkComponent() {
                     >
                       <div>
                         {barriersToImproving == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent data={barriersToImproving} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={barriersToImproving} showVotes={true} />
                         }
                       </div>
                     </ArcherElement>
@@ -181,7 +176,7 @@ function FrameworkComponent() {
                 <ArcherElement id='strategies'>
                   <div>
                     {strategies == undefined ? <SkeletonComponent /> :
-                      <AccordionComponent data={strategies} />
+                      <AccordionComponent showSuggestions={showSuggestions} data={strategies} showVotes={true} />
                     }
                   </div>
                 </ArcherElement>
