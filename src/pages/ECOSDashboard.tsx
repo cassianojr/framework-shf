@@ -71,16 +71,7 @@ export default function ECOSDashboard() {
       }
     }
 
-    const handleFrameworkData = (answersData: Answers[], data: Framework[]) => {
-      answersData.forEach((answers) => {
-        answers.answers.forEach((answer) => {
-          data.forEach((itemToCount) => {
-            countAnswers(answer, itemToCount);
-            if(itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
-          });
-        });
-      });
-
+    const setFrameworkData = (data: Framework[]) => {
       const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
       setCopingMechanisms(copingMechanisms);
       
@@ -97,15 +88,32 @@ export default function ECOSDashboard() {
       setStrategies(strategies);
     }
 
+    const handleFrameworkData = (answersData: Answers[], data: Framework[]) => {
+      answersData.forEach((answers) => {
+        answers.answers.forEach((answer) => {
+          data.forEach((itemToCount) => {
+            countAnswers(answer, itemToCount);
+            if(itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
+          });
+        });
+      });
+
+      setFrameworkData(data);
+    }
+
     const fetchData = async () => {
       const ecosData = await EcosystemService.getEcosystem(ecosId ?? "");
       setEcos(ecosData);
 
       if (ecosData.id === undefined) return;
-      const answersData = await QuestionService.getEcosAnswers(ecosData.id);
-      setAnswers(answersData);
-      FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));
-
+      try{
+        const answersData = await QuestionService.getEcosAnswers(ecosData.id);
+        setAnswers(answersData);
+        
+        FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));
+      }catch{
+        FirebaseService.getFrameworkData(setFrameworkData);
+      }
     }
 
     fetchData();
