@@ -178,7 +178,7 @@ export default function ECOSDashboard() {
                     height: '100%',
                   }}
                 >
-                  <Title>Resultados no Framework</Title>
+                  <Title>{t('framework_results')}</Title>
                   <FrameworkComponent
                     showSuggestions={false}
                     copingMechanisms={copingMechanisms}

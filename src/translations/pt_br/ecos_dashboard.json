@@ -1,6 +1,7 @@
 {
 	"copy_link_btn": "Copiar Link",
-	"ecos_link": "SECOS Link: ",
+	"ecos_link": "Link da pesquisa: ",
 	"responses_label": "Respostas:",
-	"snackbar_link_copied": "Link Copiado!"
+	"snackbar_link_copied": "Link Copiado!",
+	"framework_results": "Resultados no Framework"
 }

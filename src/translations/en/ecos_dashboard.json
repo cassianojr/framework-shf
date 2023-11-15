@@ -1,6 +1,7 @@
 {
 	"copy_link_btn": "Copy Link",
-	"ecos_link": "ECOS Link: ",
+	"ecos_link": "Survey link: ",
 	"responses_label": "Responses:",
-	"snackbar_link_copied": "Link Copied!"
+	"snackbar_link_copied": "Link Copied!",
+	"framework_results": "Framework Results"
 }

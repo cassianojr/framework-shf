@@ -1,9 +1,9 @@
 {
-	"add_ecos_btn": "ADICIONAR NOVO SECOS",
+	"add_ecos_btn": "Novo projeto",
 	"modal_text": {
 		"cancel_btn": "Cancelar",
 		"label_name": "Nome da Organização",
-		"txt1": "A função de análise pode ser muito útil para instanciar sua versão customizada do framework.\n                   Permitindo selecionar quais fatores aparecem em sua organização, sugerindo novos fatores e\n                   correlacionando principalmente barreiras à melhoria com fatores humanos sociais. Adicionando uma nova perspectiva sobre os SHFs da sua organização.",
+		"txt1": "Ao criar um novo projeto, os participantes podem selecionar quais fatores aparecem em sua organização, sugerir novos fatores e\n                   correlacionar principalmente barreiras à melhoria com fatores humanos sociais. Adicionando uma nova perspectiva sobre os fatores sociais e humanos da sua organização.",
 		"txt2": "Para começar, digite o nome da sua organização:"
 	}
 }
