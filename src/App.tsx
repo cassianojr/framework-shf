@@ -11,6 +11,7 @@ import ECOSDashboard from './pages/ECOSDashboard';
 import EcosSurvey from './pages/EcosSurvey';
 import EcosFramework from './pages/EcosFramework';
 import FrameworkPage from './pages/FrameworkPage';
+import DelphiSurvey from './pages/DelhpiSurvey';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/ecos-dashboard/:ecosId" element={<ECOSDashboard />} />
             <Route path="/ecos-survey/:ecosId" element={<EcosSurvey />} />
             <Route path="/ecos-framework/:answerId" element={<EcosFramework />} />
+            <Route path="/delphi-survey" element={<DelphiSurvey />} />
           </Routes>
         </AuthenticationProvider>
       </Router>
