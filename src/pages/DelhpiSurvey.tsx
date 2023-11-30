@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { Divider, Paper, Toolbar, Typography } from "@mui/material";
+import { Button, Divider, Paper, Toolbar, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Footer from "../components/Footer";
 import Box from '@mui/material/Box';
@@ -10,9 +10,10 @@ import { FirebaseService } from "../services/FirebaseService";
 import { Framework } from "../types/Framework.type";
 import { Modal } from "../components/Modal";
 
-interface ModalsProps {
-  next: () => void,
-  prev: () => void
+interface SelectItemsProps {
+  id: number,
+  title: string,
+  items: Framework
 }
 
 export default function DelphiSurvey() {
@@ -23,30 +24,64 @@ export default function DelphiSurvey() {
   const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+  const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
 
   React.useEffect(() => {
 
     FirebaseService.getFrameworkData((data: Framework[]) => {
-      setCopingMechanisms(data.filter((item) => item.id === "coping-mechanisms")[0]);
-      setContextualCharacteristics(data.filter((item) => item.id === "contextual-characteristics")[0]);
-      setSocialHumanFactors(data.filter((item) => item.id === "social-human-factors")[0]);
-      setBarriersToImproving(data.filter((item) => item.id === "barriers-to-improving")[0]);
-      setStrategies(data.filter((item) => item.id === "strategies")[0]);
+      const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
+      const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
+      const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
+      const barriersToImprovingLocal = data.filter((item) => item.id === "barriers-to-improving")[0];
+      const strategiesLocal = data.filter((item) => item.id === "strategies")[0];
+
+      setCopingMechanisms(copingMechanismsLocal);
+      setContextualCharacteristics(contextualCharacteristicsLocal);
+      setSocialHumanFactors(socialHumanFactorsLocal);
+      setBarriersToImproving(barriersToImprovingLocal);
+      setStrategies(strategiesLocal);
+
+      setModalContent([
+        {
+          id: 1,
+          title: "Selecione os Fatores Sociais e Humanos que você observa em sua organização",
+          items: socialHumanFactorsLocal ?? {} as Framework,
+        },
+        {
+          id: 2,
+          title: "Selecione as características contextuais da sua organização",
+          items: contextualCharacteristicsLocal ?? {} as Framework,
+        },
+        {
+          id: 3,
+          title: "Selecione as barreiras para a melhoria dos FSH que você enfrenta",
+          items: barriersToImprovingLocal ?? {} as Framework,
+        },
+        {
+          id: 4,
+          title: "Selecione as estratégias que você utiliza para lidar com os FSH",
+          items: strategiesLocal ?? {} as Framework,
+        },
+        {
+          id: 5,
+          title: "Selecione os mecanismos de enfrentamento você utiliza para lidar com os FSH, quando as estratégias não surtem efeito",
+          items: copingMechanismsLocal ?? {} as Framework,
+        }
+      ]);
+
       setLoading(false);
     });
 
 
-
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
-
-  const [welcomeModalState, setWelcomeModalState] = React.useState<boolean>(true);
-  const [selectSHFState, setSelectSHFState] = React.useState<boolean>(false);
-  const [selectCCState, setSelectCCState] = React.useState<boolean>(false);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent]);
 
 
-  const WelcomeModal = ({next}:ModalsProps) => {
+  const [currentModal, setCurrentModal] = React.useState<number>(0);
 
-    return (<Modal.Root state={welcomeModalState} id="1" title="teste" handleClose={() => false}>
+
+  const WelcomeModal = () => {
+
+    return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa Delphi de Fatores Sociais e Humanos em ECOS!" handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
           aaa
@@ -56,58 +91,34 @@ export default function DelphiSurvey() {
         </Typography>
       </Modal.Text>
       <Divider />
-      <Modal.Actions handleClose={next} />
+      <Modal.Actions handleClose={() => setCurrentModal(1)}>
+        <Button onClick={() => setCurrentModal(1)} variant='contained'>Próximo</Button>
+      </Modal.Actions>
     </Modal.Root>);
   }
 
-  const SelectSHFModal = ({next}:ModalsProps) => {
+  const SelectItemsModal = (props: SelectItemsProps) => {
+    console.log('currentModal');
 
-    return (<Modal.Root state={selectSHFState} id="1" title="tesbbbte" handleClose={() => false}>
-      <Modal.Text>
-        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          bbb
-        </Typography>
-        <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-          bbbb
-        </Typography>
-      </Modal.Text>
-      <Divider />
-      <Modal.Actions handleClose={next} />
-    </Modal.Root>);
+    return (
+      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false}>
+        <Modal.ListSelect items={props.items} handleItemClick={() => false} />
+
+        <Divider />
+        <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
+          <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>Anterior</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>Próximo</Button>
+        </Modal.Actions>
+      </Modal.Root>
+    );
   }
-
-  const SelectCCModal = () => {
-
-    return (<Modal.Root state={selectCCState} id="1" title="testecc" handleClose={() => false}>
-      <Modal.Text>
-        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          cc
-        </Typography>
-        <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-          cc
-        </Typography>
-      </Modal.Text>
-      <Divider />
-      <Modal.Actions handleClose={(() => false)} />
-    </Modal.Root>);
-  }
-
-  const handleNextModal = (setNext: (nextState: boolean) => void, setPrev: (prevState: boolean) => void) => {
-    setNext(true);
-    setPrev(false);
-  }
-
 
   return (
     <>
-      {!loading && (
-        <>
-          <WelcomeModal next={() =>handleNextModal(setSelectSHFState, setWelcomeModalState)} prev={()=> false}/>
-          <SelectSHFModal next={() =>handleNextModal(setSelectCCState, setSelectSHFState)} prev={()=> false}/>
-          <SelectCCModal />
-        </>
-      )}
 
+      {!loading&&<WelcomeModal />}
+      {!loading&&modalContent.map((item)=><SelectItemsModal id={item.id} title={item.title} items={item.items} />)}
+      
       <Box sx={{ backgroundColor: '#ebebeb' }}>
         <Navbar />
         <Toolbar />
