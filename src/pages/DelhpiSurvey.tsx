@@ -13,7 +13,21 @@ import { Modal } from "../components/Modal";
 interface SelectItemsProps {
   id: number,
   title: string,
-  items: Framework
+  items: React.MutableRefObject<ItemType[]>,
+  changeItems: (value:ItemType[]) => void,
+}
+
+interface ItemType {
+  id: string,
+  names: {
+    [key: string]: string
+  },
+  descriptions: {
+    [key: string]: string
+  },
+  liked: boolean,
+  disliked: boolean,
+  votes?: number
 }
 
 export default function DelphiSurvey() {
@@ -26,7 +40,35 @@ export default function DelphiSurvey() {
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
 
+
+  const shfRef = React.useRef<ItemType[]>([]);
+  const changeShfRef = (items:ItemType[]) => {shfRef.current = items};
+
+  const copingMechanismRef = React.useRef<ItemType[]>([]);
+  const changeCopingMechanismRef = (items:ItemType[]) => {copingMechanismRef.current = items};
+
+  const contextualCharacteristicsRef = React.useRef<ItemType[]>([]);
+  const changeContextualCharacteristicsRef = (items:ItemType[]) => {contextualCharacteristicsRef.current = items};
+
+  const barriersToImprovingRef = React.useRef<ItemType[]>([]);
+  const changeBarriersToImprovingRef = (items:ItemType[]) => {barriersToImprovingRef.current = items};
+
+  const strategiesRef = React.useRef<ItemType[]>([]);
+  const changeStrategiesRef = (items:ItemType[]) => {strategiesRef.current = items};
+  
   React.useEffect(() => {
+
+    const handleFrameworkItemsRef = (frameworkItem:Framework) => {
+      return frameworkItem.items.map((item) => {
+        return {
+          id: item.id,
+          names: item.names,
+          descriptions: item.descriptions,
+          liked: false,
+          disliked: false
+        } as ItemType;
+      });
+    }
 
     FirebaseService.getFrameworkData((data: Framework[]) => {
       const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
@@ -34,6 +76,12 @@ export default function DelphiSurvey() {
       const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
       const barriersToImprovingLocal = data.filter((item) => item.id === "barriers-to-improving")[0];
       const strategiesLocal = data.filter((item) => item.id === "strategies")[0];
+
+      changeShfRef(handleFrameworkItemsRef(socialHumanFactorsLocal));
+      changeCopingMechanismRef(handleFrameworkItemsRef(copingMechanismsLocal));
+      changeContextualCharacteristicsRef(handleFrameworkItemsRef(contextualCharacteristicsLocal));
+      changeBarriersToImprovingRef(handleFrameworkItemsRef(barriersToImprovingLocal));
+      changeStrategiesRef(handleFrameworkItemsRef(strategiesLocal));
 
       setCopingMechanisms(copingMechanismsLocal);
       setContextualCharacteristics(contextualCharacteristicsLocal);
@@ -45,27 +93,32 @@ export default function DelphiSurvey() {
         {
           id: 1,
           title: "Selecione os Fatores Sociais e Humanos que você observa em sua organização",
-          items: socialHumanFactorsLocal ?? {} as Framework,
+          items: shfRef,
+          changeItems: changeShfRef
         },
         {
           id: 2,
           title: "Selecione as características contextuais da sua organização",
-          items: contextualCharacteristicsLocal ?? {} as Framework,
+          items: contextualCharacteristicsRef,
+          changeItems: changeContextualCharacteristicsRef
         },
         {
           id: 3,
           title: "Selecione as barreiras para a melhoria dos FSH que você enfrenta",
-          items: barriersToImprovingLocal ?? {} as Framework,
+          items: barriersToImprovingRef,
+          changeItems: changeBarriersToImprovingRef
         },
         {
           id: 4,
           title: "Selecione as estratégias que você utiliza para lidar com os FSH",
-          items: strategiesLocal ?? {} as Framework,
+          items: strategiesRef,
+          changeItems: changeStrategiesRef
         },
         {
           id: 5,
           title: "Selecione os mecanismos de enfrentamento você utiliza para lidar com os FSH, quando as estratégias não surtem efeito",
-          items: copingMechanismsLocal ?? {} as Framework,
+          items: copingMechanismRef,
+          changeItems: changeCopingMechanismRef
         }
       ]);
 
@@ -75,9 +128,7 @@ export default function DelphiSurvey() {
 
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent]);
 
-
   const [currentModal, setCurrentModal] = React.useState<number>(0);
-
 
   const WelcomeModal = () => {
 
@@ -98,11 +149,10 @@ export default function DelphiSurvey() {
   }
 
   const SelectItemsModal = (props: SelectItemsProps) => {
-    console.log('currentModal');
 
     return (
-      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false}>
-        <Modal.ListSelect items={props.items} handleItemClick={() => false} />
+      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='sm'>
+        <Modal.ListSelect items={props.items} handleItemClick={() => false} changeItems={props.changeItems}/>
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
@@ -117,7 +167,7 @@ export default function DelphiSurvey() {
     <>
 
       {!loading&&<WelcomeModal />}
-      {!loading&&modalContent.map((item)=><SelectItemsModal id={item.id} title={item.title} items={item.items} />)}
+      {!loading&&modalContent.map((item)=><SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id}/>)}
       
       <Box sx={{ backgroundColor: '#ebebeb' }}>
         <Navbar />

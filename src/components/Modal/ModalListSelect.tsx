@@ -1,18 +1,22 @@
 import { InfoRounded } from "@mui/icons-material";
-import { Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { ButtonBase, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import i18next from "i18next";
-import { QuestionListItems } from "../../types/Question.type";
 import React from 'react';
-import { Framework } from "../../types/Framework.type";
+
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 interface ModalProps {
-  items: Framework,
+  items: React.MutableRefObject<ItemType[]>,
+  changeItems: (value: ItemType[]) => void,
   handleItemClick: (ids: string, name: string, description: string) => void,
-  
   showVotes?: boolean
 }
 
-interface ItemType{
+interface ItemType {
   id: string,
   names: {
     [key: string]: string
@@ -20,40 +24,40 @@ interface ItemType{
   descriptions: {
     [key: string]: string
   },
-  selected: boolean,
+  liked: boolean,
+  disliked: boolean,
   votes?: number
 }
 
 
-export function ModalListSelect({ items, handleItemClick, showVotes }: ModalProps) {
+export function ModalListSelect({ items, handleItemClick, showVotes, changeItems }: ModalProps) {
+  const [listItems, setListItems] = React.useState(items.current);
 
-  const [listItems, setListItems] = React.useState([] as ItemType[]);
+  const handleToggleLike = (id: string) => {
 
-  React.useEffect(() => {
-    const newItems = items.items.map((item) => {
-      return {
-        id: item.id,
-        names: item.names,
-        descriptions: item.descriptions,
-        selected: false,
-        suggestion: false
-      } as QuestionListItems;
-    });
-    setListItems(newItems);
-  }, [setListItems, items])
-  
+    const newListItems = items.current.map((listItem) => {
 
-  const handleToggle = (id: string) => {
-    
-    const newListItems = listItems.map((listItem) => {
-      
       if (listItem.id === id) {
-        return { ...listItem, selected: !listItem.selected };
+        return { ...listItem, liked: !listItem.liked, disliked: false };
+      }
+      return listItem;
+    });
+
+    changeItems(newListItems);
+    setListItems(newListItems);
+  }
+
+  const handleToggleDislike = (id: string) => {
+    const newListItems = items.current.map((listItem) => {
+
+      if (listItem.id === id) {
+        return { ...listItem, disliked: !listItem.disliked, liked: false };
       }
       return listItem;
     });
 
     setListItems(newListItems);
+    changeItems(newListItems);
   }
 
   return (
@@ -73,23 +77,22 @@ export function ModalListSelect({ items, handleItemClick, showVotes }: ModalProp
             key={item.id}
             divider={true}
           >
-            <ListItemButton role={undefined} sx={{ padding: 0 }}  onClick={()=>handleToggle(item.id)}>
+            <React.Fragment key={item.id}>
               <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={item.selected}
-                  tabIndex={-1}
-                  disableRipple
-                  onClick={()=>handleToggle(item.id)}
-                  inputProps={{ 'aria-labelledby': item.names[i18next.language] }}
-                />
+                <ButtonBase sx={{ padding: 0 }} onClick={() => handleToggleLike(item.id)}>
+                  {item.liked ? <ThumbUpIcon sx={{ color: 'green' }} /> : <ThumbUpOffAltIcon sx={{ color: 'green' }} />}
+                </ButtonBase>
+                <ButtonBase sx={{ padding: 0 }} onClick={() => handleToggleDislike(item.id)}>
+                  {item.disliked ? <ThumbDownIcon sx={{ color: 'red' }} /> : <ThumbDownOffAltIcon sx={{ color: 'red' }} />}
+                </ButtonBase>
               </ListItemIcon>
               <ListItemText primary={
                 <Typography sx={{ fontSize: '.9rem' }}>
                   <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
                   {item.names[i18next.language]}
-                </Typography>} />
-            </ListItemButton>
+                </Typography>}
+              />
+            </React.Fragment>
           </ListItem>
         ))}
       </List>
