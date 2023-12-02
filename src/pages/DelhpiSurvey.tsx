@@ -19,6 +19,9 @@ interface SelectItemsProps {
 
 interface ItemType {
   id: string,
+  ids: {
+    [key: string]: string
+  },
   names: {
     [key: string]: string
   },
@@ -62,6 +65,7 @@ export default function DelphiSurvey() {
       return frameworkItem.items.map((item) => {
         return {
           id: item.id,
+          ids: item.ids,
           names: item.names,
           descriptions: item.descriptions,
           liked: false,
@@ -98,7 +102,7 @@ export default function DelphiSurvey() {
         },
         {
           id: 2,
-          title: "Quais das Características Contextuais você observa em sua organização",
+          title: "Quais das Características Contextuais você observa em sua organização?",
           items: contextualCharacteristicsRef,
           changeItems: changeContextualCharacteristicsRef
         },
@@ -152,7 +156,7 @@ export default function DelphiSurvey() {
 
     return (
       <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='sm'>
-        <Modal.ListSelect items={props.items} handleItemClick={() => false} changeItems={props.changeItems}/>
+        <Modal.ListSelect items={props.items} changeItems={props.changeItems}/>
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>

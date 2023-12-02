@@ -1,5 +1,5 @@
 import { InfoRounded } from "@mui/icons-material";
-import { ButtonBase, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { ButtonBase, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import i18next from "i18next";
 import React from 'react';
 
@@ -8,16 +8,19 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { Modal } from ".";
 
 interface ModalProps {
   items: React.MutableRefObject<ItemType[]>,
   changeItems: (value: ItemType[]) => void,
-  handleItemClick: (ids: string, name: string, description: string) => void,
   showVotes?: boolean
 }
 
 interface ItemType {
   id: string,
+  ids: {
+    [key: string]: string
+  },
   names: {
     [key: string]: string
   },
@@ -30,8 +33,16 @@ interface ItemType {
 }
 
 
-export function ModalListSelect({ items, handleItemClick, showVotes, changeItems }: ModalProps) {
+export function ModalListSelect({ items, showVotes, changeItems }: ModalProps) {
   const [listItems, setListItems] = React.useState(items.current);
+
+  const [descriptionModalState, setDescriptionModalState] = React.useState(false);
+  const [descriptionModalContent, setDescriptionModalContent] = React.useState({
+    id: '',
+    title: '',
+    body: '',
+  });
+
 
   const handleToggleLike = (id: string) => {
 
@@ -60,8 +71,27 @@ export function ModalListSelect({ items, handleItemClick, showVotes, changeItems
     changeItems(newListItems);
   }
 
+  const DescriptionModal = (
+    <Modal.Root state={descriptionModalState} handleClose={() => setDescriptionModalState(false)} id={descriptionModalContent.id} title={descriptionModalContent.title}>
+      <Divider />
+      <Modal.Text content={descriptionModalContent.body} />
+      <Modal.Actions handleClose={()=>setDescriptionModalState(false)} />
+    </Modal.Root>
+  );
+
+  const handleItemClick = (id: string, name: string, description: string) => {
+    setDescriptionModalContent({
+      id,
+      title: name,
+      body: description,
+    });
+
+    setDescriptionModalState(true);
+  }
+
   return (
     <>
+      {DescriptionModal}
       <List dense>
         {listItems.map((item) => (
           <ListItem dense
@@ -88,7 +118,7 @@ export function ModalListSelect({ items, handleItemClick, showVotes, changeItems
               </ListItemIcon>
               <ListItemText primary={
                 <Typography sx={{ fontSize: '.9rem' }}>
-                  <span style={{ fontWeight: 'bold' }}>{item.id}: </span>
+                  <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
                   {item.names[i18next.language]}
                 </Typography>}
               />
