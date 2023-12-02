@@ -92,31 +92,31 @@ export default function DelphiSurvey() {
       setModalContent([
         {
           id: 1,
-          title: "Selecione os Fatores Sociais e Humanos que você observa em sua organização",
+          title: "Quais dos Fatores Sociais e Humanos abaixo que você observa em sua organização?",
           items: shfRef,
           changeItems: changeShfRef
         },
         {
           id: 2,
-          title: "Selecione as características contextuais da sua organização",
+          title: "Quais das Características Contextuais você observa em sua organização",
           items: contextualCharacteristicsRef,
           changeItems: changeContextualCharacteristicsRef
         },
         {
           id: 3,
-          title: "Selecione as barreiras para a melhoria dos FSH que você enfrenta",
+          title: "Quais Barreiras para a Melhoria dos FSH você enfrenta em sua organização?",
           items: barriersToImprovingRef,
           changeItems: changeBarriersToImprovingRef
         },
         {
           id: 4,
-          title: "Selecione as estratégias que você utiliza para lidar com os FSH",
+          title: "Quais Estratégias você utiliza para lidar com as barreiras?",
           items: strategiesRef,
           changeItems: changeStrategiesRef
         },
         {
           id: 5,
-          title: "Selecione os mecanismos de enfrentamento você utiliza para lidar com os FSH, quando as estratégias não surtem efeito",
+          title: "Quais Mecanismos de Enfrentamento você utiliza para lidar com os FSH, quando as Estratégias não surtem efeito?",
           items: copingMechanismRef,
           changeItems: changeCopingMechanismRef
         }
