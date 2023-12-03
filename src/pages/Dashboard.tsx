@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import { Button, Divider, Link, Stack, TextField, Typography } from '@mui/material';
+import { Button, Divider, FormControl, FormControlLabel, FormLabel, Link, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Modal } from '../components/Modal';
 import EcosystemService from '../services/EcosystemService';
@@ -48,10 +48,13 @@ export default function Dashboard() {
   const handleAddEcosSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const organization_name = e.currentTarget.orgName.value as string;
+    const time_window = e.currentTarget.time_window.value as number;
+    
     const ecosystem = {
       organization_name,
       admin_id: user.uid,
       responses: 0,
+      time_window,
     } as Ecosystem;
 
     setAddEcosModalState(false);
@@ -62,7 +65,10 @@ export default function Dashboard() {
     });
   }
 
-  const AddNewEcosModal = () => {
+  const NewProjectModal = () => {
+
+    const [timeWindow, setTimeWindow] = React.useState('1');
+
     return (
       <Modal.Root state={addEcosModalState} id="addNewEcos" title={t('add_ecos_btn')} handleClose={() => setAddEcosModalState(false)}>
         <form onSubmit={handleAddEcosSubmit}>
@@ -86,8 +92,27 @@ export default function Dashboard() {
                   autoFocus
                 />
               </Grid>
+              <Grid item xs={12} sx={{ marginTop: '1%' }}>
 
+                <FormControl>
+                  <FormLabel id="time-window-label">Quanto tempo os participantes terão para responder o questionário?</FormLabel>
+                  <FormLabel id="time-window-label-1">Esse tempo varia dependendo da quantidade de pessoas, mais participantes significa mais tempo para a resposta.</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="time-window-label"
+                    name="time_window"
+                    value={timeWindow}
+                    onChange={(e) => setTimeWindow(e.target.value)}
+                  >
+                    <FormControlLabel value="1" control={<Radio />} label="1 Semana" />
+                    <FormControlLabel value="2" control={<Radio />} label="2 Semanas" />
+                    <FormControlLabel value="3" control={<Radio />} label="3 Semanas" />
+                  </RadioGroup>
+                </FormControl>
+
+              </Grid>
             </Grid>
+
           </Modal.Text>
           <Divider />
           <Modal.Actions handleClose={() => setAddEcosModalState(false)}>
@@ -102,7 +127,7 @@ export default function Dashboard() {
   return (
     !appLoading &&
     <>
-      <AddNewEcosModal />
+      <NewProjectModal />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL} />
