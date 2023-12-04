@@ -143,13 +143,16 @@ export default function EcosSurvey() {
 
   const WelcomeModal = () => {
 
-    return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa Delphi de Fatores Sociais e Humanos em ECOS!" handleClose={() => false}>
+    return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!" handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          aaa
+          Essa pesquisa visa aprimorar o entendimento dos Fatores Sociais e Humanos (FSH) no contexto do Ecossistema de Software (ECOS) e como eles podem ser utilizados para melhorar a qualidade do ECOS. Para isso, precisamos da sua ajuda para responder algumas perguntas sobre os FSH que você observa em sua organização. 
+        </Typography>
+        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
+          As perguntas estão divididas em cinco partes. Cada parte apresenta uma lista de FSH, Características Contextuais, Barreiras, Estratégias e Mecanismos de Enfrentamento, respectivamente. Para cada parte, você deve indicar como você percebe cada igem em sua organização. Você pode indicar quantos itens quiser.
         </Typography>
         <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-          aaa
+          Essa pesquisa utiliza a metodologia Delphi, que consiste em uma série de rodadas de questionários. Nessa primeira rodada, você deve indicar os itens que você observa em sua organização. Nas próximas rodadas, você irá visualizar os itens indicados por outros participantes e indicar quais você também observa em sua organização. Ao final das rodadas, os itens mais indicados serão considerados como os FSH mais relevantes para o ECOS.
         </Typography>
       </Modal.Text>
       <Divider />
@@ -168,7 +171,7 @@ export default function EcosSurvey() {
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
           <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>Anterior</Button>
-          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>Próximo</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? 'Próximo' : 'Visualizar resposta'}</Button>
         </Modal.Actions>
       </Modal.Root>
     );
