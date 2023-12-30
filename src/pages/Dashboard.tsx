@@ -96,7 +96,7 @@ export default function Dashboard() {
 
                 <FormControl>
                   <FormLabel id="time-window-label">Quanto tempo os participantes terão para responder o questionário?</FormLabel>
-                  <FormLabel id="time-window-label-1">Esse tempo varia dependendo da quantidade de pessoas, mais participantes significa mais tempo para a resposta.</FormLabel>
+                  <FormLabel id="time-window-label-1">Esse tempo dependende da quantidade de pessoas envolvidas, mais participantes significa mais tempo para a resposta.</FormLabel>
                   <RadioGroup
                     row
                     aria-labelledby="time-window-label"

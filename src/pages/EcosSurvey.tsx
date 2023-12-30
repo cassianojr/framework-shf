@@ -103,7 +103,7 @@ export default function EcosSurvey() {
       setModalContent([
         {
           id: 1,
-          title: "Quais dos Fatores Sociais e Humanos abaixo que você observa em sua organização?",
+          title: "Quais dos Fatores Sociais e Humanos abaixo você observa em sua organização?",
           items: shfRef,
           changeItems: changeShfRef
         },
