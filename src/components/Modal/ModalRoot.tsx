@@ -19,10 +19,11 @@ interface ModalRootProps {
   handleClose: () => void,
   children: React.ReactNode,
   title: string,
-  id: string
+  id: string,
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false,
 }
 
-export function ModalRoot({ state, handleClose, children, title, id }: ModalRootProps) {
+export function ModalRoot({ state, handleClose, children, title, id, size }: ModalRootProps) {
 
   return (
     <Dialog
@@ -31,7 +32,7 @@ export function ModalRoot({ state, handleClose, children, title, id }: ModalRoot
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       TransitionComponent={Transition}
-      maxWidth='sm'
+      maxWidth={size ?? 'sm'}
       keepMounted
       fullWidth
     >

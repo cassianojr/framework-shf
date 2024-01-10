@@ -15,11 +15,13 @@ export default class EcosystemService {
   }
 
   public static createEcosystem(ecos: Ecosystem, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
-    const { organization_name, admin_id } = ecos;
+    const { organization_name, admin_id, time_window, amount_rounds } = ecos;
     addDoc(collection(db, "ecos"), {
       organization_name,
       admin_id,
-      responses: 0
+      responses: 0,
+      time_window,
+      amount_rounds
     }).then((docRef) => {
       successCallback(docRef);
     }).catch((error) => {
