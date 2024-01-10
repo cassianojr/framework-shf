@@ -1,9 +1,19 @@
 {
-	"add_ecos_btn": "ADD NEW ECOS",
+	"add_ecos_btn": "New Project",
 	"modal_text": {
 		"cancel_btn": "Cancel",
 		"label_name": "Organization Name",
-		"txt1": " The parsing function can be very useful for instantiating your custom version of the framework.\n                  Allowing you to select which factors appear in your organization, suggesting new factors and\n                  mainly correlating barriers to improvement with social human factors. Adding a new perspective on your organization's SHFs.",
-		"txt2": "To start, please type the name of your organization:"
+		"txt1": " Projects enable the central organization to gain valuable insights from software professionals involved in requirements management in the Software Ecosystem. This is accomplished through the application of the Delphi methodology, using questionnaires to assess the agreement among components and items of the framework. The obtained results will provide relevant information to support decision-making in improving the social and human factors that influence requirements management in its specific context.",
+		"txt2": "To start, please type the name of your organization:",
+		"time_window_separator": "Time for each round",
+		"time_window_expl": "Each Delphi round has a defined duration, dependent on the number of people involved. The greater the number of participants, the longer the time for the response.",
+		"time_window_label": "How much time will participants have to respond to the questionnaire?",
+		"time_one_week": "1 week",
+		"time_two_weeks": "2 weeks",
+		"time_three_weeks": "3 weeks",
+		"amount_rounds_separator": "Number of rounds",
+		"amount_rounds_expl": "The number of rounds varies according to the degree of consensus reached; however, most research suggests conducting 3 rounds. Despite this, you can select below the desired number of rounds. The default is set to 3.",
+		"amount_rounds_label": "How many rounds do you want to conduct?",
+		"rounds_label": "rounds"
 	}
 }

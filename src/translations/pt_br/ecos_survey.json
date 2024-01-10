@@ -1,7 +1,7 @@
 {
-	"back_btn": "VOLTAR",
+	"back_btn": "Voltar",
 	"checkbox_tags_text": "está relacionado com...",
-	"next_btn": "PRÓXIMO",
+	"next_btn": "Próximo",
 	"questions": {
 		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
 		"contextual_characteristics": "Selecione as características contextuais da sua organização",
@@ -12,6 +12,6 @@
 		"shf": "Selecione os fatores sociais e humanos que afetam sua organização",
 		"strategies": "Selecione as estratégias de melhoria que você considera úteis para sua organização"
 	},
-	"suggest_new_btn": "SUGERIR NOVO",
+	"suggest_new_btn": "Sugerir Novo",
   "snackbar_text": "Obrigado pela sua resposta!"
 }

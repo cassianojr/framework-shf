@@ -1,9 +1,20 @@
 {
-	"add_ecos_btn": "ADICIONAR NOVO SECOS",
+	"add_ecos_btn": "Novo projeto",
 	"modal_text": {
 		"cancel_btn": "Cancelar",
 		"label_name": "Nome da Organização",
-		"txt1": "A função de análise pode ser muito útil para instanciar sua versão customizada do framework.\n                   Permitindo selecionar quais fatores aparecem em sua organização, sugerindo novos fatores e\n                   correlacionando principalmente barreiras à melhoria com fatores humanos sociais. Adicionando uma nova perspectiva sobre os SHFs da sua organização.",
-		"txt2": "Para começar, digite o nome da sua organização:"
+		"txt1": "Os projetos possibilitam à organização central obter insights valiosos dos profissionais de software envolvidos na gestão de requisitos no Ecossistema de Software. Isso é feito por meio da aplicação da metodologia Delphi, utilizando questionários para avaliar a concordância dos componentes e itens do framework. Os resultados obtidos fornecerão informações relevantes para embasar a tomada de decisão na melhoria dos fatores sociais e humanos que influenciam a gestão de requisitos em seu contexto específico. ",
+		"txt2": "Para começar, digite o nome da sua organização:",
+		"time_window_separator": "Tempo de cada rodada",
+		"time_window_expl": "Cada rodada Delphi possui um tempo de duração definido, que dependende da quantidade de pessoas envolvidas. Quanto maior a quantidade de participantes, maior será tempo para a resposta.",
+		"time_window_label": "Quanto tempo os participantes terão para responder o questionário?",
+		"time_one_week": "1 semana",
+		"time_two_weeks": "2 semanas",
+		"time_three_weeks": "3 semanas",
+		"amount_rounds_separator": "Quantidade de rodadas",
+		"amount_rounds_expl": "A quantidade de rodadas varia de acordo com o grau de consenso atingido, no entanto, a maioria das pesquisas sugere que sejam realizadas 3 rodadas. Apesar disso, você pode selecionar abaixo a quantidade de rodadas desejadas. O padrão está definido em 3.",
+		"amount_rounds_label": "Quantas rodadas você deseja realizar?",
+		"rounds_label": "rodadas"
+
 	}
 }
