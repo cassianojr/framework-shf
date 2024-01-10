@@ -3,7 +3,8 @@ interface Ecosystem {
     organization_name: string,
     responses: number,
     admin_id: string,
-    time_window: number
+    time_window: number,
+    amount_rounds: number
 }
 
 export type { Ecosystem };
