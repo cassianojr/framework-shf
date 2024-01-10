@@ -23,15 +23,15 @@ function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextu
 
   const { t } = useTranslation('framework');
 
-  
+
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
 
-  if(socialGroupItems?.[0].votes != undefined){
+  if (socialGroupItems?.[0].votes != undefined) {
     socialGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
   }
 
-  if(personalGroupItems?.[0].votes != undefined){
+  if (personalGroupItems?.[0].votes != undefined) {
     personalGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
   }
 
@@ -78,7 +78,7 @@ function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextu
                       <div>
                         {socialHumanFactors == undefined || socialGroupItems == undefined || personalGroupItems == undefined ? <SkeletonComponent /> :
                           <AccordionComponent showSuggestions={showSuggestions} data={socialHumanFactors} showVotes={true} >
-                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} showVotes={true}/>
+                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} showVotes={true} />
                           </AccordionComponent>
                         }
                       </div>

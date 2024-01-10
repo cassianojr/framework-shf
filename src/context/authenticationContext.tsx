@@ -17,7 +17,7 @@ interface AuthenticationProviderProps {
   children?: React.ReactNode,
 }
 
-export interface AuthenticationContextType{
+export interface AuthenticationContextType {
   signed: boolean,
   loading: boolean,
   getUser: () => User,
@@ -127,7 +127,7 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
       value={{
         signed: !!user,
         loading,
-        getUser: () => JSON.parse(user as string) as User??"",
+        getUser: () => JSON.parse(user as string) as User ?? "",
         signOutFromApp,
         signInGoogle,
         createUserEmailPassword,

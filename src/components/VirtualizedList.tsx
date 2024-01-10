@@ -34,10 +34,10 @@ function renderRow(props: ListChildComponentProps) {
       dense
       secondaryAction={
         <>
-        {data.showVotes &&item.votes}
-        <IconButton edge="end" aria-label="details" onClick={() => handleListItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
-          <InfoRounded sx={{ fontSize: '1.2rem' }} />
-        </IconButton>
+          {data.showVotes && item.votes}
+          <IconButton edge="end" aria-label="details" onClick={() => handleListItemClick(item.ids[i18next.language], item.names[i18next.language], item.descriptions[i18next.language])}>
+            <InfoRounded sx={{ fontSize: '1.2rem' }} />
+          </IconButton>
         </>
       }
       id={item.ids[i18next.language]}

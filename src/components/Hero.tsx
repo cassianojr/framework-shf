@@ -59,7 +59,7 @@ export default function Hero(props: HeroData) {
               >
                 {title}
               </Typography>
-              <Typography variant="h5" color="inherit" paragraph sx={{textAlign:'justify'}}>
+              <Typography variant="h5" color="inherit" paragraph sx={{ textAlign: 'justify' }}>
                 {description}
               </Typography>
               <Button

@@ -64,7 +64,7 @@ export default function StepperComponent(props: StepData) {
   const maxSteps = questions.length;
 
 
-  function handleAnswers(selectedItems: { id: string | undefined; question: string; selectedItemsInQuestion: QuestionListItems[]; }[]) : Answer[] {
+  function handleAnswers(selectedItems: { id: string | undefined; question: string; selectedItemsInQuestion: QuestionListItems[]; }[]): Answer[] {
     let newAnswer = {} as Answer;
 
     if (questions[activeStep].type != QuestionType.correlate) {
@@ -107,7 +107,7 @@ export default function StepperComponent(props: StepData) {
     }
 
     setAnswers(updatedAnswers);
-    
+
     return updatedAnswers;
   }
 
@@ -161,7 +161,7 @@ export default function StepperComponent(props: StepData) {
     handleSelectedItems();
   };
 
-  const handleSave = () => {    
+  const handleSave = () => {
     const answers = handleAnswers(selectedItems);
 
     const answer = {
@@ -217,7 +217,7 @@ export default function StepperComponent(props: StepData) {
 
   return (
     (items != undefined && items.length == 0) ? <></> : <>
-    <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={t('snackbar_text')} severity='success'/>
+      <SnackBarComponent snackBarState={snackBarState} setSnackBarState={setSnackBarState} text={t('snackbar_text')} severity='success' />
       <SuggestNewModal
         suggestNewModalState={suggestNewModalState}
         setSuggestNewModalState={setSuggestNewModalState}

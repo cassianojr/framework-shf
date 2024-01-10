@@ -74,7 +74,7 @@ export default function ECOSDashboard() {
     const setFrameworkData = (data: Framework[]) => {
       const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
       setCopingMechanisms(copingMechanisms);
-      
+
       const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
       setContextualCharacteristics(contextualCharacteristics);
 
@@ -93,7 +93,7 @@ export default function ECOSDashboard() {
         answers.answers.forEach((answer) => {
           data.forEach((itemToCount) => {
             countAnswers(answer, itemToCount);
-            if(itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
+            if (itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
           });
         });
       });
@@ -106,12 +106,12 @@ export default function ECOSDashboard() {
       setEcos(ecosData);
 
       if (ecosData.id === undefined) return;
-      try{
+      try {
         const answersData = await QuestionService.getEcosAnswers(ecosData.id);
         setAnswers(answersData);
-        
+
         FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));
-      }catch{
+      } catch {
         FirebaseService.getFrameworkData(setFrameworkData);
       }
     }
@@ -144,7 +144,7 @@ export default function ECOSDashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, height: '79vh' }}>
             <Typography variant='h4' align='center' mb={3}>{ecos.organization_name}</Typography>
             <Grid container spacing={3}>
-              <Grid item sm={9}>
+              <Grid item sm={9}>{/* Framework Link */}
                 <Paper
                   sx={{
                     p: 2,
@@ -159,7 +159,7 @@ export default function ECOSDashboard() {
                 </Paper>
               </Grid>
 
-              <Grid item sm={3}>
+              <Grid item sm={3}>{/* Responses */}
                 <Paper
                   sx={{
                     p: 2,
@@ -169,7 +169,9 @@ export default function ECOSDashboard() {
                   <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {answers.length}</Typography>
                 </Paper>
               </Grid>
-              <Grid item lg={12}>
+
+
+              <Grid item lg={12}>{/* Framework instance*/}
                 <Paper
                   sx={{
                     p: 2,

@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import { Button, Link, Stack} from '@mui/material';
+import { Button, Link, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EcosystemService from '../services/EcosystemService';
 import { Ecosystem } from '../types/Ecosystem.type';

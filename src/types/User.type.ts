@@ -1,8 +1,8 @@
-interface User{
-    uid: string,
-    email: string,
-    displayName: string,
-    photoURL: string
+interface User {
+  uid: string,
+  email: string,
+  displayName: string,
+  photoURL: string
 }
 
-export type {User};
+export type { User };

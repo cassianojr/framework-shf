@@ -18,7 +18,7 @@ function renderRow(props: ListChildComponentProps) {
     <ListItem
       dense
       secondaryAction={
-        <IconButton  edge="end">
+        <IconButton edge="end">
           <Rating name={item.id} readOnly value={(Number.isNaN(item.rating)) ? 0 : item.rating} precision={0.5} />
         </IconButton>
       }
@@ -49,7 +49,7 @@ export default function FrameworkRatingsList(props: ListData) {
         itemData={props}
         itemCount={props.items.length}
         overscanCount={5}
-        >
+      >
         {renderRow}
       </List>
     </Box>

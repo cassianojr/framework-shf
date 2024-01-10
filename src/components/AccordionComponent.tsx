@@ -20,7 +20,7 @@ import { FrameworkItem } from '../types/Framework.type';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import i18next from 'i18next';
 
@@ -79,10 +79,10 @@ interface AccordionComponentProps {
       ids: {
         [key: string]: string
       },
-      names:{
+      names: {
         [key: string]: string
       },
-      descriptions:{
+      descriptions: {
         [key: string]: string
       },
     }[]
@@ -96,7 +96,7 @@ interface AccordionComponentProps {
 export default function AccordionComponent(props: AccordionComponentProps) {
   const { data, showSuggestions, showVotes } = props;
 
-  const {t} = useTranslation(['framework', 'common']);
+  const { t } = useTranslation(['framework', 'common']);
 
   const [expanded, setExpanded] = React.useState<string | false>(data.id);
 
@@ -217,7 +217,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   }
 
-  const handleClose = () =>{
+  const handleClose = () => {
     setModalPersonalsocialState(false);
     setBackToListModalState(false);
     setBackToPersonalSocialListModalState(false);
@@ -254,15 +254,15 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       <Divider />
       <Modal.Actions handleClose={handleClose}>
 
-        <Modal.EvaluateAction id={itemDescriptionModalContent.id} handleClose={()=>{
+        <Modal.EvaluateAction id={itemDescriptionModalContent.id} handleClose={() => {
           setItemDescriptionModalState(false);
           setBackToListModalState(false);
           setBackToPersonalSocialListModalState(false);
         }}>
-          {(backToListModalState || backToPersonalSocialListModalState)?
+          {(backToListModalState || backToPersonalSocialListModalState) ?
             <Button variant="outlined" size="small" onClick={() => {
               setItemDescriptionModalState(false);
-              if(backToPersonalSocialListModalState){
+              if (backToPersonalSocialListModalState) {
                 setModalPersonalsocialState(true);
                 return;
               }
@@ -273,7 +273,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
               setListModalState(true);
             }}>
               {t('common:back_button')} </Button>
-          :<></>}
+            : <></>}
 
         </Modal.EvaluateAction>
       </Modal.Actions>
@@ -293,7 +293,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> {t('social_group_label')}</Typography>
       <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> {t('personal_group_label')}</Typography>
-      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes}/>
+      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
@@ -338,10 +338,10 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             <AddIcon sx={{ fontSize: '1rem' }} />
             {t('suggest_new_button')}
           </Button> : <></>}
-          
+
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes}/>}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} />}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary

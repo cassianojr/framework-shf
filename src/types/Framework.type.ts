@@ -1,14 +1,14 @@
 interface FrameworkItem {
   id: string,
-  ids:{
+  ids: {
     [key: string]: string
   },
   name: string,
-  names:{
+  names: {
     [key: string]: string
   },
   description: string,
-  descriptions:{
+  descriptions: {
     [key: string]: string
   },
   rating?: number,
