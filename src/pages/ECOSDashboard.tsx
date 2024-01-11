@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import { Alert, Button, Link, Typography, } from '@mui/material';
+import { Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
@@ -21,6 +21,7 @@ import { QuestionService } from '../services/QuestionService';
 import { Answer, Answers } from '../types/Answer.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
+import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -187,16 +188,14 @@ export default function ECOSDashboard() {
                 flexDirection: 'row',
                 justifyContent: "space-between"
               }}>
-                <Grid container spacing={5.5} >
+                <Grid container sx={{display: 'flex', justifyContent: 'space-between'}}>
 
                   <Grid item>{/* Status */}
                     <Paper
                       sx={defaultPaperStyle}
                     >
                       <Title>Status da pesquisa</Title>
-                      <Alert variant="filled" severity="error">
-                        Não Iniciada
-                      </Alert>
+                      <SurveyStatus status={ecos.status?? 'not-started'} />
                     </Paper>
                   </Grid>
 
