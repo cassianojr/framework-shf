@@ -4,16 +4,16 @@ interface ModalProps {
   handleClose: () => void,
   children?: React.ReactNode,
 }
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 
 export function ModalActions({ handleClose, children }: ModalProps) {
 
-  const {t} = useTranslation('common');
+  const { t } = useTranslation('common');
 
   return (
     <DialogActions>
-      {children??<Button onClick={handleClose}>{t('close_button')}</Button>}
+      {children ?? <Button onClick={handleClose}>{t('close_button')}</Button>}
     </DialogActions>
   )
 }

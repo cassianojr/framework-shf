@@ -5,7 +5,7 @@ export default function SkeletonComponent() {
   return (
     <Box>
       <Skeleton />
-      <Skeleton animation="wave" variant='rectangular' height={120}/>
+      <Skeleton animation="wave" variant='rectangular' height={120} />
       <Skeleton />
     </Box>
   );

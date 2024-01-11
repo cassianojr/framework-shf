@@ -4,4 +4,4 @@ interface RatingType {
   rating: number | null;
 }
 
-export type {RatingType};
+export type { RatingType };

@@ -5,7 +5,7 @@ import br_flag from '../assets/images/br-flag.png';
 import us_flag from '../assets/images/us-flag.png';
 
 
-export default  function LanguageButton() {
+export default function LanguageButton() {
   const flags = {
     pt_br: br_flag,
     en: us_flag

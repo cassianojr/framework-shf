@@ -16,7 +16,7 @@ interface SelectItemsProps {
   id: number,
   title: string,
   items: React.MutableRefObject<ItemType[]>,
-  changeItems: (value:ItemType[]) => void,
+  changeItems: (value: ItemType[]) => void,
 }
 
 interface ItemType {
@@ -46,29 +46,29 @@ export default function EcosSurvey() {
 
   const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   const shfRef = React.useRef<ItemType[]>([]);
-  const changeShfRef = (items:ItemType[]) => {shfRef.current = items};
+  const changeShfRef = (items: ItemType[]) => { shfRef.current = items };
 
   const copingMechanismRef = React.useRef<ItemType[]>([]);
-  const changeCopingMechanismRef = (items:ItemType[]) => {copingMechanismRef.current = items};
+  const changeCopingMechanismRef = (items: ItemType[]) => { copingMechanismRef.current = items };
 
   const contextualCharacteristicsRef = React.useRef<ItemType[]>([]);
-  const changeContextualCharacteristicsRef = (items:ItemType[]) => {contextualCharacteristicsRef.current = items};
+  const changeContextualCharacteristicsRef = (items: ItemType[]) => { contextualCharacteristicsRef.current = items };
 
   const barriersToImprovingRef = React.useRef<ItemType[]>([]);
-  const changeBarriersToImprovingRef = (items:ItemType[]) => {barriersToImprovingRef.current = items};
+  const changeBarriersToImprovingRef = (items: ItemType[]) => { barriersToImprovingRef.current = items };
 
   const strategiesRef = React.useRef<ItemType[]>([]);
-  const changeStrategiesRef = (items:ItemType[]) => {strategiesRef.current = items};
-  
+  const changeStrategiesRef = (items: ItemType[]) => { strategiesRef.current = items };
+
   React.useEffect(() => {
-    if(loading) return;
+    if (loading) return;
 
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
-    const handleFrameworkItemsRef = (frameworkItem:Framework) => {
+    const handleFrameworkItemsRef = (frameworkItem: Framework) => {
       return frameworkItem.items.map((item) => {
         return {
           id: item.id,
@@ -146,7 +146,7 @@ export default function EcosSurvey() {
     return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!" handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          Essa pesquisa visa aprimorar o entendimento dos Fatores Sociais e Humanos (FSH) no contexto do Ecossistema de Software (ECOS) e como eles podem ser utilizados para melhorar a qualidade do ECOS. Para isso, precisamos da sua ajuda para responder algumas perguntas sobre os FSH que você observa em sua organização. 
+          Essa pesquisa visa aprimorar o entendimento dos Fatores Sociais e Humanos (FSH) no contexto do Ecossistema de Software (ECOS) e como eles podem ser utilizados para melhorar a qualidade do ECOS. Para isso, precisamos da sua ajuda para responder algumas perguntas sobre os FSH que você observa em sua organização.
         </Typography>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
           As perguntas estão divididas em cinco partes. Cada parte apresenta uma lista de FSH, Características Contextuais, Barreiras, Estratégias e Mecanismos de Enfrentamento, respectivamente. Para cada parte, você deve indicar como você percebe cada igem em sua organização. Você pode indicar quantos itens quiser.
@@ -166,7 +166,7 @@ export default function EcosSurvey() {
 
     return (
       <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='sm'>
-        <Modal.ListSelect items={props.items} changeItems={props.changeItems}/>
+        <Modal.ListSelect items={props.items} changeItems={props.changeItems} />
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
@@ -180,9 +180,9 @@ export default function EcosSurvey() {
   return (
     <>
 
-      {!appLoading&&<WelcomeModal />}
-      {!appLoading&&modalContent.map((item)=><SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id}/>)}
-      
+      {!appLoading && <WelcomeModal />}
+      {!appLoading && modalContent.map((item) => <SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id} />)}
+
       <Box sx={{ backgroundColor: '#ebebeb' }}>
         <Navbar />
         <Toolbar />

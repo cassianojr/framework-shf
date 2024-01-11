@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import SnackBarComponent from './SnackBarComponent';
 import { FirebaseService } from '../services/FirebaseService';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const labels: { [index: string]: string } = {
   0.5: 'Useless',
@@ -32,7 +32,7 @@ export default function RatingComponent(props: RatingComponentProps) {
   const [value, setValue] = React.useState<number | null>(null);
   const [hover, setHover] = React.useState(-1);
 
-  const {t} = useTranslation('rating');
+  const { t } = useTranslation('rating');
 
   const snackBarErrorText = t('snackbar_error');
   const snackBarSuccessText = t('snackbar_success');

@@ -22,7 +22,7 @@ export default class Singularizer {
     "s": "",
     "cas": "ca",
     "ras": "ra",
-    "ias":"ia"
+    "ias": "ia"
   };
 
   private static endings_en: { [key: string]: string } = {

@@ -18,7 +18,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
-  
+
   const { t } = useTranslation('sign_up');
 
   const navigate = useNavigate();
@@ -52,13 +52,13 @@ export default function SignUp() {
         alert('Error signing in');
         return;
       }
-      navigate((!redirect)?'/dashboard':redirect);
+      navigate((!redirect) ? '/dashboard' : redirect);
     });
 
   };
 
   React.useEffect(() => {
-    if (signed) navigate((!redirect)?'/dashboard':redirect);
+    if (signed) navigate((!redirect) ? '/dashboard' : redirect);
   }, [signed, navigate, redirect]);
 
 
@@ -66,7 +66,7 @@ export default function SignUp() {
     <>
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem', height:'75vh'}}>
+      <Container component="main" maxWidth="xs" style={{ marginBottom: '1rem', height: '75vh' }}>
         <CssBaseline />
         <Box
           sx={{
@@ -114,7 +114,7 @@ export default function SignUp() {
                   label={t('password_field')}
                   type="password"
                   id="password"
-                  inputProps={{"minLength":6}}
+                  inputProps={{ "minLength": 6 }}
                   autoComplete="new-password"
                 />
               </Grid>
@@ -125,7 +125,7 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-             {t('sign_up_button')}
+              {t('sign_up_button')}
             </Button>
             <Button fullWidth variant="outlined" sx={{ mb: 2 }} onClick={signInGoogle}>
               <GoogleIcon sx={{ mr: 1 }} />

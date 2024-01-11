@@ -28,7 +28,7 @@ export default function FrameworkPage() {
     });
 
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving]);
-  
+
   return (
     <Box sx={{ backgroundColor: '#ebebeb' }}>
       <Navbar />

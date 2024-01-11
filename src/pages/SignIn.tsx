@@ -46,19 +46,19 @@ export default function SignIn() {
       alert('Error signing in');
     }
 
-    navigate((!redirect)?'/dashboard':redirect);
+    navigate((!redirect) ? '/dashboard' : redirect);
 
   };
 
   React.useEffect(() => {
-    if (signed) navigate((!redirect)?'/dashboard':redirect);
+    if (signed) navigate((!redirect) ? '/dashboard' : redirect);
   }, [signed, navigate, redirect]);
 
-  const SurveyInstructionsModal = () =>{
+  const SurveyInstructionsModal = () => {
     const [modalState, setModalState] = React.useState(true);
 
     return (
-      <Modal.Root state={modalState} handleClose={()=>setModalState(false)} title={t('survey_instructions:title')} id="survey-instructions-modal">
+      <Modal.Root state={modalState} handleClose={() => setModalState(false)} title={t('survey_instructions:title')} id="survey-instructions-modal">
         <Modal.Text>
           {t('survey_instructions:paragraph1')}
         </Modal.Text>
@@ -66,17 +66,17 @@ export default function SignIn() {
           {t('survey_instructions:paragraph2')}
         </Modal.Text>
         <Divider />
-        <Modal.Actions handleClose={() =>setModalState(false)} />
+        <Modal.Actions handleClose={() => setModalState(false)} />
       </Modal.Root>
     );
   }
 
   return (
     <>
-    {redirect && <SurveyInstructionsModal />}
+      {redirect && <SurveyInstructionsModal />}
       <Navbar />
       <Toolbar />
-      <Container component="main" maxWidth="xs" style={{marginBottom:'1rem', height:'75vh'}}>
+      <Container component="main" maxWidth="xs" style={{ marginBottom: '1rem', height: '75vh' }}>
         <CssBaseline />
         <Box
           sx={{
@@ -130,7 +130,7 @@ export default function SignIn() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={`sign-up?${queryParams}`} variant="body2">
-                {t('sign_up_link')}
+                  {t('sign_up_link')}
                 </Link>
               </Grid>
             </Grid>
