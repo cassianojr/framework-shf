@@ -22,6 +22,7 @@ import { Answer, Answers } from '../types/Answer.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
 import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
+import EmailService from '../services/EmailService';
 
 export default function ECOSDashboard() {
   const { t } = useTranslation('ecos_dashboard');
@@ -129,6 +130,29 @@ export default function ECOSDashboard() {
   }, [signed, navigate, loading, user.uid, ecosId, setAnswers]);
 
 
+  const handleStartSurvey = () => {
+
+    const email = user.email ?? "";
+    
+    // const endAt = new Date().getTime()+ecos.time_window*7*24*60*60*1000;
+    const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
+
+    const endAtString = new Date(endAt).toISOString();
+
+    if(email === "" || ecosId == null) return;
+
+    if(ecos.current_round !== 1 && answers.length > 0){
+      answers.forEach((answer) => {
+        EmailService.notifyStartSurvey(answer.user_email, ecos.organization_name, ecosId);
+      });
+    }
+
+    EmailService.scheduleEndRound(email, endAtString, ecos.organization_name, ecosId);
+    const newEcos = {...ecos, status: 'waiting-for-answers', current_round: ecos.current_round+1} as Ecosystem;
+    setEcos(newEcos);
+    EcosystemService.updateEcosystem(newEcos);
+  }
+
   return (
     !appLoading &&
     <>
@@ -154,13 +178,12 @@ export default function ECOSDashboard() {
 
             <Grid container spacing={3}>
 
-              <Grid item xs={3}>
+              <Grid item xs={3}>{/* Start survey */}
                 <Paper
                   sx={defaultPaperStyle}
                 >
                   <Title>Iniciar Pesquisa</Title>
-                  <Button variant='contained' color='success'  sx={{p: 1.4}}>Iniciar Pesquisa</Button>
-
+                  <Button variant='contained' color='success'  sx={{p: 1.4}} onClick={handleStartSurvey}>Iniciar Pesquisa</Button>
                 </Paper>
               </Grid>
 
@@ -222,7 +245,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>Rodada atual</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>1º rodada</Button>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.current_round}º rodada</Button>
                     </Paper>
                   </Grid>
 

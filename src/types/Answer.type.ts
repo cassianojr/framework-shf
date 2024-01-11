@@ -3,6 +3,7 @@ import { QuestionListItems } from "./Question.type";
 interface Answers {
   id?: string,
   user_id: string,
+  user_email: string,
   ecossystem_id: string,
   answers: Answer[]
 }
