@@ -127,7 +127,7 @@ export default function DrawerAppBar(props: Props) {
 
 
   const handleSignOut = (itemName: string) => {
-    if (itemName !== 'Sign Out') return;
+    if (itemName !== 'Logout') return;
     signOutFromApp();
     handleDrawerToggle();
   }
