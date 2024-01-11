@@ -23,8 +23,10 @@ import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
 import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
 import EmailService from '../services/EmailService';
+import i18next from 'i18next';
 
 export default function ECOSDashboard() {
+  
   const { t } = useTranslation('ecos_dashboard');
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
@@ -143,11 +145,11 @@ export default function ECOSDashboard() {
 
     if(ecos.current_round !== 1 && answers.length > 0){
       answers.forEach((answer) => {
-        EmailService.notifyStartSurvey(answer.user_email, ecos.organization_name, ecosId);
+        EmailService.notifyStartSurvey(answer.user_email, ecos.organization_name, ecosId, i18next.language);
       });
     }
 
-    EmailService.scheduleEndRound(email, endAtString, ecos.organization_name, ecosId);
+    EmailService.scheduleEndRound(email, endAtString, ecos.organization_name, ecosId, i18next.language);
     const newEcos = {...ecos, status: 'waiting-for-answers', current_round: ecos.current_round+1} as Ecosystem;
     setEcos(newEcos);
     EcosystemService.updateEcosystem(newEcos);
@@ -182,8 +184,8 @@ export default function ECOSDashboard() {
                 <Paper
                   sx={defaultPaperStyle}
                 >
-                  <Title>Iniciar Pesquisa</Title>
-                  <Button variant='contained' color='success'  sx={{p: 1.4}} onClick={handleStartSurvey}>Iniciar Pesquisa</Button>
+                  <Title>{t('start_survey')}</Title>
+                  <Button variant='contained' color='success'  sx={{p: 1.4}} onClick={handleStartSurvey}>{t('start_survey')}</Button>
                 </Paper>
               </Grid>
 
@@ -217,7 +219,7 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Status da pesquisa</Title>
+                      <Title>{t('survey_status_label')}</Title>
                       <SurveyStatus status={ecos.status?? 'not-started'} />
                     </Paper>
                   </Grid>
@@ -226,8 +228,8 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Tempo para a resposta</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} semanas</Button>
+                      <Title>{t('time_window')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} {t('time_window_unit')}</Button>
                     </Paper>
                   </Grid>
 
@@ -235,8 +237,8 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Quantidade de rodadas</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} rodadas</Button>
+                      <Title>{t('amout_of_rounds')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}</Button>
                     </Paper>
                   </Grid>
 
@@ -244,8 +246,8 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Rodada atual</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.current_round}º rodada</Button>
+                      <Title>{t('current_round')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.current_round}º {t('current_round_unit')}</Button>
                     </Paper>
                   </Grid>
 

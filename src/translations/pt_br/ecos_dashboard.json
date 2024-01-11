@@ -1,7 +1,21 @@
 {
 	"copy_link_btn": "Copiar Link",
-	"ecos_link": "Link da pesquisa: ",
-	"responses_label": "Respostas:",
+	"ecos_link": "Link da pesquisa",
+	"responses_label": "Respostas",
 	"snackbar_link_copied": "Link Copiado!",
-	"framework_results": "Resultados no Framework"
+	"framework_results": "Resultados no Framework",
+  "start_survey": "Iniciar Pesquisa",
+  "time_window": "Tempo para a resposta",
+  "time_window_unit": "semanas",
+  "amout_of_rounds": "Quantidade de rodadas",
+  "amout_of_rounds_unit": "rodadas",
+  "current_round": "Rodada atual",
+  "current_round_unit": "rodada",
+  "survey_status_label": "Status da Pesquisa",
+  "survey_status": {
+    "not_started": "Não iniciada",
+    "waiting_for_answers": "Aguardando Respostas",
+    "in_analysis": "Em Análise",
+    "finished": "Finalizada"
+  }
 }
