@@ -7,10 +7,10 @@ interface ModalProps {
 }
 
 export function ModalText({ content, dense = false, children }: ModalProps) {
-  const denseStyle = dense ? {padding: 0} : {}
+  const denseStyle = dense ? { padding: 0 } : {}
   return (
     <DialogContent sx={denseStyle}>
-      {children??<Typography sx={{ textAlign: 'justify' }}>{content}</Typography>}
+      {children ?? <Typography sx={{ textAlign: 'justify' }}>{content}</Typography>}
     </DialogContent>
   )
 }

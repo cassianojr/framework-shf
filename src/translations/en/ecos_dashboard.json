@@ -1,7 +1,21 @@
 {
-	"copy_link_btn": "Copy Link",
-	"ecos_link": "Survey link: ",
-	"responses_label": "Responses:",
-	"snackbar_link_copied": "Link Copied!",
-	"framework_results": "Framework Results"
+  "copy_link_btn": "Copy Link",
+  "ecos_link": "Survey link: ",
+  "responses_label": "Responses:",
+  "snackbar_link_copied": "Link Copied!",
+  "framework_results": "Framework Results",
+  "start_survey": "Start Survey",
+  "time_window": "Response Time Window",
+  "time_window_unit": "weeks",
+  "amout_of_rounds": "Number of Rounds",
+  "amout_of_rounds_unit": "rounds",
+  "current_round": "Current Round",
+  "current_round_unit": "round",
+  "survey_status_label": "Survey Status",
+  "survey_status": {
+    "not_started": "Not Started",
+    "waiting_for_answers": "Waiting for Answers",
+    "in_analysis": "In Analysis",
+    "finished": "Finished"
+  }
 }

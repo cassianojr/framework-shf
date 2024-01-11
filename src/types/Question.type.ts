@@ -2,23 +2,23 @@ import { Framework } from "./Framework.type"
 
 interface Question {
   id: string,
-  title:{
+  title: {
     [key: string]: string
   },
-  description_title:{
+  description_title: {
     [key: string]: string
   },
-  description:{
+  description: {
     [key: string]: string
   },
   type: QuestionType,
   order: number,
   items_id?: string,
   framework_items?: Framework,
-  suggest_title?:{
+  suggest_title?: {
     [key: string]: string
   },
-  suggest_description?:{
+  suggest_description?: {
     [key: string]: string
   },
   correlateToId?: string,
@@ -29,21 +29,21 @@ interface Question {
   suggestion: boolean
 }
 
-export enum QuestionType{
+export enum QuestionType {
   select = "select",
   correlate = "correlate"
 }
 
-interface QuestionListItems{
+interface QuestionListItems {
   id: string,
-  names:{
+  names: {
     [key: string]: string
   },
   selected: boolean,
-  descriptions:{
+  descriptions: {
     [key: string]: string
   },
-  suggestion:boolean
+  suggestion: boolean
 }
 
-export type {Question, QuestionListItems};
+export type { Question, QuestionListItems };

@@ -90,7 +90,7 @@ export default function AccountMenu({ handleSignOut, displayName, photoURL }: Ac
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-        <ProfileAvatar /> {t('account_menu.profile_opt')}
+          <ProfileAvatar /> {t('account_menu.profile_opt')}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

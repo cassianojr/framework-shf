@@ -77,11 +77,11 @@ export class FirebaseService {
         if (snapshot.exists()) {
           const data = snapshot.data() as Framework;
           resolve(data);
-        }else{
+        } else {
           unsubscribe();
           reject("No such document!");
         }
-      },(error)=>{
+      }, (error) => {
         console.log(error);
         unsubscribe();
         reject(error);

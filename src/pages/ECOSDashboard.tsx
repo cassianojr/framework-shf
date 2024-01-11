@@ -21,8 +21,12 @@ import { QuestionService } from '../services/QuestionService';
 import { Answer, Answers } from '../types/Answer.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
+import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
+import EmailService from '../services/EmailService';
+import i18next from 'i18next';
 
 export default function ECOSDashboard() {
+  
   const { t } = useTranslation('ecos_dashboard');
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
@@ -38,16 +42,23 @@ export default function ECOSDashboard() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
-
   const ecosId = useParams().ecosId;
 
   const user = getUser();
 
-  const frameworkLink = `${window.location.origin}/ecos-survey/${ecosId}`;
+  const surveyLink = `${window.location.origin}/ecos-survey/${ecosId}`;
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(frameworkLink);
+    navigator.clipboard.writeText(surveyLink);
     setCopySnackBarState(true);
+  }
+
+  const defaultPaperStyle = {
+    p: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between'
   }
 
   React.useEffect(() => {
@@ -74,7 +85,7 @@ export default function ECOSDashboard() {
     const setFrameworkData = (data: Framework[]) => {
       const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
       setCopingMechanisms(copingMechanisms);
-      
+
       const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
       setContextualCharacteristics(contextualCharacteristics);
 
@@ -93,7 +104,7 @@ export default function ECOSDashboard() {
         answers.answers.forEach((answer) => {
           data.forEach((itemToCount) => {
             countAnswers(answer, itemToCount);
-            if(itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
+            if (itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
           });
         });
       });
@@ -106,12 +117,12 @@ export default function ECOSDashboard() {
       setEcos(ecosData);
 
       if (ecosData.id === undefined) return;
-      try{
+      try {
         const answersData = await QuestionService.getEcosAnswers(ecosData.id);
         setAnswers(answersData);
-        
+
         FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));
-      }catch{
+      } catch {
         FirebaseService.getFrameworkData(setFrameworkData);
       }
     }
@@ -120,6 +131,29 @@ export default function ECOSDashboard() {
 
   }, [signed, navigate, loading, user.uid, ecosId, setAnswers]);
 
+
+  const handleStartSurvey = () => {
+
+    const email = user.email ?? "";
+    
+    // const endAt = new Date().getTime()+ecos.time_window*7*24*60*60*1000;
+    const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
+
+    const endAtString = new Date(endAt).toISOString();
+
+    if(email === "" || ecosId == null) return;
+
+    if(ecos.current_round !== 1 && answers.length > 0){
+      answers.forEach((answer) => {
+        EmailService.notifyStartSurvey(answer.user_email, ecos.organization_name, ecosId, i18next.language);
+      });
+    }
+
+    EmailService.scheduleEndRound(email, endAtString, ecos.organization_name, ecosId, i18next.language);
+    const newEcos = {...ecos, status: 'waiting-for-answers', current_round: ecos.current_round+1} as Ecosystem;
+    setEcos(newEcos);
+    EcosystemService.updateEcosystem(newEcos);
+  }
 
   return (
     !appLoading &&
@@ -143,33 +177,94 @@ export default function ECOSDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, height: '79vh' }}>
             <Typography variant='h4' align='center' mb={3}>{ecos.organization_name}</Typography>
+
             <Grid container spacing={3}>
-              <Grid item sm={9}>
+
+              <Grid item xs={3}>{/* Start survey */}
                 <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('ecos_link')}<Link href={frameworkLink} target='_blank'>{frameworkLink}</Link></Typography>
-                  <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                  sx={defaultPaperStyle}
+                >
+                  <Title>{t('start_survey')}</Title>
+                  <Button variant='contained' color='success'  sx={{p: 1.4}} onClick={handleStartSurvey}>{t('start_survey')}</Button>
                 </Paper>
               </Grid>
 
-              <Grid item sm={3}>
+              <Grid item xs>{/* Survey Link */}
                 <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {answers.length}</Typography>
+                  sx={defaultPaperStyle}>
+                  <Title>{t('ecos_link')}</Title>
+                  <Container
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+
+                    <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
+                    <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                  </Container>
                 </Paper>
               </Grid>
-              <Grid item lg={12}>
+
+              <Grid item sm={12} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: "space-between"
+              }}>
+                <Grid container sx={{display: 'flex', justifyContent: 'space-between'}}>
+
+                  <Grid item>{/* Status */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('survey_status_label')}</Title>
+                      <SurveyStatus status={ecos.status?? 'not-started'} />
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Time window */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('time_window')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} {t('time_window_unit')}</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Amount of rounds */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('amout_of_rounds')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Current round */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('current_round')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.current_round}º {t('current_round_unit')}</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/*reponses*/}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('responses_label')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{answers.length}</Button>
+                    </Paper>
+                  </Grid>
+
+                </Grid>
+              </Grid>
+
+
+              <Grid item lg={12}>{/* Framework instance*/}
                 <Paper
                   sx={{
                     p: 2,

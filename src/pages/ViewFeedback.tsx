@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function ViewFeedback() {
 
-  
-  const {t} = useTranslation('view_feedback');
+
+  const { t } = useTranslation('view_feedback');
 
   return (
     <Box sx={{ backgroundColor: '#f5f5f5' }}>

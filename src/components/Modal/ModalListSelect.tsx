@@ -75,7 +75,7 @@ export function ModalListSelect({ items, showVotes, changeItems }: ModalProps) {
     <Modal.Root state={descriptionModalState} handleClose={() => setDescriptionModalState(false)} id={descriptionModalContent.id} title={descriptionModalContent.title}>
       <Divider />
       <Modal.Text content={descriptionModalContent.body} />
-      <Modal.Actions handleClose={()=>setDescriptionModalState(false)} />
+      <Modal.Actions handleClose={() => setDescriptionModalState(false)} />
     </Modal.Root>
   );
 

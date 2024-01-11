@@ -6,13 +6,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import {Suggestion} from '../types/Suggestion.type';
+import { Suggestion } from '../types/Suggestion.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { useTranslation } from 'react-i18next';
 
 export default function SuggestionTable() {
 
-  const {t} = useTranslation('view_feedback');
+  const { t } = useTranslation('view_feedback');
 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 

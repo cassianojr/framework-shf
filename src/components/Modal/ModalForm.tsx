@@ -8,12 +8,12 @@ interface ModalProps {
   setSnackBarState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 
 export function ModalForm({ setFormModalState, title, setSnackBarState }: ModalProps) {
 
-  const {t} = useTranslation('modal_form');
+  const { t } = useTranslation('modal_form');
 
   const [formState, setFormState] = React.useState({
     type: title,

@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, addDoc, collection, doc, onSnapshot, query, where } from 'firebase/firestore';
+import { DocumentData, DocumentReference, addDoc, collection, doc, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import { Ecosystem } from '../types/Ecosystem.type';
 
@@ -21,13 +21,35 @@ export default class EcosystemService {
       admin_id,
       responses: 0,
       time_window,
-      amount_rounds
+      amount_rounds,
+      status: 'not-started',
     }).then((docRef) => {
       successCallback(docRef);
     }).catch((error) => {
       console.error("Error adding document: ", error);
       errorCallback();
     });
+  }
+
+  public static updateEcosystem(ecos: Ecosystem): void {
+    const { organization_name, admin_id, time_window, amount_rounds, id, status, current_round, responses } = ecos;
+    if(id === undefined) throw new Error("Ecosystem id is undefined");
+
+    updateDoc(doc(db,"ecos", id), {
+      organization_name,
+      admin_id,
+      time_window,
+      amount_rounds,
+      status,
+      current_round,
+      responses
+    }).then(() => {
+      console.log("Document written with ID: ", id);
+    }).catch((error) => {
+      console.error("Error adding document: ", error);
+      
+    });
+   
   }
 
   public static getEcosystem(ecosId: string): Promise<Ecosystem> {

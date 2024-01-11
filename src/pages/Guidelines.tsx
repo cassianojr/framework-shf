@@ -23,14 +23,14 @@ function Guidelines() {
               {t('title')}
             </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>{t('list.1.title')}</i> {t('list.1.description')}
+              <i style={{ fontWeight: 'bold' }}>{t('list.1.title')}</i> {t('list.1.description')}
             </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>{t('list.2.title')}</i>{t('list.2.description')}
-              </Typography>
+              <i style={{ fontWeight: 'bold' }}>{t('list.2.title')}</i>{t('list.2.description')}
+            </Typography>
             <Typography sx={typographyStyle}>
-              <i style={{fontWeight:'bold'}}>{t('list.3.title')}</i>{t('list.3.description')}
-              </Typography>
+              <i style={{ fontWeight: 'bold' }}>{t('list.3.title')}</i>{t('list.3.description')}
+            </Typography>
 
           </Box>
         </section>

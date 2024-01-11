@@ -37,7 +37,7 @@ interface DashboardAppbarProps {
   photoURL: string | null
 }
 
-export default function DashboardAppbar({handleSignOut, displayName, photoURL}: DashboardAppbarProps) {
+export default function DashboardAppbar({ handleSignOut, displayName, photoURL }: DashboardAppbarProps) {
 
   const { t } = useTranslation('app_drawer');
 
@@ -73,10 +73,10 @@ export default function DashboardAppbar({handleSignOut, displayName, photoURL}: 
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {t('welcome_message', {user: displayName})}!
+            {t('welcome_message', { user: displayName })}!
           </Typography>
 
-          <AccountMenu handleSignOut={handleSignOut} displayName={displayName} photoURL={photoURL}/>
+          <AccountMenu handleSignOut={handleSignOut} displayName={displayName} photoURL={photoURL} />
           <LanguageButton />
         </Toolbar>
       </AppBar>

@@ -29,7 +29,7 @@ export default function CheckboxesTags({ itemName, itemId, options, values, setV
 
     newValues.push({ correlateWith: values.filter((value) => value.correlateWith.id == itemId)[0].correlateWith, itemsToCorrelate: newValue });
     setValues(newValues);
-    
+
   }
 
   return (
