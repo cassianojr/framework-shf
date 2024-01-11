@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import { Button, Link, Typography, } from '@mui/material';
+import { Alert, Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
@@ -38,16 +38,23 @@ export default function ECOSDashboard() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
-
   const ecosId = useParams().ecosId;
 
   const user = getUser();
 
-  const frameworkLink = `${window.location.origin}/ecos-survey/${ecosId}`;
+  const surveyLink = `${window.location.origin}/ecos-survey/${ecosId}`;
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(frameworkLink);
+    navigator.clipboard.writeText(surveyLink);
     setCopySnackBarState(true);
+  }
+
+  const defaultPaperStyle = {
+    p: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between'
   }
 
   React.useEffect(() => {
@@ -143,31 +150,93 @@ export default function ECOSDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, height: '79vh' }}>
             <Typography variant='h4' align='center' mb={3}>{ecos.organization_name}</Typography>
+
             <Grid container spacing={3}>
-              <Grid item sm={9}>{/* Framework Link */}
+
+              <Grid item xs={3}>
                 <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('ecos_link')}<Link href={frameworkLink} target='_blank'>{frameworkLink}</Link></Typography>
-                  <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                  sx={defaultPaperStyle}
+                >
+                  <Title>Iniciar Pesquisa</Title>
+                  <Button variant='contained' color='success'  sx={{p: 1.4}}>Iniciar Pesquisa</Button>
+
                 </Paper>
               </Grid>
 
-              <Grid item sm={3}>{/* Responses */}
+              <Grid item xs>{/* Survey Link */}
                 <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{t('responses_label')} {answers.length}</Typography>
+                  sx={defaultPaperStyle}>
+                  <Title>{t('ecos_link')}</Title>
+                  <Container
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+
+                    <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
+                    <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                  </Container>
                 </Paper>
+              </Grid>
+
+              <Grid item sm={12} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: "space-between"
+              }}>
+                <Grid container spacing={5.5} >
+
+                  <Grid item>{/* Status */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>Status da pesquisa</Title>
+                      <Alert variant="filled" severity="error">
+                        Não Iniciada
+                      </Alert>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Time window */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>Tempo para a resposta</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} semanas</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Amount of rounds */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>Quantidade de rodadas</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} rodadas</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/* Current round */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>Rodada atual</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>1º rodada</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item>{/*reponses*/}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('responses_label')}</Title>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{answers.length}</Button>
+                    </Paper>
+                  </Grid>
+
+                </Grid>
               </Grid>
 
 
