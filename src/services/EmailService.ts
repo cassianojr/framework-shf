@@ -5,13 +5,13 @@ const startSurveyEmailTemplate = (ecosystemName: string, ecosystemId: string, la
   const messageText: Record<string, { greeting: string, surveyMessage: string, linkText: string, endText: string }> = {
     pt_br: {
       greeting: 'Olá!',
-      surveyMessage: `Uma pesquisa para o ecossistema ${ecosystemName} começou!`,
+      surveyMessage: `Uma rodada de pesquisa para o ecossistema ${ecosystemName} começou!`,
       linkText: 'clique aqui',
       endText: 'para responder a pesquisa.',
     },
     en: {
       greeting: 'Hi there!',
-      surveyMessage: `A survey for the ecosystem ${ecosystemName} has started!`,
+      surveyMessage: `A survey round for the ecosystem ${ecosystemName} has started!`,
       linkText: 'here',
       endText: 'to answer the survey.',
     }
