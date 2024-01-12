@@ -1,7 +1,7 @@
 import React from 'react'
 import { Ecosystem } from '../../types/Ecosystem.type';
 import { Modal } from '../Modal';
-import { Button, Divider, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Slider, TextField, Typography } from '@mui/material';
+import { Button, Divider, FormControl, FormLabel, Grid, Slider, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import EcosystemService from '../../services/EcosystemService';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ export default function NewProjectModal({ user, setState, state }: NewProjectMod
   const navigate = useNavigate();
   const { t } = useTranslation('dashboard');
 
-  const [timeWindow, setTimeWindow] = React.useState('1');
+  const [timeWindow, setTimeWindow] = React.useState(1);
   const [amountRounds, setAmountRounds] = React.useState(3);
 
   const handleAddEcosSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,17 +74,25 @@ export default function NewProjectModal({ user, setState, state }: NewProjectMod
               <FormControl>
                 <Typography id="time-window-label-1" sx={{ color: 'black', mt: 2 }}>{t('modal_text.time_window_expl')}</Typography>
                 <Typography id="time-window-label" sx={{ color: 'black', mt: 2 }}>{t('modal_text.time_window_label')}</Typography>
-                <RadioGroup
-                  row
-                  aria-labelledby="time-window-label"
-                  name="time_window"
-                  value={timeWindow}
-                  onChange={(e) => setTimeWindow(e.target.value)}
-                >
-                  <FormControlLabel value="1" control={<Radio />} label={t('modal_text.time_one_week')} />
-                  <FormControlLabel value="2" control={<Radio />} label={t('modal_text.time_two_weeks')} />
-                  <FormControlLabel value="3" control={<Radio />} label={t('modal_text.time_three_weeks')} />
-                </RadioGroup>
+                <Grid container spacing={2} alignItems={'center'} sx={{ width: 300, m: 'auto' }}>
+                  <Grid item xs={6}>
+                    <Slider
+                      aria-label={t('modal_text.time_window_label')}
+                      defaultValue={3}
+                      valueLabelDisplay="auto"
+                      onChange={(e, newValue) => setTimeWindow(newValue as number)}
+                      value={timeWindow}
+                      step={1}
+                      marks
+                      min={1}
+                      max={3}
+                      name="time_window"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography>{timeWindow} {t('modal_text.time_week')}{(timeWindow > 1)? 's': ''}</Typography>
+                  </Grid>
+                </Grid>
               </FormControl>
 
               <Divider sx={{ marginTop: '1%' }} >{t('modal_text.amount_rounds_separator')}</Divider>
