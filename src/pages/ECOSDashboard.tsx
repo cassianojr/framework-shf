@@ -229,7 +229,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('time_window')}</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} {t('time_window_unit')}</Button>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window>1) ? 's': ''}</Button>
                     </Paper>
                   </Grid>
 
@@ -238,7 +238,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('amout_of_rounds')}</Title>
-                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}</Button>
+                      <Button variant='contained' sx={{cursor: 'default', p: 1.4}}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}{(ecos.amount_rounds>1)?'s':''}</Button>
                     </Paper>
                   </Grid>
 
