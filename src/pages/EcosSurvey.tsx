@@ -10,7 +10,9 @@ import { FirebaseService } from "../services/FirebaseService";
 import { Framework } from "../types/Framework.type";
 import { Modal } from "../components/Modal";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import EcosystemService from "../services/EcosystemService";
 
 interface SelectItemsProps {
   id: number,
@@ -29,9 +31,8 @@ interface ItemType {
   },
   descriptions: {
     [key: string]: string
-  },
-  liked: boolean,
-  disliked: boolean,
+  }
+  ratio: number,
   votes?: number
 }
 export default function EcosSurvey() {
@@ -43,6 +44,8 @@ export default function EcosSurvey() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
+
+  const { t } = useTranslation('ecos_survey');
 
   const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -63,11 +66,30 @@ export default function EcosSurvey() {
   const strategiesRef = React.useRef<ItemType[]>([]);
   const changeStrategiesRef = (items: ItemType[]) => { strategiesRef.current = items };
 
+  const ecosId = useParams().ecosId;
+
   React.useEffect(() => {
     if (loading) return;
 
+
+
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
+    const getEcosData = async () => {
+      if(!ecosId) return;
+      const ecosData = await EcosystemService.getEcosystem(ecosId);
+      if(ecosData.status !== "waiting-for-answers"){
+        throw new Error("Ecosystem is not waiting for answers");
+      }
+      return ecosData;
+    }
+
+    getEcosData().then((ecosData) => console.log(ecosData)).catch(()=>{
+      alert("Ecosystem is not waiting for answers");
+      navigate('/dashboard');
+      return;
+    });
+    
     const handleFrameworkItemsRef = (frameworkItem: Framework) => {
       return frameworkItem.items.map((item) => {
         return {
@@ -75,13 +97,12 @@ export default function EcosSurvey() {
           ids: item.ids,
           names: item.names,
           descriptions: item.descriptions,
-          liked: false,
-          disliked: false
+          ratio: 0,
         } as ItemType;
       });
     }
 
-    FirebaseService.getFrameworkData((data: Framework[]) => {
+    const handleFrameworkData = (data: Framework[]) => {
       const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
       const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
       const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
@@ -103,75 +124,89 @@ export default function EcosSurvey() {
       setModalContent([
         {
           id: 1,
-          title: "Quais dos Fatores Sociais e Humanos abaixo você observa em sua organização?",
+          title: t('fsh_affirmative'),
           items: shfRef,
           changeItems: changeShfRef
         },
         {
           id: 2,
-          title: "Quais das Características Contextuais você observa em sua organização?",
+          title: t('cc_affirmative'),
           items: contextualCharacteristicsRef,
           changeItems: changeContextualCharacteristicsRef
         },
         {
           id: 3,
-          title: "Quais Barreiras para a Melhoria dos FSH você enfrenta em sua organização?",
+          title: t('barriers_affirmative'),
           items: barriersToImprovingRef,
           changeItems: changeBarriersToImprovingRef
         },
         {
           id: 4,
-          title: "Quais Estratégias você utiliza para lidar com as barreiras?",
+          title: t('strategies_affirmative'),
           items: strategiesRef,
           changeItems: changeStrategiesRef
         },
         {
           id: 5,
-          title: "Quais Mecanismos de Enfrentamento você utiliza para lidar com os FSH, quando as Estratégias não surtem efeito?",
+          title: t('coping_mec_affirmative'),
           items: copingMechanismRef,
           changeItems: changeCopingMechanismRef
         }
       ]);
 
       setAppLoading(false);
+    }
+
+    const localStorageData = localStorage.getItem('frameworkData');
+    if (localStorageData) {
+      handleFrameworkData(JSON.parse(localStorageData));
+      return;
+    }
+
+    FirebaseService.getFrameworkData((data:Framework[])=>{
+      localStorage.setItem('frameworkData', JSON.stringify(data));
+      handleFrameworkData(data);
     });
+    
 
 
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
 
   const WelcomeModal = () => {
 
-    return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!" handleClose={() => false}>
+    return (<Modal.Root state={currentModal == 0} id="0" title={t('welcome_text')} handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          Essa pesquisa visa aprimorar o entendimento dos Fatores Sociais e Humanos (FSH) no contexto do Ecossistema de Software (ECOS) e como eles podem ser utilizados para melhorar a qualidade do ECOS. Para isso, precisamos da sua ajuda para responder algumas perguntas sobre os FSH que você observa em sua organização.
+          {t('instructions.p1')}
         </Typography>
-        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          As perguntas estão divididas em cinco partes. Cada parte apresenta uma lista de FSH, Características Contextuais, Barreiras, Estratégias e Mecanismos de Enfrentamento, respectivamente. Para cada parte, você deve indicar como você percebe cada igem em sua organização. Você pode indicar quantos itens quiser.
+        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }} variant="h6">
+          {t('instructions.p2')}
         </Typography>
-        <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-          Essa pesquisa utiliza a metodologia Delphi, que consiste em uma série de rodadas de questionários. Nessa primeira rodada, você deve indicar os itens que você observa em sua organização. Nas próximas rodadas, você irá visualizar os itens indicados por outros participantes e indicar quais você também observa em sua organização. Ao final das rodadas, os itens mais indicados serão considerados como os FSH mais relevantes para o ECOS.
-        </Typography>
+        <ul>
+          <li>{t('instructions.i1')}</li>
+          <li>{t('instructions.i2')}</li>
+          <li>{t('instructions.i3')}</li>
+          <li>{t('instructions.i4')}</li>
+        </ul>
       </Modal.Text>
       <Divider />
       <Modal.Actions handleClose={() => setCurrentModal(1)}>
-        <Button onClick={() => setCurrentModal(1)} variant='contained'>Próximo</Button>
+        <Button onClick={() => setCurrentModal(1)} variant='contained'>{t('next_btn')}</Button>
       </Modal.Actions>
     </Modal.Root>);
   }
 
   const SelectItemsModal = (props: SelectItemsProps) => {
-
     return (
-      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='sm'>
-        <Modal.ListSelect items={props.items} changeItems={props.changeItems} />
+      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
+        <Modal.FrameworkDataTable items={props.items} changeItems={props.changeItems} />
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
-          <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>Anterior</Button>
-          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? 'Próximo' : 'Visualizar resposta'}</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>{t('back_btn')}</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
         </Modal.Actions>
       </Modal.Root>
     );

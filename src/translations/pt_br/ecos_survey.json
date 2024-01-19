@@ -1,17 +1,28 @@
 {
 	"back_btn": "Voltar",
-	"checkbox_tags_text": "está relacionado com...",
 	"next_btn": "Próximo",
-	"questions": {
-		"barriers": "Selecione as barreiras para melhorar o FSH em sua organização",
-		"contextual_characteristics": "Selecione as características contextuais da sua organização",
-		"copy_mechanisms": "Selecione os mecanismos de enfrentamento que você considera úteis em sua organização",
-		"correlate_barriers_with_shf": "Para cada fator selecionado, indique quais das barreiras influenciam esse fator",
-		"correlate_barriers_with_strategies": "Para cada barreira selecionada, indique quais das estratégias de melhoria influenciam esse fator",
-		"correlate_coping_mechanisms_with_barriers": "Para cada mecanismo de enfrentamento selecionado, indique quais das barreiras influenciam esse mecanismo",
-		"shf": "Selecione os fatores sociais e humanos que afetam sua organização",
-		"strategies": "Selecione as estratégias de melhoria que você considera úteis para sua organização"
-	},
-	"suggest_new_btn": "Sugerir Novo",
-  "snackbar_text": "Obrigado pela sua resposta!"
+  "snackbar_text": "Obrigado pela sua resposta!",
+  "welcome_text": "Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!",
+  "fsh_affirmative": "Os fatores sociais e humanos abaixo listados  influenciam a gerência de requisitos em ecossistemas de software.",
+  "cc_affirmative": "As características contextuais da gerência de requisitos em ecossistemas de software abaixo listadas têm um impacto na importância de considerar os fatores sociais e humanos.",
+  "barriers_affirmative": "As barreiras listadas abaixo impedem a melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de software.",
+  "strategies_affirmative": "As estratégias de melhorias abaixo listadas podem ser utilizadas para superar as barreiras e melhorar os fatores sociais e humanos.",
+  "coping_mec_affirmative": "Os mecanismos de enfrentamento listados abaixo podem ser utilizados quando as estratégias de melhoria não funcionam.",
+  "instructions": {
+    "p1": "Os componentes e itens aqui apresentados representam a visão de um framework conceitual de ação para entender e melhorar fatores sociais e humanos que influenciam a gerência de requisitos em ecossistemas de software. Identificou-se esses componentes e seus itens em um estudo de rapid review sobre fatores sociais e humanos na engenharia de requisitos em ecossistemas de software (Citação da rapid review) e em um estudo de campo sobre fatores sociais e humanos na gerência de requisitos em ecossistemas de software (Citação do estudo de campo). Cada um dos componentes e itens é acompanhado de sua definição derivados de estudos relacionados a fatores sociais e humanos na gerência de requisitos em ecossistemas de software.",
+    "p2": " Instruções para análise dos componentes e seus itens:",
+    "i1": "Leia a definição dos componentes e seus respectivos itens;",
+    "i2": "Analise cuidadosamente cada afirmação associada aos componentes e itens;",
+    "i3": "Responda de acordo com a realidade da sua organização (ecossistema de software);",
+    "i4": "Marque sua resposta entre as opções: (“Concordo totalmente”, “Concordo”, “Não concordo e nem discordo”, “Discordo” ou “Discordo totalmente”)."
+  },
+  "survey_options":{
+    "strongly_agree": "Concordo totalmente",
+    "agree": "Concordo",
+    "neither": "Não concordo e nem discordo",
+    "disagree": "Discordo",
+    "strongly_disagree": "Discordo totalmente"
+  },
+  "item_name": "Nome",
+  "view_answer_btn": "Visualizar resposta"
 }
