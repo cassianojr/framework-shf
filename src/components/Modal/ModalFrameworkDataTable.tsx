@@ -1,10 +1,9 @@
 import { InfoRounded } from "@mui/icons-material";
-import { Divider, Radio } from "@mui/material";
+import { IconButton, Radio, TextField, Tooltip } from "@mui/material";
 import i18next from "i18next";
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRenderEditCellParams } from '@mui/x-data-grid';
 
-import { Modal } from ".";
 
 interface ModalProps {
   items: React.MutableRefObject<ItemType[]>,
@@ -28,34 +27,8 @@ interface ItemType {
 }
 
 
-export function ModalFrameworkDataTable({ items, showVotes, changeItems }: ModalProps) {
+export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   const [listItems, setListItems] = React.useState(items.current);
-
-  const [descriptionModalState, setDescriptionModalState] = React.useState(false);
-  const [descriptionModalContent, setDescriptionModalContent] = React.useState({
-    id: '',
-    title: '',
-    body: '',
-  });
-
-
-  const DescriptionModal = (
-    <Modal.Root state={descriptionModalState} handleClose={() => setDescriptionModalState(false)} id={descriptionModalContent.id} title={descriptionModalContent.title}>
-      <Divider />
-      <Modal.Text content={descriptionModalContent.body} />
-      <Modal.Actions handleClose={() => setDescriptionModalState(false)} />
-    </Modal.Root>
-  );
-
-  const handleItemClick = (id: string, name: string, description: string) => {
-    setDescriptionModalContent({
-      id,
-      title: name,
-      body: description,
-    });
-
-    setDescriptionModalState(true);
-  }
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const newItems = [...listItems];
@@ -75,23 +48,43 @@ export function ModalFrameworkDataTable({ items, showVotes, changeItems }: Modal
     />
   )
 
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
-    { field: 'name', headerName: 'Name', width: 320, sortable: false, resizable: false },
+    {
+      field: 'name', headerName: 'Name', width: 330, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => (
+        <TextField
+          InputProps={{
+            disableUnderline: true,
+            startAdornment: (
+              <Tooltip arrow title={<p style={{fontSize: '1rem'}}>{listItems.find((item)=>item.ids[i18next.language] === params.id)?.descriptions[i18next.language]}</p>  } >
+                <IconButton>
+                  <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
+                </IconButton>
+              </Tooltip>)
+          }}
+          multiline
+          value={` ${listItems.find((item) => item.ids[i18next.language] === params.id)?.names[i18next.language]} `
+          }
+          variant="standard"
+          sx={{ width: '100%', background: 'white' }}
+        />
+      )
+    },
     {
       field: 'fully-disagree', headerName: 'Fully disagree', width: 120, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
     },
     {
-      field: 'disagree', headerName: 'Disagree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'disagree', headerName: 'Disagree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(2, params)
     },
     {
-      field: 'neutral', headerName: 'Neutral', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'neutral', headerName: 'Neutral', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(3, params)
     },
     {
-      field: 'agree', headerName: 'Agree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'agree', headerName: 'Agree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(4, params)
     },
     {
-      field: 'fully-agree', headerName: 'Fully agree', width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'fully-agree', headerName: 'Fully agree', width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(5, params)
     }
   ]
 
@@ -104,13 +97,11 @@ export function ModalFrameworkDataTable({ items, showVotes, changeItems }: Modal
 
   return (
     <>
-      {DescriptionModal}
       <DataGrid
         rows={rows}
         columns={columns}
         disableRowSelectionOnClick
         disableColumnMenu
-        density="compact"
         hideFooterPagination
         hideFooter
       />
