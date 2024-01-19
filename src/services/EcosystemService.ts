@@ -22,6 +22,7 @@ export default class EcosystemService {
       responses: 0,
       time_window,
       amount_rounds,
+      current_round: 1,
       status: 'not-started',
     }).then((docRef) => {
       successCallback(docRef);

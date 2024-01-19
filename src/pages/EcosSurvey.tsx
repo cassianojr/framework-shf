@@ -29,9 +29,8 @@ interface ItemType {
   },
   descriptions: {
     [key: string]: string
-  },
-  liked: boolean,
-  disliked: boolean,
+  }
+  ratio: number,
   votes?: number
 }
 export default function EcosSurvey() {
@@ -75,13 +74,13 @@ export default function EcosSurvey() {
           ids: item.ids,
           names: item.names,
           descriptions: item.descriptions,
-          liked: false,
-          disliked: false
+          ratio: 0,
         } as ItemType;
       });
     }
 
-    FirebaseService.getFrameworkData((data: Framework[]) => {
+
+    const handleFrameworkData = (data: Framework[]) => {
       const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
       const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
       const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
@@ -103,37 +102,51 @@ export default function EcosSurvey() {
       setModalContent([
         {
           id: 1,
-          title: "Quais dos Fatores Sociais e Humanos abaixo você observa em sua organização?",
+          title: "Os fatores sociais e humanos abaixo listados  influenciam a gerência de requisitos em ecossistemas de software.",
           items: shfRef,
           changeItems: changeShfRef
         },
         {
           id: 2,
-          title: "Quais das Características Contextuais você observa em sua organização?",
+          title: "As características contextuais da gerência de requisitos em ecossistemas de software abaixo listadas têm um impacto na importância de considerar os fatores sociais e humanos.",
           items: contextualCharacteristicsRef,
           changeItems: changeContextualCharacteristicsRef
         },
         {
           id: 3,
-          title: "Quais Barreiras para a Melhoria dos FSH você enfrenta em sua organização?",
+          title: "As barreiras listadas abaixo impedem a melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de software.",
           items: barriersToImprovingRef,
           changeItems: changeBarriersToImprovingRef
         },
         {
           id: 4,
-          title: "Quais Estratégias você utiliza para lidar com as barreiras?",
+          title: "As estratégias de melhorias abaixo listadas podem ser utilizadas para superar as barreiras e melhorar os fatores sociais e humanos ",
           items: strategiesRef,
           changeItems: changeStrategiesRef
         },
         {
           id: 5,
-          title: "Quais Mecanismos de Enfrentamento você utiliza para lidar com os FSH, quando as Estratégias não surtem efeito?",
+          title: "Os mecanismos de enfrentamento listados abaixo podem ser utilizados quando as estratégias de melhoria não funcionam.",
           items: copingMechanismRef,
           changeItems: changeCopingMechanismRef
         }
       ]);
 
       setAppLoading(false);
+    }
+
+
+    const localStorageData = localStorage.getItem('frameworkData');
+    if (localStorageData) {
+      console.log('Using local storage data');
+      
+      handleFrameworkData(JSON.parse(localStorageData));
+      return;
+    }
+
+    FirebaseService.getFrameworkData((data:Framework[])=>{
+      localStorage.setItem('frameworkData', JSON.stringify(data));
+      handleFrameworkData(data);
     });
 
 
@@ -146,14 +159,17 @@ export default function EcosSurvey() {
     return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!" handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          Essa pesquisa visa aprimorar o entendimento dos Fatores Sociais e Humanos (FSH) no contexto do Ecossistema de Software (ECOS) e como eles podem ser utilizados para melhorar a qualidade do ECOS. Para isso, precisamos da sua ajuda para responder algumas perguntas sobre os FSH que você observa em sua organização.
+          Os componentes e itens aqui apresentados representam a visão de um framework conceitual de ação para entender e melhorar fatores sociais e humanos que influenciam a gerência de requisitos em ecossistemas de software. Identificou-se esses componentes e seus itens em um estudo de rapid review sobre fatores sociais e humanos na engenharia de requisitos em ecossistemas de software (Citação da rapid review) e em um estudo de campo sobre fatores sociais e humanos na gerência de requisitos em ecossistemas de software (Citação do estudo de campo). Cada um dos componentes e itens é acompanhado de sua definição derivados de estudos relacionados a fatores sociais e humanos na gerência de requisitos em ecossistemas de software.
         </Typography>
-        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          As perguntas estão divididas em cinco partes. Cada parte apresenta uma lista de FSH, Características Contextuais, Barreiras, Estratégias e Mecanismos de Enfrentamento, respectivamente. Para cada parte, você deve indicar como você percebe cada igem em sua organização. Você pode indicar quantos itens quiser.
+        <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }} variant="h6">
+          Instruções para análise dos componentes e seus itens:
         </Typography>
-        <Typography sx={{ textAlign: 'justify', textIndent: '1rem' }}>
-          Essa pesquisa utiliza a metodologia Delphi, que consiste em uma série de rodadas de questionários. Nessa primeira rodada, você deve indicar os itens que você observa em sua organização. Nas próximas rodadas, você irá visualizar os itens indicados por outros participantes e indicar quais você também observa em sua organização. Ao final das rodadas, os itens mais indicados serão considerados como os FSH mais relevantes para o ECOS.
-        </Typography>
+        <ul>
+          <li>Leia a definição dos componentes e seus respectivos itens; </li>
+          <li>Analise cuidadosamente cada afirmação associada aos componentes e itens;</li>
+          <li>Responda de acordo com a realidade da sua organização (ecossistema de software);  </li>
+          <li>Marque sua resposta entre as opções: (“Concordo totalmente”, “Concordo”, “Não concordo e nem discordo”, “Discordo” ou “Discordo totalmente”).</li>
+        </ul>
       </Modal.Text>
       <Divider />
       <Modal.Actions handleClose={() => setCurrentModal(1)}>
@@ -163,10 +179,9 @@ export default function EcosSurvey() {
   }
 
   const SelectItemsModal = (props: SelectItemsProps) => {
-
     return (
-      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='sm'>
-        <Modal.ListSelect items={props.items} changeItems={props.changeItems} />
+      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
+        <Modal.FrameworkDataTable items={props.items} changeItems={props.changeItems} />
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>

@@ -2,7 +2,7 @@ import { ModalActions } from "./ModalActions";
 import { ModalEvaluateAction } from "./ModalEvaluateAction";
 import { ModalForm } from "./ModalForm";
 import { ModalList } from "./ModalList";
-import { ModalListSelect } from "./ModalListSelect";
+import { ModalFrameworkDataTable } from "./ModalFrameworkDataTable";
 import { ModalRoot } from "./ModalRoot";
 import { ModalText } from "./ModalText";
 
@@ -13,5 +13,5 @@ export const Modal = {
   Text: ModalText,
   Actions: ModalActions,
   EvaluateAction: ModalEvaluateAction,
-  ListSelect: ModalListSelect
+  FrameworkDataTable: ModalFrameworkDataTable
 }
