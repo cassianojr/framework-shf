@@ -10,8 +10,9 @@ import { FirebaseService } from "../services/FirebaseService";
 import { Framework } from "../types/Framework.type";
 import { Modal } from "../components/Modal";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import EcosystemService from "../services/EcosystemService";
 
 interface SelectItemsProps {
   id: number,
@@ -65,11 +66,30 @@ export default function EcosSurvey() {
   const strategiesRef = React.useRef<ItemType[]>([]);
   const changeStrategiesRef = (items: ItemType[]) => { strategiesRef.current = items };
 
+  const ecosId = useParams().ecosId;
+
   React.useEffect(() => {
     if (loading) return;
 
+
+
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
+    const getEcosData = async () => {
+      if(!ecosId) return;
+      const ecosData = await EcosystemService.getEcosystem(ecosId);
+      if(ecosData.status !== "waiting-for-answers"){
+        throw new Error("Ecosystem is not waiting for answers");
+      }
+      return ecosData;
+    }
+
+    getEcosData().then((ecosData) => console.log(ecosData)).catch(()=>{
+      alert("Ecosystem is not waiting for answers");
+      navigate('/dashboard');
+      return;
+    });
+    
     const handleFrameworkItemsRef = (frameworkItem: Framework) => {
       return frameworkItem.items.map((item) => {
         return {
@@ -81,7 +101,6 @@ export default function EcosSurvey() {
         } as ItemType;
       });
     }
-
 
     const handleFrameworkData = (data: Framework[]) => {
       const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
@@ -138,11 +157,8 @@ export default function EcosSurvey() {
       setAppLoading(false);
     }
 
-
     const localStorageData = localStorage.getItem('frameworkData');
     if (localStorageData) {
-      console.log('Using local storage data');
-      
       handleFrameworkData(JSON.parse(localStorageData));
       return;
     }
@@ -151,9 +167,10 @@ export default function EcosSurvey() {
       localStorage.setItem('frameworkData', JSON.stringify(data));
       handleFrameworkData(data);
     });
+    
 
 
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
 
