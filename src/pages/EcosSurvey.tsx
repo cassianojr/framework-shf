@@ -11,6 +11,7 @@ import { Framework } from "../types/Framework.type";
 import { Modal } from "../components/Modal";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface SelectItemsProps {
   id: number,
@@ -42,6 +43,8 @@ export default function EcosSurvey() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
+
+  const { t } = useTranslation('ecos_survey');
 
   const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -102,31 +105,31 @@ export default function EcosSurvey() {
       setModalContent([
         {
           id: 1,
-          title: "Os fatores sociais e humanos abaixo listados  influenciam a gerência de requisitos em ecossistemas de software.",
+          title: t('fsh_affirmative'),
           items: shfRef,
           changeItems: changeShfRef
         },
         {
           id: 2,
-          title: "As características contextuais da gerência de requisitos em ecossistemas de software abaixo listadas têm um impacto na importância de considerar os fatores sociais e humanos.",
+          title: t('cc_affirmative'),
           items: contextualCharacteristicsRef,
           changeItems: changeContextualCharacteristicsRef
         },
         {
           id: 3,
-          title: "As barreiras listadas abaixo impedem a melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de software.",
+          title: t('barriers_affirmative'),
           items: barriersToImprovingRef,
           changeItems: changeBarriersToImprovingRef
         },
         {
           id: 4,
-          title: "As estratégias de melhorias abaixo listadas podem ser utilizadas para superar as barreiras e melhorar os fatores sociais e humanos ",
+          title: t('strategies_affirmative'),
           items: strategiesRef,
           changeItems: changeStrategiesRef
         },
         {
           id: 5,
-          title: "Os mecanismos de enfrentamento listados abaixo podem ser utilizados quando as estratégias de melhoria não funcionam.",
+          title: t('coping_mec_affirmative'),
           items: copingMechanismRef,
           changeItems: changeCopingMechanismRef
         }
@@ -150,30 +153,30 @@ export default function EcosSurvey() {
     });
 
 
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
 
   const WelcomeModal = () => {
 
-    return (<Modal.Root state={currentModal == 0} id="0" title="Seja bem vindo a Pesquisa sobre Fatores Sociais e Humanos em Ecossistemas de Software!" handleClose={() => false}>
+    return (<Modal.Root state={currentModal == 0} id="0" title={t('welcome_text')} handleClose={() => false}>
       <Modal.Text>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
-          Os componentes e itens aqui apresentados representam a visão de um framework conceitual de ação para entender e melhorar fatores sociais e humanos que influenciam a gerência de requisitos em ecossistemas de software. Identificou-se esses componentes e seus itens em um estudo de rapid review sobre fatores sociais e humanos na engenharia de requisitos em ecossistemas de software (Citação da rapid review) e em um estudo de campo sobre fatores sociais e humanos na gerência de requisitos em ecossistemas de software (Citação do estudo de campo). Cada um dos componentes e itens é acompanhado de sua definição derivados de estudos relacionados a fatores sociais e humanos na gerência de requisitos em ecossistemas de software.
+          {t('instructions.p1')}
         </Typography>
         <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }} variant="h6">
-          Instruções para análise dos componentes e seus itens:
+          {t('instructions.p2')}
         </Typography>
         <ul>
-          <li>Leia a definição dos componentes e seus respectivos itens; </li>
-          <li>Analise cuidadosamente cada afirmação associada aos componentes e itens;</li>
-          <li>Responda de acordo com a realidade da sua organização (ecossistema de software);  </li>
-          <li>Marque sua resposta entre as opções: (“Concordo totalmente”, “Concordo”, “Não concordo e nem discordo”, “Discordo” ou “Discordo totalmente”).</li>
+          <li>{t('instructions.i1')}</li>
+          <li>{t('instructions.i2')}</li>
+          <li>{t('instructions.i3')}</li>
+          <li>{t('instructions.i4')}</li>
         </ul>
       </Modal.Text>
       <Divider />
       <Modal.Actions handleClose={() => setCurrentModal(1)}>
-        <Button onClick={() => setCurrentModal(1)} variant='contained'>Próximo</Button>
+        <Button onClick={() => setCurrentModal(1)} variant='contained'>{t('next_btn')}</Button>
       </Modal.Actions>
     </Modal.Root>);
   }
@@ -185,8 +188,8 @@ export default function EcosSurvey() {
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
-          <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>Anterior</Button>
-          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? 'Próximo' : 'Visualizar resposta'}</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>{t('back_btn')}</Button>
+          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
         </Modal.Actions>
       </Modal.Root>
     );

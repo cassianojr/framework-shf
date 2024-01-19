@@ -3,6 +3,7 @@ import { IconButton, Radio, TextField, Tooltip } from "@mui/material";
 import i18next from "i18next";
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRenderEditCellParams } from '@mui/x-data-grid';
+import { useTranslation } from "react-i18next";
 
 
 interface ModalProps {
@@ -30,6 +31,8 @@ interface ItemType {
 export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   const [listItems, setListItems] = React.useState(items.current);
 
+  const { t } = useTranslation('ecos_survey');
+
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const newItems = [...listItems];
     const itemIndex = newItems.findIndex((item) => item.ids[i18next.language] === id);
@@ -48,11 +51,10 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
     />
   )
 
-
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
     {
-      field: 'name', headerName: 'Name', width: 330, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => (
+      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => (
         <TextField
           InputProps={{
             disableUnderline: true,
@@ -72,19 +74,19 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
       )
     },
     {
-      field: 'fully-disagree', headerName: 'Fully disagree', width: 120, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'fully-disagree', headerName: t('survey_options.strongly_disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
     },
     {
-      field: 'disagree', headerName: 'Disagree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(2, params)
+      field: 'disagree', headerName: t('survey_options.disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(2, params)
     },
     {
-      field: 'neutral', headerName: 'Neutral', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(3, params)
+      field: 'neutral', headerName: t('survey_options.neither'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(3, params)
     },
     {
-      field: 'agree', headerName: 'Agree', width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(4, params)
+      field: 'agree', headerName: t('survey_options.agree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(4, params)
     },
     {
-      field: 'fully-agree', headerName: 'Fully agree', width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(5, params)
+      field: 'fully-agree', headerName: t('survey_options.strongly_agree'), width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(5, params)
     }
   ]
 
@@ -104,6 +106,14 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
         disableColumnMenu
         hideFooterPagination
         hideFooter
+        columnHeaderHeight={80}
+        sx={{
+          '& .MuiDataGrid-columnHeaderTitle': {
+            textOverflow: "clip",
+            whiteSpace: "break-spaces",
+            lineHeight: '1.2rem'
+        }
+        }}
       />
     </>
   )
