@@ -1,5 +1,5 @@
 import { InfoRounded } from "@mui/icons-material";
-import { IconButton, Radio, TextField, Tooltip } from "@mui/material";
+import { Radio, Tooltip, Typography } from "@mui/material";
 import i18next from "i18next";
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRenderEditCellParams } from '@mui/x-data-grid';
@@ -54,24 +54,17 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
     {
-      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => (
-        <TextField
-          InputProps={{
-            disableUnderline: true,
-            startAdornment: (
-              <Tooltip arrow title={<p style={{fontSize: '1rem'}}>{listItems.find((item)=>item.ids[i18next.language] === params.id)?.descriptions[i18next.language]}</p>  } >
-                <IconButton>
-                  <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
-                </IconButton>
-              </Tooltip>)
-          }}
-          multiline
-          value={` ${listItems.find((item) => item.ids[i18next.language] === params.id)?.names[i18next.language]} `
-          }
-          variant="standard"
-          sx={{ width: '100%', background: 'white' }}
-        />
-      )
+      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => {
+        const item = listItems.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as ItemType;
+
+        return (
+          <>
+            <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
+              <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
+            </Tooltip>
+            <Typography sx={{marginLeft: '.3rem'}}>{item.names[i18next.language]}</Typography>
+          </>)
+      }
     },
     {
       field: 'fully-disagree', headerName: t('survey_options.strongly_disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
@@ -107,12 +100,13 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
         hideFooterPagination
         hideFooter
         columnHeaderHeight={80}
+        getRowHeight={() => 'auto' as const}
         sx={{
           '& .MuiDataGrid-columnHeaderTitle': {
             textOverflow: "clip",
             whiteSpace: "break-spaces",
             lineHeight: '1.2rem'
-        }
+          }
         }}
       />
     </>

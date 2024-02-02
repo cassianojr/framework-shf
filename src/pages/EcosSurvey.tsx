@@ -199,6 +199,18 @@ export default function EcosSurvey() {
   }
 
   const SelectItemsModal = (props: SelectItemsProps) => {
+
+    const handleNextBtnClick = () => {
+      if(currentModal < 5){
+        setCurrentModal((curr) => curr + 1);
+        return;
+      }
+
+      const items = props.items.current;
+      console.log(modalContent);
+      
+    }
+
     return (
       <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
         <Modal.FrameworkDataTable items={props.items} changeItems={props.changeItems} />
@@ -206,7 +218,7 @@ export default function EcosSurvey() {
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
           <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>{t('back_btn')}</Button>
-          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
+          <Button onClick={handleNextBtnClick} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
         </Modal.Actions>
       </Modal.Root>
     );
