@@ -13,12 +13,15 @@ import { AuthenticationContext, AuthenticationContextType } from "../context/aut
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import EcosystemService from "../services/EcosystemService";
+import { NewAnswers } from "../types/Answer.type";
+import { QuestionService } from "../services/QuestionService";
 
 interface SelectItemsProps {
-  id: number,
+  id: string,
   title: string,
   items: React.MutableRefObject<ItemType[]>,
   changeItems: (value: ItemType[]) => void,
+  order: number
 }
 
 interface ItemType {
@@ -44,10 +47,11 @@ export default function EcosSurvey() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
+  const [currentRound, setCurrentRound] = React.useState<number>(0);
 
   const { t } = useTranslation('ecos_survey');
 
-  const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+  const { signed, loading, getUser } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
   const navigate = useNavigate();
 
@@ -71,25 +75,17 @@ export default function EcosSurvey() {
   React.useEffect(() => {
     if (loading) return;
 
-
-
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
     const getEcosData = async () => {
-      if(!ecosId) return;
+      if (!ecosId) return;
       const ecosData = await EcosystemService.getEcosystem(ecosId);
-      if(ecosData.status !== "waiting-for-answers"){
+      if (ecosData.status !== "waiting-for-answers") {
         throw new Error("Ecosystem is not waiting for answers");
       }
       return ecosData;
     }
 
-    getEcosData().then((ecosData) => console.log(ecosData)).catch(()=>{
-      alert("Ecosystem is not waiting for answers");
-      navigate('/dashboard');
-      return;
-    });
-    
     const handleFrameworkItemsRef = (frameworkItem: Framework) => {
       return frameworkItem.items.map((item) => {
         return {
@@ -123,52 +119,65 @@ export default function EcosSurvey() {
 
       setModalContent([
         {
-          id: 1,
+          id: "social-human-factors",
           title: t('fsh_affirmative'),
           items: shfRef,
-          changeItems: changeShfRef
+          changeItems: changeShfRef,
+          order: 1
         },
         {
-          id: 2,
+          id: "coping-mechanisms",
           title: t('cc_affirmative'),
           items: contextualCharacteristicsRef,
-          changeItems: changeContextualCharacteristicsRef
+          changeItems: changeContextualCharacteristicsRef,
+          order: 2
         },
         {
-          id: 3,
+          id: "contextual-characteristics",
           title: t('barriers_affirmative'),
           items: barriersToImprovingRef,
-          changeItems: changeBarriersToImprovingRef
+          changeItems: changeBarriersToImprovingRef,
+          order: 3
         },
         {
-          id: 4,
+          id: "barriers-to-improving",
           title: t('strategies_affirmative'),
           items: strategiesRef,
-          changeItems: changeStrategiesRef
+          changeItems: changeStrategiesRef,
+          order: 4
         },
         {
-          id: 5,
+          id: "strategies",
           title: t('coping_mec_affirmative'),
           items: copingMechanismRef,
-          changeItems: changeCopingMechanismRef
+          changeItems: changeCopingMechanismRef,
+          order: 5
         }
       ]);
 
       setAppLoading(false);
     }
 
-    const localStorageData = localStorage.getItem('frameworkData');
-    if (localStorageData) {
-      handleFrameworkData(JSON.parse(localStorageData));
+    getEcosData().then((ecosData) => {
+      if(!ecosData) return;
+
+      setCurrentRound(ecosData.current_round);
+
+      const localStorageData = localStorage.getItem('frameworkData');
+      if (localStorageData) {
+        handleFrameworkData(JSON.parse(localStorageData));
+        return;
+      }
+
+      FirebaseService.getFrameworkData((data: Framework[]) => {
+        localStorage.setItem('frameworkData', JSON.stringify(data));
+        handleFrameworkData(data);
+      });
+    }).catch(() => {
+      alert("Ecosystem is not waiting for answers");
+      navigate('/dashboard');
       return;
-    }
-
-    FirebaseService.getFrameworkData((data:Framework[])=>{
-      localStorage.setItem('frameworkData', JSON.stringify(data));
-      handleFrameworkData(data);
     });
-    
-
 
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId]);
 
@@ -201,18 +210,40 @@ export default function EcosSurvey() {
   const SelectItemsModal = (props: SelectItemsProps) => {
 
     const handleNextBtnClick = () => {
-      if(currentModal < 5){
+      if (currentModal < 5) {
         setCurrentModal((curr) => curr + 1);
         return;
       }
 
-      const items = props.items.current;
-      console.log(modalContent);
-      
+      const answers = {
+        user_id: getUser().uid,
+        user_email: getUser().email,
+        ecossystem_id: ecosId,
+        round: currentRound,
+        answers: modalContent.map((modalContentItem) => {
+          return {
+            framework_item: modalContentItem.id,
+            question: modalContentItem.title,
+            items: modalContentItem.items.current.map((item) => {
+              return {
+                id: item.id,
+                ids: item.ids,
+                names: item.names,
+                answer: item.ratio
+              }
+            })
+          }
+        })
+      } as NewAnswers;
+
+      QuestionService.saveAnswers(answers, (answerId) =>{
+        console.log(answerId);
+      }, ()=>console.log('error'));
+
     }
 
     return (
-      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
+      <Modal.Root state={currentModal == props.order} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
         <Modal.FrameworkDataTable items={props.items} changeItems={props.changeItems} />
 
         <Divider />
@@ -228,7 +259,7 @@ export default function EcosSurvey() {
     <>
 
       {!appLoading && <WelcomeModal />}
-      {!appLoading && modalContent.map((item) => <SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id} />)}
+      {!appLoading && modalContent.map((item) => <SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id} order={item.order} />)}
 
       <Box sx={{ backgroundColor: '#ebebeb' }}>
         <Navbar />

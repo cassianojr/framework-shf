@@ -2,7 +2,7 @@ import { DocumentData, DocumentReference, addDoc, collection, doc, onSnapshot, q
 import { Question, QuestionListItems } from "../types/Question.type";
 import { db } from "./firebaseConfig";
 import { FirebaseService } from "./FirebaseService";
-import { Answers } from "../types/Answer.type";
+import { NewAnswers } from "../types/Answer.type";
 
 export class QuestionService {
 
@@ -20,7 +20,7 @@ export class QuestionService {
     });
   }
 
-  public static saveAnswers(answers: Answers, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
+  public static saveAnswers(answers: NewAnswers, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
 
     addDoc(collection(db, "answers"), answers).then((docRef) => {
       successCallback(docRef);
@@ -31,7 +31,7 @@ export class QuestionService {
 
   }
 
-  public static getAnswers(answerId: string): Promise<Answers> {
+  public static getAnswers(answerId: string): Promise<NewAnswers> {
     return new Promise((resolve, reject) => {
       const answerRef = doc(db, "answers", answerId);
       const unsubscribe = onSnapshot(answerRef, (snapshot) => {
@@ -39,7 +39,7 @@ export class QuestionService {
           unsubscribe();
           reject("No such document!");
         } else {
-          const data = snapshot.data() as Answers;
+          const data = snapshot.data() as NewAnswers;
           resolve(data);
         }
       }, (error) => {
@@ -50,7 +50,7 @@ export class QuestionService {
     });
   }
 
-  public static getEcosAnswers(ecosId: string): Promise<Answers[]> {
+  public static getEcosAnswers(ecosId: string): Promise<NewAnswers[]> {
     return new Promise((resolve, reject) => {
       const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));
       const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -61,7 +61,7 @@ export class QuestionService {
           const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
-          })) as Answers[];
+          })) as NewAnswers[];
           resolve(data);
         }
       }, (error) => {
