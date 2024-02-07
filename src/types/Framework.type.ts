@@ -13,6 +13,7 @@ interface FrameworkItem {
   },
   rating?: number,
   votes?: number,
+  ratio?: number,
 }
 
 interface Framework {

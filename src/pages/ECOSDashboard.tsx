@@ -119,7 +119,8 @@ export default function ECOSDashboard() {
 
       if (ecosData.id === undefined) return;
       try {
-        const answersData = await QuestionService.getEcosAnswers(ecosData.id);
+        // const answersData = await QuestionService.getEcosAnswers(ecosData.id);
+        const answersData = {} as Answers[];
         setAnswers(answersData);
 
         FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data));

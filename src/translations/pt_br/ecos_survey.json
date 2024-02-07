@@ -24,5 +24,7 @@
     "strongly_disagree": "Discordo totalmente"
   },
   "item_name": "Nome",
-  "view_answer_btn": "Visualizar resposta"
+  "view_answer_btn": "Visualizar resposta",
+  "answers_saved": "Respostas enviadas com sucesso!",
+  "answers_not_saved": "Erro ao enviar respostas!"
 }

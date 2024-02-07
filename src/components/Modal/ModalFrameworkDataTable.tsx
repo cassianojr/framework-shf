@@ -4,29 +4,14 @@ import i18next from "i18next";
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRenderEditCellParams } from '@mui/x-data-grid';
 import { useTranslation } from "react-i18next";
+import { FrameworkItem } from "../../types/Framework.type";
 
 
 interface ModalProps {
-  items: React.MutableRefObject<ItemType[]>,
-  changeItems: (value: ItemType[]) => void,
+  items: React.MutableRefObject<FrameworkItem[]>,
+  changeItems: (value: FrameworkItem[]) => void,
   showVotes?: boolean
 }
-
-interface ItemType {
-  id: string,
-  ids: {
-    [key: string]: string
-  },
-  names: {
-    [key: string]: string
-  },
-  descriptions: {
-    [key: string]: string
-  },
-  ratio: number,
-  votes?: number
-}
-
 
 export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   const [listItems, setListItems] = React.useState(items.current);
@@ -42,7 +27,7 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   }
 
 
-  const createRadioButton = (value: number, params: GridRenderEditCellParams<ItemType, number>) => (
+  const createRadioButton = (value: number, params: GridRenderEditCellParams<FrameworkItem, number>) => (
     <Radio
       checked={listItems.find((item) => item.ids[i18next.language] == params.id)?.ratio == value}
       name="item-ratio"
@@ -54,8 +39,8 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
     {
-      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<ItemType, number>) => {
-        const item = listItems.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as ItemType;
+      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
+        const item = listItems.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
 
         return (
           <>
@@ -67,19 +52,19 @@ export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
       }
     },
     {
-      field: 'fully-disagree', headerName: t('survey_options.strongly_disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(1, params)
+      field: 'fully-disagree', headerName: t('survey_options.strongly_disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(1, params)
     },
     {
-      field: 'disagree', headerName: t('survey_options.disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(2, params)
+      field: 'disagree', headerName: t('survey_options.disagree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(2, params)
     },
     {
-      field: 'neutral', headerName: t('survey_options.neither'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(3, params)
+      field: 'neutral', headerName: t('survey_options.neither'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(3, params)
     },
     {
-      field: 'agree', headerName: t('survey_options.agree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(4, params)
+      field: 'agree', headerName: t('survey_options.agree'), width: 90, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(4, params)
     },
     {
-      field: 'fully-agree', headerName: t('survey_options.strongly_agree'), width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<ItemType, number>) => createRadioButton(5, params)
+      field: 'fully-agree', headerName: t('survey_options.strongly_agree'), width: 100, sortable: false, resizable: false, renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(5, params)
     }
   ]
 

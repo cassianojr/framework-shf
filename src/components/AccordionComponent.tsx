@@ -15,7 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { Modal } from './Modal';
 import SnackBarComponent from './SnackBarComponent';
-import { FrameworkItem } from '../types/Framework.type';
+import { Framework, FrameworkItem } from '../types/Framework.type';
 
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
@@ -61,36 +61,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 interface AccordionComponentProps {
-  data: {
-    id: string,
-    label: string,
-    labels: {
-      [key: string]: string
-    },
-    headerColor: string,
-    description: string,
-    descriptions: {
-      [key: string]: string
-    },
-    items: {
-      id: string,
-      name: string,
-      description: string,
-      ids: {
-        [key: string]: string
-      },
-      names: {
-        [key: string]: string
-      },
-      descriptions: {
-        [key: string]: string
-      },
-    }[]
-  },
+  data: Framework,
   showSuggestions: boolean,
   children?: JSX.Element,
   showVotes?: boolean
-
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
