@@ -11,7 +11,7 @@ import { AuthenticationContext, AuthenticationContextType } from '../context/aut
 import React from "react";
 
 import FrameworkComponent from '../components/FrameworkComponent';
-import { Answers } from '../types/Answer.type';
+import { NewAnswers } from '../types/Answer.type';
 import { QuestionService } from '../services/QuestionService';
 import EcosystemService from '../services/EcosystemService';
 import Title from '../components/Dashboard/Title';
@@ -24,7 +24,7 @@ export default function EcosFramework() {
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
 
-  const [answers, setAnswers] = React.useState({} as Answers);
+  const [answers, setAnswers] = React.useState({} as NewAnswers);
   const [ecosName, setEcosName] = React.useState('');
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
