@@ -24,5 +24,7 @@
     "strongly_disagree": "Strongly Disagree"
   },
   "item_name": "Name",
-  "view_answer_btn": "View answer"
+  "view_answer_btn": "View answer",
+  "answers_saved": "Answers saved successfully!",
+  "answers_not_saved": "An error occurred while saving your answers. Please try again."
 }

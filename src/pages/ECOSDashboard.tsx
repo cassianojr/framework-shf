@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import {  Button, Link, Typography, } from '@mui/material';
+import { Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
 import EcosystemService from '../services/EcosystemService';
@@ -17,7 +17,7 @@ import { Ecosystem } from '../types/Ecosystem.type';
 import { useTranslation } from "react-i18next";
 import Title from '../components/Dashboard/Title';
 import { QuestionService } from '../services/QuestionService';
-import { Answer, Answers } from '../types/Answer.type';
+import { NewAnswer, NewAnswers } from '../types/Answer.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
 import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
@@ -33,7 +33,7 @@ export default function ECOSDashboard() {
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
   const [ecos, setEcos] = React.useState({} as Ecosystem);
-  const [answers, setAnswers] = React.useState([] as Answers[]);
+  const [answers, setAnswers] = React.useState([] as NewAnswers[]);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -68,19 +68,19 @@ export default function ECOSDashboard() {
     if (!signed) navigate('/sign-in');
     if (signed) setAppLoading(false);
 
-    const countAnswers = (answer: Answer, itemToCount: Framework) => {
-      if (answer.questionName === itemToCount.id) {
-        answer.selectedItems?.forEach((item) => {
+    const countAnswers = (answer: NewAnswer, frameworkComponentToCount: Framework) => {
 
-          itemToCount.items?.forEach((itemToCount) => {
-            if (item.id == itemToCount.id) {
-              itemToCount.votes = itemToCount.votes ? itemToCount.votes + 1 : 1;
-            } else {
-              itemToCount.votes = itemToCount.votes ? itemToCount.votes : 0;
-            }
-          });
+      answer.items.forEach((itemAnswer) => {
+
+        frameworkComponentToCount.items?.forEach((itemToCount) => {      
+
+          if (itemAnswer.id == itemToCount.id) {
+
+            if (itemAnswer.answer === 1 || itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
+            if (itemAnswer.answer === 4 || itemAnswer.answer === 5) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+          }
         });
-      }
+      });
     }
 
     const setFrameworkData = (data: Framework[]) => {
@@ -100,15 +100,24 @@ export default function ECOSDashboard() {
       setStrategies(strategies);
     }
 
-    const handleFrameworkData = (answersData: Answers[], data: Framework[]) => {
-      answersData.forEach((answers) => {
-        answers.answers.forEach((answer) => {
-          data.forEach((itemToCount) => {
-            countAnswers(answer, itemToCount);
-            if (itemToCount.id !== "social-human-factors") itemToCount.items?.sort((a, b) => (a.votes ?? 0) < (b.votes ?? 0) ? 1 : -1);
+    const handleFrameworkData = (answersData: NewAnswers[], data: Framework[]) => {
+
+      const rounds = answersData.map((answer) => answer.round);
+      const uniqueRounds = [...new Set(rounds)];
+
+      uniqueRounds.forEach((round) => {
+        const answersPerRound = answersData.filter((answer) => answer.round === round);
+
+        answersPerRound.forEach((answer) => {
+          answer.answers.forEach((item) => {
+
+            data.forEach((itemToCount) => {
+              if (item.framework_item != itemToCount.id) return;
+              countAnswers(item, itemToCount);
+            });
           });
         });
-      });
+      })
 
       setFrameworkData(data);
     }
@@ -265,24 +274,15 @@ export default function ECOSDashboard() {
               </Grid>
 
               <Grid item lg={12}>{/* Framework instance*/}
-                {/* <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                  }}
-                > */}
-                  <Title>{t('framework_results')}</Title>
-                  <div>
-                    <ResultDataDisplay frameworkComponent={socialHumanFactors} expanded={true} />
-                    <ResultDataDisplay frameworkComponent={contextualCharacteristics} />
-                    <ResultDataDisplay frameworkComponent={copingMechanisms}  />
-                    <ResultDataDisplay frameworkComponent={barriersToImproving}/>
-                    <ResultDataDisplay frameworkComponent={strategies}/>
-                    <ResultDataDisplay frameworkComponent={copingMechanisms}/>   
-                  </div>
-                {/* </Paper> */}
+                <Title>{t('framework_results')}</Title>
+                <div>
+                  <ResultDataDisplay frameworkComponent={socialHumanFactors} expanded={true} />
+                  <ResultDataDisplay frameworkComponent={contextualCharacteristics} />
+                  <ResultDataDisplay frameworkComponent={copingMechanisms} />
+                  <ResultDataDisplay frameworkComponent={barriersToImproving} />
+                  <ResultDataDisplay frameworkComponent={strategies} />
+                  <ResultDataDisplay frameworkComponent={copingMechanisms} />
+                </div>
               </Grid>
 
             </Grid>

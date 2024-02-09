@@ -19,21 +19,12 @@ interface FrameworkComponentProps {
   strategies?: Framework
 }
 
-function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
+const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
 
   const { t } = useTranslation('framework');
 
-
   const socialGroupItems = socialHumanFactors?.items?.slice(0, 17);
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
-
-  if (socialGroupItems?.[0].votes != undefined) {
-    socialGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
-  }
-
-  if (personalGroupItems?.[0].votes != undefined) {
-    personalGroupItems.sort((a, b) => (a.votes ?? 0) > (b.votes ?? 0) ? -1 : 1);
-  }
 
   const [centerModalState, setCenterModalState] = React.useState(false);
 
@@ -188,6 +179,6 @@ function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextu
     </>
 
   )
-}
+});
 
 export default FrameworkComponent

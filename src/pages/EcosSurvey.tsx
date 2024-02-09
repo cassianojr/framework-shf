@@ -7,34 +7,24 @@ import React from 'react';
 
 import FrameworkComponent from "../components/FrameworkComponent";
 import { FirebaseService } from "../services/FirebaseService";
-import { Framework } from "../types/Framework.type";
+import { Framework, FrameworkItem } from "../types/Framework.type";
 import { Modal } from "../components/Modal";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import EcosystemService from "../services/EcosystemService";
+import { NewAnswers } from "../types/Answer.type";
+import { QuestionService } from "../services/QuestionService";
+import SnackBarComponent from "../components/SnackBarComponent";
 
 interface SelectItemsProps {
-  id: number,
+  id: string,
   title: string,
-  items: React.MutableRefObject<ItemType[]>,
-  changeItems: (value: ItemType[]) => void,
+  items: React.MutableRefObject<FrameworkItem[]>,
+  changeItems: (value: FrameworkItem[]) => void,
+  order: number
 }
 
-interface ItemType {
-  id: string,
-  ids: {
-    [key: string]: string
-  },
-  names: {
-    [key: string]: string
-  },
-  descriptions: {
-    [key: string]: string
-  }
-  ratio: number,
-  votes?: number
-}
 export default function EcosSurvey() {
 
   const [appLoading, setAppLoading] = React.useState<boolean>(true);
@@ -44,52 +34,68 @@ export default function EcosSurvey() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
+  const [currentRound, setCurrentRound] = React.useState<number>(0);
+  const [answers, setAnswers] = React.useState<NewAnswers | undefined>(undefined);
+  const [feedBackSnackbarState, setFeedBackSnackbarState] = React.useState(false);
+  const [feedBackSnackBar, setFeedBackSnackBar] = React.useState({severity: "success", text: ""} as {severity: "success" | "info" | "warning" | "error", text: string} );
 
   const { t } = useTranslation('ecos_survey');
 
-  const { signed, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
+  const { signed, loading, getUser } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
   const navigate = useNavigate();
 
-  const shfRef = React.useRef<ItemType[]>([]);
-  const changeShfRef = (items: ItemType[]) => { shfRef.current = items };
+  const shfRef = React.useRef<FrameworkItem[]>([]);
+  const changeShfRef = (items: FrameworkItem[]) => { shfRef.current = items };
 
-  const copingMechanismRef = React.useRef<ItemType[]>([]);
-  const changeCopingMechanismRef = (items: ItemType[]) => { copingMechanismRef.current = items };
+  const copingMechanismRef = React.useRef<FrameworkItem[]>([]);
+  const changeCopingMechanismRef = (items: FrameworkItem[]) => { copingMechanismRef.current = items };
 
-  const contextualCharacteristicsRef = React.useRef<ItemType[]>([]);
-  const changeContextualCharacteristicsRef = (items: ItemType[]) => { contextualCharacteristicsRef.current = items };
+  const contextualCharacteristicsRef = React.useRef<FrameworkItem[]>([]);
+  const changeContextualCharacteristicsRef = (items: FrameworkItem[]) => { contextualCharacteristicsRef.current = items };
 
-  const barriersToImprovingRef = React.useRef<ItemType[]>([]);
-  const changeBarriersToImprovingRef = (items: ItemType[]) => { barriersToImprovingRef.current = items };
+  const barriersToImprovingRef = React.useRef<FrameworkItem[]>([]);
+  const changeBarriersToImprovingRef = (items: FrameworkItem[]) => { barriersToImprovingRef.current = items };
 
-  const strategiesRef = React.useRef<ItemType[]>([]);
-  const changeStrategiesRef = (items: ItemType[]) => { strategiesRef.current = items };
+  const strategiesRef = React.useRef<FrameworkItem[]>([]);
+  const changeStrategiesRef = (items: FrameworkItem[]) => { strategiesRef.current = items };
 
   const ecosId = useParams().ecosId;
+  const [ecosName, setEcosName] = React.useState<string>("");
+
+  const handleSaveAnswers = () => {
+    if (!answers) return;
+
+    QuestionService.saveAnswers(answers, () => {
+      setFeedBackSnackBar({severity: "success", text: t('answers_saved')});
+      setFeedBackSnackbarState(true);
+
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 3000);
+      
+    }, () => {
+      setFeedBackSnackBar({severity: "error", text: t('answers_not_saved')});
+      setFeedBackSnackbarState(true);
+
+    });
+
+  }
 
   React.useEffect(() => {
     if (loading) return;
 
-
-
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
     const getEcosData = async () => {
-      if(!ecosId) return;
+      if (!ecosId) return;
       const ecosData = await EcosystemService.getEcosystem(ecosId);
-      if(ecosData.status !== "waiting-for-answers"){
+      if (ecosData.status !== "waiting-for-answers") {
         throw new Error("Ecosystem is not waiting for answers");
       }
       return ecosData;
     }
 
-    getEcosData().then((ecosData) => console.log(ecosData)).catch(()=>{
-      alert("Ecosystem is not waiting for answers");
-      navigate('/dashboard');
-      return;
-    });
-    
     const handleFrameworkItemsRef = (frameworkItem: Framework) => {
       return frameworkItem.items.map((item) => {
         return {
@@ -98,7 +104,7 @@ export default function EcosSurvey() {
           names: item.names,
           descriptions: item.descriptions,
           ratio: 0,
-        } as ItemType;
+        } as FrameworkItem;
       });
     }
 
@@ -123,54 +129,77 @@ export default function EcosSurvey() {
 
       setModalContent([
         {
-          id: 1,
+          id: "social-human-factors",
           title: t('fsh_affirmative'),
           items: shfRef,
-          changeItems: changeShfRef
+          changeItems: changeShfRef,
+          order: 1
         },
         {
-          id: 2,
-          title: t('cc_affirmative'),
-          items: contextualCharacteristicsRef,
-          changeItems: changeContextualCharacteristicsRef
-        },
-        {
-          id: 3,
-          title: t('barriers_affirmative'),
-          items: barriersToImprovingRef,
-          changeItems: changeBarriersToImprovingRef
-        },
-        {
-          id: 4,
-          title: t('strategies_affirmative'),
-          items: strategiesRef,
-          changeItems: changeStrategiesRef
-        },
-        {
-          id: 5,
+          id: "coping-mechanisms",
           title: t('coping_mec_affirmative'),
           items: copingMechanismRef,
-          changeItems: changeCopingMechanismRef
+          changeItems: changeCopingMechanismRef,
+          order: 2
+        },
+        {
+          id: "contextual-characteristics",
+          title: t('cc_affirmative'),
+          items: contextualCharacteristicsRef ,
+          changeItems: changeContextualCharacteristicsRef,
+          order: 3
+        },
+        {
+          id: "barriers-to-improving",
+          title: t('barriers_affirmative'),
+          items: barriersToImprovingRef,
+          changeItems: changeBarriersToImprovingRef,
+          order: 4
+        },
+        {
+          id: "strategies",
+          title: t('strategies_affirmative'),
+          items: strategiesRef ,
+          changeItems: changeStrategiesRef,
+          order: 5
         }
       ]);
 
+    }
+
+    getEcosData().then(async (ecosData) => {
+      if (!ecosData) return;
+
+      const answersByUser = (await QuestionService.getAnswersByUserId(getUser().uid)).filter((answer) => answer.ecossystem_id === ecosId);
+
+      if(answersByUser.find((answer) => answer.round === ecosData.current_round)) {
+        alert("You have already answered this round");
+        navigate('/dashboard');
+        return;
+      }
+      
+      setCurrentRound(ecosData.current_round);
+      setEcosName(ecosData.organization_name);
+
+      const localStorageData = localStorage.getItem('frameworkData');
+      if (localStorageData) {
+        handleFrameworkData(JSON.parse(localStorageData));
+        return;
+      }
+
+      FirebaseService.getFrameworkData((data: Framework[]) => {
+        localStorage.setItem('frameworkData', JSON.stringify(data));
+        handleFrameworkData(data);
+      });
+
       setAppLoading(false);
-    }
-
-    const localStorageData = localStorage.getItem('frameworkData');
-    if (localStorageData) {
-      handleFrameworkData(JSON.parse(localStorageData));
+    }).catch(() => {
+      alert("Ecosystem is not waiting for answers");
+      navigate('/dashboard');
       return;
-    }
-
-    FirebaseService.getFrameworkData((data:Framework[])=>{
-      localStorage.setItem('frameworkData', JSON.stringify(data));
-      handleFrameworkData(data);
     });
-    
 
-
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId, getUser]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
 
@@ -199,14 +228,77 @@ export default function EcosSurvey() {
   }
 
   const SelectItemsModal = (props: SelectItemsProps) => {
+
+
+    const setAnswersToFrameworkComponent = () => {
+      setSocialHumanFactors({
+        ...socialHumanFactors,
+        items: modalContent.filter((item) => item.id === "social-human-factors")[0].items.current as FrameworkItem[]
+      } as Framework);
+
+      setContextualCharacteristics({
+        ...contextualCharacteristics,
+        items: modalContent.filter((item) => item.id === "contextual-characteristics")[0].items.current as FrameworkItem[]
+      } as Framework);
+
+      setBarriersToImproving({
+        ...barriersToImproving,
+        items: modalContent.filter((item) => item.id === "barriers-to-improving")[0].items.current as FrameworkItem[]
+      } as Framework);
+
+      setStrategies({
+        ...strategies,
+        items: modalContent.filter((item) => item.id === "strategies")[0].items.current as FrameworkItem[]
+      } as Framework);
+
+      setCopingMechanisms({
+        ...copingMechanisms,
+        items: modalContent.filter((item) => item.id === "coping-mechanisms")[0].items.current as FrameworkItem[]
+      } as Framework);
+    }
+
+    const createAnswersObject = () => {
+      const answers = {
+        user_id: getUser().uid,
+        user_email: getUser().email,
+        ecossystem_id: ecosId,
+        round: currentRound,
+        answers: modalContent.map((modalContentItem) => {
+          return {
+            framework_item: modalContentItem.id,
+            question: modalContentItem.title,
+            items: modalContentItem.items.current.map((item) => {
+              return {
+                id: item.id,
+                ids: item.ids,
+                names: item.names,
+                answer: item.ratio
+              }
+            })
+          }
+        })
+      } as NewAnswers;
+
+      return answers;
+    }
+
+    const handleNextBtnClick = () => {
+      if (currentModal >= 5) {
+        setAnswers(createAnswersObject);
+        setAnswersToFrameworkComponent();
+      }
+
+      setCurrentModal((curr) => curr + 1);
+    }
+
     return (
-      <Modal.Root state={currentModal == props.id} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
+      <Modal.Root state={currentModal == props.order} id={props.id.toString()} title={props.title} handleClose={() => false} size='md'>
         <Modal.FrameworkDataTable items={props.items} changeItems={props.changeItems} />
 
         <Divider />
         <Modal.Actions handleClose={() => setCurrentModal((curr) => curr + 1)}>
           <Button onClick={() => setCurrentModal((curr) => curr - 1)} variant='contained'>{t('back_btn')}</Button>
-          <Button onClick={() => setCurrentModal((curr) => curr + 1)} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
+          <Button onClick={handleNextBtnClick} variant='contained'>{(currentModal != 5) ? t('next_btn') : t('view_answer_btn')}</Button>
         </Modal.Actions>
       </Modal.Root>
     );
@@ -214,20 +306,29 @@ export default function EcosSurvey() {
 
   return (
     <>
-
       {!appLoading && <WelcomeModal />}
-      {!appLoading && modalContent.map((item) => <SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id} />)}
-
+      {!appLoading && modalContent.map((item) => <SelectItemsModal id={item.id} title={item.title} items={item.items} changeItems={item.changeItems} key={item.id} order={item.order} />)}
+      <SnackBarComponent snackBarState={feedBackSnackbarState} setSnackBarState={setFeedBackSnackbarState} severity={feedBackSnackBar.severity} text={feedBackSnackBar.text}/>
       <Box sx={{ backgroundColor: '#ebebeb' }}>
         <Navbar />
         <Toolbar />
         <Container sx={{ minHeight: '100vh' }} component={Paper} elevation={3} style={{ paddingTop: '1%' }} maxWidth={false}>
+
+          {!appLoading && (<Box sx={{ margin: 'auto', width: '50%', p: 2 }} component={Paper} elevation={2}>
+            <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecosName}</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', width: '30%', margin: 'auto' }}>
+              <Button variant='outlined' onClick={() => setCurrentModal(1)}>Editar Respostas</Button>
+              <Button variant='contained' onClick={handleSaveAnswers}>Enviar</Button>
+            </Box>
+          </Box>)}
+
           <FrameworkComponent
             copingMechanisms={copingMechanisms}
             contextualCharacteristics={contextualCharacteristics}
             socialHumanFactors={socialHumanFactors}
             barriersToImproving={barriersToImproving}
             strategies={strategies}
+            showSuggestions={false}
           />
         </Container>
         <Footer />
