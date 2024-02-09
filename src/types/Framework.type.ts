@@ -12,8 +12,9 @@ interface FrameworkItem {
     [key: string]: string
   },
   rating?: number,
-  votes?: number,
   ratio?: number,
+  agree?: number,
+  disagree?: number,
 }
 
 interface Framework {

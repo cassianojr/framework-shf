@@ -24,31 +24,13 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => params.row.names[i18next.language]
     },
     {
-      field: 'fully-disagree',
-      headerName: 'Discordo totalmente',
-      width: 100,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
-      valueGetter: () => Math.random()
-    },
-    {
       field: 'disagree',
       headerName: 'Discordo',
       width: 100,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
-      valueGetter: () => Math.random()
-    },
-    {
-      field: 'neutral',
-      headerName: 'Não concordo e nem discordo',
-      width: 120,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
-      valueGetter: () => Math.random()
+      valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => (((params.row.disagree??0) / 2))
     },
     {
       field: 'agree',
@@ -57,17 +39,9 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
-      valueGetter: () => Math.random()
-    },
-    {
-      field: 'fully-agree',
-      headerName: 'Concordo totalmente',
-      width: 100,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
-      valueGetter: () => Math.random()
-    },
+      valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => (((params.row.agree??0) / 2))
+      
+    }
   ]
 
   return (

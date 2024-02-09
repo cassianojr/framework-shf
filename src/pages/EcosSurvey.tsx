@@ -137,30 +137,30 @@ export default function EcosSurvey() {
         },
         {
           id: "coping-mechanisms",
-          title: t('cc_affirmative'),
-          items: contextualCharacteristicsRef,
-          changeItems: changeContextualCharacteristicsRef,
+          title: t('coping_mec_affirmative'),
+          items: copingMechanismRef,
+          changeItems: changeCopingMechanismRef,
           order: 2
         },
         {
           id: "contextual-characteristics",
-          title: t('barriers_affirmative'),
-          items: barriersToImprovingRef,
-          changeItems: changeBarriersToImprovingRef,
+          title: t('cc_affirmative'),
+          items: contextualCharacteristicsRef ,
+          changeItems: changeContextualCharacteristicsRef,
           order: 3
         },
         {
           id: "barriers-to-improving",
-          title: t('strategies_affirmative'),
-          items: strategiesRef,
-          changeItems: changeStrategiesRef,
+          title: t('barriers_affirmative'),
+          items: barriersToImprovingRef,
+          changeItems: changeBarriersToImprovingRef,
           order: 4
         },
         {
           id: "strategies",
-          title: t('coping_mec_affirmative'),
-          items: copingMechanismRef,
-          changeItems: changeCopingMechanismRef,
+          title: t('strategies_affirmative'),
+          items: strategiesRef ,
+          changeItems: changeStrategiesRef,
           order: 5
         }
       ]);
