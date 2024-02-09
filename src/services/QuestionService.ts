@@ -50,6 +50,28 @@ export class QuestionService {
     });
   }
 
+  public static getAnswersByUserId(userId: string): Promise<NewAnswers[]> {
+    return new Promise((resolve, reject) => {
+      const q = query(collection(db, "answers"), where("user_id", "==", userId));
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) {
+          unsubscribe();
+          reject("No such document!");
+        } else {
+          const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as NewAnswers[];
+          resolve(data);
+        }
+      }, (error) => {
+        console.log("Error getting documents: ", error);
+        unsubscribe();
+        reject(error);
+      });
+    });
+  }
+
   public static getEcosAnswers(ecosId: string): Promise<NewAnswers[]> {
     return new Promise((resolve, reject) => {
       const q = query(collection(db, "answers"), where("ecossystem_id", "==", ecosId));

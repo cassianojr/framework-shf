@@ -78,7 +78,6 @@ export default function ECOSDashboard() {
 
             if (itemAnswer.answer === 1 || itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
             if (itemAnswer.answer === 4 || itemAnswer.answer === 5) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
-
           }
         });
       });

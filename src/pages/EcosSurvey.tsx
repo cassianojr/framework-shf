@@ -165,12 +165,19 @@ export default function EcosSurvey() {
         }
       ]);
 
-      setAppLoading(false);
     }
 
-    getEcosData().then((ecosData) => {
+    getEcosData().then(async (ecosData) => {
       if (!ecosData) return;
 
+      const answersByUser = (await QuestionService.getAnswersByUserId(getUser().uid)).filter((answer) => answer.ecossystem_id === ecosId);
+
+      if(answersByUser.find((answer) => answer.round === ecosData.current_round)) {
+        alert("You have already answered this round");
+        navigate('/dashboard');
+        return;
+      }
+      
       setCurrentRound(ecosData.current_round);
       setEcosName(ecosData.organization_name);
 
@@ -184,13 +191,15 @@ export default function EcosSurvey() {
         localStorage.setItem('frameworkData', JSON.stringify(data));
         handleFrameworkData(data);
       });
+
+      setAppLoading(false);
     }).catch(() => {
       alert("Ecosystem is not waiting for answers");
       navigate('/dashboard');
       return;
     });
 
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId, getUser]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
 

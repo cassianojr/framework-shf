@@ -53,8 +53,6 @@ function RenderRow(props: ListChildComponentProps) {
 
 export default function VirtualizedList(props: ListData) {
   const height = props.height ?? 80;
-
-  console.log(props.items[0].ratio);
   
   return (
     <Box
