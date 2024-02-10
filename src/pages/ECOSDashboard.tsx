@@ -75,9 +75,11 @@ export default function ECOSDashboard() {
         frameworkComponentToCount.items?.forEach((itemToCount) => {      
 
           if (itemAnswer.id == itemToCount.id) {
-
-            if (itemAnswer.answer === 1 || itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
-            if (itemAnswer.answer === 4 || itemAnswer.answer === 5) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+            if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
+            if (itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
+            if (itemAnswer.answer === 3) itemToCount.neutral = itemToCount.neutral ? itemToCount.neutral + 1 : 1;
+            if (itemAnswer.answer === 4) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+            if (itemAnswer.answer === 5) itemToCount.totallyAgree = itemToCount.totallyAgree ? itemToCount.totallyAgree + 1 : 1;
           }
         });
       });

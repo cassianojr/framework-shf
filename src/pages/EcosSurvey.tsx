@@ -167,17 +167,18 @@ export default function EcosSurvey() {
 
     }
 
-    getEcosData().then(async (ecosData) => {
+    getEcosData().then((ecosData) => {
       if (!ecosData) return;
 
-      const answersByUser = (await QuestionService.getAnswersByUserId(getUser().uid)).filter((answer) => answer.ecossystem_id === ecosId);
+      QuestionService.getAnswersByUserId(getUser().uid)
+      .then((answers) => {
+        if(answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
+          alert("You have already answered this survey for this round. You will be redirected to the dashboard.");
+          navigate('/dashboard');
+          return;
+        }
+      });
 
-      if(answersByUser.find((answer) => answer.round === ecosData.current_round)) {
-        alert("You have already answered this round");
-        navigate('/dashboard');
-        return;
-      }
-      
       setCurrentRound(ecosData.current_round);
       setEcosName(ecosData.organization_name);
 
@@ -191,14 +192,13 @@ export default function EcosSurvey() {
         localStorage.setItem('frameworkData', JSON.stringify(data));
         handleFrameworkData(data);
       });
-
-      setAppLoading(false);
     }).catch(() => {
       alert("Ecosystem is not waiting for answers");
       navigate('/dashboard');
       return;
     });
 
+    setAppLoading(false);
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId, getUser]);
 
   const [currentModal, setCurrentModal] = React.useState<number>(0);
