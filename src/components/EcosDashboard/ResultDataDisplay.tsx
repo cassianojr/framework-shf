@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs } from '@mui/m
 import i18next from 'i18next';
 import { Framework } from '../../types/Framework.type';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ResultDataGrid from '../ResultDataGrid/ResultDataGrid';
+import { ResultDataGrid } from '../ResultDataGrid/ResultDataGrid';
 import { Box } from '@mui/system';
 import React from 'react';
 
@@ -35,10 +35,10 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
         {...other}
-       
+
       >
         {value === index && (
-          <Box  sx={{ overflow: 'auto', height: 300}}>
+          <Box sx={{ overflow: 'auto', height: 300 }}>
             {children}
           </Box>
         )}
@@ -69,9 +69,9 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
             <ResultDataGrid frameworkComponent={frameworkComponent} columnType='likert' />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-          <ResultDataGrid frameworkComponent={frameworkComponent} columnType='result' />
+            <ResultDataGrid frameworkComponent={frameworkComponent} columnType='result' />
           </TabPanel>
-          
+
         </Box>
       </AccordionDetails>
     </Accordion>

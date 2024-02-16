@@ -3,13 +3,14 @@ import { Framework, FrameworkItem } from '../../types/Framework.type';
 import { Typography } from '@mui/material';
 import i18next from 'i18next';
 import { ProgressBar } from './DataGridProgressBar';
+import React from 'react';
 
 interface ResultDataGridProps {
   frameworkComponent: Framework | undefined,
   columnType: 'likert' | 'result' 
 }
 
-export default function ResultDataGrid({ frameworkComponent, columnType }: ResultDataGridProps) {
+export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComponent, columnType }: ResultDataGridProps) {
 
   const calculatePercentValue = (params: GridRenderCellParams<FrameworkItem, number>, value: number) => {
     const disagree = params.row.disagree ?? 0;
@@ -158,4 +159,4 @@ export default function ResultDataGrid({ frameworkComponent, columnType }: Resul
       hideFooter
     />
   )
-}
+});
