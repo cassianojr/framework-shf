@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { Paper, Toolbar, Typography } from "@mui/material";
+import { Divider, Paper, Toolbar, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Footer from "../components/Footer";
 import Box from '@mui/material/Box';
@@ -14,6 +14,7 @@ import EcosystemService from "../services/EcosystemService";
 import { QuestionService } from "../services/QuestionService";
 import SnackBarComponent from "../components/SnackBarComponent";
 import SurveyStepper from "../components/SurveyStepper";
+import { Modal } from "../components/Modal";
 
 interface SelectItemsProps {
   id: string,
@@ -23,6 +24,7 @@ interface SelectItemsProps {
   order: number
 }
 
+
 export default function EcosSurvey() {
 
   const [appLoading, setAppLoading] = React.useState<boolean>(true);
@@ -31,6 +33,9 @@ export default function EcosSurvey() {
   const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+
+  const [errorModalState, setErrorModalState] = React.useState(false);
+  const [errorModalContent, setErrorModalContent] = React.useState({ title: "", description: "" } as { title: string, description: string });
 
   const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
   const [currentRound, setCurrentRound] = React.useState<number>(0);
@@ -60,6 +65,26 @@ export default function EcosSurvey() {
 
   const ecosId = useParams().ecosId;
   const [ecosName, setEcosName] = React.useState<string>("");
+
+
+  const ErrorModal = () => {
+    const handleClose = () => {
+      setErrorModalState(false);
+      navigate('/dashboard');
+    }
+
+    return (
+      <Modal.Root state={errorModalState} id={errorModalContent.title} handleClose={handleClose} title={errorModalContent.title}>
+        <Modal.Text>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>
+            {errorModalContent.description}
+          </Typography>
+        </Modal.Text>
+        <Divider />
+        <Modal.Actions handleClose={handleClose} />
+      </Modal.Root>
+    );
+  }
 
   React.useEffect(() => {
     if (loading) return;
@@ -106,8 +131,6 @@ export default function EcosSurvey() {
       setBarriersToImproving(barriersToImprovingLocal);
       setStrategies(strategiesLocal);
 
-
-
       setModalContent([
         {
           id: "social-human-factors",
@@ -152,9 +175,9 @@ export default function EcosSurvey() {
 
       QuestionService.getAnswersByUserId(getUser().uid)
         .then((answers) => {
-          if(answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            alert("You have already answered this survey for this round. You will be redirected to the dashboard.");
-            navigate('/dashboard');
+          if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
+            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            setErrorModalState(true);
             return;
           }
         });
@@ -173,8 +196,8 @@ export default function EcosSurvey() {
         handleFrameworkData(data);
       });
     }).catch(() => {
-      alert("Ecosystem is not waiting for answers");
-      navigate('/dashboard');
+      setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
+      setErrorModalState(true);
       return;
     });
 
@@ -184,6 +207,7 @@ export default function EcosSurvey() {
 
   return (
     <>
+      <ErrorModal />
       <SnackBarComponent snackBarState={feedBackSnackbarState} setSnackBarState={setFeedBackSnackbarState} severity={feedBackSnackBar.severity} text={feedBackSnackBar.text} />
       <Box >
         <Navbar />

@@ -27,5 +27,10 @@
   "view_answer_btn": "Visualizar resposta",
   "save_btn": "Savlar",
   "answers_saved": "Respostas enviadas com sucesso!",
-  "answers_not_saved": "Erro ao enviar respostas!"
+  "answers_not_saved": "Erro ao enviar respostas!",
+  "errors": {
+    "title": "Ops!",
+    "already_answered": "Você já respondeu a esta pesquisa para esta rodada. Você será redirecionado para o painel.",
+    "not_accept_answers": "Este ecossistema não está esperando respostas no momento. Por favor, aguarde a próxima rodada ser iniciada."
+  }
 }

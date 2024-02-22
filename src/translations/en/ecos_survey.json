@@ -27,5 +27,10 @@
   "view_answer_btn": "View answer",
   "save_btn": "Save",
   "answers_saved": "Answers saved successfully!",
-  "answers_not_saved": "An error occurred while saving your answers. Please try again."
+  "answers_not_saved": "An error occurred while saving your answers. Please try again.",
+  "errors": {
+    "title": "Error",
+    "already_answered": "You have already answered this survey for this round. You will be redirected to the dashboard.",
+    "not_accept_answers": "This ecosystem is not waiting for answers right now. Please wait for the next round begin."
+  }
 }
