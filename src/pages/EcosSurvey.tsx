@@ -37,7 +37,7 @@ export default function EcosSurvey() {
   const [errorModalState, setErrorModalState] = React.useState(false);
   const [errorModalContent, setErrorModalContent] = React.useState({ title: "", description: "" } as { title: string, description: string });
 
-  const [modalContent, setModalContent] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
+  const [questions, setQuestions] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
   const [currentRound, setCurrentRound] = React.useState<number>(0);
   const [feedBackSnackbarState, setFeedBackSnackbarState] = React.useState(false);
   const [feedBackSnackBar, setFeedBackSnackBar] = React.useState({ severity: "success", text: "" } as { severity: "success" | "info" | "warning" | "error", text: string });
@@ -131,7 +131,7 @@ export default function EcosSurvey() {
       setBarriersToImproving(barriersToImprovingLocal);
       setStrategies(strategiesLocal);
 
-      setModalContent([
+      setQuestions([
         {
           id: "social-human-factors",
           title: t('fsh_affirmative'),
@@ -176,8 +176,8 @@ export default function EcosSurvey() {
       QuestionService.getAnswersByUserId(getUser().uid)
         .then((answers) => {
           if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-            setErrorModalState(true);
+            // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            // setErrorModalState(true);
             return;
           }
         });
@@ -196,13 +196,13 @@ export default function EcosSurvey() {
         handleFrameworkData(data);
       });
     }).catch(() => {
-      setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
-      setErrorModalState(true);
+      // setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
+      // setErrorModalState(true);
       return;
     });
 
     setAppLoading(false);
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, setModalContent, loading, signed, navigate, t, ecosId, getUser]);
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser]);
 
 
   return (
@@ -217,7 +217,7 @@ export default function EcosSurvey() {
           {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecosName}</Typography>}
 
           {!appLoading && <SurveyStepper
-            stepsVote={modalContent}
+            stepsVote={questions}
             frameworkItems={{
               socialHumanFactors,
               contextualCharacteristics,

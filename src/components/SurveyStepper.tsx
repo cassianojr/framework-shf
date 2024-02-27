@@ -1,13 +1,13 @@
 import { Button, MobileStepper, Paper, Typography } from '@mui/material';
 import React from 'react'
 import { Framework, FrameworkItem } from '../types/Framework.type';
-import { Modal } from './Modal';
 import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import FrameworkComponent from './FrameworkComponent';
 import { QuestionService } from '../services/QuestionService';
 import { NewAnswers } from '../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
+import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
 
 interface SurveyStepperProps {
   stepsVote: {
@@ -143,7 +143,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecosId, curre
       type: 'vote',
       texts: [],
       lists: [],
-      dataTable: <Modal.FrameworkDataTable key={step.id} items={step.items} changeItems={step.changeItems} />
+      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />
     }
   });
 

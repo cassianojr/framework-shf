@@ -25,6 +25,7 @@ import EmailService from '../services/EmailService';
 import i18next from 'i18next';
 
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
+import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipantsModal';
 
 export default function ECOSDashboard() {
 
@@ -42,6 +43,8 @@ export default function ECOSDashboard() {
   const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+  const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
+
 
   const ecosId = useParams().ecosId;
 
@@ -72,7 +75,7 @@ export default function ECOSDashboard() {
 
       answer.items.forEach((itemAnswer) => {
 
-        frameworkComponentToCount.items?.forEach((itemToCount) => {      
+        frameworkComponentToCount.items?.forEach((itemToCount) => {
 
           if (itemAnswer.id == itemToCount.id) {
             if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
@@ -170,6 +173,7 @@ export default function ECOSDashboard() {
   return (
     !appLoading &&
     <>
+      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -215,8 +219,17 @@ export default function ECOSDashboard() {
                     }}>
 
                     <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
-                    <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                    <Button variant='outlined' sx={{ width: '100%', mt: 1 }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
                   </Container>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={3}>{/* Manage Participants */}
+                <Paper
+                  sx={defaultPaperStyle}
+                >
+                  <Title>Gerenciar Participantes</Title>
+                  <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>Gerenciar Participantes</Button>
                 </Paper>
               </Grid>
 

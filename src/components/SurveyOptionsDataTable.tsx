@@ -4,16 +4,15 @@ import i18next from "i18next";
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRenderEditCellParams } from '@mui/x-data-grid';
 import { useTranslation } from "react-i18next";
-import { FrameworkItem } from "../../types/Framework.type";
+import { FrameworkItem } from "../types/Framework.type";
 
 
 interface ModalProps {
   items: React.MutableRefObject<FrameworkItem[]>,
   changeItems: (value: FrameworkItem[]) => void,
-  showVotes?: boolean
 }
 
-export function ModalFrameworkDataTable({ items, changeItems }: ModalProps) {
+export function SurveyOptionsDataTable({ items, changeItems }: ModalProps) {
   const [listItems, setListItems] = React.useState(items.current);
 
   const { t } = useTranslation('ecos_survey');
