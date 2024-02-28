@@ -1,12 +1,13 @@
 import React from 'react'
 import { Modal } from '../Modal'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Button, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { Ecosystem, Participant } from '../../types/Ecosystem.type';
 import AddParticipantModal from './AddParticipantModal';
+import EcosystemService from '../../services/EcosystemService';
 
 interface ManageParticipantsModalProps {
   setModalState: React.Dispatch<React.SetStateAction<boolean>>,
@@ -51,13 +52,27 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
       width: 140,
       sortable: false,
       resizable: false,
-      renderCell: () => <Button variant="contained" color="error" startIcon={<DeleteIcon />}>Deletar</Button>
+      renderCell: (params: GridRenderCellParams<Participant, string>) => <Button variant="contained" color="error" onClick={()=>deleteParticipant(params.value??'')} startIcon={<DeleteIcon />}>Deletar</Button>,
+      valueGetter: (params: GridRenderCellParams<Participant, number>) =>{
+        return params.row.id;
+      }
     },
   ]
 
   const handleModalClose = () => {
     setModalState(false);
   };
+
+  const deleteParticipant = (id: string) => {
+    if(id === '') return;
+
+    const newParticipants = participants.filter(p => p.id !== id);
+    const newEcos = {...ecos, participants: newParticipants};
+
+    EcosystemService.updateEcosystem(newEcos);
+    
+    setEcos(newEcos);
+  }
 
   return (
     <>
