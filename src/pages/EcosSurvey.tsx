@@ -176,8 +176,8 @@ export default function EcosSurvey() {
       QuestionService.getAnswersByUserId(getUser().uid)
         .then((answers) => {
           if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-            // setErrorModalState(true);
+            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            setErrorModalState(true);
             return;
           }
         });
@@ -196,8 +196,8 @@ export default function EcosSurvey() {
         handleFrameworkData(data);
       });
     }).catch(() => {
-      // setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
-      // setErrorModalState(true);
+      setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
+      setErrorModalState(true);
       return;
     });
 

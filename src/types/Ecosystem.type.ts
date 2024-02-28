@@ -6,7 +6,14 @@ interface Ecosystem {
   time_window: number,
   amount_rounds: number,
   status: 'not-started' | 'waiting-for-answers' | 'in-analysis' | 'finished',
-  current_round: number
+  current_round: number,
+  participants: Participant[]
 }
 
-export type { Ecosystem };
+interface Participant {
+  id: string,
+  name: string,
+  email: string
+}
+
+export type { Ecosystem, Participant };

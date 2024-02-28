@@ -33,7 +33,7 @@ export default class EcosystemService {
   }
 
   public static updateEcosystem(ecos: Ecosystem): void {
-    const { organization_name, admin_id, time_window, amount_rounds, id, status, current_round, responses } = ecos;
+    const { organization_name, admin_id, time_window, amount_rounds, id, status, current_round, responses, participants } = ecos;
     if(id === undefined) throw new Error("Ecosystem id is undefined");
 
     updateDoc(doc(db,"ecos", id), {
@@ -43,7 +43,8 @@ export default class EcosystemService {
       amount_rounds,
       status,
       current_round,
-      responses
+      responses,
+      participants
     }).then(() => {
       console.log("Document written with ID: ", id);
     }).catch((error) => {

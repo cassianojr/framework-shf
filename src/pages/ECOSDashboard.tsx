@@ -45,7 +45,6 @@ export default function ECOSDashboard() {
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
 
-
   const ecosId = useParams().ecosId;
 
   const user = getUser();
@@ -170,10 +169,12 @@ export default function ECOSDashboard() {
     EcosystemService.updateEcosystem(newEcos);
   }
 
+
+
   return (
     !appLoading &&
     <>
-      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} />
+      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
