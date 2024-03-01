@@ -11,16 +11,21 @@ interface AddParticipantModalProps {
   setAddParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>,
   addParticipantModalState: boolean,
   ecos: Ecosystem,
-  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>
+  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>,
+  participantData: Participant | undefined
 }
 
 
-export default function AddParticipantModal({ addParticipantModalState, setAddParticipantModalState, ecos, setEcos }: AddParticipantModalProps){
+export default function AddParticipantModal({ addParticipantModalState, setAddParticipantModalState, ecos, setEcos, participantData }: AddParticipantModalProps) {
 
-  const [formState, setFormState] = React.useState({
+  const participantId = participantData?.id;
+
+  const emptyParticipant = {
     name: '',
     email: ''
-  });
+  }
+
+  const [formState, setFormState] = React.useState((participantId ? participantData : emptyParticipant));
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -33,13 +38,18 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
     e.preventDefault();
 
     const newParticipant = {
-      id: uuid(),
+      id: participantId || uuid(),
       name: formState.name,
       email: formState.email
     } as Participant;
-    const participants = ecos.participants || [] as Participant[];
 
-    const newEcos = {...ecos, participants: [...participants, newParticipant]}
+
+    const participants = (participantId) ? ecos.participants.map((participant) => participant.id !== participantId) : ecos.participants || [] as Participant[];
+
+    const newEcos = { ...ecos, participants: [...participants, newParticipant] } as Ecosystem;
+
+    console.log(newEcos);
+    
     setEcos(newEcos);
     EcosystemService.updateEcosystem(newEcos);
 
@@ -52,6 +62,10 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
   }
 
   const handleAddParticipantModalClose = () => {
+    setFormState({
+      name: '',
+      email: ''
+    });
     setAddParticipantModalState(false);
   }
 

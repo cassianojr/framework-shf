@@ -131,43 +131,47 @@ export default function EcosSurvey() {
       setBarriersToImproving(barriersToImprovingLocal);
       setStrategies(strategiesLocal);
 
-      setQuestions([
-        {
-          id: "social-human-factors",
-          title: t('fsh_affirmative'),
-          items: shfRef,
-          changeItems: changeShfRef,
-          order: 1
-        },
-        {
-          id: "coping-mechanisms",
-          title: t('coping_mec_affirmative'),
-          items: copingMechanismRef,
-          changeItems: changeCopingMechanismRef,
-          order: 2
-        },
-        {
-          id: "contextual-characteristics",
-          title: t('cc_affirmative'),
-          items: contextualCharacteristicsRef,
-          changeItems: changeContextualCharacteristicsRef,
-          order: 3
-        },
-        {
-          id: "barriers-to-improving",
-          title: t('barriers_affirmative'),
-          items: barriersToImprovingRef,
-          changeItems: changeBarriersToImprovingRef,
-          order: 4
-        },
-        {
-          id: "strategies",
-          title: t('strategies_affirmative'),
-          items: strategiesRef,
-          changeItems: changeStrategiesRef,
-          order: 5
-        }
-      ]);
+
+      if (questions.length === 0) {
+        setQuestions([
+          {
+            id: "social-human-factors",
+            title: t('fsh_affirmative'),
+            items: shfRef,
+            changeItems: changeShfRef,
+            order: 1
+          },
+          {
+            id: "coping-mechanisms",
+            title: t('coping_mec_affirmative'),
+            items: copingMechanismRef,
+            changeItems: changeCopingMechanismRef,
+            order: 2
+          },
+          {
+            id: "contextual-characteristics",
+            title: t('cc_affirmative'),
+            items: contextualCharacteristicsRef,
+            changeItems: changeContextualCharacteristicsRef,
+            order: 3
+          },
+          {
+            id: "barriers-to-improving",
+            title: t('barriers_affirmative'),
+            items: barriersToImprovingRef,
+            changeItems: changeBarriersToImprovingRef,
+            order: 4
+          },
+          {
+            id: "strategies",
+            title: t('strategies_affirmative'),
+            items: strategiesRef,
+            changeItems: changeStrategiesRef,
+            order: 5
+          }
+        ]);
+      }
+
     }
 
     getEcosData().then((ecosData) => {
@@ -186,6 +190,7 @@ export default function EcosSurvey() {
       setEcosName(ecosData.organization_name);
 
       const localStorageData = localStorage.getItem('frameworkData');
+
       if (localStorageData) {
         handleFrameworkData(JSON.parse(localStorageData));
         return;
@@ -203,6 +208,8 @@ export default function EcosSurvey() {
 
     setAppLoading(false);
   }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser]);
+
+  console.log('render');
 
 
   return (

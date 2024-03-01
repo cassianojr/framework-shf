@@ -6,8 +6,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { Ecosystem, Participant } from '../../types/Ecosystem.type';
-import AddParticipantModal from './AddParticipantModal';
 import EcosystemService from '../../services/EcosystemService';
+import AddParticipant from './AddParticipant';
+import EditParticipant from './EditParticipant';
 
 interface ManageParticipantsModalProps {
   setModalState: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,8 +21,15 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
 
   const participants = ecos.participants || [] as Participant[];
 
+  const [participantEditData, setParticipantEditData] = React.useState<Participant>({
+    id: '',
+    name: '',
+    email: ''
+  } as Participant);
+
 
   const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
+  const [editParticipantModalState, setEditParticipantModalState] = React.useState(false);
 
   const columns: GridColDef[] = [
     {
@@ -44,7 +52,10 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
       width: 140,
       sortable: false,
       resizable: false,
-      renderCell: () => <Button variant="contained" color="warning" startIcon={<EditIcon />}>Editar</Button>
+      renderCell: (params: GridRenderCellParams<Participant, Participant>) => <Button onClick={() => editParticipant(params.value ?? undefined)} variant="contained" color="warning" startIcon={<EditIcon />}>Editar</Button>,
+      valueGetter: (params: GridRenderCellParams<Participant, number>) => {
+        return params.row;
+      }
     },
     {
       field: 'deletebtn',
@@ -52,8 +63,8 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
       width: 140,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<Participant, string>) => <Button variant="contained" color="error" onClick={()=>deleteParticipant(params.value??'')} startIcon={<DeleteIcon />}>Deletar</Button>,
-      valueGetter: (params: GridRenderCellParams<Participant, number>) =>{
+      renderCell: (params: GridRenderCellParams<Participant, string>) => <Button variant="contained" color="error" onClick={() => deleteParticipant(params.value ?? '')} startIcon={<DeleteIcon />}>Deletar</Button>,
+      valueGetter: (params: GridRenderCellParams<Participant, number>) => {
         return params.row.id;
       }
     },
@@ -63,14 +74,21 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     setModalState(false);
   };
 
+  const editParticipant = (participant: Participant | undefined) => {
+    if (!participant) return;
+
+    setParticipantEditData(participant);
+    setEditParticipantModalState(true);
+  }
+
   const deleteParticipant = (id: string) => {
-    if(id === '') return;
+    if (id === '') return;
 
     const newParticipants = participants.filter(p => p.id !== id);
-    const newEcos = {...ecos, participants: newParticipants};
+    const newEcos = { ...ecos, participants: newParticipants };
 
     EcosystemService.updateEcosystem(newEcos);
-    
+
     setEcos(newEcos);
   }
 
@@ -92,7 +110,14 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
         <Divider />
         <Modal.Actions handleClose={handleModalClose} />
       </Modal.Root>
-      <AddParticipantModal addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} ecos={ecos} setEcos={setEcos} />
+      <AddParticipant addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} ecos={ecos} setEcos={setEcos} />
+      <EditParticipant
+        editParticipantModalState={editParticipantModalState}
+        setEditParticipantModalState={setEditParticipantModalState}
+        ecos={ecos}
+        setEcos={setEcos}
+        participantData={participantEditData}
+        setParticipantData={setParticipantEditData} />
     </>
 
   )
