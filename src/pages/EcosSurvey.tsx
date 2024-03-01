@@ -15,6 +15,7 @@ import { QuestionService } from "../services/QuestionService";
 import SnackBarComponent from "../components/SnackBarComponent";
 import SurveyStepper from "../components/SurveyStepper";
 import { Modal } from "../components/Modal";
+import { Ecosystem } from "../types/Ecosystem.type";
 
 interface SelectItemsProps {
   id: string,
@@ -38,7 +39,6 @@ export default function EcosSurvey() {
   const [errorModalContent, setErrorModalContent] = React.useState({ title: "", description: "" } as { title: string, description: string });
 
   const [questions, setQuestions] = React.useState<SelectItemsProps[]>([] as SelectItemsProps[]);
-  const [currentRound, setCurrentRound] = React.useState<number>(0);
   const [feedBackSnackbarState, setFeedBackSnackbarState] = React.useState(false);
   const [feedBackSnackBar, setFeedBackSnackBar] = React.useState({ severity: "success", text: "" } as { severity: "success" | "info" | "warning" | "error", text: string });
 
@@ -64,8 +64,9 @@ export default function EcosSurvey() {
   const changeStrategiesRef = (items: FrameworkItem[]) => { strategiesRef.current = items };
 
   const ecosId = useParams().ecosId;
-  const [ecosName, setEcosName] = React.useState<string>("");
+  // const [ecosName, setEcosName] = React.useState<string>("");
 
+  const [ecos, setEcos] = React.useState<Ecosystem | undefined>(undefined);
 
   const ErrorModal = () => {
     const handleClose = () => {
@@ -92,8 +93,13 @@ export default function EcosSurvey() {
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
     const getEcosData = async () => {
+      if(ecos) return ecos;
+
       if (!ecosId) return;
+
       const ecosData = await EcosystemService.getEcosystem(ecosId);
+      setEcos(ecosData);
+
       if (ecosData.status !== "waiting-for-answers") {
         throw new Error("Ecosystem is not waiting for answers");
       }
@@ -142,31 +148,31 @@ export default function EcosSurvey() {
             order: 1
           },
           {
-            id: "coping-mechanisms",
-            title: t('coping_mec_affirmative'),
-            items: copingMechanismRef,
-            changeItems: changeCopingMechanismRef,
-            order: 2
-          },
-          {
             id: "contextual-characteristics",
             title: t('cc_affirmative'),
             items: contextualCharacteristicsRef,
             changeItems: changeContextualCharacteristicsRef,
-            order: 3
+            order: 2
           },
           {
             id: "barriers-to-improving",
             title: t('barriers_affirmative'),
             items: barriersToImprovingRef,
             changeItems: changeBarriersToImprovingRef,
-            order: 4
+            order: 3
           },
           {
             id: "strategies",
             title: t('strategies_affirmative'),
             items: strategiesRef,
             changeItems: changeStrategiesRef,
+            order: 4
+          },
+          {
+            id: "coping-mechanisms",
+            title: t('coping_mec_affirmative'),
+            items: copingMechanismRef,
+            changeItems: changeCopingMechanismRef,
             order: 5
           }
         ]);
@@ -186,9 +192,6 @@ export default function EcosSurvey() {
           }
         });
 
-      setCurrentRound(ecosData.current_round);
-      setEcosName(ecosData.organization_name);
-
       const localStorageData = localStorage.getItem('frameworkData');
 
       if (localStorageData) {
@@ -207,10 +210,7 @@ export default function EcosSurvey() {
     });
 
     setAppLoading(false);
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser]);
-
-  console.log('render');
-
+  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser, ecos]);
 
   return (
     <>
@@ -221,9 +221,9 @@ export default function EcosSurvey() {
         <Toolbar />
         <Container sx={{ minHeight: '100vh', background: '#f5f5f5' }} component={Paper} elevation={3} style={{ paddingTop: '1%' }} maxWidth={false}>
 
-          {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecosName}</Typography>}
+          {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecos?.organization_name??''}</Typography>}
 
-          {!appLoading && <SurveyStepper
+          {(!appLoading && ecos) && <SurveyStepper
             stepsVote={questions}
             frameworkItems={{
               socialHumanFactors,
@@ -237,12 +237,12 @@ export default function EcosSurvey() {
               setStrategies,
               setCopingMechanisms
             }}
-            ecosId={ecosId}
-            currentRound={currentRound}
+            ecos={ecos}
             user_id={getUser().uid}
             user_email={getUser().email}
             setFeedBackSnackBar={setFeedBackSnackBar}
             setFeedBackSnackbarState={setFeedBackSnackbarState}
+            user_name={getUser().displayName??getUser().email}
           />}
         </Container>
         <Footer />

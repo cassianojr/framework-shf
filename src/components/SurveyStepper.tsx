@@ -8,6 +8,10 @@ import { QuestionService } from '../services/QuestionService';
 import { NewAnswers } from '../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
 import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
+import { Ecosystem, Participant } from '../types/Ecosystem.type';
+import EcosystemService from '../services/EcosystemService';
+import { v4 as uuid } from 'uuid';
+
 
 interface SurveyStepperProps {
   stepsVote: {
@@ -29,15 +33,15 @@ interface SurveyStepperProps {
     setStrategies: (value: Framework) => void,
     setCopingMechanisms: (value: Framework) => void
   },
-  ecosId: string | undefined,
-  currentRound: number,
   user_id: string,
+  user_name: string,
   user_email: string,
+  ecos: Ecosystem,
   setFeedBackSnackBar: (value: { severity: "success" | "error", text: string }) => void,
   setFeedBackSnackbarState: (value: boolean) => void
 }
 
-export default function SurveyStepper({ stepsVote, frameworkItems, ecosId, currentRound, user_id, user_email, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
+export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id, user_email, user_name, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
   const { t } = useTranslation('ecos_survey');
   const navigate = useNavigate();
 
@@ -77,8 +81,8 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecosId, curre
     const answers = {
       user_id,
       user_email,
-      ecossystem_id: ecosId,
-      round: currentRound,
+      ecossystem_id: ecos.id,
+      round: ecos.current_round,
       answers: stepsVote.map((stepVoteItem) => {
         return {
           framework_item: stepVoteItem.id,
@@ -98,10 +102,29 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecosId, curre
     return answers;
   }
 
+  const handleParticipantOnEcos = ()=>{
+    if (ecos.participants.find((p) => p.email === user_email) !== undefined) {
+      return;
+    }
+
+    const newParticipant = {
+      id: uuid(),
+      name: user_name,
+      email: user_email
+    } as Participant;
+
+    const newParticipants = ecos.participants ? [...ecos.participants, newParticipant] : [newParticipant];
+    const newEcos = { ...ecos, participants: newParticipants };
+    EcosystemService.updateEcosystem(newEcos);
+  }
+
   const handleSaveAnswers = () => {
     if (!answers) return;
 
     QuestionService.saveAnswers(answers, () => {
+
+      handleParticipantOnEcos();
+
       setFeedBackSnackBar({ severity: "success", text: t('answers_saved') });
       setFeedBackSnackbarState(true);
 
