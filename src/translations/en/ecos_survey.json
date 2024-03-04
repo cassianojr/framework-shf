@@ -1,6 +1,6 @@
 {
-	"back_btn": "Back",
-	"next_btn": "Next",
+  "back_btn": "Back",
+  "next_btn": "Next",
   "snackbar_text": "Thanks for your answer!",
   "welcome_text": "Welcome to the Research on Social and Human Factors in Software Ecosystems!",
   "fsh_affirmative": "The social and human factors listed below influence requirements management in software ecosystems.",
@@ -32,5 +32,13 @@
     "title": "Error",
     "already_answered": "You have already answered this survey for this round. You will be redirected to the dashboard.",
     "not_accept_answers": "This ecosystem is not waiting for answers right now. Please wait for the next round begin."
+  },
+  "agree_btn": "Agree",
+  "consent_term": {
+    "title": "Informed Consent Form",
+    "p1": "You are invited to participate in a research aimed at evaluating professionals' perception of Social and Human Factors affecting requirements management in Software Ecosystems. The research is conducted through an online questionnaire that will take approximately 10 minutes to complete.",
+    "p2": "Participation is voluntary, and you may withdraw at any time without any prejudice. The information collected will be used solely for scientific purposes, and there will be no identification of participants.",
+    "p3": "By clicking 'Agree,' you are consenting to participate in the research. If you have any questions, please contact the researcher responsible for the study.",
+    "p4": "Do you agree to participate in the research?"
   }
 }

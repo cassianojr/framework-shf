@@ -102,7 +102,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     return answers;
   }
 
-  const handleParticipantOnEcos = ()=>{
+  const handleParticipantOnEcos = () => {
     if (ecos.participants.find((p) => p.email === user_email) !== undefined) {
       return;
     }
@@ -186,6 +186,18 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       dataTable: <></>,
       type: 'text'
     },
+    {
+      title: t('consent_term.title'),
+      texts: [
+        t('consent_term.p1'),
+        t('consent_term.p2'),
+        t('consent_term.p3'),
+        t('consent_term.p4')
+      ],
+      lists: [],
+      dataTable: <></>,
+      type: 'text'
+    },
     ...stepperContents
   ];
 
@@ -236,8 +248,11 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
         position="static"
         activeStep={activeStep}
         nextButton={
-          <Button variant='contained' onClick={handleNext}>{(activeStep !== steps.length) ? (activeStep !== steps.length - 1) ? t('next_btn') : t('view_answer_btn') : t('save_btn')}</Button>
+          (activeStep === 1) ? <Button variant='contained' onClick={handleNext}>{t('agree_btn')}</Button> : (
+            <Button variant='contained' onClick={handleNext}>{(activeStep !== steps.length) ? (activeStep !== steps.length - 1) ? t('next_btn') : t('view_answer_btn') : t('save_btn')}</Button>
+          )
         }
+
         backButton={
           <Button variant='outlined' onClick={handleBack}>{t('back_btn')}</Button>
         }
