@@ -64,7 +64,6 @@ export default function EcosSurvey() {
   const changeStrategiesRef = (items: FrameworkItem[]) => { strategiesRef.current = items };
 
   const ecosId = useParams().ecosId;
-  // const [ecosName, setEcosName] = React.useState<string>("");
 
   const [ecos, setEcos] = React.useState<Ecosystem | undefined>(undefined);
 
@@ -186,8 +185,8 @@ export default function EcosSurvey() {
       QuestionService.getAnswersByUserId(getUser().uid)
         .then((answers) => {
           if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-            setErrorModalState(true);
+            // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            // setErrorModalState(true);
             return;
           }
         });

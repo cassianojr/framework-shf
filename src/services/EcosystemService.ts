@@ -15,13 +15,12 @@ export default class EcosystemService {
   }
 
   public static createEcosystem(ecos: Ecosystem, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
-    const { organization_name, admin_id, time_window, amount_rounds } = ecos;
+    const { organization_name, admin_id, time_window } = ecos;
     addDoc(collection(db, "ecos"), {
       organization_name,
       admin_id,
       responses: 0,
       time_window,
-      amount_rounds,
       current_round: 1,
       status: 'not-started',
     }).then((docRef) => {
@@ -33,14 +32,13 @@ export default class EcosystemService {
   }
 
   public static updateEcosystem(ecos: Ecosystem): void {
-    const { organization_name, admin_id, time_window, amount_rounds, id, status, current_round, responses, participants } = ecos;
+    const { organization_name, admin_id, time_window, id, status, current_round, responses, participants } = ecos;
     if(id === undefined) throw new Error("Ecosystem id is undefined");
 
     updateDoc(doc(db,"ecos", id), {
       organization_name,
       admin_id,
       time_window,
-      amount_rounds,
       status,
       current_round,
       responses,

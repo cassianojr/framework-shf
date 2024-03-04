@@ -220,17 +220,8 @@ export default function ECOSDashboard() {
                     }}>
 
                     <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
-                    <Button variant='outlined' sx={{ width: '100%', mt: 1 }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                    <Button variant='contained' sx={{ width: '36%', mt: 1 }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
                   </Container>
-                </Paper>
-              </Grid>
-
-              <Grid item xs={3}>{/* Manage Participants */}
-                <Paper
-                  sx={defaultPaperStyle}
-                >
-                  <Title>Gerenciar Participantes</Title>
-                  <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>Gerenciar Participantes</Button>
                 </Paper>
               </Grid>
 
@@ -241,7 +232,7 @@ export default function ECOSDashboard() {
               }}>
                 <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                  <Grid item>{/* Status */}
+                  <Grid item sm={2.8}>{/* Status */}
                     <Paper
                       sx={defaultPaperStyle}
                     >
@@ -256,15 +247,6 @@ export default function ECOSDashboard() {
                     >
                       <Title>{t('time_window')}</Title>
                       <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window > 1) ? 's' : ''}</Button>
-                    </Paper>
-                  </Grid>
-
-                  <Grid item>{/* Amount of rounds */}
-                    <Paper
-                      sx={defaultPaperStyle}
-                    >
-                      <Title>{t('amout_of_rounds')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}{(ecos.amount_rounds > 1) ? 's' : ''}</Button>
                     </Paper>
                   </Grid>
 
@@ -283,6 +265,15 @@ export default function ECOSDashboard() {
                     >
                       <Title>{t('responses_label')}</Title>
                       <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{answers.length}</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={3}>{/* Manage Participants */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>Gerenciar Participantes</Title>
+                      <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>Gerenciar Participantes</Button>
                     </Paper>
                   </Grid>
 
