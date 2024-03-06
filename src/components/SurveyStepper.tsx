@@ -154,7 +154,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
         noErrors = false;
         item.validationError = true;
-        
+
       }else{
         if(item.validationError) item.validationError = false;
       }
@@ -177,7 +177,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     }
 
     if(activeStep > 1 && !validateAnswers()){
-      setFeedBackSnackBar({ severity: "error", text: 'Para os itens em que você respondeu "Concrodo Totalmente" ou "Discordo Totalmente", por favor, escreva um comentário.' });
+      setFeedBackSnackBar({ severity: "error", text: t('feedback.error') });
       setFeedBackSnackbarState(true);
       return;
     } 

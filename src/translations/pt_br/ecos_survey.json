@@ -40,5 +40,10 @@
     "p2": "A participação é voluntária e você poderá desistir a qualquer momento, sem qualquer prejuízo. As informações coletadas serão utilizadas apenas para fins científicos e não haverá identificação dos participantes.",
     "p3": "Ao clicar em “Concordo”, você estará concordando em participar da pesquisa. Caso tenha alguma dúvida, entre em contato com o pesquisador responsável pela pesquisa.",
     "p4": "Você concorda em participar da pesquisa?"
+  },
+  "feedback": {
+    "title": "Deixe seu feedback para ",
+    "textarea_label": "Deixe seu feedback aqui",
+    "error": "Para os itens em que você respondeu \"Concrodo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
   }
 }

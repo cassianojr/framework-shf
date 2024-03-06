@@ -156,12 +156,12 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     }
 
     return (
-      <Modal.Root state={modalState} handleClose={() => setModalState(false)} title={`Deixe seu feedback para ${commentModalItem?.name}`} id={`comment-modal-${commentModalItem?.id}`}>
+      <Modal.Root state={modalState} handleClose={() => setModalState(false)} title={`${t('feedback.title')} ${commentModalItem?.name}`} id={`comment-modal-${commentModalItem?.id}`}>
         <Modal.Text>
           <form onSubmit={handleSave}>
             <TextField
               id="filled-multiline-static"
-              label="Deixe seu feedback"
+              label={t('feedback.textarea_label')}
               multiline
               rows={4}
               value={comment}
