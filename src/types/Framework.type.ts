@@ -18,6 +18,8 @@ interface FrameworkItem {
   neutral?: number,
   disagree?: number,
   totallyDisagree?: number,
+  comment?: string,
+  validationError: boolean
 }
 
 interface Framework {

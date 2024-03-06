@@ -23,7 +23,8 @@ interface Item {
   names: {
     [key: string]: string
   }
-  answer: number
+  answer: number,
+  comment?: string
 }
 
 

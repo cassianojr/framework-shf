@@ -49,6 +49,8 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   const [answers, setAnswers] = React.useState<NewAnswers | undefined>(undefined);
 
 
+  const [refresh, setRefresh] = React.useState(false);
+
   const setAnswersToFrameworkComponent = () => {
     frameworkItems.setSocialHumanFactors({
       ...frameworkItems.socialHumanFactors,
@@ -92,7 +94,8 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
               id: item.id,
               ids: item.ids,
               names: item.names,
-              answer: item.ratio
+              answer: item.ratio,
+              comment: item.comment
             }
           })
         }
@@ -138,6 +141,31 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     });
   }
 
+  const validateAnswers = () => {
+    let noErrors = true;
+
+    const verifyableItems = ['SHF01', 'ST01']
+    const shouldValidate = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep-2].items.current[0].ids['en']) !== undefined);
+
+    if(!shouldValidate) return noErrors;
+    
+    stepsVote[activeStep-2].items.current.forEach((item) => {
+      if((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)){
+
+        noErrors = false;
+        item.validationError = true;
+        
+      }else{
+        if(item.validationError) item.validationError = false;
+      }
+      
+    });
+    
+    setRefresh(!refresh);
+    
+    return noErrors;
+  }
+
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       setAnswersToFrameworkComponent();
@@ -147,6 +175,12 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       handleSaveAnswers();
       return;
     }
+
+    if(activeStep > 1 && !validateAnswers()){
+      setFeedBackSnackBar({ severity: "error", text: 'Para os itens em que você respondeu "Concrodo Totalmente" ou "Discordo Totalmente", por favor, escreva um comentário.' });
+      setFeedBackSnackbarState(true);
+      return;
+    } 
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
@@ -166,7 +200,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       type: 'vote',
       texts: [],
       lists: [],
-      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />
+      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateAnswers}/>
     }
   });
 

@@ -170,7 +170,6 @@ export default function ECOSDashboard() {
   }
 
 
-
   return (
     !appLoading &&
     <>
@@ -246,7 +245,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('time_window')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window > 1) ? 's' : ''}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window > 1) ? 's' : ''}</Button>
                     </Paper>
                   </Grid>
 
@@ -255,7 +254,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('current_round')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.current_round}º {t('current_round_unit')}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{ecos.current_round}º {t('current_round_unit')}</Button>
                     </Paper>
                   </Grid>
 
@@ -264,7 +263,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('responses_label')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{answers.length}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{answers.length}</Button>
                     </Paper>
                   </Grid>
 

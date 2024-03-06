@@ -136,7 +136,6 @@ export default function EcosSurvey() {
       setBarriersToImproving(barriersToImprovingLocal);
       setStrategies(strategiesLocal);
 
-
       if (questions.length === 0) {
         setQuestions([
           {
