@@ -271,8 +271,8 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Gerenciar Participantes</Title>
-                      <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>Gerenciar Participantes</Button>
+                      <Title>{t('manage_participants.title')}</Title>
+                      <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>{t('manage_participants.title')}</Button>
                     </Paper>
                   </Grid>
 

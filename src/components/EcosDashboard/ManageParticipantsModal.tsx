@@ -9,6 +9,7 @@ import { Ecosystem, Participant } from '../../types/Ecosystem.type';
 import EcosystemService from '../../services/EcosystemService';
 import AddParticipant from './AddParticipant';
 import EditParticipant from './EditParticipant';
+import { useTranslation } from 'react-i18next';
 
 interface ManageParticipantsModalProps {
   setModalState: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,6 +21,8 @@ interface ManageParticipantsModalProps {
 export default function ManageParticipantsModal({ setModalState, modalState, ecos, setEcos }: ManageParticipantsModalProps) {
 
   const participants = ecos.participants || [] as Participant[];
+
+  const { t } = useTranslation('ecos_dashboard');
 
   const [participantEditData, setParticipantEditData] = React.useState<Participant>({
     id: '',
@@ -34,7 +37,7 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
   const columns: GridColDef[] = [
     {
       field: 'name',
-      headerName: 'Nome',
+      headerName: t('manage_participants.name_label'),
       width: 300,
       sortable: false,
       resizable: false
@@ -48,22 +51,22 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     },
     {
       field: 'editbtn',
-      headerName: 'Editar',
+      headerName: t('manage_participants.edit_btn'),
       width: 140,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<Participant, Participant>) => <Button onClick={() => editParticipant(params.value ?? undefined)} variant="contained" color="warning" startIcon={<EditIcon />}>Editar</Button>,
+      renderCell: (params: GridRenderCellParams<Participant, Participant>) => <Button onClick={() => editParticipant(params.value ?? undefined)} variant="contained" color="warning" startIcon={<EditIcon />}>{t('manage_participants.edit_btn')}</Button>,
       valueGetter: (params: GridRenderCellParams<Participant, number>) => {
         return params.row;
       }
     },
     {
       field: 'deletebtn',
-      headerName: 'Deletar',
+      headerName: t('manage_participants.delete_btn'),
       width: 140,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<Participant, string>) => <Button variant="contained" color="error" onClick={() => deleteParticipant(params.value ?? '')} startIcon={<DeleteIcon />}>Deletar</Button>,
+      renderCell: (params: GridRenderCellParams<Participant, string>) => <Button variant="contained" color="error" onClick={() => deleteParticipant(params.value ?? '')} startIcon={<DeleteIcon />}>{t('manage_participants.delete_btn')}</Button>,
       valueGetter: (params: GridRenderCellParams<Participant, number>) => {
         return params.row.id;
       }
@@ -94,9 +97,9 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
 
   return (
     <>
-      <Modal.Root state={modalState} handleClose={handleModalClose} title="Gerenciar Participantes" id="manage-users-modal" size='md'>
+      <Modal.Root state={modalState} handleClose={handleModalClose} title={t('manage_participants.title')} id="manage-users-modal" size='md'>
         <Modal.Text>
-          <Button variant="contained" color="primary" sx={{ width: '100%', mb: 2 }} onClick={() => setAddParticipantModalState(true)} startIcon={<AddIcon />}>Adicionar Participante</Button>
+          <Button variant="contained" color="primary" sx={{ width: '100%', mb: 2 }} onClick={() => setAddParticipantModalState(true)} startIcon={<AddIcon />}>{t('manage_participants.add_participant')}</Button>
           <DataGrid
             rows={participants}
             columns={columns}

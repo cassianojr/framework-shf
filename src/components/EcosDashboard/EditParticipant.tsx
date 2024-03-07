@@ -2,6 +2,7 @@ import React from 'react'
 import { Ecosystem, Participant } from '../../types/Ecosystem.type'
 import ParticipantFormModal from './ParticipantFormModal'
 import EcosystemService from '../../services/EcosystemService'
+import { useTranslation } from 'react-i18next'
 
 
 interface EditParticipantProps {
@@ -14,6 +15,9 @@ interface EditParticipantProps {
 }
 
 export default function EditParticipant({ editParticipantModalState, setEditParticipantModalState, ecos, setEcos, participantData, setParticipantData }: EditParticipantProps) {
+
+  const { t } = useTranslation('ecos_dashboard');
+
 
   const handleSubmit = (participant: Participant) => {
     const participants = ecos.participants;
@@ -28,7 +32,7 @@ export default function EditParticipant({ editParticipantModalState, setEditPart
   return (
     <ParticipantFormModal
       handleSubmit={handleSubmit}
-      title="Editar participante"
+      title={t('manage_participants.edit_title')}
       id="edit-participant-modal"
       modalState={editParticipantModalState}
       setModalState={setEditParticipantModalState}

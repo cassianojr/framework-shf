@@ -2,6 +2,7 @@ import React from 'react'
 import { Ecosystem, Participant } from '../../types/Ecosystem.type'
 import ParticipantFormModal from './ParticipantFormModal'
 import EcosystemService from '../../services/EcosystemService';
+import { useTranslation } from 'react-i18next';
 
 interface AddParticipantProps {
   setAddParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>,
@@ -11,6 +12,8 @@ interface AddParticipantProps {
 }
 
 export default function AddParticipant({ addParticipantModalState, setAddParticipantModalState, ecos, setEcos }: AddParticipantProps) {
+
+  const { t } = useTranslation('ecos_dashboard');
 
   const [formState, setFormState] = React.useState({
     id: '',
@@ -33,7 +36,7 @@ export default function AddParticipant({ addParticipantModalState, setAddPartici
   return (
     <ParticipantFormModal
       handleSubmit={handleSubmit}
-      title="Adicionar participante"
+      title={t('manage_participants.add_participant')}
       id="add-participant-modal"
       modalState={addParticipantModalState}
       setModalState={setAddParticipantModalState}

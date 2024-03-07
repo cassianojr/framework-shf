@@ -17,5 +17,14 @@
     "waiting_for_answers": "Aguardando Respostas",
     "in_analysis": "Em Análise",
     "finished": "Finalizada"
+  },
+  "manage_participants": {
+    "title": "Gerenciar Participantes",
+    "add_participant": "Adicionar Participante",
+    "save_btn": "Salvar",
+    "edit_btn": "Editar",
+    "delete_btn": "Deletar",
+    "name_label": "Nome",
+    "edit_title": "Editar Participante"
   }
 }

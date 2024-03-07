@@ -1,7 +1,7 @@
 {
   "copy_link_btn": "Copy Link",
   "ecos_link": "Survey link: ",
-  "responses_label": "Responses:",
+  "responses_label": "Responses",
   "snackbar_link_copied": "Link Copied!",
   "framework_results": "Framework Results",
   "start_survey": "Start Survey",
@@ -17,5 +17,14 @@
     "waiting_for_answers": "Waiting for Answers",
     "in_analysis": "In Analysis",
     "finished": "Finished"
+  },
+  "manage_participants": {
+    "title": "Manage Participants",
+    "add_participant": "Add Participant",
+    "save_btn": "Save",
+    "edit_btn": "Edit",
+    "delete_btn": "Delete",
+    "name_label": "Name",
+    "edit_title": "Edit Participant"
   }
 }

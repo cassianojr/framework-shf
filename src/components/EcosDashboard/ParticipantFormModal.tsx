@@ -3,6 +3,7 @@ import { Modal } from '../Modal'
 import { Button, Divider, Grid, TextField } from '@mui/material'
 import { v4 as uuid } from 'uuid';
 import { Participant } from '../../types/Ecosystem.type';
+import { useTranslation } from 'react-i18next';
 
 
 interface ParticipantFormModalProps {
@@ -17,6 +18,7 @@ interface ParticipantFormModalProps {
 
 export default function ParticipantFormModal({ title, modalState, setModalState, handleSubmit, id, formState, setFormState }: ParticipantFormModalProps) {
 
+  const { t } = useTranslation('ecos_dashboard');
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -63,7 +65,7 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
                 required
                 id="name"
                 name="name"
-                label={'Nome'}
+                label={t('manage_participants.name_label')}
                 autoFocus
                 value={formState.name}
                 onChange={handleFormChange}
@@ -90,7 +92,7 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
                 type="submit"
 
               >
-                {"Salvar"}
+                {t('manage_participants.save_btn')}
               </Button>
             </Grid>
           </Grid>
