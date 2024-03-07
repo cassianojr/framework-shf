@@ -25,6 +25,25 @@
   },
   "item_name": "Nome",
   "view_answer_btn": "Visualizar resposta",
+  "save_btn": "Savlar",
   "answers_saved": "Respostas enviadas com sucesso!",
-  "answers_not_saved": "Erro ao enviar respostas!"
+  "answers_not_saved": "Erro ao enviar respostas!",
+  "errors": {
+    "title": "Ops!",
+    "already_answered": "Você já respondeu a esta pesquisa para esta rodada. Você será redirecionado para o painel.",
+    "not_accept_answers": "Este ecossistema não está esperando respostas no momento. Por favor, aguarde a próxima rodada ser iniciada."
+  },
+  "agree_btn": "Concordo",
+  "consent_term": {
+    "title": "Termo de Consentimento Livre e Esclarecido",
+    "p1": "Você está sendo convidado(a) a participar de uma pesquisa que tem como objetivo avaliar a percepção de profissionais sobre os Fatores Sociais e Humanos que afetam a gerência de requisitos em Ecossistemas de Software. A pesquisa é realizada por meio de um questionário online que levará aproximadamente 10 minutos para ser respondido.",
+    "p2": "A participação é voluntária e você poderá desistir a qualquer momento, sem qualquer prejuízo. As informações coletadas serão utilizadas apenas para fins científicos e não haverá identificação dos participantes.",
+    "p3": "Ao clicar em “Concordo”, você estará concordando em participar da pesquisa. Caso tenha alguma dúvida, entre em contato com o pesquisador responsável pela pesquisa.",
+    "p4": "Você concorda em participar da pesquisa?"
+  },
+  "feedback": {
+    "title": "Deixe seu feedback para ",
+    "textarea_label": "Deixe seu feedback aqui",
+    "error": "Para os itens em que você respondeu \"Concrodo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Ecosystem } from '../../types/Ecosystem.type';
 import { Modal } from '../Modal';
-import { Button, Divider, FormControl, FormLabel, Grid, Slider, TextField, Typography } from '@mui/material';
+import { Button, Divider, FormControl, Grid, Slider, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import EcosystemService from '../../services/EcosystemService';
 import { useTranslation } from 'react-i18next';
@@ -20,20 +20,17 @@ export default function NewProjectModal({ user, setState, state }: NewProjectMod
   const { t } = useTranslation('dashboard');
 
   const [timeWindow, setTimeWindow] = React.useState(1);
-  const [amountRounds, setAmountRounds] = React.useState(3);
 
   const handleAddEcosSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const organization_name = e.currentTarget.orgName.value as string;
     const time_window = e.currentTarget.time_window.value as number;
-    const amount_rounds = e.currentTarget.amount_rounds.value as number;
 
     const ecosystem = {
       organization_name,
       admin_id: user.uid,
       responses: 0,
-      time_window,
-      amount_rounds
+      time_window
     } as Ecosystem;
 
     setState(false);
@@ -91,32 +88,6 @@ export default function NewProjectModal({ user, setState, state }: NewProjectMod
                   </Grid>
                   <Grid item xs={6}>
                     <Typography>{timeWindow} {t('modal_text.time_week')}{(timeWindow > 1)? 's': ''}</Typography>
-                  </Grid>
-                </Grid>
-              </FormControl>
-
-              <Divider sx={{ marginTop: '1%' }} >{t('modal_text.amount_rounds_separator')}</Divider>
-
-              <FormControl>
-                <FormLabel sx={{ color: 'black', mt: 2 }}>{t('modal_text.amount_rounds_expl')}</FormLabel>
-                <FormLabel sx={{ color: 'black', mt: 2 }}>{t('modal_text.amount_rounds_label')}</FormLabel>
-                <Grid container spacing={2} alignItems={'center'} sx={{ width: 300, m: 'auto' }}>
-                  <Grid item xs={6}>
-                    <Slider
-                      aria-label={t('modal_text.amount_rounds_separator')}
-                      defaultValue={3}
-                      valueLabelDisplay="auto"
-                      onChange={(e, newValue) => setAmountRounds(newValue as number)}
-                      value={amountRounds}
-                      step={1}
-                      marks
-                      min={2}
-                      max={8}
-                      name="amount_rounds"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography>{amountRounds} {t('modal_text.rounds_label')}</Typography>
                   </Grid>
                 </Grid>
               </FormControl>

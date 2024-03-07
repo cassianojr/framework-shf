@@ -13,8 +13,13 @@ interface FrameworkItem {
   },
   rating?: number,
   ratio?: number,
+  totallyAgree?: number,
   agree?: number,
+  neutral?: number,
   disagree?: number,
+  totallyDisagree?: number,
+  comment?: string,
+  validationError?: boolean
 }
 
 interface Framework {

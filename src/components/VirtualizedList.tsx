@@ -9,7 +9,8 @@ interface ListData {
   items: FrameworkItem[],
   handleListItemClick: (id: string, name: string, description: string) => void,
   height?: number
-  showVotes?: boolean
+  showVotes?: boolean,
+  showSurveyOptions?: boolean
 }
 
 
@@ -22,7 +23,7 @@ function RenderRow(props: ListChildComponentProps) {
   const ratioAnswers = ['strongly_disagree', 'disagree', 'neither', 'agree', 'strongly_agree'];
   
   const { t } = useTranslation('ecos_survey');
-
+  
   return (
     <ListItem
       dense
@@ -45,7 +46,7 @@ function RenderRow(props: ListChildComponentProps) {
             <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
             {item.names[i18next.language]} 
           </Typography>} />
-          <Typography sx={{ fontSize: '.8rem' }}>{(item.ratio !== undefined) ? t(`survey_options.${ratioAnswers[item.ratio-1]}`) : ''}</Typography>
+          {data.showSurveyOptions && <Typography sx={{ fontSize: '.8rem' }}>{(item.ratio != 0) ? t(`survey_options.${ratioAnswers[item.ratio-1]}`) : 'Sem resposta'}</Typography>}
       </>
     </ListItem>
   );

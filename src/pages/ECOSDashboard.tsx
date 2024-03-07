@@ -25,6 +25,7 @@ import EmailService from '../services/EmailService';
 import i18next from 'i18next';
 
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
+import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipantsModal';
 
 export default function ECOSDashboard() {
 
@@ -42,6 +43,7 @@ export default function ECOSDashboard() {
   const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+  const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
 
   const ecosId = useParams().ecosId;
 
@@ -72,12 +74,14 @@ export default function ECOSDashboard() {
 
       answer.items.forEach((itemAnswer) => {
 
-        frameworkComponentToCount.items?.forEach((itemToCount) => {      
+        frameworkComponentToCount.items?.forEach((itemToCount) => {
 
           if (itemAnswer.id == itemToCount.id) {
-
-            if (itemAnswer.answer === 1 || itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
-            if (itemAnswer.answer === 4 || itemAnswer.answer === 5) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+            if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
+            if (itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
+            if (itemAnswer.answer === 3) itemToCount.neutral = itemToCount.neutral ? itemToCount.neutral + 1 : 1;
+            if (itemAnswer.answer === 4) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+            if (itemAnswer.answer === 5) itemToCount.totallyAgree = itemToCount.totallyAgree ? itemToCount.totallyAgree + 1 : 1;
           }
         });
       });
@@ -165,9 +169,11 @@ export default function ECOSDashboard() {
     EcosystemService.updateEcosystem(newEcos);
   }
 
+
   return (
     !appLoading &&
     <>
+      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -213,7 +219,7 @@ export default function ECOSDashboard() {
                     }}>
 
                     <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
-                    <Button variant='outlined' startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                    <Button variant='contained' sx={{ width: '36%', mt: 1 }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
                   </Container>
                 </Paper>
               </Grid>
@@ -225,7 +231,7 @@ export default function ECOSDashboard() {
               }}>
                 <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                  <Grid item>{/* Status */}
+                  <Grid item sm={2.8}>{/* Status */}
                     <Paper
                       sx={defaultPaperStyle}
                     >
@@ -239,16 +245,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('time_window')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window > 1) ? 's' : ''}</Button>
-                    </Paper>
-                  </Grid>
-
-                  <Grid item>{/* Amount of rounds */}
-                    <Paper
-                      sx={defaultPaperStyle}
-                    >
-                      <Title>{t('amout_of_rounds')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.amount_rounds} {t('amout_of_rounds_unit')}{(ecos.amount_rounds > 1) ? 's' : ''}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{ecos.time_window} {t('time_window_unit')}{(ecos.time_window > 1) ? 's' : ''}</Button>
                     </Paper>
                   </Grid>
 
@@ -257,7 +254,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('current_round')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{ecos.current_round}º {t('current_round_unit')}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{ecos.current_round}º {t('current_round_unit')}</Button>
                     </Paper>
                   </Grid>
 
@@ -266,7 +263,16 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('responses_label')}</Title>
-                      <Button variant='contained' sx={{ cursor: 'default', p: 1.4 }}>{answers.length}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{answers.length}</Button>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={3}>{/* Manage Participants */}
+                    <Paper
+                      sx={defaultPaperStyle}
+                    >
+                      <Title>{t('manage_participants.title')}</Title>
+                      <Button variant='contained' color='info' sx={{ p: 1.4 }} onClick={() => setManageParticipantsModalState(true)}>{t('manage_participants.title')}</Button>
                     </Paper>
                   </Grid>
 

@@ -25,7 +25,8 @@ interface ListPersonalAndSocialProps {
   personalGroupItems: Items[],
   socialGroupItems: Items[],
   handleListItemClick?: (id: string, name: string, description: string) => void,
-  showVotes?: boolean
+  showVotes?: boolean,
+  showSurveyOptions?: boolean
 }
 
 
@@ -58,7 +59,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         {socialGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={socialGroupOpen} timeout="auto" unmountOnExit>
-        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={25} showVotes={props.showVotes} />
+        <VirtualizedList items={socialGroupItems} handleListItemClick={handleListClick} height={25} showVotes={props.showVotes} showSurveyOptions={props.showSurveyOptions} />
       </Collapse>
 
       <ListItemButton onClick={handlePersonalGroupClick} divider={true} sx={{ height: '1.5rem' }}>
@@ -69,7 +70,7 @@ export default function ListPersonalAndSocial(props: ListPersonalAndSocialProps)
         {personalGroupOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={personalGroupOpen} timeout="auto" unmountOnExit>
-        <VirtualizedList items={personalGroupItems} handleListItemClick={handleListClick} height={25} showVotes={props.showVotes} />
+        <VirtualizedList items={personalGroupItems} handleListItemClick={handleListClick} height={25} showVotes={props.showVotes} showSurveyOptions={props.showSurveyOptions} />
       </Collapse>
     </List>
   )

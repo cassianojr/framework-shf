@@ -2,7 +2,6 @@ import { ModalActions } from "./ModalActions";
 import { ModalEvaluateAction } from "./ModalEvaluateAction";
 import { ModalForm } from "./ModalForm";
 import { ModalList } from "./ModalList";
-import { ModalFrameworkDataTable } from "./ModalFrameworkDataTable";
 import { ModalRoot } from "./ModalRoot";
 import { ModalText } from "./ModalText";
 
@@ -13,5 +12,4 @@ export const Modal = {
   Text: ModalText,
   Actions: ModalActions,
   EvaluateAction: ModalEvaluateAction,
-  FrameworkDataTable: ModalFrameworkDataTable
 }

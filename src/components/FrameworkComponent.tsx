@@ -16,10 +16,11 @@ interface FrameworkComponentProps {
   contextualCharacteristics?: Framework,
   socialHumanFactors?: Framework,
   barriersToImproving?: Framework,
-  strategies?: Framework
+  strategies?: Framework,
+  showSurveyOptions?: boolean
 }
 
-const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
+const FrameworkComponent = React.memo(function FrameworkComponent({ showSurveyOptions = false, showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
 
   const { t } = useTranslation('framework');
 
@@ -68,8 +69,8 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggesti
                     >
                       <div>
                         {socialHumanFactors == undefined || socialGroupItems == undefined || personalGroupItems == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent showSuggestions={showSuggestions} data={socialHumanFactors} showVotes={true} >
-                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} showVotes={true} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={socialHumanFactors} showVotes={true} showSurveyOptions={showSurveyOptions} >
+                            <ListPersonalAndSocial socialGroupItems={socialGroupItems} personalGroupItems={personalGroupItems} showVotes={true} showSurveyOptions={showSurveyOptions} />
                           </AccordionComponent>
                         }
                       </div>
@@ -88,7 +89,7 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggesti
                     >
                       <div>
                         {contextualCharacteristics == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent showSuggestions={showSuggestions} data={contextualCharacteristics} showVotes={true} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={contextualCharacteristics} showVotes={true} showSurveyOptions={showSurveyOptions}/>
                         }
                       </div>
                     </ArcherElement>
@@ -130,7 +131,7 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggesti
                     >
                       <div>
                         {copingMechanisms == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent showSuggestions={showSuggestions} data={copingMechanisms} showVotes={true} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={copingMechanisms} showVotes={true} showSurveyOptions={showSurveyOptions}/>
                         }
                       </div>
                     </ArcherElement>
@@ -154,7 +155,7 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggesti
                     >
                       <div>
                         {barriersToImproving == undefined ? <SkeletonComponent /> :
-                          <AccordionComponent showSuggestions={showSuggestions} data={barriersToImproving} showVotes={true} />
+                          <AccordionComponent showSuggestions={showSuggestions} data={barriersToImproving} showVotes={true} showSurveyOptions={showSurveyOptions}/>
                         }
                       </div>
                     </ArcherElement>
@@ -167,7 +168,7 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSuggesti
                 <ArcherElement id='strategies'>
                   <div>
                     {strategies == undefined ? <SkeletonComponent /> :
-                      <AccordionComponent showSuggestions={showSuggestions} data={strategies} showVotes={true} />
+                      <AccordionComponent showSuggestions={showSuggestions} data={strategies} showVotes={true} showSurveyOptions={showSurveyOptions}/>
                     }
                   </div>
                 </ArcherElement>

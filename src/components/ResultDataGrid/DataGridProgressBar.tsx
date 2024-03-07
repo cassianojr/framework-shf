@@ -45,8 +45,8 @@ export const ProgressBar = React.memo(function ProgressBar(props: ProgressBarPro
       <BarDiv
         className={clsx({
           low: valueInPercent < 30,
-          medium: valueInPercent >= 30 && valueInPercent <= 70,
-          high: valueInPercent > 70,
+          medium: valueInPercent >= 30 && valueInPercent <= 59,
+          high: valueInPercent > 59,
         })}
         style={{ maxWidth: `${valueInPercent}%`}}
       />
