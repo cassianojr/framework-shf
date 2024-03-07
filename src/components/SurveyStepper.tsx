@@ -247,6 +247,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
               barriersToImproving={frameworkItems.barriersToImproving}
               strategies={frameworkItems.strategies}
               showSuggestions={false}
+              showSurveyOptions={true}
             />
           </Box>)
           : <></>}

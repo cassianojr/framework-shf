@@ -64,7 +64,8 @@ interface AccordionComponentProps {
   data: Framework,
   showSuggestions: boolean,
   children?: JSX.Element,
-  showVotes?: boolean
+  showVotes?: boolean,
+  showSurveyOptions?: boolean
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
@@ -315,7 +316,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} />}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} showSurveyOptions={props.showSurveyOptions}/>}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary
