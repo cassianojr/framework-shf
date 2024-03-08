@@ -143,41 +143,44 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
   const validateFeedback = () => {
     let noErrors = true;
+    if (activeStep <= 1) return true;
 
     const verifyableItems = ['SHF01', 'ST01']
-    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep-2].items.current[0].ids['en']) !== undefined);
+    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 2].items.current[0].ids['en']) !== undefined);
 
-    if(!shouldValidateForComments) return noErrors;
-    
-    stepsVote[activeStep-2].items.current.forEach((item) => {
-      if((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)){
+    if (!shouldValidateForComments) return noErrors;
+
+    stepsVote[activeStep - 2].items.current.forEach((item) => {
+      if ((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)) {
 
         noErrors = false;
         item.validationError = true;
 
-      }else{
-        if(item.validationError) item.validationError = false;
+      } else {
+        if (item.validationError) item.validationError = false;
       }
-      
+
     });
-    
+
     setRefresh(!refresh);
-    
+
     return noErrors;
   }
 
-  const validateAnswers = () =>{
+  const validateAnswers = () => {
     let noErrors = true;
 
-    stepsVote[activeStep-2].items.current.forEach((item) => {
-      if(item.ratio === 0){
+    if (activeStep <= 1) return true;
+    
+    stepsVote[activeStep - 2].items.current.forEach((item) => {
+      if (item.ratio === 0) {
         noErrors = false;
         item.validationError = true;
-      }else{
-        if(item.validationError) item.validationError = false;
+      } else {
+        if (item.validationError) item.validationError = false;
       }
     });
-    
+
     setRefresh(!refresh);
     return noErrors;
   }
@@ -194,14 +197,14 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
     const errorOnAnswers = !validateAnswers();
     const errorOnFeedback = !validateFeedback();
-    
-    if(activeStep > 1 && (errorOnFeedback || errorOnAnswers)){
-      if(errorOnFeedback) setFeedBackSnackBar({ severity: "error", text: t('feedback.error') });
-      if(errorOnAnswers) setFeedBackSnackBar({ severity: "error", text: t('validation_error') });
+
+    if (activeStep > 1 && (errorOnFeedback || errorOnAnswers)) {
+      if (errorOnFeedback) setFeedBackSnackBar({ severity: "error", text: t('feedback.error') });
+      if (errorOnAnswers) setFeedBackSnackBar({ severity: "error", text: t('validation_error') });
 
       setFeedBackSnackbarState(true);
       return;
-    } 
+    }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
@@ -221,7 +224,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       type: 'vote',
       texts: [],
       lists: [],
-      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback}/>
+      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback} />
     }
   });
 
