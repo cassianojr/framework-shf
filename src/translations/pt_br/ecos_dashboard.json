@@ -26,5 +26,11 @@
     "delete_btn": "Deletar",
     "name_label": "Nome",
     "edit_title": "Editar Participante"
-  }
+  },
+  "interpretation": "Interpretação",
+  "consensus": "Consenso",
+  "strong_consensus": "Consenso Forte",
+  "consesnus_not_reached": "Consenso não alcançado",
+  "result_tab": "Resultados",
+  "likert_scale_tab": "Escala Likert"
 }

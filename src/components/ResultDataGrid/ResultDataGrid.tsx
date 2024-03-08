@@ -4,6 +4,7 @@ import { Typography } from '@mui/material';
 import i18next from 'i18next';
 import { ProgressBar } from './DataGridProgressBar';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ResultDataGridProps {
   frameworkComponent: Framework | undefined,
@@ -11,6 +12,9 @@ interface ResultDataGridProps {
 }
 
 export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComponent, columnType }: ResultDataGridProps) {
+
+  const { t } = useTranslation(['ecos_survey', 'ecos_dashboard']);
+
 
   const calculatePercentValue = (params: GridRenderCellParams<FrameworkItem, number>, value: number) => {
     const disagree = params.row.disagree ?? 0;
@@ -40,7 +44,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     ...defaultColums,
     {
       field: 'totallyDisagree',
-      headerName: 'Discordo Totalmente',
+      headerName: t('survey_options.strongly_disagree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -51,7 +55,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'disagree',
-      headerName: 'Discordo',
+      headerName: t('survey_options.disagree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -62,7 +66,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'neutral',
-      headerName: 'Não concordo nem discordo',
+      headerName: t('survey_options.neither'),
       width: 120,
       sortable: false,
       resizable: false,
@@ -73,7 +77,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'agree',
-      headerName: 'Concordo',
+      headerName: t('survey_options.agree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -85,7 +89,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'totallyAgree',
-      headerName: 'Concordo Totalmente',
+      headerName: t('survey_options.strongly_agree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -100,7 +104,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     ...defaultColums,
     {
       field: 'disagree',
-      headerName: 'Discordo',
+      headerName:  t('survey_options.disagree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -111,7 +115,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'agree',
-      headerName: 'Concordo',
+      headerName: t('survey_options.agree'),
       width: 100,
       sortable: false,
       resizable: false,
@@ -122,7 +126,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     },
     {
       field: 'intepretation',
-      headerName: 'Interpretação',
+      headerName: t('ecos_dashboard:interpretation'),
       width: 250,
       sortable: false,
       resizable: false,
@@ -132,9 +136,9 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
         const percentDisagree = calculatePercentValue(params, (params.row.disagree ?? 0)+(params.row.totallyDisagree ?? 0)) * 100;
 
         
-        if(percentAgree >= 80 || percentDisagree >= 80 ) return 'Consenso sólido';
-        if(percentAgree >= 60 || percentDisagree >= 60) return 'Consenso';
-        if(percentAgree < 60 || percentDisagree < 60) return 'Consenso não alcançado'
+        if(percentAgree >= 80 || percentDisagree >= 80 ) return t('ecos_dashboard:strong_consensus');
+        if(percentAgree >= 60 || percentDisagree >= 60) return t('ecos_dashboard:consensus');
+        if(percentAgree < 60 || percentDisagree < 60) return t('ecos_dashboard:consesnus_not_reached');
 
       }
     }
