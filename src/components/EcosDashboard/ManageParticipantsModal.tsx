@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from '../Modal'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -99,6 +99,9 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     <>
       <Modal.Root state={modalState} handleClose={handleModalClose} title={t('manage_participants.title')} id="manage-users-modal" size='md'>
         <Modal.Text>
+          
+          <Typography mb={3}>Ao iniciar uma nova pesquisa, os participantes cadastrados abaixo receberão um e-mail contendo o link para responder a pesquisa.</Typography>
+
           <Button variant="contained" color="primary" sx={{ width: '100%', mb: 2 }} onClick={() => setAddParticipantModalState(true)} startIcon={<AddIcon />}>{t('manage_participants.add_participant')}</Button>
           <DataGrid
             rows={participants}

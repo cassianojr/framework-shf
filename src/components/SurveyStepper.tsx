@@ -260,7 +260,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   ];
 
   return (
-    <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '55%', margin: 'auto' }}>
+    <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '65%', margin: 'auto' }}>
       <Box>
         {activeStep === steps.length ? (
           <Box>

@@ -150,8 +150,8 @@ export default function ECOSDashboard() {
 
     const email = user.email ?? "";
 
-    // const endAt = new Date().getTime()+ecos.time_window*7*24*60*60*1000;
-    const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
+    const endAt = new Date().getTime()+ecos.time_window*7*24*60*60*1000;
+    // const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
 
     const endAtString = new Date(endAt).toISOString();
 

@@ -70,7 +70,7 @@ export default function EcosSurvey() {
   const ErrorModal = () => {
     const handleClose = () => {
       setErrorModalState(false);
-      navigate('/dashboard');
+      navigate('/');
     }
 
     return (
