@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { Framework } from '../../types/Framework.type';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,9 +11,10 @@ import { useTranslation } from 'react-i18next';
 interface ResultDataDisplayProps {
   frameworkComponent: Framework | undefined,
   expanded?: boolean,
+  question: string
 }
 
-export default function ResultDataDisplay({ frameworkComponent, expanded = false }: ResultDataDisplayProps) {
+export default function ResultDataDisplay({ frameworkComponent, expanded = false, question }: ResultDataDisplayProps) {
   const { t } = useTranslation('ecos_dashboard');
 
 
@@ -60,8 +61,8 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
         {frameworkComponent?.labels[i18next.language]}
       </AccordionSummary>
       <AccordionDetails>
-        <Box sx={{ height: 340 }}>
-
+        <Box sx={{ height: 400 }}>
+          <Typography variant='h6'>{question}</Typography>
           <Box >
             <Tabs value={tabValue} onChange={handleTabChange} aria-label="data display tabs">
               <Tab label={t('likert_scale_tab')} value={0} />
