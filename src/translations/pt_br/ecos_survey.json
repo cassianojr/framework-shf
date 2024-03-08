@@ -44,6 +44,7 @@
   "feedback": {
     "title": "Deixe seu feedback para ",
     "textarea_label": "Deixe seu feedback aqui",
-    "error": "Para os itens em que você respondeu \"Concrodo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
-  }
+    "error": "Para os itens em que você respondeu \"Concordo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
+  },
+  "validation_error": "Por favor, responda a todas as perguntas antes de passar para o próximo passo."
 }
