@@ -29,7 +29,7 @@ import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipa
 
 export default function ECOSDashboard() {
 
-  const { t } = useTranslation('ecos_dashboard');
+  const { t } = useTranslation(['ecos_dashboard', 'ecos_survey']);
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
@@ -282,12 +282,11 @@ export default function ECOSDashboard() {
               <Grid item lg={12}>{/* Framework instance*/}
                 <Title>{t('framework_results')}</Title>
                 <div>
-                  <ResultDataDisplay frameworkComponent={socialHumanFactors} expanded={true} />
-                  <ResultDataDisplay frameworkComponent={contextualCharacteristics} />
-                  <ResultDataDisplay frameworkComponent={copingMechanisms} />
-                  <ResultDataDisplay frameworkComponent={barriersToImproving} />
-                  <ResultDataDisplay frameworkComponent={strategies} />
-                  <ResultDataDisplay frameworkComponent={copingMechanisms} />
+                  <ResultDataDisplay question={t('ecos_survey:fsh_affirmative')} frameworkComponent={socialHumanFactors} expanded={true} />
+                  <ResultDataDisplay question={t('ecos_survey:cc_affirmative')} frameworkComponent={contextualCharacteristics} />
+                  <ResultDataDisplay question={t('ecos_survey:barriers_affirmative')} frameworkComponent={barriersToImproving} />
+                  <ResultDataDisplay question={t('ecos_survey:strategies_affirmative')} frameworkComponent={strategies} />
+                  <ResultDataDisplay question={t('ecos_survey:coping_mec_affirmative')} frameworkComponent={copingMechanisms} />
                 </div>
               </Grid>
 

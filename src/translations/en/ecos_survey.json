@@ -45,5 +45,6 @@
     "title": "Leave your feedback for ",
     "textarea_label": "Leave your feedback here",
     "error": "For items where you selected 'Strongly Agree' or 'Strongly Disagree,' please provide a comment."
-  }
+  },
+  "validation_error": "Please, answer all questions before moving on the next step."
 }

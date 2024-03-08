@@ -1,18 +1,23 @@
-import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { Framework } from '../../types/Framework.type';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ResultDataGrid } from '../ResultDataGrid/ResultDataGrid';
 import { Box } from '@mui/system';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 interface ResultDataDisplayProps {
   frameworkComponent: Framework | undefined,
   expanded?: boolean,
+  question: string
 }
 
-export default function ResultDataDisplay({ frameworkComponent, expanded = false }: ResultDataDisplayProps) {
+export default function ResultDataDisplay({ frameworkComponent, expanded = false, question }: ResultDataDisplayProps) {
+  const { t } = useTranslation('ecos_dashboard');
+
+
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -56,12 +61,12 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
         {frameworkComponent?.labels[i18next.language]}
       </AccordionSummary>
       <AccordionDetails>
-        <Box sx={{ height: 340 }}>
-
+        <Box sx={{ height: 400 }}>
+          <Typography variant='h6'>{question}</Typography>
           <Box >
             <Tabs value={tabValue} onChange={handleTabChange} aria-label="data display tabs">
-              <Tab label="Escala Likert" value={0} />
-              <Tab label="Resultado" value={1} />
+              <Tab label={t('likert_scale_tab')} value={0} />
+              <Tab label={t('result_tab')} value={1} />
             </Tabs>
           </Box>
 

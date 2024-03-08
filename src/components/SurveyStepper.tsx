@@ -141,13 +141,13 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     });
   }
 
-  const validateAnswers = () => {
+  const validateFeedback = () => {
     let noErrors = true;
 
     const verifyableItems = ['SHF01', 'ST01']
-    const shouldValidate = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep-2].items.current[0].ids['en']) !== undefined);
+    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep-2].items.current[0].ids['en']) !== undefined);
 
-    if(!shouldValidate) return noErrors;
+    if(!shouldValidateForComments) return noErrors;
     
     stepsVote[activeStep-2].items.current.forEach((item) => {
       if((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)){
@@ -166,6 +166,22 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     return noErrors;
   }
 
+  const validateAnswers = () =>{
+    let noErrors = true;
+
+    stepsVote[activeStep-2].items.current.forEach((item) => {
+      if(item.ratio === 0){
+        noErrors = false;
+        item.validationError = true;
+      }else{
+        if(item.validationError) item.validationError = false;
+      }
+    });
+    
+    setRefresh(!refresh);
+    return noErrors;
+  }
+
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       setAnswersToFrameworkComponent();
@@ -176,8 +192,13 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       return;
     }
 
-    if(activeStep > 1 && !validateAnswers()){
-      setFeedBackSnackBar({ severity: "error", text: t('feedback.error') });
+    const errorOnAnswers = !validateAnswers();
+    const errorOnFeedback = !validateFeedback();
+    
+    if(activeStep > 1 && (errorOnFeedback || errorOnAnswers)){
+      if(errorOnFeedback) setFeedBackSnackBar({ severity: "error", text: t('feedback.error') });
+      if(errorOnAnswers) setFeedBackSnackBar({ severity: "error", text: t('validation_error') });
+
       setFeedBackSnackbarState(true);
       return;
     } 
@@ -200,7 +221,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       type: 'vote',
       texts: [],
       lists: [],
-      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateAnswers}/>
+      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback}/>
     }
   });
 
