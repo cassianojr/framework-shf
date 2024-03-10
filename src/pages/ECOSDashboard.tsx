@@ -62,7 +62,7 @@ export default function ECOSDashboard() {
   }
 
   const defaultPaperStyle = {
-    p: 2,
+    p: 1,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -231,7 +231,7 @@ export default function ECOSDashboard() {
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '30%',
+                      width: '31%',
 
                     }}>
                       <Button variant='contained' sx={{ width: '100%' }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
