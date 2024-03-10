@@ -71,7 +71,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'fully-disagree',
       headerName: t('survey_options.strongly_disagree'),
-      // width: 90,
       flex: 1.3,
       sortable: false,
       resizable: false,
@@ -80,7 +79,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'disagree',
       headerName: t('survey_options.disagree'),
-      // width: 90,
       flex: 1.1,
       sortable: false,
       resizable: false,
@@ -89,7 +87,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'neutral',
       headerName: t('survey_options.neither'),
-      // width: 90,
       flex: 1.2,
       sortable: false,
       resizable: false,
@@ -98,7 +95,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'agree',
       headerName: t('survey_options.agree'),
-      // width: 90,
       flex: 1.2,
       sortable: false,
       resizable: false,
@@ -107,7 +103,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'fully-agree',
       headerName: t('survey_options.strongly_agree'),
-      // width: 90,
       flex: 1.3,
       sortable: false,
       resizable: false,
@@ -116,7 +111,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'comment',
       headerName: '',
-      // width: 50,
       flex: 0.7,
       sortable: false,
       resizable: false,

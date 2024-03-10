@@ -216,7 +216,7 @@ export default function ECOSDashboard() {
                 <Paper
                   sx={defaultPaperStyle}>
                   <Title>{t('ecos_link')}</Title>
-                  <Container
+                  <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -225,19 +225,19 @@ export default function ECOSDashboard() {
                       alignItems: 'center',
                     }}>
 
-                    <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
+                    <Typography sx={{ fontWeight: 'bold'}}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
                     <Box sx={{
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '36%',
+                      width: '34%',
 
                     }}>
                       <Button variant='contained' sx={{ width: '100%' }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
                       <Button variant='contained' sx={{ width: '100%', mt: 1 }} startIcon={<AddIcon />} onClick={() => setAddParticipantModalState(true)}>{t('manage_participants.add_participant')}</Button>
                     </Box>
-                  </Container>
+                  </Box>
                 </Paper>
               </Grid>
 
