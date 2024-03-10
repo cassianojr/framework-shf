@@ -54,9 +54,9 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
+    { field: 'id', headerName: 'ID', flex: 1, sortable: false, resizable: false },
     {
-      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
+      field: 'name', headerName: t('item_name'), flex: 3.5, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
         const item = items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
 
         return (
@@ -71,7 +71,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'fully-disagree',
       headerName: t('survey_options.strongly_disagree'),
-      width: 90,
+      // width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(1, params)
@@ -79,7 +80,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'disagree',
       headerName: t('survey_options.disagree'),
-      width: 90,
+      // width: 90,
+      flex: 1.1,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(2, params)
@@ -87,7 +89,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'neutral',
       headerName: t('survey_options.neither'),
-      width: 90,
+      // width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(3, params)
@@ -95,7 +98,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'agree',
       headerName: t('survey_options.agree'),
-      width: 90,
+      // width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(4, params)
@@ -103,7 +107,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'fully-agree',
       headerName: t('survey_options.strongly_agree'),
-      width: 90,
+      // width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(5, params)
@@ -111,7 +116,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'comment',
       headerName: '',
-      width: 50,
+      // width: 50,
+      flex: 0.7,
       sortable: false,
       resizable: false,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem,
