@@ -231,7 +231,7 @@ export default function ECOSDashboard() {
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '34%',
+                      width: '30%',
 
                     }}>
                       <Button variant='contained' sx={{ width: '100%' }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
