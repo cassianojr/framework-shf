@@ -201,7 +201,7 @@ export default function ECOSDashboard() {
 
             <Grid container spacing={3}>
 
-              <Grid item xs={3}>{/* Start survey */}
+              <Grid item>{/* Start survey */}
                 <Paper
                   sx={defaultPaperStyle}
                 >
@@ -248,7 +248,7 @@ export default function ECOSDashboard() {
               }}>
                 <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                  <Grid item sm={2.8}>{/* Status */}
+                  <Grid item >{/* Status */}
                     <Paper
                       sx={defaultPaperStyle}
                     >
