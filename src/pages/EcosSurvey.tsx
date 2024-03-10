@@ -140,35 +140,35 @@ export default function EcosSurvey() {
         setQuestions([
           {
             id: "social-human-factors",
-            title: t('fsh_affirmative'),
+            title: 'fsh_affirmative',
             items: shfRef,
             changeItems: changeShfRef,
             order: 1
           },
           {
             id: "contextual-characteristics",
-            title: t('cc_affirmative'),
+            title: 'cc_affirmative',
             items: contextualCharacteristicsRef,
             changeItems: changeContextualCharacteristicsRef,
             order: 2
           },
           {
             id: "barriers-to-improving",
-            title: t('barriers_affirmative'),
+            title: 'barriers_affirmative',
             items: barriersToImprovingRef,
             changeItems: changeBarriersToImprovingRef,
             order: 3
           },
           {
             id: "strategies",
-            title: t('strategies_affirmative'),
+            title: 'strategies_affirmative',
             items: strategiesRef,
             changeItems: changeStrategiesRef,
             order: 4
           },
           {
             id: "coping-mechanisms",
-            title: t('coping_mec_affirmative'),
+            title: 'coping_mec_affirmative',
             items: copingMechanismRef,
             changeItems: changeCopingMechanismRef,
             order: 5

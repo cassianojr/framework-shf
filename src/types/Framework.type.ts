@@ -19,7 +19,8 @@ interface FrameworkItem {
   disagree?: number,
   totallyDisagree?: number,
   comment?: string,
-  validationError?: boolean
+  validationError?: boolean,
+  feedbackValidationError?: boolean
 }
 
 interface Framework {

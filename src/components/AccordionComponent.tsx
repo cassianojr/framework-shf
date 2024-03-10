@@ -69,7 +69,7 @@ interface AccordionComponentProps {
 }
 
 export default function AccordionComponent(props: AccordionComponentProps) {
-  const { data, showSuggestions, showVotes } = props;
+  const { data, showSuggestions, showVotes, showSurveyOptions } = props;
 
   const { t } = useTranslation(['framework', 'common']);
 
@@ -257,7 +257,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
   const listModal = (
     <Modal.Root state={listModalState} handleClose={handleClose} id={listModalContent.id} title={listModalContent.title}>
-      <Modal.List items={listModalContent.items} handleItemClick={handleListItemModalClick} showVotes={showVotes} />
+      <Modal.List showSurveyOptions={showSurveyOptions} items={listModalContent.items} handleItemClick={handleListItemModalClick} showVotes={showVotes} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
@@ -266,9 +266,9 @@ export default function AccordionComponent(props: AccordionComponentProps) {
   const modalPersonalsocial = (
     <Modal.Root state={modalPersonalsocialState} handleClose={handleClose} id={modalPersonalsocialContent.id} title={modalPersonalsocialContent.title}>
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><GroupIcon sx={{ fontSize: '1.2rem' }} /> {t('social_group_label')}</Typography>
-      <Modal.List items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
+      <Modal.List showSurveyOptions={showSurveyOptions} items={modalPersonalsocialContent.socialGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
       <Typography variant='h6' style={{ paddingInline: '1rem' }}><PersonIcon sx={{ fontSize: '1.2rem' }} /> {t('personal_group_label')}</Typography>
-      <Modal.List items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
+      <Modal.List showSurveyOptions={showSurveyOptions} items={modalPersonalsocialContent.personalGroup} handleItemClick={handleListPersonalSocialItemModalClick} showVotes={showVotes} />
       <Divider />
       <Modal.Actions handleClose={handleClose} />
     </Modal.Root>
@@ -316,7 +316,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} showSurveyOptions={props.showSurveyOptions}/>}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} showSurveyOptions={showSurveyOptions}/>}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary

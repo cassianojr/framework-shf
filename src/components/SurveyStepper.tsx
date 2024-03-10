@@ -95,7 +95,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
               ids: item.ids,
               names: item.names,
               answer: item.ratio,
-              comment: item.comment
+              comment: item.comment??''
             }
           })
         }
@@ -154,10 +154,10 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       if ((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)) {
 
         noErrors = false;
-        item.validationError = true;
+        item.feedbackValidationError = true;
 
       } else {
-        if (item.validationError) item.validationError = false;
+        if (item.feedbackValidationError) item.feedbackValidationError = false;
       }
 
     });
@@ -217,7 +217,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   const stepperContents = stepsVote.map((step) => {
     return {
       id: step.id,
-      title: step.title,
+      title: t(step.title),
       items: step.items,
       changeItems: step.changeItems,
       order: step.order,

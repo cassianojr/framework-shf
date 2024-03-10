@@ -11,7 +11,7 @@ import { Modal } from "./Modal";
 interface SurveyOptionsDataTableProps {
   items: React.MutableRefObject<FrameworkItem[]>,
   changeItems: (value: FrameworkItem[]) => void,
-  validateAnswers: () => boolean
+  validateAnswers: () => void
 }
 
 interface CommentModalProps {
@@ -48,8 +48,8 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
       name="item-ratio"
       onChange={(event) => handleRadioChange(event, params.id as string)}
       value={value}
-      sx={item?.validationError ? { ...errorStyle } : {}}
-      color={item?.validationError ? 'error' : 'primary'}
+      sx={(item?.validationError || item?.feedbackValidationError) ? { ...errorStyle } : {}}
+      color={(item?.validationError || item?.feedbackValidationError) ? 'error' : 'primary'}
     />);
   }
 
@@ -64,7 +64,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
             <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
               <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
             </Tooltip>
-            <Typography sx={(item.validationError) ? { ...errorStyle, marginLeft: '.3rem' } : { marginLeft: '.3rem', }}>{item.names[i18next.language]}</Typography>
+            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem' } : { marginLeft: '.3rem', }}>{item.names[i18next.language]}</Typography>
           </>)
       }
     },
@@ -115,7 +115,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
       sortable: false,
       resizable: false,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, FrameworkItem>) => <CommentIcon onClick={() => openCommentModal(params.row)} sx={{ cursor: 'pointer' }} color={(params.value?.validationError) ? 'error' : 'primary'} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, FrameworkItem>) => <CommentIcon onClick={() => openCommentModal(params.row)} sx={{ cursor: 'pointer' }} color={(params.value?.validationError || params.value?.feedbackValidationError) ? 'error' : 'primary'} />,
     }
   ]
 
