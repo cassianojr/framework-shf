@@ -5,6 +5,7 @@
   "snackbar_link_copied": "Link Copied!",
   "framework_results": "Framework Results",
   "start_survey": "Start Survey",
+  "survey_started": "Survey Started",
   "time_window": "Response Time Window",
   "time_window_unit": "week",
   "amout_of_rounds": "Number of Rounds",
@@ -20,6 +21,7 @@
   },
   "manage_participants": {
     "title": "Manage Participants",
+    "subtitle": "When you add a participant, they will receive an email with a link to the survey.",
     "add_participant": "Add Participant",
     "save_btn": "Save",
     "edit_btn": "Edit",

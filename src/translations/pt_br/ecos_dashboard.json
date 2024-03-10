@@ -5,6 +5,7 @@
 	"snackbar_link_copied": "Link Copiado!",
 	"framework_results": "Resultados no Framework",
   "start_survey": "Iniciar Pesquisa",
+  "survey_started": "Pesquisa Iniciada",
   "time_window": "Tempo para a resposta",
   "time_window_unit": "semana",
   "amout_of_rounds": "Quantidade de rodadas",
@@ -20,6 +21,7 @@
   },
   "manage_participants": {
     "title": "Gerenciar Participantes",
+    "subtitle": "Ao iniciar uma nova pesquisa, os participantes cadastrados abaixo receberão um e-mail contendo o link para responder a pesquisa.",
     "add_participant": "Adicionar Participante",
     "save_btn": "Salvar",
     "edit_btn": "Editar",
