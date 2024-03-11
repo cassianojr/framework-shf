@@ -33,8 +33,6 @@ export default class EcosystemService {
 
   public static updateEcosystem(ecos: Ecosystem): void {
     const { organization_name, admin_id, time_window, id, status, current_round, responses, participants } = ecos;
-
-    console.log(participants);
     
     if(id === undefined) throw new Error("Ecosystem id is undefined");
 
