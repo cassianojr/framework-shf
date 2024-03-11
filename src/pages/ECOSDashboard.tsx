@@ -162,9 +162,10 @@ export default function ECOSDashboard() {
 
     if (email === "" || ecosId == null) return;
 
-    if (ecos.current_round !== 1 && answers.length > 0) {
-      answers.forEach((answer) => {
-        EmailService.notifyStartSurvey(answer.user_email, ecos.organization_name, ecosId, i18next.language);
+
+    if (ecos.participants !== undefined && ecos.participants.length > 0) {
+      ecos.participants.forEach((participant) => {
+        EmailService.notifyStartSurvey(participant.email, ecos.organization_name, ecosId, i18next.language);
       });
     }
 
