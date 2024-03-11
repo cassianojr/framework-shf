@@ -2,20 +2,27 @@
   "back_btn": "Back",
   "next_btn": "Next",
   "snackbar_text": "Thanks for your answer!",
-  "welcome_text": "Welcome to the Research on Social and Human Factors in Software Ecosystems!",
-  "fsh_affirmative": "The social and human factors listed below influence requirements management in software ecosystems.",
-  "cc_affirmative": "The contextual characteristics of requirements management in software ecosystems listed below have an impact on the importance of considering social and human factors.",
-  "barriers_affirmative": "The barriers listed below hinder the improvement of social and human factors in requirements management in software ecosystems.",
-  "strategies_affirmative": "The improvement strategies listed below can be used to overcome barriers and enhance social and human factors.",
-  "coping_mec_affirmative": "The coping mechanisms listed below can be used when improvement strategies do not work.",
+  "welcome_text": "Welcome to the survey on social and human factors in requirements management in software ecosystems!",
   "instructions": {
-    "p1": "The components and items presented here represent the vision of a conceptual action framework for understanding and improving social and human factors that influence requirements management in software ecosystems. These components and their items were identified in a rapid review study on social and human factors in requirements engineering in software ecosystems (Citation of the rapid review) and in a field study on social and human factors in requirements management in software ecosystems (Citation of the field study). Each of the components and items is accompanied by its definition derived from studies related to social and human factors in requirements management in software ecosystems.",
-    "p2": "Instructions for the analysis of components and their items:",
+    "p1": "The components and items presented here represent the vision of a conceptual framework actionable for understanding and improving social and human factors influencing requirements management in software ecosystems. These components and their items were identified in a rapid review study on social and human factors in requirements engineering in software ecosystems (citation of the rapid review) and a field study on social and human factors in requirements management in software ecosystems (citation of the field study). Each component and item is accompanied by its definition derived from studies related to social and human factors in requirements management in software ecosystems.",
+    "p2": "Instructions for answer the survey:",
     "i1": "Read the definition of the components and their respective items;",
     "i2": "Carefully analyze each statement associated with the components and items;",
     "i3": "Respond according to the reality of your organization (software ecosystem);",
     "i4": "Mark your response among the options: (“Strongly Agree”, “Agree”, “Neither Agree nor Disagree”, “Disagree”, or “Strongly Disagree”)."
   },
+  "consent_term": {
+    "title": "Consent form",
+    "p1": "You are invited to participate in a survey to understand the social and human factors influencing requirements management in your organization (software ecosystem).",
+    "p2": "Participation is voluntary, and you may withdraw at any time without any prejudice. The information collected will be used solely for scientific purposes, and there will be no identification of participants.",
+    "p3": "By clicking “Agree”, you will agree to participate in the survey. If you have any questions, don't hesitate to contact the organization responsible for the survey.",
+    "p4": "Do you agree to participate in the survey?"
+  },
+  "fsh_affirmative": "The social and human factors listed below influence requirements management in software ecosystems.",
+  "cc_affirmative": "The contextual characteristics of requirements management in software ecosystems listed below have an impact on the importance of considering social and human factors.",
+  "barriers_affirmative": "The barriers listed below hinder the improvement of social and human factors in requirements management in software ecosystems.",
+  "strategies_affirmative": "The improvement strategies listed below can be used to overcome barriers and enhance social and human factors.",
+  "coping_mec_affirmative": "The coping mechanisms listed below can be used when improvement strategies do not work.",
   "survey_options": {
     "strongly_agree": "Strongly Agree",
     "agree": "Agree",
@@ -34,13 +41,6 @@
     "not_accept_answers": "This ecosystem is not waiting for answers right now. Please wait for the next round begin."
   },
   "agree_btn": "Agree",
-  "consent_term": {
-    "title": "Informed Consent Form",
-    "p1": "You are invited to participate in a research aimed at evaluating professionals' perception of Social and Human Factors affecting requirements management in Software Ecosystems. The research is conducted through an online questionnaire that will take approximately 10 minutes to complete.",
-    "p2": "Participation is voluntary, and you may withdraw at any time without any prejudice. The information collected will be used solely for scientific purposes, and there will be no identification of participants.",
-    "p3": "By clicking 'Agree,' you are consenting to participate in the research. If you have any questions, please contact the researcher responsible for the study.",
-    "p4": "Do you agree to participate in the research?"
-  },
   "feedback": {
     "title": "Leave your feedback for ",
     "textarea_label": "Leave your feedback here",

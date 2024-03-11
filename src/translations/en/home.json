@@ -1,16 +1,16 @@
 {
 	"hero": {
 		"button_try_now": "Try Now!",
-		"description": "The framework SHFiRM-SECO is a tool to help the identification and improvement of social and human factors in requirements management in software ecosystems.",
-		"title": "Explore Social and Human Factors"
+		"description": "Welcome to our tool, designed to facilitate identifying and improving social and human factors in requirements management within software ecosystems. Our goal is to provide an intuitive and effective platform that assists professionals and teams in understanding and addressing the social and human factors that influence requirements management activities in complex software development environments. Explore our tool to gain valuable insights and implement meaningful improvements in your software project.",
+		"title": "Explore the social and human factors that influence requirements management in your software ecosystem."
 	},
 	"main": {
 		"list_item": {
-			"1": "Identify the social and human factors that influence requirements management activities in your software ecosystem;",
-			"2": "Identify the contextual characteristics of requirements management in your software ecosystem;",
-			"3": "Point out the barriers you face to improving social and human factors;",
-			"4": "Get suggestions for strategies and coping mechanisms to use for requirements management in your software ecosystem;"
+			"1": "Identify the social and human factors influencing requirements management activities in your software ecosystem; ",
+			"2": "Discover the contextual characteristics of requirements management in your software ecosystem;",
+			"3": "Highlight the barriers you and your team face in improving social and human factors in requirements management in your software ecosystem.",
+			"4": "Obtain suggestions for improvement strategies and coping mechanisms to use during requirements management activities in your software ecosystem."
 		},
-		"title": "Get a 360º view of social and human factors"
+		"title": "Gain a comprehensive understanding of your software ecosystem's social and human factors influencing requirements management."
 	}
 }
