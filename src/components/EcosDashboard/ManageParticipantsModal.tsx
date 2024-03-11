@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from '../Modal'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,10 +15,12 @@ interface ManageParticipantsModalProps {
   setModalState: React.Dispatch<React.SetStateAction<boolean>>,
   modalState: boolean,
   ecos: Ecosystem,
-  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>
+  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>,
+  addParticipantModalState: boolean,
+  setAddParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ManageParticipantsModal({ setModalState, modalState, ecos, setEcos }: ManageParticipantsModalProps) {
+export default function ManageParticipantsModal({ setModalState, modalState, ecos, setEcos, addParticipantModalState, setAddParticipantModalState }: ManageParticipantsModalProps) {
 
   const participants = ecos.participants || [] as Participant[];
 
@@ -31,7 +33,6 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
   } as Participant);
 
 
-  const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
   const [editParticipantModalState, setEditParticipantModalState] = React.useState(false);
 
   const columns: GridColDef[] = [
@@ -99,6 +100,9 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     <>
       <Modal.Root state={modalState} handleClose={handleModalClose} title={t('manage_participants.title')} id="manage-users-modal" size='md'>
         <Modal.Text>
+          
+          <Typography mb={3}>{t('manage_participants.subtitle')}</Typography>
+
           <Button variant="contained" color="primary" sx={{ width: '100%', mb: 2 }} onClick={() => setAddParticipantModalState(true)} startIcon={<AddIcon />}>{t('manage_participants.add_participant')}</Button>
           <DataGrid
             rows={participants}

@@ -1,17 +1,17 @@
 {
 	"list": {
 		"1": {
-			"description": "A primeira etapa é identificar os problemas. O primeiro passo para avaliar os FSH que influenciam a gerência de requisitos em ECOS é conhecer os fatores do dia a dia dos profissionais que atuam nas atividades da gerência de requisitos. Com isso, pergunte aos profissionais da equipe quais fatores eles já enfrentaram, apresente a lista de barreiras e entenda se eles já encontraram algumas delas em suas atividades da gerência de requisitos em ECOS. É fundamental que esta etapa seja feita individualmente, podendo também utilizar formulários on-line se preferir.",
-			"title": "Pergunte (Ask):"
+			"description": "A primeira etapa é identificar os problemas. O primeiro passo para avaliar os fatores sociais e humanos que influenciama gerência de requisitos em ecossistemas de software é conhecer os fatores do dia a dia dos profissionais que atuam nas atividades dagerência de requisitos e descobrir as características contextuais da gerência de requisitos. Com isso, pergunte aos profissionais da equipe quais fatores eles já enfrentaram, apresente a lista de barreiras que impedem a melhoria dos fatores sociais e humanos e entenda se eles já encontraram algumas em suas atividades na gerência de requisitos em ecossistemas de software. Pergunte quais estratégias de melhoria e mecanismos de enfrentamento os profissionais consideram que podem ser utilizados para superar as barreirase melhorar os fatores sociais e humanos. A ferramenta permite coletar feedback por meio de questionário estruturado em formato de pesquisa organizacional e também pode ser utilizada para coletar feedback por meio de métodos não estruturados (por exemplo, retrospectivas, reuniões individuais). É fundamental que esta etapa seja feita individualmente. ",
+      "title": "Pergunte (Ask):"
 		},
 		"2": {
-			"description": " As estratégias de melhoria devem ocorrer no nível individual da equipe e organizacional, dependendo dos fatores e barreiras identificados. Após coletar feedback, as respostas devem ser avaliadas para determinar quais barrerias e fatores requerem a priorização para melhoria. Deve-se planejar estratégias de melhoria e alocar recursos financeiros para retificação, se necessário.",
-			"title": "Planeje (Plan):"
+			"description": " As estratégias de melhoria devem ocorrer no nível individual da equipe e organizacional, dependendo dos fatores sociais e humanos e das barreiras identificadas. Após coletar o feedback, as respostas devem ser analisadas para determinar quais barreiras e fatores sociais e humanos requerem priorização para melhoria. Deve-se planejar as estratégias de melhoria e alocar recursos financeiros para retificação, se necessário. ",
+      "title": "Planeje (Plan):"
 		},
 		"3": {
-			"description": "Pequenas melhorias contínuas e iterativas são fundamentais. Implemente gradualmente as estratégias de melhoria e avalie se elas efetivamente abordam as barreiras e os fatores. Acompanhar o sucesso das estratégias é fundamental para superar as barreiras e melhorar os FSH. Depos que as melhorias planejadas forem implementadas, repita esse processo de três etapas iterativamente para sustentar o progresso e abordar os seguintes fatores e barreiras, mantendo assim um processo de melhoria contínua.",
-			"title": "Execute (Act):"
+			"description": " Pequenas melhorias contínuas e iterativas são fundamentais. Implemente gradualmente as estratégias de melhoria e avalie se elas efetivamente abordam as barreiras e os fatores sociais e humanos. Acompanhar o sucesso das estratégias de melhoria é fundamental para superar as barreiras e melhorar os fatores sociais e humanos. Depois que as melhorias planejadas forem implementadas, repita esse processo de três etapas iterativamente para sustentar o progresso e abordar os fatores e barreiras, mantendo assim um processo de melhoria contínua.",
+      	"title": "Execute (Act):"
 		}
 	},
-	"title": "Diretrizes para Utilização"
+	"title": "Diretrizes para utilização da ferramenta"
 }

@@ -1,36 +1,38 @@
 {
-	"copy_link_btn": "Copiar Link",
+	"copy_link_btn": "Copiar link",
 	"ecos_link": "Link da pesquisa",
 	"responses_label": "Respostas",
-	"snackbar_link_copied": "Link Copiado!",
-	"framework_results": "Resultados no Framework",
-  "start_survey": "Iniciar Pesquisa",
+	"snackbar_link_copied": "Link copiado!",
+	"framework_results": "Resultados",
+  "start_survey": "Iniciar pesquisa",
+  "survey_started": "Pesquisa iniciada",
   "time_window": "Tempo para a resposta",
   "time_window_unit": "semana",
   "amout_of_rounds": "Quantidade de rodadas",
   "amout_of_rounds_unit": "rodada",
   "current_round": "Rodada atual",
   "current_round_unit": "rodada",
-  "survey_status_label": "Status da Pesquisa",
+  "survey_status_label": "Status da pesquisa",
   "survey_status": {
     "not_started": "Não iniciada",
-    "waiting_for_answers": "Aguardando Respostas",
-    "in_analysis": "Em Análise",
+    "waiting_for_answers": "Aguardando respostas",
+    "in_analysis": "Em análise",
     "finished": "Finalizada"
   },
   "manage_participants": {
-    "title": "Gerenciar Participantes",
-    "add_participant": "Adicionar Participante",
+    "title": "Gerenciar participantes",
+    "subtitle": "Ao iniciar uma nova pesquisa, os participantes cadastrados abaixo receberão um e-mail contendo o link para responder a pesquisa.",
+    "add_participant": "Adicionar participante",
     "save_btn": "Salvar",
     "edit_btn": "Editar",
     "delete_btn": "Deletar",
     "name_label": "Nome",
-    "edit_title": "Editar Participante"
+    "edit_title": "Editar participante"
   },
   "interpretation": "Interpretação",
   "consensus": "Consenso",
-  "strong_consensus": "Consenso Forte",
+  "strong_consensus": "Consenso forte",
   "consesnus_not_reached": "Consenso não alcançado",
   "result_tab": "Resultados",
-  "likert_scale_tab": "Escala Likert"
+  "likert_scale_tab": "Escala likert"
 }

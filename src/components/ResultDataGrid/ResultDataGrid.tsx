@@ -25,6 +25,8 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
 
     const totalVotes = agree+disagree+totallyDisagree+totallyAgree+neutral;
 
+    if(totalVotes === 0) return 0;
+
     return value / totalVotes;
   };
   
@@ -32,7 +34,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
     {
       field: 'name',
       headerName: 'Nome',
-      width: 545,
+      flex: 4,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <Typography>{params.value}</Typography>,

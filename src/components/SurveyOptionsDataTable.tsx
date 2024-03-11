@@ -11,7 +11,7 @@ import { Modal } from "./Modal";
 interface SurveyOptionsDataTableProps {
   items: React.MutableRefObject<FrameworkItem[]>,
   changeItems: (value: FrameworkItem[]) => void,
-  validateAnswers: () => boolean
+  validateAnswers: () => void
 }
 
 interface CommentModalProps {
@@ -48,15 +48,15 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
       name="item-ratio"
       onChange={(event) => handleRadioChange(event, params.id as string)}
       value={value}
-      sx={item?.validationError ? { ...errorStyle } : {}}
-      color={item?.validationError ? 'error' : 'primary'}
+      sx={(item?.validationError || item?.feedbackValidationError) ? { ...errorStyle } : {}}
+      color={(item?.validationError || item?.feedbackValidationError) ? 'error' : 'primary'}
     />);
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70, sortable: false, resizable: false },
+    { field: 'id', headerName: 'ID', flex: 1, sortable: false, resizable: false },
     {
-      field: 'name', headerName: t('item_name'), width: 350, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
+      field: 'name', headerName: t('item_name'), flex: 3.3, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
         const item = items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
 
         return (
@@ -64,14 +64,14 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
             <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
               <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
             </Tooltip>
-            <Typography sx={(item.validationError) ? { ...errorStyle, marginLeft: '.3rem' } : { marginLeft: '.3rem', }}>{item.names[i18next.language]}</Typography>
+            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem' } : { marginLeft: '.3rem', }}>{item.names[i18next.language]}</Typography>
           </>)
       }
     },
     {
       field: 'fully-disagree',
       headerName: t('survey_options.strongly_disagree'),
-      width: 90,
+      flex: 1.3,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(1, params)
@@ -79,7 +79,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'disagree',
       headerName: t('survey_options.disagree'),
-      width: 90,
+      flex: 1.1,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(2, params)
@@ -87,7 +87,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'neutral',
       headerName: t('survey_options.neither'),
-      width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(3, params)
@@ -95,7 +95,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'agree',
       headerName: t('survey_options.agree'),
-      width: 90,
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(4, params)
@@ -103,7 +103,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'fully-agree',
       headerName: t('survey_options.strongly_agree'),
-      width: 90,
+      flex: 1.3,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(5, params)
@@ -111,11 +111,11 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     {
       field: 'comment',
       headerName: '',
-      width: 50,
+      flex: 0.7,
       sortable: false,
       resizable: false,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, FrameworkItem>) => <CommentIcon onClick={() => openCommentModal(params.row)} sx={{ cursor: 'pointer' }} color={(params.value?.validationError) ? 'error' : 'primary'} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, FrameworkItem>) => <CommentIcon onClick={() => openCommentModal(params.row)} sx={{ cursor: 'pointer' }} color={(params.value?.validationError || params.value?.feedbackValidationError) ? 'error' : 'primary'} />,
     }
   ]
 

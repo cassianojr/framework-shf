@@ -24,6 +24,9 @@ import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
 import EmailService from '../services/EmailService';
 import i18next from 'i18next';
 
+import AddIcon from '@mui/icons-material/Add';
+
+
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipantsModal';
 
@@ -44,6 +47,8 @@ export default function ECOSDashboard() {
   const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
   const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
   const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
+  const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
+
 
   const ecosId = useParams().ecosId;
 
@@ -57,7 +62,7 @@ export default function ECOSDashboard() {
   }
 
   const defaultPaperStyle = {
-    p: 2,
+    p: 1,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -150,8 +155,8 @@ export default function ECOSDashboard() {
 
     const email = user.email ?? "";
 
-    // const endAt = new Date().getTime()+ecos.time_window*7*24*60*60*1000;
-    const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
+    const endAt = new Date().getTime() + ecos.time_window * 7 * 24 * 60 * 60 * 1000;
+    // const endAt = new Date().getTime() + 10 * 1000; // 10 seconds TODO change to the line above
 
     const endAtString = new Date(endAt).toISOString();
 
@@ -173,7 +178,7 @@ export default function ECOSDashboard() {
   return (
     !appLoading &&
     <>
-      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} />
+      <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -196,12 +201,14 @@ export default function ECOSDashboard() {
 
             <Grid container spacing={3}>
 
-              <Grid item xs={3}>{/* Start survey */}
+              <Grid item>{/* Start survey */}
                 <Paper
                   sx={defaultPaperStyle}
                 >
                   <Title>{t('start_survey')}</Title>
-                  <Button variant='contained' color='success' sx={{ p: 1.4 }} onClick={handleStartSurvey}>{t('start_survey')}</Button>
+                  <Button variant='contained' color='success' disabled={ecos.status === 'waiting-for-answers'} sx={{ p: 1.4 }} onClick={handleStartSurvey}>
+                    {(ecos.status === 'waiting-for-answers') ? t('survey_started') : t('start_survey')}
+                  </Button>
                 </Paper>
               </Grid>
 
@@ -209,7 +216,7 @@ export default function ECOSDashboard() {
                 <Paper
                   sx={defaultPaperStyle}>
                   <Title>{t('ecos_link')}</Title>
-                  <Container
+                  <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -218,9 +225,19 @@ export default function ECOSDashboard() {
                       alignItems: 'center',
                     }}>
 
-                    <Typography sx={{ fontWeight: 'bold' }}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
-                    <Button variant='contained' sx={{ width: '36%', mt: 1 }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
-                  </Container>
+                    <Typography sx={{ fontWeight: 'bold'}}><Link href={surveyLink} target='_blank'>{surveyLink}</Link></Typography>
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '31%',
+
+                    }}>
+                      <Button variant='contained' sx={{ width: '100%' }} startIcon={<ContentCopyIcon />} onClick={handleCopyLink}>{t('copy_link_btn')}</Button>
+                      <Button variant='contained' sx={{ width: '100%', mt: 1 }} startIcon={<AddIcon />} onClick={() => setAddParticipantModalState(true)}>{t('manage_participants.add_participant')}</Button>
+                    </Box>
+                  </Box>
                 </Paper>
               </Grid>
 
@@ -231,7 +248,7 @@ export default function ECOSDashboard() {
               }}>
                 <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                  <Grid item sm={2.8}>{/* Status */}
+                  <Grid item >{/* Status */}
                     <Paper
                       sx={defaultPaperStyle}
                     >

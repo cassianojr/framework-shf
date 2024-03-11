@@ -1,6 +1,7 @@
 import { InfoRounded } from "@mui/icons-material";
 import { IconButton, List, ListItem, ListItemText, Typography } from "@mui/material";
 import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 interface ModalProps {
   items: {
@@ -16,13 +17,19 @@ interface ModalProps {
     descriptions: {
       [key: string]: string
     },
-    votes?: number
+    votes?: number,
+    ratio?:number
   }[]
   handleItemClick: (ids: string, name: string, description: string) => void,
+  showSurveyOptions?: boolean
   showVotes?: boolean
 }
 
-export function ModalList({ items, handleItemClick, showVotes }: ModalProps) {
+export function ModalList({ items, handleItemClick, showVotes, showSurveyOptions }: ModalProps) {
+
+  const ratioAnswers = ['strongly_disagree', 'disagree', 'neither', 'agree', 'strongly_agree'];
+  const { t } = useTranslation('ecos_survey');
+
   return (
     <List dense >
       {items.map((item) => (
@@ -44,6 +51,7 @@ export function ModalList({ items, handleItemClick, showVotes }: ModalProps) {
               <span style={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}: </span>
               {item.names[i18next.language]}
             </Typography>} />
+            {(showSurveyOptions && item.ratio) && <Typography sx={{ fontSize: '.8rem' }}>{(item.ratio != 0) ? t(`survey_options.${ratioAnswers[item.ratio-1]}`) : 'Sem resposta'}</Typography>}
         </ListItem>
       ))}
     </List>
