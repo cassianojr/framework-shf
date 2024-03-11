@@ -25,6 +25,8 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
 
     const totalVotes = agree+disagree+totallyDisagree+totallyAgree+neutral;
 
+    if(totalVotes === 0) return 0;
+
     return value / totalVotes;
   };
   
