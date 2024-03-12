@@ -4,6 +4,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 interface ProgressBarProps {
   value: number;
+  colors: boolean;
 }
 
 export const BarDiv = styled('div')({
@@ -17,11 +18,14 @@ export const BarDiv = styled('div')({
   '&.high': {
     backgroundColor: '#088208a3',
   },
+  '&.normal':{
+    backgroundColor: 'gray'
+  }
 });
 
 
 export const ProgressBar = React.memo(function ProgressBar(props: ProgressBarProps) {
-  const { value } = props;
+  const { value, colors } = props;
   const valueInPercent = value * 100;
 
   const theme = useTheme();
@@ -44,9 +48,10 @@ export const ProgressBar = React.memo(function ProgressBar(props: ProgressBarPro
       }}>{`${valueInPercent.toLocaleString()} %`}</div>
       <BarDiv
         className={clsx({
-          low: valueInPercent < 30,
-          medium: valueInPercent >= 30 && valueInPercent <= 59,
-          high: valueInPercent > 59,
+          low: valueInPercent < 60,
+          medium: valueInPercent >= 60 && valueInPercent <= 79,
+          high: valueInPercent > 80,
+          normal: !colors
         })}
         style={{ maxWidth: `${valueInPercent}%`}}
       />
