@@ -8,10 +8,11 @@ import { useTranslation } from 'react-i18next';
 
 interface ResultDataGridProps {
   frameworkComponent: Framework | undefined,
-  columnType: 'likert' | 'result' 
+  columnType: 'likert' | 'result',
+  showColors?: boolean
 }
 
-export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComponent, columnType }: ResultDataGridProps) {
+export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComponent, columnType, showColors=false }: ResultDataGridProps) {
 
   const { t } = useTranslation(['ecos_survey', 'ecos_dashboard']);
 
@@ -50,7 +51,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => {
         return calculatePercentValue(params, params.row.totallyDisagree ?? 0);
       }
@@ -61,7 +62,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => {
         return calculatePercentValue(params, params.row.disagree ?? 0);
       }
@@ -72,7 +73,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 120,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => {
         return calculatePercentValue(params, params.row.neutral ?? 0);
       }
@@ -83,7 +84,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) =>{
         return calculatePercentValue(params, params.row.agree ?? 0);
       }
@@ -95,7 +96,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) =>{
         return calculatePercentValue(params, params.row.totallyAgree ?? 0);
       }
@@ -110,7 +111,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) => {
         return calculatePercentValue(params, (params.row.disagree ?? 0)+(params.row.totallyDisagree ?? 0));
       }
@@ -121,7 +122,7 @@ export const ResultDataGrid = React.memo(function ResultDataGrid({ frameworkComp
       width: 100,
       sortable: false,
       resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} />,
+      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => <ProgressBar value={Number(params.value)} colors={showColors}/>,
       valueGetter: (params: GridRenderCellParams<FrameworkItem, number>) =>{
         return calculatePercentValue(params, (params.row.agree??0) + (params.row.totallyAgree ?? 0));
       }

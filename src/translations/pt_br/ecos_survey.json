@@ -13,9 +13,9 @@
    },
    "consent_term": {
     "title": "Termo de consentimento livre e esclarecido",
-    "p1": "Você está sendo convidado(a) a participar de uma pesquisa que tem como objetivo obter a sua a percepção sobre os fatores sociais e humanos que influenciam a gerência de requisitos em sua organização (ecossistema de Software). ",
+    "p1": "Você está sendo convidado(a) a participar de uma pesquisa que tem como objetivo obter a sua percepção sobre os fatores sociais e humanos que influenciam a gerência de requisitos em sua organização.",
     "p2": "A participação é voluntária e você pode desistir a qualquer momento, sem qualquer prejuízo. As informações coletadas serão analisadas juntamente com as de outros participantes da pesquisa, garantindo o sigilo dos dados obtidos durante o processo. Sua identidade será mantida em sigilo; portanto, ao responder à pesquisa, suas respostas serão registradas de forma anônima, garantindo sua privacidade e confidencialidade.",
-    "p3": "Ao clicar em “Concordo”, você estará concordando em participar da pesquisa. Caso tenha alguma dúvida, entre em contato com o organização responsável pela pesquisa.",
+    "p3": "Ao clicar em “Concordo”, você estará concordando em participar da pesquisa. Caso tenha alguma dúvida, entre em contato com a organização responsável pela pesquisa.",
     "p4": "Você concorda em participar da pesquisa?"
   },
   "fsh_affirmative": "Os fatores sociais e humanos abaixo listados  influenciam a gerência de requisitos em ecossistemas de software.",

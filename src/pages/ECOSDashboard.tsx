@@ -267,14 +267,15 @@ export default function ECOSDashboard() {
                     </Paper>
                   </Grid>
 
-                  <Grid item>{/* Current round */}
+                    {/* Current round */}
+                  {/* <Grid item>
                     <Paper
                       sx={defaultPaperStyle}
                     >
                       <Title>{t('current_round')}</Title>
                       <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{ecos.current_round}º {t('current_round_unit')}</Button>
                     </Paper>
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item>{/*reponses*/}
                     <Paper

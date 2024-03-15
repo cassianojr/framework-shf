@@ -74,7 +74,7 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
             <ResultDataGrid frameworkComponent={frameworkComponent} columnType='likert' />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <ResultDataGrid frameworkComponent={frameworkComponent} columnType='result' />
+            <ResultDataGrid frameworkComponent={frameworkComponent} columnType='result' showColors />
           </TabPanel>
 
         </Box>
