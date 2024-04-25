@@ -30,7 +30,6 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
   const handleClose = () => {
     setFormState({
       id: '',
-      name: '',
       email: ''
     });
     setModalState(false);
@@ -41,7 +40,6 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
 
     const newParticipant = {
       id: (formState.id === '')?uuid():formState.id,
-      name: formState.name,
       email: formState.email
     } as Participant;
 
@@ -49,7 +47,6 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
 
     setFormState({
       id: '',
-      name: '',
       email: ''
     });
   }
@@ -59,18 +56,6 @@ export default function ParticipantFormModal({ title, modalState, setModalState,
       <Modal.Text>
         <form onSubmit={handleFormSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sx={{ marginTop: '1%' }}>
-              <TextField
-                fullWidth
-                required
-                id="name"
-                name="name"
-                label={t('manage_participants.name_label')}
-                autoFocus
-                value={formState.name}
-                onChange={handleFormChange}
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth

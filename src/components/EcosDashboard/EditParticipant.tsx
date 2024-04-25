@@ -1,15 +1,15 @@
 import React from 'react'
-import { Ecosystem, Participant } from '../../types/Ecosystem.type'
 import ParticipantFormModal from './ParticipantFormModal'
-import EcosystemService from '../../services/EcosystemService'
 import { useTranslation } from 'react-i18next'
+import { EcosProject, Participant } from '../../types/EcosProject.type'
+import EcosProjectService from '../../services/EcosProjectService'
 
 
 interface EditParticipantProps {
   setEditParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>,
   editParticipantModalState: boolean,
-  ecos: Ecosystem,
-  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>,
+  ecos: EcosProject,
+  setEcos: React.Dispatch<React.SetStateAction<EcosProject>>,
   participantData: Participant,
   setParticipantData: React.Dispatch<React.SetStateAction<Participant>>
 }
@@ -21,10 +21,10 @@ export default function EditParticipant({ editParticipantModalState, setEditPart
 
   const handleSubmit = (participant: Participant) => {
     const participants = ecos.participants;
-    const newEcos = { ...ecos, participants: participants?.map((p) => p.id === participant.id ? participant : p) } as Ecosystem;
+    const newEcos = { ...ecos, participants: participants?.map((p) => p.id === participant.id ? participant : p) } as EcosProject;
 
     setEcos(newEcos);
-    EcosystemService.updateEcosystem(newEcos);
+    EcosProjectService.updateEcosProject(newEcos, ()=> console.log('success'), ()=> console.log("error"));
 
     setEditParticipantModalState(false);
   }
