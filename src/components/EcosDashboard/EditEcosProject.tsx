@@ -19,6 +19,8 @@ interface EditEcosProjectProps {
   frameworkData: Framework[],
   ecosProject: EcosProject,
   setEcosProject: React.Dispatch<React.SetStateAction<EcosProject>>,
+  onSuccess: () => void,
+  onError: () => void
 }
 
 export default function EditEcosProject(props: EditEcosProjectProps) {
@@ -62,6 +64,7 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
               sx={{ width: '100%' }}
               value={endDate}
               onChange={(newValue) => setEndDate(newValue)}
+              format='DD/MM/YYYY'
               slotProps={{
                 textField: {
                   fullWidth: true,
@@ -134,8 +137,10 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
       props.setEcosProject(newData);
       setActiveStep(0);
       setState(false);
+      props.onSuccess();
     }, () => {
       console.error('Error creating new ecos project');
+      props.onError();
     });
   }
 

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Modal } from '../Modal';
-import { Button, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, MobileStepper, Switch, TextField, Typography } from '@mui/material';
+import { Button, Divider, Grid, List, ListItem, ListItemButton, ListItemText, MobileStepper, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { User } from '../../types/User.type';
@@ -9,7 +9,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { Framework, FrameworkItem } from '../../types/Framework.type';
-import i18next from "i18next";
 import Title from './Title';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { v4 as uuid } from 'uuid';
@@ -17,6 +16,7 @@ import { Dayjs } from 'dayjs';
 import { EcosProject, Participant } from '../../types/EcosProject.type';
 import EcosProjectService from '../../services/EcosProjectService';
 import FrameworkItemListSelect from './FrameworkItemListSelect';
+
 
 interface NewProjectModalProps {
   user: User,
@@ -31,7 +31,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
   const { t } = useTranslation('dashboard');
   const [activeStep, setActiveStep] = React.useState(0);
   const [orgNameError, setOrgNameError] = React.useState(false);
-  const [endDateError, setEndDateError] = React.useState(false);	
+  const [endDateError, setEndDateError] = React.useState(false);
 
   const [orgName, setOrgName] = React.useState('');
   const [participants, setParticipants] = React.useState([] as Participant[]);
@@ -131,9 +131,10 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
               label="Data de término da pesquisa*"
               sx={{ width: '100%' }}
               value={endDate}
+              format='DD/MM/YYYY'
               onChange={(newValue) => setEndDate(newValue)}
               slotProps={{
-                textField:{
+                textField: {
                   fullWidth: true,
                   variant: 'outlined',
                   error: endDateError,
@@ -144,23 +145,59 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
           </LocalizationProvider>
         </Grid>
       </Grid>
-    </>, <>Dados demográficos...</>,
+    </>,
+    <>
+      <Title>Dados demográficos</Title>
+      <Typography> Esses dados são obrigatórios para a pesquisa, e serão coletados dos participantes.</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="ecosTime"
+            name="ecosTime"
+            value={''}
+            label={'Quanto tempo trabalha no ecossistema?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="reqTime"
+            name="reqTime"
+            value={''}
+            label={'Quanto tempo trabalha com gerenciamento de requisitos?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="role"
+            name="role"
+            value={''}
+            label={'Qual o seu cargo no ecossistema?'}
+            disabled
+          />
+        </Grid>
+      </Grid>
+    </>,
     <>
       <Title>Por favor, selecione os fatores sociais e humanos que serão obrigatórios na pesquisa:</Title>
-      <FrameworkItemListSelect items={shfItems} setItems={setShfItems}/>
+      <FrameworkItemListSelect items={shfItems} setItems={setShfItems} />
     </>,
     <>
       <Title>Por favor, selecione as características contextuais da sua organização:</Title>
 
-      <FrameworkItemListSelect items={ccItems} setItems={setCcItems}/>
+      <FrameworkItemListSelect items={ccItems} setItems={setCcItems} />
     </>,
     <>
       <Title>Por favor, selecione as barreiras para melhoria que serão obrigatórias na pesquisa:</Title>
-      <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems}/>
+      <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems} />
     </>,
     <>
       <Title>Por favor, selecione as estratégias que serão obrigatórias na pesquisa:</Title>
-      <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems}/>
+      <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems} />
     </>,
     <>
       <AddParticiantsStep />
@@ -169,7 +206,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
 
   const handleAddEcosSubmit = () => {
     const endDateObj = endDate?.toDate();
-   
+
     const ecosProject = {
       name: orgName,
       end_date: endDateObj?.toISOString(),
@@ -183,7 +220,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
       },
       status: 'not-started'
     } as EcosProject;
-    
+
     EcosProjectService.createEcosProject(ecosProject, (docRef) => {
       navigate(`/ecos-dashboard/${docRef.id}`);
     }, () => {
@@ -195,14 +232,14 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
     if (orgName === '') {
       setOrgNameError(true);
       return false;
-    }else{
+    } else {
       setOrgNameError(false);
     }
 
     if (endDate === null) {
       setEndDateError(true);
       return false;
-    }else{
+    } else {
       setEndDateError(false);
     }
 

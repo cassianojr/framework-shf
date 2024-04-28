@@ -52,6 +52,10 @@ export default function ECOSDashboard() {
   const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
   const [editEcosProjectModalState, setEditEcosProjectModalState] = React.useState(false);
 
+  const [feedbackSnackBarState, setFeedbackSnackBarState] = React.useState(false);
+  const [feedbackSnackBarText, setFeedbackSnackBarText] = React.useState('' as string);
+  const [feedbackSnackBarSeverity, setFeedbackSnackBarSeverity] = React.useState('info' as 'success' | 'info' | 'warning' | 'error');
+
   const [frameworkDataState, setFrameworkDataState] = React.useState([] as Framework[]);
 
   const ecosId = useParams().ecosId;
@@ -221,13 +225,20 @@ export default function ECOSDashboard() {
     setEcos(newEcosProject);
     EcosProjectService.updateEcosProject(newEcosProject, ()=>console.log("updated"), ()=>console.error("error updating"));
   }
+
+  const pushFeedbackSnackbar = (text: string, severity: 'success' | 'info' | 'warning' | 'error') => {
+    setFeedbackSnackBarText(text);
+    setFeedbackSnackBarSeverity(severity);
+    setFeedbackSnackBarState(true);
+  }
   
   return (
     !appLoading &&
     <>
-      {frameworkDataState.length >0 && <EditEcosProject setEcosProject={setEcos} ecosProject={ecos} frameworkData={frameworkDataState} setState={setEditEcosProjectModalState} state={editEcosProjectModalState} />}
+      {frameworkDataState.length >0 && <EditEcosProject onError={()=>pushFeedbackSnackbar("Erro ao salvar alterações", 'error')} onSuccess={()=>pushFeedbackSnackbar("Alterações salvas com sucesso", 'success')} setEcosProject={setEcos} ecosProject={ecos} frameworkData={frameworkDataState} setState={setEditEcosProjectModalState} state={editEcosProjectModalState} />}
       <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
+      <SnackBarComponent snackBarState={feedbackSnackBarState} setSnackBarState={setFeedbackSnackBarState} text={feedbackSnackBarText} severity={feedbackSnackBarSeverity} />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL} />

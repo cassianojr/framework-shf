@@ -84,7 +84,10 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     const newParticipants = participants.filter(p => p.id !== id);
     const newEcos = { ...ecos, participants: newParticipants };
 
-    EcosProjectService.updateEcosProject(newEcos);
+    EcosProjectService.updateEcosProject(newEcos, ()=>{
+     console.log('Participant deleted successfully');
+      
+    }, ()=>console.log('error'));
 
     setEcos(newEcos);
   }
