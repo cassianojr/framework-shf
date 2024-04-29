@@ -26,7 +26,8 @@ export default function AddParticipant({ addParticipantModalState, setAddPartici
     const newEcos = { ...ecos, participants: [...participants, newParticipant] } as EcosProject;
 
     setEcos(newEcos);
-    EcosProjectService.updateEcosProject(newEcos);
+    //TODO handle errors
+    EcosProjectService.updateEcosProject(newEcos, ()=>console.log('ok'), ()=>console.log('error'));
 
     setAddParticipantModalState(false);
   }
