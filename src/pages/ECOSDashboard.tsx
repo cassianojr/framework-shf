@@ -25,7 +25,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import AddIcon from '@mui/icons-material/Add';
 
-import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
+// import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipantsModal';
 import { EcosProject, MandatoryItems } from '../types/EcosProject.type';
 import EcosProjectService from '../services/EcosProjectService';
@@ -42,11 +42,11 @@ export default function ECOSDashboard() {
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
-  const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
-  const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
-  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
-  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
-  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+  // const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
+  // const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
+  // const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
+  // const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
+  // const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
   const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
   const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
@@ -145,20 +145,20 @@ export default function ECOSDashboard() {
       });
       setFrameworkDataState(data);
 
-      const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
-      setCopingMechanisms(copingMechanisms);
+      // const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
+      // setCopingMechanisms(copingMechanisms);
 
-      const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
-      setContextualCharacteristics(contextualCharacteristics);
+      // const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
+      // setContextualCharacteristics(contextualCharacteristics);
 
-      const socialHumanFactors = data.filter((item) => item.id === "social-human-factors")[0];
-      setSocialHumanFactors(socialHumanFactors);
+      // const socialHumanFactors = data.filter((item) => item.id === "social-human-factors")[0];
+      // setSocialHumanFactors(socialHumanFactors);
 
-      const barriersToImproving = data.filter((item) => item.id === "barriers-to-improving")[0];
-      setBarriersToImproving(barriersToImproving);
+      // const barriersToImproving = data.filter((item) => item.id === "barriers-to-improving")[0];
+      // setBarriersToImproving(barriersToImproving);
 
-      const strategies = data.filter((item) => item.id === "strategies")[0];
-      setStrategies(strategies);
+      // const strategies = data.filter((item) => item.id === "strategies")[0];
+      // setStrategies(strategies);
     }
 
     const handleFrameworkData = (answersData: NewAnswers[], data: Framework[], mandatory_items:MandatoryItems) => {

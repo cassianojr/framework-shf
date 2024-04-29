@@ -9,7 +9,7 @@
     "i1": "Read the definition of the components and their respective items;",
     "i2": "Carefully analyze each statement associated with the components and items;",
     "i3": "Respond according to the reality of your organization (software ecosystem);",
-    "i4": "Mark your response among the options: (“Strongly Agree”, “Agree”, “Neither Agree nor Disagree”, “Disagree”, or “Strongly Disagree”)."
+    "i4": "Mark your response among the options: (“Agree” or “Disagree”)."
   },
   "consent_term": {
     "title": "Consent form",

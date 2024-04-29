@@ -36,12 +36,15 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
     newItems[itemIndex].ratio = parseInt(event.target.value);
     setListItems(newItems);
     changeItems(newItems);
+    
     validateAnswers();
   }
 
 
   const createRadioButton = (value: number, params: GridRenderEditCellParams<FrameworkItem, number>) => {
     const item = items.current.find((item) => item.ids[i18next.language] == params.id);
+    console.log(item);
+    
 
     return (<Radio
       checked={item?.ratio == value}
@@ -56,7 +59,7 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 1, sortable: false, resizable: false },
     {
-      field: 'name', headerName: t('item_name'), flex: 3.3, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
+      field: 'name', headerName: t('item_name'), flex: 4.3, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
         const item = items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
 
         return (
@@ -64,14 +67,14 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
             <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
               <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
             </Tooltip>
-            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem' } : { marginLeft: '.3rem', }}>{item.names[i18next.language]}</Typography>
+            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem', fontWeight: (item.selected) ? 'bold': '' } : { marginLeft: '.3rem', fontWeight: (item.selected) ? 'bold': ''}}>{item.names[i18next.language]} {item.selected? '*': ''}</Typography>
           </>)
       }
     },
     {
-      field: 'fully-disagree',
-      headerName: t('survey_options.strongly_disagree'),
-      flex: 1.3,
+      field: 'agree',
+      headerName: t('survey_options.agree'),
+      flex: 1.2,
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(1, params)
@@ -83,30 +86,6 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
       sortable: false,
       resizable: false,
       renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(2, params)
-    },
-    {
-      field: 'neutral',
-      headerName: t('survey_options.neither'),
-      flex: 1.2,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(3, params)
-    },
-    {
-      field: 'agree',
-      headerName: t('survey_options.agree'),
-      flex: 1.2,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(4, params)
-    },
-    {
-      field: 'fully-agree',
-      headerName: t('survey_options.strongly_agree'),
-      flex: 1.3,
-      sortable: false,
-      resizable: false,
-      renderCell: (params: GridRenderCellParams<FrameworkItem, number>) => createRadioButton(5, params)
     },
     {
       field: 'comment',
@@ -140,13 +119,13 @@ export function SurveyOptionsDataTable({ items, changeItems, validateAnswers }: 
 
     const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const item = items.current.find((item) => item.id === commentModalItem?.id);
-
+      
+      const item = items.current.find((i) => i.ids[i18next.language] === commentModalItem?.id);
 
       if (!item) return;
 
       const newItem = { ...item, comment: comment };
-      const newItems = items.current.map((item) => item.id === commentModalItem?.id ? newItem : item);
+      const newItems = items.current.map((item) => item.ids[i18next.language] === commentModalItem?.id ? newItem : item);
 
       changeItems(newItems);
 

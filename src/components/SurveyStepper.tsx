@@ -1,4 +1,4 @@
-import { Button, MobileStepper, Paper, Typography } from '@mui/material';
+import { Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
 import React from 'react'
 import { Framework, FrameworkItem } from '../types/Framework.type';
 import { Box } from '@mui/system';
@@ -8,9 +8,9 @@ import { QuestionService } from '../services/QuestionService';
 import { NewAnswers } from '../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
 import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
-import { Ecosystem, Participant } from '../types/Ecosystem.type';
-import EcosystemService from '../services/EcosystemService';
 import { v4 as uuid } from 'uuid';
+import { EcosProject, Participant } from '../types/EcosProject.type';
+import EcosProjectService from '../services/EcosProjectService';
 
 
 interface SurveyStepperProps {
@@ -34,20 +34,18 @@ interface SurveyStepperProps {
     setCopingMechanisms: (value: Framework) => void
   },
   user_id: string,
-  user_name: string,
   user_email: string,
-  ecos: Ecosystem,
+  ecos: EcosProject,
   setFeedBackSnackBar: (value: { severity: "success" | "error", text: string }) => void,
   setFeedBackSnackbarState: (value: boolean) => void
 }
 
-export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id, user_email, user_name, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
+export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id, user_email, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
   const { t } = useTranslation('ecos_survey');
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [answers, setAnswers] = React.useState<NewAnswers | undefined>(undefined);
-
 
   const [refresh, setRefresh] = React.useState(false);
 
@@ -84,7 +82,6 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       user_id,
       user_email,
       ecossystem_id: ecos.id,
-      round: ecos.current_round,
       answers: stepsVote.map((stepVoteItem) => {
         return {
           framework_item: stepVoteItem.id,
@@ -95,7 +92,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
               ids: item.ids,
               names: item.names,
               answer: item.ratio,
-              comment: item.comment??''
+              comment: item.comment ?? ''
             }
           })
         }
@@ -112,13 +109,12 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
     const newParticipant = {
       id: uuid(),
-      name: user_name,
       email: user_email
     } as Participant;
 
     const newParticipants = ecos.participants ? [...ecos.participants, newParticipant] : [newParticipant];
     const newEcos = { ...ecos, participants: newParticipants };
-    EcosystemService.updateEcosystem(newEcos);
+    EcosProjectService.updateEcosProject(newEcos, () => console.log('ok'), () => console.log('error'));
   }
 
   const handleSaveAnswers = () => {
@@ -143,15 +139,16 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
   const validateFeedback = () => {
     let noErrors = true;
-    if (activeStep <= 1) return true;
+    if (activeStep <= 2) return true;
 
     const verifyableItems = ['SHF01', 'ST01']
-    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 2].items.current[0].ids['en']) !== undefined);
+    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 3].items.current[0].ids['en']) !== undefined);
 
     if (!shouldValidateForComments) return noErrors;
 
-    stepsVote[activeStep - 2].items.current.forEach((item) => {
-      if ((item.ratio === 1 || item.ratio === 5) && (item.comment == '' || item.comment === undefined)) {
+    stepsVote[activeStep - 3].items.current.forEach((item) => {
+      
+      if (item.selected && (item.comment == '' || item.comment === undefined)) {
 
         noErrors = false;
         item.feedbackValidationError = true;
@@ -171,9 +168,13 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     let noErrors = true;
 
     if (activeStep <= 1) return true;
-    
-    stepsVote[activeStep - 2].items.current.forEach((item) => {
-      if (item.ratio === 0) {
+
+    //TODO validation of demographic data
+    if (activeStep === 2) return true;
+
+    stepsVote[activeStep - 3].items.current.forEach((item) => {
+      
+      if (item.ratio === 0 && item.selected) {
         noErrors = false;
         item.validationError = true;
       } else {
@@ -186,10 +187,12 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   }
 
   const handleNext = () => {
+
     if (activeStep === steps.length - 1) {
       setAnswersToFrameworkComponent();
       setAnswers(createAnswersObject());
     }
+
     if (activeStep === steps.length) {
       handleSaveAnswers();
       return;
@@ -214,50 +217,85 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const DemographicDataComponent = () => {
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="ecosTime"
+            name="ecosTime"
+            value={''}
+            label={'Quanto tempo trabalha no ecossistema?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="reqTime"
+            name="reqTime"
+            value={''}
+            label={'Quanto tempo trabalha com gerenciamento de requisitos?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="role"
+            name="role"
+            value={''}
+            label={'Qual o seu cargo no ecossistema?'}
+            disabled
+          />
+        </Grid>
+      </Grid>
+    )
+  }
+
   const stepperContents = stepsVote.map((step) => {
     return {
       id: step.id,
       title: t(step.title),
-      items: step.items,
-      changeItems: step.changeItems,
-      order: step.order,
-      type: 'vote',
-      texts: [],
-      lists: [],
-      dataTable: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback} />
+      component: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback} />
     }
-  });
+  })
 
   const steps = [
     {
+      id: 'welcome',
       title: t('welcome_text'),
-      texts: [
-        t('instructions.p1'),
-        t('instructions.p2')
-      ],
-      lists: [
-        t('instructions.i1'),
-        t('instructions.i2'),
-        t('instructions.i3'),
-        t('instructions.i4')
-      ],
-      dataTable: <></>,
-      type: 'text'
+      component:
+        <>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('instructions.p1')}</Typography>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('instructions.p2')}</Typography>
+          <ul>
+            <li>{t('instructions.i1')}</li>
+            <li>{t('instructions.i2')}</li>
+            <li>{t('instructions.i3')}</li>
+            <li>{t('instructions.i4')}</li>
+          </ul>
+        </>
     },
     {
+      id: 'consent_term',
       title: t('consent_term.title'),
-      texts: [
-        t('consent_term.p1'),
-        t('consent_term.p2'),
-        t('consent_term.p3'),
-        t('consent_term.p4')
-      ],
-      lists: [],
-      dataTable: <></>,
-      type: 'text'
+      component:
+        <>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('consent_term.p1')}</Typography>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('consent_term.p2')}</Typography>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('consent_term.p3')}</Typography>
+          <Typography sx={{ textAlign: 'justify', marginBottom: '1rem' }}>{t('consent_term.p4')}</Typography>
+        </>
+    },
+    {
+      id: 'demographic_data',
+      title: "Dados demográficos",
+      component: <DemographicDataComponent />
     },
     ...stepperContents
-  ];
+  ]
 
   return (
     <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '65%', margin: 'auto' }}>
@@ -279,25 +317,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
         {steps[activeStep] && (
           <>
             <Typography variant='h6'>{steps[activeStep]?.title ?? ''}</Typography>
-
-            {(steps[activeStep].type === 'text' && activeStep < steps.length) ? (
-              <>
-                {steps[activeStep].texts.map((text, index) => (
-                  <Typography key={index} sx={{ textAlign: 'justify', marginBottom: '1rem', textIndent: '1rem' }}>{text}</Typography>
-                ))}
-                <ul>
-
-                  {steps[activeStep].lists.map((text, index) => (
-                    <li key={index}>{text}</li>
-                  ))}
-                </ul>
-              </>
-
-            ) : (
-              <Box height={'70vh'}>
-                {steps[activeStep]?.dataTable ?? <></>}
-              </Box>
-            )}
+            {steps[activeStep].component}
           </>
         )}
       </Box>

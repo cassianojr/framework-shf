@@ -9,7 +9,7 @@
     "i1": "Leia a definição dos componentes e seus respectivos itens;",
     "i2": "Analise cuidadosamente cada afirmação associada aos componentes e itens;",
     "i3": "Responda de acordo com a realidade da sua organização (ecossistema de software);",
-    "i4": "Marque sua resposta entre as opções: (“Concordo totalmente”, “Concordo”, “Não concordo e nem discordo”, “Discordo” ou “Discordo totalmente”)."
+    "i4": "Marque sua resposta entre as opções: (“Concordo” ou “Discordo”)."
    },
    "consent_term": {
     "title": "Termo de consentimento livre e esclarecido",

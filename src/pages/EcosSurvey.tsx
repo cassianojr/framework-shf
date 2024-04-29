@@ -10,12 +10,11 @@ import { Framework, FrameworkItem } from "../types/Framework.type";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import EcosystemService from "../services/EcosystemService";
-import { QuestionService } from "../services/QuestionService";
 import SnackBarComponent from "../components/SnackBarComponent";
 import SurveyStepper from "../components/SurveyStepper";
 import { Modal } from "../components/Modal";
-import { Ecosystem } from "../types/Ecosystem.type";
+import EcosProjectService from "../services/EcosProjectService";
+import { EcosProject } from "../types/EcosProject.type";
 
 interface SelectItemsProps {
   id: string,
@@ -65,7 +64,7 @@ export default function EcosSurvey() {
 
   const ecosId = useParams().ecosId;
 
-  const [ecos, setEcos] = React.useState<Ecosystem | undefined>(undefined);
+  const [ecos, setEcos] = React.useState<EcosProject | undefined>(undefined);
 
   const ErrorModal = () => {
     const handleClose = () => {
@@ -96,7 +95,7 @@ export default function EcosSurvey() {
 
       if (!ecosId) return;
 
-      const ecosData = await EcosystemService.getEcosystem(ecosId);
+      const ecosData = await EcosProjectService.getEcosProject(ecosId);
       setEcos(ecosData);
 
       if (ecosData.status !== "waiting-for-answers") {
@@ -113,16 +112,71 @@ export default function EcosSurvey() {
           names: item.names,
           descriptions: item.descriptions,
           ratio: 0,
+          selected: item.selected ?? false,
         } as FrameworkItem;
       });
     }
 
-    const handleFrameworkData = (data: Framework[]) => {
-      const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
+    const handleMandatoryItems = (frameworkData: Framework[], ecosData: EcosProject) => {
+      const mandatoryItems = ecosData.mandatory_items;
+
+      const shf = frameworkData.filter((item) => item.id === "social-human-factors")[0];
+      const cc = frameworkData.filter((item) => item.id === "contextual-characteristics")[0];
+      const barriers = frameworkData.filter((item) => item.id === "barriers-to-improving")[0];
+      const strategies = frameworkData.filter((item) => item.id === "strategies")[0];
+
+      shf.items.map((item) =>{
+        mandatoryItems.shf.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
+      });
+
+      // cc.items.map((item) =>{
+      //   mandatoryItems.cc.forEach((mandatoryItem) =>{
+      //     if(item.id === mandatoryItem.id){
+      //       item.selected = true;
+      //     }
+      //   })  
+      // });
+
+      cc.items = mandatoryItems.cc;
+      
+
+      barriers.items.map((item) =>{
+        mandatoryItems.barriers.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
+      });
+
+      strategies.items.map((item) =>{
+        mandatoryItems.strategies.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
+      });      
+      
+      return {
+        socialHumanFactorsLocal :shf,
+        contextualCharacteristicsLocal: cc,
+        barriersToImprovingLocal: barriers,
+        strategiesLocal: strategies
+      }
+    }
+
+    const handleFrameworkData = (data: Framework[], ecosData: EcosProject) => {
+
+      const { socialHumanFactorsLocal, contextualCharacteristicsLocal, barriersToImprovingLocal, strategiesLocal } = handleMandatoryItems(data, ecosData);
+      
+      // const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
       const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
-      const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
-      const barriersToImprovingLocal = data.filter((item) => item.id === "barriers-to-improving")[0];
-      const strategiesLocal = data.filter((item) => item.id === "strategies")[0];
+      // const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
+      // const barriersToImprovingLocal = data.filter((item) => item.id === "barriers-to-improving")[0];
+      // const strategiesLocal = data.filter((item) => item.id === "strategies")[0];
 
       changeShfRef(handleFrameworkItemsRef(socialHumanFactorsLocal));
       changeCopingMechanismRef(handleFrameworkItemsRef(copingMechanismsLocal));
@@ -165,13 +219,6 @@ export default function EcosSurvey() {
             items: strategiesRef,
             changeItems: changeStrategiesRef,
             order: 4
-          },
-          {
-            id: "coping-mechanisms",
-            title: 'coping_mec_affirmative',
-            items: copingMechanismRef,
-            changeItems: changeCopingMechanismRef,
-            order: 5
           }
         ]);
       }
@@ -181,26 +228,27 @@ export default function EcosSurvey() {
     getEcosData().then((ecosData) => {
       if (!ecosData) return;
 
-      QuestionService.getAnswersByUserId(getUser().uid)
-        .then((answers) => {
-          if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-            // setErrorModalState(true);
-            return;
-          }
-        });
+      // QuestionService.getAnswersByUserId(getUser().uid)
+      //   .then((answers) => {
+      //     if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
+      //       // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+      //       // setErrorModalState(true);
+      //       return;
+      //     }
+      //   });
 
       const localStorageData = localStorage.getItem('frameworkData');
 
       if (localStorageData) {
-        handleFrameworkData(JSON.parse(localStorageData));
+        handleFrameworkData(JSON.parse(localStorageData), ecosData);
         return;
       }
 
       FirebaseService.getFrameworkData((data: Framework[]) => {
         localStorage.setItem('frameworkData', JSON.stringify(data));
-        handleFrameworkData(data);
+        handleFrameworkData(data, ecosData);
       });
+
     }).catch(() => {
       setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
       setErrorModalState(true);
@@ -219,7 +267,7 @@ export default function EcosSurvey() {
         <Toolbar />
         <Container sx={{ minHeight: '100vh', background: '#f5f5f5' }} component={Paper} elevation={3} style={{ paddingTop: '1%' }} maxWidth={false}>
 
-          {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecos?.organization_name??''}</Typography>}
+          {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecos?.name??''}</Typography>}
 
           {(!appLoading && ecos) && <SurveyStepper
             stepsVote={questions}
@@ -240,7 +288,6 @@ export default function EcosSurvey() {
             user_email={getUser().email}
             setFeedBackSnackBar={setFeedBackSnackBar}
             setFeedBackSnackbarState={setFeedBackSnackbarState}
-            user_name={getUser().displayName??getUser().email}
           />}
         </Container>
         <Footer />
