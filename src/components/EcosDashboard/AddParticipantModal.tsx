@@ -39,7 +39,6 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
 
     const newParticipant = {
       id: participantId || uuid(),
-      name: formState.name,
       email: formState.email
     } as Participant;
 
@@ -74,18 +73,6 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
       <Modal.Text>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sx={{ marginTop: '1%' }}>
-              <TextField
-                fullWidth
-                required
-                id="name"
-                name="name"
-                label={'Nome'}
-                autoFocus
-                value={formState.name}
-                onChange={handleFormChange}
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
