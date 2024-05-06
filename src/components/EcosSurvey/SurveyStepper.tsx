@@ -1,16 +1,18 @@
 import { Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
 import React from 'react'
-import { Framework, FrameworkItem } from '../types/Framework.type';
-import { Box } from '@mui/system';
+import { Framework, FrameworkItem } from '../../types/Framework.type';
+import { Box, Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import FrameworkComponent from './FrameworkComponent';
-import { QuestionService } from '../services/QuestionService';
-import { NewAnswers } from '../types/Answer.type';
+import FrameworkComponent from '../FrameworkComponent';
+import { QuestionService } from '../../services/QuestionService';
+import { NewAnswers } from '../../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
 import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
 import { v4 as uuid } from 'uuid';
-import { EcosProject, Participant } from '../types/EcosProject.type';
-import EcosProjectService from '../services/EcosProjectService';
+import { EcosProject, Participant } from '../../types/EcosProject.type';
+import EcosProjectService from '../../services/EcosProjectService';
+import SurveyOptionalDataComponent from './SurveyOptionalDataComponent';
+import { SurveyViewOnly } from './SurveyViewOnly';
 
 
 interface SurveyStepperProps {
@@ -19,6 +21,10 @@ interface SurveyStepperProps {
     title: string,
     items: React.MutableRefObject<FrameworkItem[]>,
     changeItems: (value: FrameworkItem[]) => void,
+    optionalItems?: React.MutableRefObject<FrameworkItem[]>,
+    changeOptionalItems?: (value: FrameworkItem[]) => void,
+    viewOnly?: boolean,
+    optionalTitle?: string,
     order: number
   }[],
   frameworkItems: {
@@ -147,7 +153,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     if (!shouldValidateForComments) return noErrors;
 
     stepsVote[activeStep - 3].items.current.forEach((item) => {
-      
+
       if (item.selected && (item.comment == '' || item.comment === undefined)) {
 
         noErrors = false;
@@ -173,7 +179,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     if (activeStep === 2) return true;
 
     stepsVote[activeStep - 3].items.current.forEach((item) => {
-      
+
       if (item.ratio === 0 && item.selected) {
         noErrors = false;
         item.validationError = true;
@@ -226,7 +232,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
             id="ecosTime"
             name="ecosTime"
             value={''}
-            label={'Quanto tempo trabalha no ecossistema?'}
+            label={'Quanto tempo trabalha no ecossistema de software?'}
             disabled
           />
         </Grid>
@@ -236,7 +242,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
             id="reqTime"
             name="reqTime"
             value={''}
-            label={'Quanto tempo trabalha com gerenciamento de requisitos?'}
+            label={'Quanto tempo trabalha com gerência de requisitos?'}
             disabled
           />
         </Grid>
@@ -246,7 +252,7 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
             id="role"
             name="role"
             value={''}
-            label={'Qual o seu cargo no ecossistema?'}
+            label={'Qual o seu cargo no ecossistema de software?'}
             disabled
           />
         </Grid>
@@ -257,8 +263,12 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   const stepperContents = stepsVote.map((step) => {
     return {
       id: step.id,
-      title: t(step.title),
-      component: <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} validateAnswers={validateFeedback} />
+      title: t(step.title, {ecos_name: ecos.name}),
+      component:
+        <>
+          {step.viewOnly? <SurveyViewOnly items={step.items} /> :<SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />}
+          {step.optionalItems && step.changeOptionalItems ? <SurveyOptionalDataComponent key={`optional-${step.id}`} title={t(step.optionalTitle??'', {ecos_name:ecos.name})} items={step.optionalItems} changeItems={step.changeOptionalItems} /> : <></>}
+        </>
     }
   })
 
@@ -297,9 +307,10 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     ...stepperContents
   ]
 
+
   return (
     <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '65%', margin: 'auto' }}>
-      <Box>
+      <Container sx={{ p: '1rem' }}>
         {activeStep === steps.length ? (
           <Box>
             <FrameworkComponent
@@ -316,11 +327,11 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
         {steps[activeStep] && (
           <>
-            <Typography variant='h6'>{steps[activeStep]?.title ?? ''}</Typography>
+            <Typography variant='h6' sx={{textAlign: 'justify'}}>{steps[activeStep]?.title ?? ''}</Typography>
             {steps[activeStep].component}
           </>
         )}
-      </Box>
+      </Container>
       <MobileStepper
         variant="progress"
         steps={steps.length + 1}
@@ -339,4 +350,3 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
     </Paper>
   )
 }
-

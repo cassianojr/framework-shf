@@ -81,67 +81,65 @@ export default function ECOSDashboard() {
     if (loading) return;
 
     if (!signed) navigate('/sign-in');
-    if (signed) setAppLoading(false);
 
-    const countAnswers = (answer: NewAnswer, frameworkComponentToCount: Framework) => {
+    // const countAnswers = (answer: NewAnswer, frameworkComponentToCount: Framework) => {
 
-      answer.items.forEach((itemAnswer) => {
+    //   answer.items.forEach((itemAnswer) => {
 
-        frameworkComponentToCount.items?.forEach((itemToCount) => {
+    //     frameworkComponentToCount.items?.forEach((itemToCount) => {
 
-          if (itemAnswer.id == itemToCount.id) {
-            if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
-            if (itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
-            if (itemAnswer.answer === 3) itemToCount.neutral = itemToCount.neutral ? itemToCount.neutral + 1 : 1;
-            if (itemAnswer.answer === 4) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
-            if (itemAnswer.answer === 5) itemToCount.totallyAgree = itemToCount.totallyAgree ? itemToCount.totallyAgree + 1 : 1;
-          }
-        });
-      });
-    }
+    //       if (itemAnswer.id == itemToCount.id) {
+    //         if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
+    //         if (itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
+    //         if (itemAnswer.answer === 3) itemToCount.neutral = itemToCount.neutral ? itemToCount.neutral + 1 : 1;
+    //         if (itemAnswer.answer === 4) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
+    //         if (itemAnswer.answer === 5) itemToCount.totallyAgree = itemToCount.totallyAgree ? itemToCount.totallyAgree + 1 : 1;
+    //       }
+    //     });
+    //   });
+    // }
 
-    const setFrameworkData = (data: Framework[], mandatory_items:MandatoryItems ) => {
+    const setFrameworkData = (data: Framework[], mandatory_items: MandatoryItems) => {
       data.forEach((item) => {
-        if(item.id === 'social-human-factors') {
+        if (item.id === 'social-human-factors') {
           item.items.map((item) => {
             mandatory_items.shf.forEach((mandatoryItem) => {
-              if(item.id === mandatoryItem.id) {
+              if (item.id === mandatoryItem.id) {
                 item.selected = true;
               }
             });
           });
         }
 
-        if(item.id === 'contextual-characteristics') {
+        if (item.id === 'contextual-characteristics') {
           item.items.map((item) => {
             mandatory_items.cc.forEach((mandatoryItem) => {
-              if(item.id === mandatoryItem.id) {
+              if (item.id === mandatoryItem.id) {
                 item.selected = true;
               }
             });
           });
         }
 
-        if(item.id === 'barriers-to-improving') {
+        if (item.id === 'barriers-to-improving') {
           item.items.map((item) => {
             mandatory_items.barriers.forEach((mandatoryItem) => {
-              if(item.id === mandatoryItem.id) {
+              if (item.id === mandatoryItem.id) {
                 item.selected = true;
               }
             });
           });
         }
 
-        if(item.id === 'strategies') {
+        if (item.id === 'strategies') {
           item.items.map((item) => {
             mandatory_items.strategies.forEach((mandatoryItem) => {
-              if(item.id === mandatoryItem.id) {
+              if (item.id === mandatoryItem.id) {
                 item.selected = true;
               }
             });
           });
         }
-
       });
       setFrameworkDataState(data);
 
@@ -161,46 +159,51 @@ export default function ECOSDashboard() {
       // setStrategies(strategies);
     }
 
-    const handleFrameworkData = (answersData: NewAnswers[], data: Framework[], mandatory_items:MandatoryItems) => {
-      const rounds = answersData.map((answer) => answer.round);
-      const uniqueRounds = [...new Set(rounds)];
+    // const handleFrameworkData = (answersData: NewAnswers[], data: Framework[], mandatory_items:MandatoryItems) => {
+    //   const rounds = answersData.map((answer) => answer.round);
+    //   const uniqueRounds = [...new Set(rounds)];
 
-      uniqueRounds.forEach((round) => {
-        const answersPerRound = answersData.filter((answer) => answer.round === round);
+    //   uniqueRounds.forEach((round) => {
+    //     const answersPerRound = answersData.filter((answer) => answer.round === round);
 
-        answersPerRound.forEach((answer) => {
-          answer.answers.forEach((item) => {
+    //     answersPerRound.forEach((answer) => {
+    //       answer.answers.forEach((item) => {
 
-            data.forEach((itemToCount) => {
-              if (item.framework_item != itemToCount.id) return;
-              countAnswers(item, itemToCount);
-            });
-          });
-        });
-      });
+    //         data.forEach((itemToCount) => {
+    //           if (item.framework_item != itemToCount.id) return;
+    //           countAnswers(item, itemToCount);
+    //         });
+    //       });
+    //     });
+    //   });
 
-      setFrameworkData(data, mandatory_items);
-    }
+    //   setFrameworkData(data, mandatory_items);
+    // }
 
     const fetchData = async () => {
       const ecosData = await EcosProjectService.getEcosProject(ecosId ?? "");
-      setEcos(ecosData);
+      console.log();
+      
+      if (ecos.id === undefined) setEcos(ecosData);
 
       if (ecosData.id === undefined) return;
-      try {
-        const answersData = await QuestionService.getEcosAnswers(ecosData.id);
-        setAnswers(answersData);
 
-        FirebaseService.getFrameworkData((data) => handleFrameworkData(answersData, data, ecos.mandatory_items));
-      } catch {
-        FirebaseService.getFrameworkData((data)=>setFrameworkData(data, ecosData.mandatory_items));
-      }
+      // try {
+      // const answersData = await QuestionService.getEcosAnswers(ecosData.id);
+      // setAnswers(answersData);
+
+      // FirebaseService.getFrameworkData((data) => setFrameworkData(data, ecos.mandatory_items));
+      // } catch {
+
+      if (!frameworkDataState) FirebaseService.getFrameworkData((data) => setFrameworkData(data, ecosData.mandatory_items));
+      setAppLoading(false);
+
+      // }
     }
 
     fetchData();
 
-  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos]);
-
+  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState]);
 
   const handleStartSurvey = () => {
 
@@ -223,7 +226,7 @@ export default function ECOSDashboard() {
     EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language);
     const newEcosProject = { ...ecos, status: 'waiting-for-answers' } as EcosProject;
     setEcos(newEcosProject);
-    EcosProjectService.updateEcosProject(newEcosProject, ()=>console.log("updated"), ()=>console.error("error updating"));
+    EcosProjectService.updateEcosProject(newEcosProject, () => console.log("updated"), () => console.error("error updating"));
   }
 
   const pushFeedbackSnackbar = (text: string, severity: 'success' | 'info' | 'warning' | 'error') => {
@@ -231,11 +234,11 @@ export default function ECOSDashboard() {
     setFeedbackSnackBarSeverity(severity);
     setFeedbackSnackBarState(true);
   }
-  
+
   return (
     !appLoading &&
     <>
-      {frameworkDataState.length >0 && <EditEcosProject onError={()=>pushFeedbackSnackbar("Erro ao salvar alterações", 'error')} onSuccess={()=>pushFeedbackSnackbar("Alterações salvas com sucesso", 'success')} setEcosProject={setEcos} ecosProject={ecos} frameworkData={frameworkDataState} setState={setEditEcosProjectModalState} state={editEcosProjectModalState} />}
+      {frameworkDataState.length > 0 && <EditEcosProject onError={() => pushFeedbackSnackbar("Erro ao salvar alterações", 'error')} onSuccess={() => pushFeedbackSnackbar("Alterações salvas com sucesso", 'success')} setEcosProject={setEcos} ecosProject={ecos} frameworkData={frameworkDataState} setState={setEditEcosProjectModalState} state={editEcosProjectModalState} />}
       <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
       <SnackBarComponent snackBarState={feedbackSnackBarState} setSnackBarState={setFeedbackSnackBarState} text={feedbackSnackBarText} severity={feedbackSnackBarSeverity} />
@@ -280,7 +283,7 @@ export default function ECOSDashboard() {
                       sx={defaultPaperStyle}
                     >
                       <Title>Data de término</Title>
-                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{new Date(ecos.end_date).toLocaleDateString()}</Button>
+                      <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{(!loading) ? new Date(ecos.end_date).toLocaleDateString() : ''}</Button>
                     </Paper>
                   </Grid>
 
