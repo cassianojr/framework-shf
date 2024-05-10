@@ -5,6 +5,7 @@ interface NewAnswers {
   ecossystem_id: string,
   answers: NewAnswer[],
   optionalAnswers: NewAnswer[],
+  demographicData: DemoagraphicData
   round: number
 }
 
@@ -26,5 +27,11 @@ interface Item {
   comment?: string
 }
 
+interface DemoagraphicData {
+  timeOnEcos: string,
+  timeOnReqManagment: string,
+  role: string  
+}
 
-export type {NewAnswers, NewAnswer, Item};
+
+export type {NewAnswers, NewAnswer, Item, DemoagraphicData};

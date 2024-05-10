@@ -1,10 +1,10 @@
-import { Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
+import { Autocomplete, Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
 import React from 'react'
 import { FrameworkItem } from '../../types/Framework.type';
 import { Box, Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { QuestionService } from '../../services/QuestionService';
-import { NewAnswers } from '../../types/Answer.type';
+import { DemoagraphicData, NewAnswers } from '../../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
 import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
 import { v4 as uuid } from 'uuid';
@@ -43,11 +43,38 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
   const [refresh, setRefresh] = React.useState(false);
 
+  const [reqTimeError, setReqTimeError] = React.useState(false);
+  const [timeOnReqManagmentError, setTimeOnReqManagmentError] = React.useState(false);
+  const [roleError, setRoleError] = React.useState(false);
+
+  const timeOptions = [
+    'Selecione',
+    "Menos de 1 ano",
+    "De 1 a 2 anos",
+    "De 2 a 5 anos",
+    "De 5 a 10 anos",
+    "Mais de 10 anos"
+  ]
+
+  const ecosRoles = [
+    'Selecione',
+    'Desenvolvedor',
+    'Gerente de Projeto',
+    'Gerente de Requisitos',
+    'Arquiteto de Software',
+    'Analista de Requisitos',
+    'Testador',
+    'Outro'
+  ]
+
+  const [demographicData, setDemographicData] = React.useState({timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0]} as DemoagraphicData);
+
   const createAnswersObject = () => {
     const answers = {
       user_id,
       user_email,
       ecossystem_id: ecos.id,
+      demographicData,
       answers: stepsVote.filter(item => !item.viewOnly).map((stepVoteItem) => {
         return {
           framework_item: stepVoteItem.id,
@@ -150,8 +177,15 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
     if (activeStep <= 1) return true;
 
-    //TODO validation of demographic data
-    if (activeStep === 2) return true;
+    if (activeStep === 2){
+      setReqTimeError(demographicData.timeOnEcos === timeOptions[0]);
+      setTimeOnReqManagmentError(demographicData.timeOnReqManagment === timeOptions[0]);
+      setRoleError(demographicData.role === ecosRoles[0]);
+      if (demographicData.timeOnEcos === timeOptions[0] || demographicData.timeOnReqManagment === timeOptions[0] || demographicData.role === ecosRoles[0]){
+        noErrors = false;
+      }
+      return noErrors;
+    }
 
     stepsVote[activeStep - 3].items.current.forEach((item) => {
 
@@ -198,37 +232,71 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   };
 
   const DemographicDataComponent = () => {
+
+    const [timeOnEcosInputValue, setTimeOnEcosInputValue] = React.useState(timeOptions[0]);
+    const [timeOnReqManagmentInputValue, setTimeOnReqManagmentInputValue] = React.useState(timeOptions[0]);
+    const [roleInputValue, setRoleInputValue] = React.useState(ecosRoles[0]);
+
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
-          <TextField
-            fullWidth
-            id="ecosTime"
-            name="ecosTime"
-            value={''}
-            label={'Quanto tempo trabalha no ecossistema de software?'}
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} sx={{ marginTop: '1%' }}>
-          <TextField
-            fullWidth
+          <Autocomplete
+            disablePortal
             id="reqTime"
-            name="reqTime"
-            value={''}
-            label={'Quanto tempo trabalha com gerência de requisitos?'}
-            disabled
+            options={timeOptions}
+            onKeyDown={(e) => e.preventDefault()}
+            sx={{ caretColor: 'transparent' }}
+            value={demographicData.timeOnEcos}
+            onChange={(_, newValue: string | null) => {
+              setReqTimeError(false);
+              setDemographicData({ ...demographicData, timeOnEcos: newValue ?? '' });
+            }}
+            inputValue={timeOnEcosInputValue}
+            onInputChange={(_, newInputValue) => {
+              setTimeOnEcosInputValue(newInputValue);
+            }}
+            renderInput={(params) => <TextField {...params} label={'Quanto tempo trabalha no ecossistema de software?'} InputLabelProps={{shrink: true}} error={reqTimeError} />}
           />
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
-          <TextField
-            fullWidth
-            id="role"
-            name="role"
-            value={''}
-            label={'Qual o seu cargo no ecossistema de software?'}
-            disabled
+          <Autocomplete
+            disablePortal
+            id="reqTime"
+            options={timeOptions}
+            onKeyDown={(e) => e.preventDefault()}
+            sx={{ caretColor: 'transparent' }}
+            value={demographicData.timeOnReqManagment}
+            onChange={(_, newValue: string | null) => {
+              setTimeOnReqManagmentError(false);
+              setDemographicData({ ...demographicData, timeOnReqManagment: newValue ?? '' });
+            }}
+            inputValue={timeOnReqManagmentInputValue}
+            onInputChange={(_, newInputValue) => {
+              setTimeOnReqManagmentInputValue(newInputValue);
+            }}
+            
+            renderInput={(params) => <TextField {...params} label={'Quanto tempo trabalha com gerência de requisitos?'} InputLabelProps={{shrink: true}} error={timeOnReqManagmentError}/>}
           />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <Autocomplete
+            disablePortal
+            id="role"
+            options={ecosRoles}
+            onKeyDown={(e) => e.preventDefault()}
+            sx={{ caretColor: 'transparent' }}
+            value={demographicData.role}
+            onChange={(_, newValue: string | null) => {
+              setRoleError(false);
+              setDemographicData({ ...demographicData, role: newValue ?? '' });
+            }}
+            inputValue={roleInputValue}
+            onInputChange={(_, newInputValue) => {
+              setRoleInputValue(newInputValue);
+            }}
+            renderInput={(params) => <TextField {...params} label={'Qual o seu papel no ecossistema?'} InputLabelProps={{shrink: true}} error={roleError} />}
+          />
+
         </Grid>
       </Grid>
     )
@@ -287,7 +355,7 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
       <Container sx={{ p: '1rem' }}>
         {activeStep === steps.length ? (
           <Box>
-            {answers&&<ViewAnswersComponent answers={answers}/>}
+            {answers && <ViewAnswersComponent answers={answers} />}
           </Box>)
           : <></>}
 

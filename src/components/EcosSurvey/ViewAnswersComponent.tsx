@@ -2,7 +2,7 @@ import { NewAnswer, NewAnswers } from '../../types/Answer.type'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Title from '../Dashboard/Title';
 import i18next from 'i18next';
-import { Divider } from '@mui/material';
+import { Divider, Grid, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface ViewAnswersComponentProps {
@@ -79,9 +79,52 @@ export default function ViewAnswersComponent({ answers }: ViewAnswersComponentPr
     )
   }
 
+  const DemographicDataComponent = () => {
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="ecosTime"
+            name="ecosTime"
+            value={answers.demographicData.timeOnEcos}
+            label={'Quanto tempo trabalha no ecossistema de software?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="reqTime"
+            name="reqTime"
+            value={answers.demographicData.timeOnReqManagment}
+            label={'Quanto tempo trabalha com gerência de requisitos?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="role"
+            name="role"
+            value={answers.demographicData.role}
+            label={'Qual o seu cargo no ecossistema de software?'}
+            disabled
+          />
+        </Grid>
+      </Grid>
+    )
+  }
+
   return (
     <>
       <Title>{t('view_answers.title')}</Title>
+      <Divider sx={{m: '1.3rem'}} />
+
+      <Title>{'Dados demográficos'}</Title>
+
+      <DemographicDataComponent />
+
       <Divider sx={{m: '1.3rem'}} />
       {answers.answers.map((answer, index) => (
         <div key={answer.framework_item}>
