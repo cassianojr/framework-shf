@@ -1,9 +1,8 @@
 import { Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
 import React from 'react'
-import { Framework, FrameworkItem } from '../../types/Framework.type';
+import { FrameworkItem } from '../../types/Framework.type';
 import { Box, Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import FrameworkComponent from '../FrameworkComponent';
 import { QuestionService } from '../../services/QuestionService';
 import { NewAnswers } from '../../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { EcosProject, Participant } from '../../types/EcosProject.type';
 import EcosProjectService from '../../services/EcosProjectService';
 import SurveyOptionalDataComponent from './SurveyOptionalDataComponent';
 import { SurveyViewOnly } from './SurveyViewOnly';
+import ViewAnswersComponent from './ViewAnswersComponent';
 
 
 interface SurveyStepperProps {
@@ -27,18 +27,6 @@ interface SurveyStepperProps {
     optionalTitle?: string,
     order: number
   }[],
-  frameworkItems: {
-    socialHumanFactors: Framework | undefined,
-    contextualCharacteristics: Framework | undefined,
-    barriersToImproving: Framework | undefined,
-    strategies: Framework | undefined,
-    copingMechanisms: Framework | undefined,
-    setSocialHumanFactors: (value: Framework) => void,
-    setContextualCharacteristics: (value: Framework) => void,
-    setBarriersToImproving: (value: Framework) => void,
-    setStrategies: (value: Framework) => void,
-    setCopingMechanisms: (value: Framework) => void
-  },
   user_id: string,
   user_email: string,
   ecos: EcosProject,
@@ -46,7 +34,7 @@ interface SurveyStepperProps {
   setFeedBackSnackbarState: (value: boolean) => void
 }
 
-export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id, user_email, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
+export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
   const { t } = useTranslation('ecos_survey');
   const navigate = useNavigate();
 
@@ -55,40 +43,12 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
 
   const [refresh, setRefresh] = React.useState(false);
 
-  const setAnswersToFrameworkComponent = () => {
-    frameworkItems.setSocialHumanFactors({
-      ...frameworkItems.socialHumanFactors,
-      items: stepsVote.filter((item) => item.id === "social-human-factors")[0].items.current as FrameworkItem[]
-    } as Framework);
-
-    frameworkItems.setContextualCharacteristics({
-      ...frameworkItems.contextualCharacteristics,
-      items: stepsVote.filter((item) => item.id === "contextual-characteristics")[0].items.current as FrameworkItem[]
-    } as Framework);
-
-    frameworkItems.setBarriersToImproving({
-      ...frameworkItems.barriersToImproving,
-      items: stepsVote.filter((item) => item.id === "barriers-to-improving")[0].items.current as FrameworkItem[]
-    } as Framework);
-
-    frameworkItems.setStrategies({
-      ...frameworkItems.strategies,
-      items: stepsVote.filter((item) => item.id === "strategies")[0].items.current as FrameworkItem[]
-    } as Framework);
-
-    frameworkItems.setCopingMechanisms({
-      ...frameworkItems.copingMechanisms,
-      items: stepsVote.filter((item) => item.id === "coping-mechanisms")[0].items.current as FrameworkItem[]
-    } as Framework);
-  }
-
-
   const createAnswersObject = () => {
     const answers = {
       user_id,
       user_email,
       ecossystem_id: ecos.id,
-      answers: stepsVote.map((stepVoteItem) => {
+      answers: stepsVote.filter(item => !item.viewOnly).map((stepVoteItem) => {
         return {
           framework_item: stepVoteItem.id,
           question: stepVoteItem.title,
@@ -102,7 +62,22 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
             }
           })
         }
-      })
+      }),
+      optionalAnswers: stepsVote.filter((stepVoteItem) => stepVoteItem.optionalItems && stepVoteItem.changeOptionalItems).map((stepVoteItem) => {
+        return {
+          framework_item: stepVoteItem.id,
+          question: stepVoteItem.optionalTitle ?? '',
+          items: stepVoteItem.optionalItems?.current.filter(item => item.comment !== undefined && item.comment !== '').map((item) => {
+            return {
+              id: item.id,
+              ids: item.ids,
+              names: item.names,
+              answer: 1,
+              comment: item.comment
+            }
+          }) ?? []
+        }
+      }),
     } as NewAnswers;
 
     return answers;
@@ -195,7 +170,6 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   const handleNext = () => {
 
     if (activeStep === steps.length - 1) {
-      setAnswersToFrameworkComponent();
       setAnswers(createAnswersObject());
     }
 
@@ -263,11 +237,11 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
   const stepperContents = stepsVote.map((step) => {
     return {
       id: step.id,
-      title: t(step.title, {ecos_name: ecos.name}),
+      title: t(step.title, { ecos_name: ecos.name }),
       component:
         <>
-          {step.viewOnly? <SurveyViewOnly items={step.items} /> :<SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />}
-          {step.optionalItems && step.changeOptionalItems ? <SurveyOptionalDataComponent key={`optional-${step.id}`} title={t(step.optionalTitle??'', {ecos_name:ecos.name})} items={step.optionalItems} changeItems={step.changeOptionalItems} /> : <></>}
+          {step.viewOnly ? <SurveyViewOnly items={step.items} /> : <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />}
+          {step.optionalItems && step.changeOptionalItems ? <SurveyOptionalDataComponent key={`optional-${step.id}`} title={t(step.optionalTitle ?? '', { ecos_name: ecos.name })} items={step.optionalItems} changeItems={step.changeOptionalItems} /> : <></>}
         </>
     }
   })
@@ -313,21 +287,13 @@ export default function SurveyStepper({ stepsVote, frameworkItems, ecos, user_id
       <Container sx={{ p: '1rem' }}>
         {activeStep === steps.length ? (
           <Box>
-            <FrameworkComponent
-              copingMechanisms={frameworkItems.copingMechanisms}
-              contextualCharacteristics={frameworkItems.contextualCharacteristics}
-              socialHumanFactors={frameworkItems.socialHumanFactors}
-              barriersToImproving={frameworkItems.barriersToImproving}
-              strategies={frameworkItems.strategies}
-              showSuggestions={false}
-              showSurveyOptions={true}
-            />
+            {answers&&<ViewAnswersComponent answers={answers}/>}
           </Box>)
           : <></>}
 
         {steps[activeStep] && (
           <>
-            <Typography variant='h6' sx={{textAlign: 'justify'}}>{steps[activeStep]?.title ?? ''}</Typography>
+            <Typography variant='h6' sx={{ textAlign: 'justify' }}>{steps[activeStep]?.title ?? ''}</Typography>
             {steps[activeStep].component}
           </>
         )}

@@ -15,6 +15,8 @@ import SurveyStepper from "../components/EcosSurvey/SurveyStepper";
 import { Modal } from "../components/Modal";
 import EcosProjectService from "../services/EcosProjectService";
 import { EcosProject } from "../types/EcosProject.type";
+import i18next from "i18next";
+import { QuestionService } from "../services/QuestionService";
 
 interface SelectItemsProps {
   id: string,
@@ -32,11 +34,6 @@ interface SelectItemsProps {
 export default function EcosSurvey() {
 
   const [appLoading, setAppLoading] = React.useState<boolean>(true);
-  const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
-  const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
-  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
-  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
-  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
   const [errorModalState, setErrorModalState] = React.useState(false);
   const [errorModalContent, setErrorModalContent] = React.useState({ title: "", description: "" } as { title: string, description: string });
@@ -62,6 +59,9 @@ export default function EcosSurvey() {
 
   const strategiesRef = React.useRef<FrameworkItem[]>([]);
   const changeStrategiesRef = (items: FrameworkItem[]) => { strategiesRef.current = items };
+
+  const copingMechanismsRef = React.useRef<FrameworkItem[]>([]);
+  const changeCopingMechanismsRef = (items: FrameworkItem[]) => { copingMechanismsRef.current = items };
 
 
   const optionalShfRef = React.useRef<FrameworkItem[]>([]);
@@ -177,16 +177,11 @@ export default function EcosSurvey() {
       changeContextualCharacteristicsRef(contextualCharacteristicsLocal.items);
       changeBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => item.selected));
       changeStrategiesRef(strategiesLocal.items.filter((item) => item.selected));
+      changeCopingMechanismsRef(copingMechanismsLocal.items);
 
-      changeOptionalShfRef(socialHumanFactorsLocal.items.filter((item) => !item.selected));
-      changeOptionalBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => !item.selected));
-      changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected));
-
-      setCopingMechanisms(copingMechanismsLocal);
-      setContextualCharacteristics(contextualCharacteristicsLocal);
-      setSocialHumanFactors(socialHumanFactorsLocal);
-      setBarriersToImproving(barriersToImprovingLocal);
-      setStrategies(strategiesLocal);
+      changeOptionalShfRef(socialHumanFactorsLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
+      changeOptionalBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
+      changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
 
       if (questions.length === 0) {
         setQuestions([
@@ -227,7 +222,15 @@ export default function EcosSurvey() {
             changeOptionalItems: changeOptionalStrategiesRef,
             optionalTitle: "strategies_optional",
             order: 4
-          }
+          },
+          {
+            id: "coping_mechanisms",
+            title: 'coping_mec_affirmative',
+            items: copingMechanismsRef,
+            changeItems: changeCopingMechanismsRef,
+            viewOnly: true,
+            order: 5
+          },
         ]);
       }
 
@@ -236,14 +239,14 @@ export default function EcosSurvey() {
     getEcosData().then((ecosData) => {
       if (!ecosData) return;
 
-      // QuestionService.getAnswersByUserId(getUser().uid)
-      //   .then((answers) => {
-      //     if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-      //       // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-      //       // setErrorModalState(true);
-      //       return;
-      //     }
-      //   });
+      QuestionService.getAnswersByUserId(getUser().uid)
+        .then((answers) => {
+          if (answers.find((answer) => answer.ecossystem_id == ecosId)) {
+            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            setErrorModalState(true);
+            return;
+          }
+        });
 
       const localStorageData = localStorage.getItem('frameworkData');
 
@@ -264,7 +267,7 @@ export default function EcosSurvey() {
     });
 
     setAppLoading(false);
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser, ecos]);
+  }, [questions, loading, signed, navigate, t, ecosId, getUser, ecos]);
 
   return (
     <>
@@ -277,18 +280,6 @@ export default function EcosSurvey() {
 
           {(!appLoading && ecos) && <SurveyStepper
             stepsVote={questions}
-            frameworkItems={{
-              socialHumanFactors,
-              contextualCharacteristics,
-              barriersToImproving,
-              strategies,
-              copingMechanisms,
-              setSocialHumanFactors,
-              setContextualCharacteristics,
-              setBarriersToImproving,
-              setStrategies,
-              setCopingMechanisms
-            }}
             ecos={ecos}
             user_id={getUser().uid}
             user_email={getUser().email}

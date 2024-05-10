@@ -25,7 +25,7 @@
   "barriers_optional":"Abaixo estão listadas algumas barreiras que podem impedir a melhoria dos fatores sociais e humanos na gerência de requisitos em ecossistemas de software. Se você considerar alguma dessas barreiras como crítica no ecossistema {{ecos_name}}, por favor, selecione-as clicando em cada uma delas.",
   "strategies_affirmative": "Dadas as estratégias listadas abaixo, indicadas pela organização central, indique se elas ajudaram a melhorar os fatores sociais e humanos e superar as barreiras na gerência de requisitos no ecossistema {{ecos_name}}. Para cada estratégia, indique se concorda ou discorda.",
   "strategies_optional":"Abaixo estão listadas algumas estratégias que podem ajudar a melhorar os FSH e superar as barreiras na gerência de requisitos em ecossistemas de software. Se você considera que alguma dessas estratégias podem ser utilizadas no ecossistema {{ecos_name}}, por favor, seleciona-os clicando em cada uma delas.",
-  "coping_mec_affirmative": "Os mecanismos de enfrentamento listados abaixo podem ser utilizados quando as estratégias de melhoria não funcionam.",
+  "coping_mec_affirmative": "Abaixo estão listados alguns mecanismos de enfrentamento que podem ser utilizados quando as estratégias não são eficazes para melhorar os fatores sociais e humanos e superar as barreiras na gerência de requisitos em ecossistemas de software.",
   "survey_options":{
     "strongly_agree": "Concordo totalmente",
     "agree": "Concordo",
@@ -49,5 +49,27 @@
     "textarea_label": "Deixe seu feedback aqui",
     "error": "Para os itens em que você respondeu \"Concordo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
   },
-  "validation_error": "Por favor, responda a todas as perguntas antes de passar para o próximo passo."
+  "validation_error": "Por favor, responda a todas as perguntas antes de passar para o próximo passo.",
+  "view_answers": {
+    "title": "Visualize as suas respostas abaixo",
+    "fsh_affirmative": {
+      "title":"Fatores sociais e humanos",
+      "critical": "Fatores sociais e humanos críticos"
+    },
+    "cc_affirmative": {
+      "title": "Características contextuais",
+      "critical": "Características contextuais críticas"
+    },
+    "barriers_affirmative": {
+      "title": "Barreiras",
+      "critical": "Barreiras críticas"
+    },
+    "strategies_affirmative": {
+      "title": "Estratégias de melhoria",
+      "critical": "Estratégias críticas"
+    },
+    "name": "Nome",
+    "answer": "Resposta",
+    "feedback": "Feedback"
+  }
 }

@@ -47,7 +47,7 @@ export function SurveyViewOnly({ items }: SurveyViewOnlyProps) {
         disableColumnMenu
         hideFooterPagination
         hideFooter
-        columnHeaderHeight={80}
+        columnHeaderHeight={40}
         getRowHeight={() => 'auto' as const}
         sx={{
           '& .MuiDataGrid-columnHeaderTitle': {

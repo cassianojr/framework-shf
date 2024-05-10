@@ -15,6 +15,7 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
 
   const [commentModalState, setCommentModalState] = React.useState(false);
   const [commentModalItem, setCommentModalItem] = React.useState<FrameworkItem | undefined>(undefined);
+  const [reload, setReload] = React.useState(false);
 
   const handleToggleButtonClick = (item: FrameworkItem) => {
     if (item.comment !== undefined && item.comment !== '') {
@@ -28,7 +29,9 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
   const UnmarkItem = (item: FrameworkItem) => {
     const newItem = { ...item, comment: '' };
     const newItems = items.current.map((i) => i.ids[i18next.language] === item.ids[i18next.language] ? newItem : i);
+    
     changeItems(newItems);
+    setReload(!reload);
   }
 
   return (

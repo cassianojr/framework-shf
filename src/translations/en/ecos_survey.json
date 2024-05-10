@@ -25,7 +25,7 @@
   "barriers_optional": "Listed below are some barriers that may prevent the improvement of social and human factors in requirements management in software ecosystems. If you consider any of these barriers to be critical in the {{ecos_name}} ecosystem, please select them by clicking on each one.",
   "strategies_affirmative": "Given the strategies listed below, indicated by the central organization, indicate whether they helped improve social and human factors and overcome barriers in requirements management in the {{ecos_name}} ecosystem. For each strategy, indicate whether you agree or disagree.",
   "strategies_optional": "Listed below are some strategies that can help improve FSH and overcome barriers in requirements management in software ecosystems. If you consider that any of these strategies can be used in the {{ecos_name}} ecosystem, please select them by clicking on each one of them.",
-  "coping_mec_affirmative": "The coping mechanisms listed below can be used when improvement strategies do not work.",
+  "coping_mec_affirmative": "Listed below are some coping mechanisms that can be used when strategies are not effective to improve social and human factors and overcome barriers in requirements management in software ecosystems.",
   "survey_options": {
     "strongly_agree": "Strongly Agree",
     "agree": "Agree",
@@ -49,5 +49,27 @@
     "textarea_label": "Leave your feedback here",
     "error": "For items where you selected 'Strongly Agree' or 'Strongly Disagree,' please provide a comment."
   },
-  "validation_error": "Please, answer all questions before moving on the next step."
+  "validation_error": "Please, answer all questions before moving on the next step.",
+  "view_answers": {
+    "title": "View your answers below",
+    "fsh_affirmative": {
+      "title": "Social and Human Factors",
+      "critical": "Critical Social and Human Factors"
+    },
+    "cc_affirmative": {
+      "title": "Contextual Characteristics",
+      "critical": "Critical Contextual Characteristics"
+    },
+    "barriers_affirmative": {
+      "title": "Barriers",
+      "critical": "Critical Barriers"
+    },
+    "strategies_affirmative": {
+      "title": "Improvement Strategies",
+      "critical": "Critical Strategies"
+    },
+    "name": "Name",
+    "answer": "Answer",
+    "feedback": "Feedback"
+  }
 }

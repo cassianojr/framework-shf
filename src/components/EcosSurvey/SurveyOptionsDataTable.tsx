@@ -115,7 +115,7 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
         disableColumnMenu
         hideFooterPagination
         hideFooter
-        columnHeaderHeight={80}
+        columnHeaderHeight={40}
         getRowHeight={() => 'auto' as const}
         sx={{
           '& .MuiDataGrid-columnHeaderTitle': {
