@@ -35,7 +35,7 @@
   },
   "item_name": "Nome",
   "view_answer_btn": "Visualizar resposta",
-  "save_btn": "Savlar",
+  "save_btn": "Salvar",
   "answers_saved": "Respostas enviadas com sucesso!",
   "answers_not_saved": "Erro ao enviar respostas!",
   "errors": {
