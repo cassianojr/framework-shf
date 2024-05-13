@@ -58,12 +58,19 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
   const ecosRoles = [
     'Selecione',
-    'Desenvolvedor',
-    'Gerente de Projeto',
-    'Gerente de Requisitos',
-    'Arquiteto de Software',
-    'Analista de Requisitos',
-    'Testador',
+    'Fornecedor comercial independente',
+    'Fabricante de design original',
+    'Provedor de plataforma/SaaS',
+    'Fornecedor de SaaS',
+    'Distribuidor de produtos',
+    'Desenvolvedor de software',
+    'Designer de software',
+    'Provedor de serviços de aplicativos',
+    'Engenheiro de requisitos',
+    'Integrador',
+    'Fornecedor de conteúdo',
+    'Revendedor de valor agregado',
+    'Cliente/usuário final',
     'Outro'
   ]
 

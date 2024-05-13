@@ -132,14 +132,6 @@ export default function EcosSurvey() {
         })  
       });
 
-      // cc.items.map((item) =>{
-      //   mandatoryItems.cc.forEach((mandatoryItem) =>{
-      //     if(item.id === mandatoryItem.id){
-      //       item.selected = true;
-      //     }
-      //   })  
-      // });
-
       cc.items = mandatoryItems.cc;
       
 
