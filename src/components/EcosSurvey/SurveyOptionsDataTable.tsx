@@ -50,17 +50,16 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 1, sortable: false, resizable: false },
     {
       field: 'name', headerName: t('item_name'), flex: 4.3, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
         const item = items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
 
         return (
           <>
+            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem', fontWeight: (item.selected) ? 'bold': '' } : { marginLeft: '.3rem'}}>{item.names[i18next.language]}</Typography>
             <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
               <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
             </Tooltip>
-            <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem', fontWeight: (item.selected) ? 'bold': '' } : { marginLeft: '.3rem'}}>{item.names[i18next.language]}</Typography>
           </>)
       }
     },

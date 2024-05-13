@@ -158,6 +158,13 @@ export default function EcosSurvey() {
         strategiesLocal: strategies
       }
     }
+    const sortFrameworkItems = (data: Framework[]) => {
+      data.forEach((item) => {
+        item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])))
+      })
+      
+      return data;
+    }
 
     const handleFrameworkData = (data: Framework[], ecosData: EcosProject) => {
 
@@ -171,9 +178,9 @@ export default function EcosSurvey() {
       changeStrategiesRef(strategiesLocal.items.filter((item) => item.selected));
       changeCopingMechanismsRef(copingMechanismsLocal.items);
 
-      changeOptionalShfRef(socialHumanFactorsLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
-      changeOptionalBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
-      changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected).sort((a,b) => a.names[i18next.language].localeCompare(b.names[i18next.language])));
+      changeOptionalShfRef(socialHumanFactorsLocal.items.filter((item) => !item.selected));
+      changeOptionalBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => !item.selected));
+      changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected));
 
       if (questions.length === 0) {
         setQuestions([
@@ -243,13 +250,15 @@ export default function EcosSurvey() {
       const localStorageData = localStorage.getItem('frameworkData');
 
       if (localStorageData) {
-        handleFrameworkData(JSON.parse(localStorageData), ecosData);
+        const sortedData = sortFrameworkItems(JSON.parse(localStorageData));
+        handleFrameworkData(sortedData, ecosData);
         return;
       }
 
       FirebaseService.getFrameworkData((data: Framework[]) => {
         localStorage.setItem('frameworkData', JSON.stringify(data));
-        handleFrameworkData(data, ecosData);
+        const sortedData = sortFrameworkItems(data);
+        handleFrameworkData(sortedData, ecosData);
       });
 
     }).catch(() => {

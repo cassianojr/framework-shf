@@ -48,7 +48,7 @@ export default function Dashboard() {
 
     const sortFrameworkItems = (data: Framework[]) => {
       data.forEach((item) => {
-        item.items.sort((a, b) => (a.names[i18next.language] < b.names[i18next.language]) ? -1 : 1)
+        item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])));
       })
       
       return data;
@@ -59,9 +59,9 @@ export default function Dashboard() {
 
       if (localStorageData) {
         if (frameworkData.length === 0) {
-          const newData = sortFrameworkItems(JSON.parse(localStorageData) as Framework[]);
+          const sortedData = sortFrameworkItems(JSON.parse(localStorageData) as Framework[]);
           
-          setFrameworkData(newData)
+          setFrameworkData(sortedData)
         }
         return;
       }
@@ -69,9 +69,9 @@ export default function Dashboard() {
       FirebaseService.getFrameworkData((data: Framework[]) => {
         localStorage.setItem('frameworkData', JSON.stringify(data));
         if (frameworkData.length === 0) {
-          const newData = sortFrameworkItems(data);
+          const sortedData = sortFrameworkItems(data);
 
-          setFrameworkData(newData)
+          setFrameworkData(sortedData)
         }
       });
     }

@@ -17,7 +17,6 @@ export function SurveyViewOnly({ items }: SurveyViewOnlyProps) {
   const { t } = useTranslation(['ecos_survey', 'common']);
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 1, sortable: false, resizable: false },
     {
       field: 'name', headerName: t('item_name'), flex: 4.3, sortable: false, resizable: false, renderCell: (params: GridRenderEditCellParams<FrameworkItem, number>) => {
         const item = items.current.find((item) => item.ids[i18next.language] === params.id) ?? { ids: {}, names: {}, descriptions: {} } as FrameworkItem;
