@@ -47,6 +47,7 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const [timeOnReqManagmentError, setTimeOnReqManagmentError] = React.useState(false);
   const [roleError, setRoleError] = React.useState(false);
 
+  //TODO create translations
   const timeOptions = [
     'Selecione',
     "Menos de 1 ano",

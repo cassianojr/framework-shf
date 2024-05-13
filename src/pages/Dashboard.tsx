@@ -17,6 +17,7 @@ import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
 import { EcosProject } from '../types/EcosProject.type';
 import EcosProjectService from '../services/EcosProjectService';
+import i18next from 'i18next';
 
 const btnStyle = {
   p: 1.5
@@ -45,17 +46,33 @@ export default function Dashboard() {
       setUserEcos(ecos);
     });
 
+    const sortFrameworkItems = (data: Framework[]) => {
+      data.forEach((item) => {
+        item.items.sort((a, b) => (a.names[i18next.language] < b.names[i18next.language]) ? -1 : 1)
+      })
+      
+      return data;
+    }
+
     const getFrameworkData = async () => {
       const localStorageData = localStorage.getItem('frameworkData');
 
       if (localStorageData) {
-        if(frameworkData.length === 0) setFrameworkData(JSON.parse(localStorageData));
+        if (frameworkData.length === 0) {
+          const newData = sortFrameworkItems(JSON.parse(localStorageData) as Framework[]);
+          
+          setFrameworkData(newData)
+        }
         return;
       }
 
       FirebaseService.getFrameworkData((data: Framework[]) => {
         localStorage.setItem('frameworkData', JSON.stringify(data));
-        if(frameworkData.length === 0) setFrameworkData(data);
+        if (frameworkData.length === 0) {
+          const newData = sortFrameworkItems(data);
+
+          setFrameworkData(newData)
+        }
       });
     }
 

@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemIcon, ListItemText, Switch } from "@mui/material";
+import { List, ListItem, ListItemText, Switch } from "@mui/material";
 import { FrameworkItem } from "../../types/Framework.type";
 import i18next from "i18next";
 
@@ -22,7 +22,6 @@ export default function FrameworkItemListSelect(props: ListComponentProps) {
       {props.items.map((item) => {
         return (
           <ListItem key={item.id} divider>
-            <ListItemIcon id={`icon-${item.id}`} sx={{ fontWeight: 'bold' }}>{item.ids[i18next.language]}</ListItemIcon>
             <ListItemText id={`text-${item.id}`}>{item.names[i18next.language]}</ListItemText>
             <Switch
               edge="end"
