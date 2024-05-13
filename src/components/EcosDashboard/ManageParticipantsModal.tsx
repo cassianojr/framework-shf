@@ -5,17 +5,17 @@ import { Button, Divider, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import { Ecosystem, Participant } from '../../types/Ecosystem.type';
-import EcosystemService from '../../services/EcosystemService';
 import AddParticipant from './AddParticipant';
 import EditParticipant from './EditParticipant';
 import { useTranslation } from 'react-i18next';
+import { EcosProject, Participant } from '../../types/EcosProject.type';
+import EcosProjectService from '../../services/EcosProjectService';
 
 interface ManageParticipantsModalProps {
   setModalState: React.Dispatch<React.SetStateAction<boolean>>,
   modalState: boolean,
-  ecos: Ecosystem,
-  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>,
+  ecos: EcosProject,
+  setEcos: React.Dispatch<React.SetStateAction<EcosProject>>,
   addParticipantModalState: boolean,
   setAddParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -37,16 +37,9 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
 
   const columns: GridColDef[] = [
     {
-      field: 'name',
-      headerName: t('manage_participants.name_label'),
-      width: 300,
-      sortable: false,
-      resizable: false
-    },
-    {
       field: 'email',
       headerName: 'Email',
-      width: 250,
+      width: 550,
       sortable: false,
       resizable: false
     },
@@ -91,7 +84,10 @@ export default function ManageParticipantsModal({ setModalState, modalState, eco
     const newParticipants = participants.filter(p => p.id !== id);
     const newEcos = { ...ecos, participants: newParticipants };
 
-    EcosystemService.updateEcosystem(newEcos);
+    EcosProjectService.updateEcosProject(newEcos, ()=>{
+     console.log('Participant deleted successfully');
+      
+    }, ()=>console.log('error'));
 
     setEcos(newEcos);
   }

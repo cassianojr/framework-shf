@@ -1,107 +1,293 @@
 import React from 'react'
-import { Ecosystem } from '../../types/Ecosystem.type';
 import { Modal } from '../Modal';
-import { Button, Divider, FormControl, Grid, Slider, TextField, Typography } from '@mui/material';
+import { Button, Divider, Grid, List, ListItem, ListItemButton, ListItemText, MobileStepper, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import EcosystemService from '../../services/EcosystemService';
 import { useTranslation } from 'react-i18next';
-import AddIcon from '@mui/icons-material/Add';
 import { User } from '../../types/User.type';
+import { Box, Container } from '@mui/system';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { Framework, FrameworkItem } from '../../types/Framework.type';
+import Title from './Title';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { v4 as uuid } from 'uuid';
+import { Dayjs } from 'dayjs';
+import { EcosProject, Participant } from '../../types/EcosProject.type';
+import EcosProjectService from '../../services/EcosProjectService';
+import FrameworkItemListSelect from './FrameworkItemListSelect';
+
 
 interface NewProjectModalProps {
   user: User,
   setState: React.Dispatch<React.SetStateAction<boolean>>,
-  state: boolean
+  state: boolean,
+  frameworkData: Framework[]
 }
 
-export default function NewProjectModal({ user, setState, state }: NewProjectModalProps) {
+export default function NewProjectModal({ user, setState, state, frameworkData }: NewProjectModalProps) {
 
   const navigate = useNavigate();
   const { t } = useTranslation('dashboard');
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [orgNameError, setOrgNameError] = React.useState(false);
+  const [endDateError, setEndDateError] = React.useState(false);
 
-  const [timeWindow, setTimeWindow] = React.useState(1);
+  const [orgName, setOrgName] = React.useState('');
+  const [participants, setParticipants] = React.useState([] as Participant[]);
+  const [endDate, setEndDate] = React.useState<Dayjs | null>(null);
 
-  const handleAddEcosSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const organization_name = e.currentTarget.orgName.value as string;
-    const time_window = e.currentTarget.time_window.value as number;
+  const [shfItems, setShfItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'social-human-factors')[0].items);
+  const [ccItems, setCcItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'contextual-characteristics')[0].items);
+  const [barriersItems, setBarriersItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'barriers-to-improving')[0].items);
+  const [strategiesItems, setStrategiesItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'strategies')[0].items);
 
-    const ecosystem = {
-      organization_name,
+  const AddParticiantsStep = () => {
+    const [participantEmail, setParticipantEmail] = React.useState('');
+
+    const handleParticipantEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setParticipantEmail(e.target.value);
+    }
+
+    const handleAddParticipant = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const email = e.currentTarget.participantEmail.value as string;
+
+      setParticipants([...participants, { id: uuid(), email }]);
+      setParticipantEmail('');
+    }
+
+    const handleDeleteParticipant = (participantId: string) => {
+      setParticipants(participants.filter((participant) => participant.id !== participantId));
+    }
+
+    return (
+      <Box>
+        <Title>Adicionar participantes</Title>
+        <form onSubmit={handleAddParticipant}>
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <TextField value={participantEmail} type={'email'} onChange={handleParticipantEmailChange} fullWidth required id="participantEmail" name="participantEmail" label="email do participante" />
+            </Grid>
+            <Grid item xs={2}>
+              <Button type='submit' variant="contained" color="primary" sx={{ height: '3.5rem' }}>Adicionar</Button>
+            </Grid>
+          </Grid>
+        </form>
+
+        <Title>Participantes</Title>
+        <List>
+          {participants.map((participant) => {
+            return (
+              <ListItem
+                key={participant.id}
+                divider
+                dense
+                secondaryAction={
+                  <ListItemButton onClick={() => handleDeleteParticipant(participant.id)}>
+                    <DeleteIcon />
+                  </ListItemButton>
+                }
+                id={participant.id}>
+                <ListItemText>{participant.email}</ListItemText>
+
+              </ListItem>
+            )
+          })}
+        </List>
+      </Box>
+    )
+  }
+
+  const steps = [
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <Typography>
+            {t('modal_text.txt1')}
+          </Typography>
+          <Typography>
+            {t('modal_text.txt2')}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            required
+            id="orgName"
+            name="orgName"
+            value={orgName}
+            onChange={(e) => setOrgName(e.target.value)}
+            label={t('modal_text.label_name')}
+            autoFocus
+            error={orgNameError}
+          />
+        </Grid>
+
+        <Grid item xs={12} sx={{ marginTop: '1%', marginBottom: '2%' }}>
+          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>Selecione a data em que a pesquisa irá terminar:</Typography>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Data de término da pesquisa*"
+              sx={{ width: '100%' }}
+              value={endDate}
+              format='DD/MM/YYYY'
+              onChange={(newValue) => setEndDate(newValue)}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  variant: 'outlined',
+                  error: endDateError,
+                  helperText: endDateError ? 'Por favor, selecione a data de término da pesquisa' : null
+                }
+              }}
+            />
+          </LocalizationProvider>
+        </Grid>
+      </Grid>
+    </>,
+    <>
+      <Title>Dados demográficos</Title>
+      <Typography> Esses dados são obrigatórios para a pesquisa, e serão coletados dos participantes.</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="ecosTime"
+            name="ecosTime"
+            value={''}
+            label={'Quanto tempo trabalha no ecossistema?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="reqTime"
+            name="reqTime"
+            value={''}
+            label={'Quanto tempo trabalha com gerenciamento de requisitos?'}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1%' }}>
+          <TextField
+            fullWidth
+            id="role"
+            name="role"
+            value={''}
+            label={'Qual o seu cargo no ecossistema?'}
+            disabled
+          />
+        </Grid>
+      </Grid>
+    </>,
+    <>
+      <Title>Por favor, selecione os fatores sociais e humanos que serão obrigatórios na pesquisa:</Title>
+      <FrameworkItemListSelect items={shfItems} setItems={setShfItems} />
+    </>,
+    <>
+      <Title>Por favor, selecione as características contextuais da sua organização:</Title>
+
+      <FrameworkItemListSelect items={ccItems} setItems={setCcItems} />
+    </>,
+    <>
+      <Title>Por favor, selecione as barreiras para melhoria que serão obrigatórias na pesquisa:</Title>
+      <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems} />
+    </>,
+    <>
+      <Title>Por favor, selecione as estratégias que serão obrigatórias na pesquisa:</Title>
+      <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems} />
+    </>,
+    <>
+      <AddParticiantsStep />
+    </>
+  ]
+
+  const handleAddEcosSubmit = () => {
+    const endDateObj = endDate?.toDate();
+
+    const ecosProject = {
+      name: orgName,
+      end_date: endDateObj?.toISOString(),
+      participants: participants,
       admin_id: user.uid,
-      responses: 0,
-      time_window
-    } as Ecosystem;
+      mandatory_items: {
+        shf: shfItems.filter((item) => item.selected),
+        cc: ccItems.filter((item) => item.selected),
+        barriers: barriersItems.filter((item) => item.selected),
+        strategies: strategiesItems.filter((item) => item.selected)
+      },
+      status: 'not-started'
+    } as EcosProject;
 
-    setState(false);
-    EcosystemService.createEcosystem(ecosystem, (ecos) => {
-      navigate(`/ecos-dashboard/${ecos.id}`);
+    EcosProjectService.createEcosProject(ecosProject, (docRef) => {
+      navigate(`/ecos-dashboard/${docRef.id}`);
     }, () => {
-      console.log('error');
+      console.error('Error creating new ecos project');
     });
+  }
+
+  const checkFirstStep = () => {
+    if (orgName === '') {
+      setOrgNameError(true);
+      return false;
+    } else {
+      setOrgNameError(false);
+    }
+
+    if (endDate === null) {
+      setEndDateError(true);
+      return false;
+    } else {
+      setEndDateError(false);
+    }
+
+    return true;
+  }
+
+  const handleBackBtn = () => {
+    if (activeStep === 0) {
+      setState(false);
+      return;
+    }
+    setActiveStep(activeStep - 1);
+  }
+
+  const handleNextBtn = () => {
+    if (activeStep === steps.length - 1) {
+      handleAddEcosSubmit();
+      return;
+    }
+    if (checkFirstStep()) setActiveStep(activeStep + 1);
   }
 
   return (
     <Modal.Root state={state} id="addNewEcos" title={t('add_ecos_btn')} handleClose={() => setState(false)}>
-      <form onSubmit={handleAddEcosSubmit}>
-        <Modal.Text>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sx={{ marginTop: '1%' }}>
-              <Typography>
-                {t('modal_text.txt1')}
-              </Typography>
-              <Typography>
-                {t('modal_text.txt2')}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sx={{ marginTop: '1%' }}>
-              <TextField
-                fullWidth
-                required
-                id="orgName"
-                name="orgName"
-                label={t('modal_text.label_name')}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sx={{ marginTop: '1%' }}>
+      <Container>
+        <Box>
+          {steps[activeStep]}
+        </Box>
 
-              <Divider sx={{ marginTop: '1%' }} >{t('modal_text.time_window_separator')}</Divider>
-
-              <FormControl>
-                <Typography id="time-window-label-1" sx={{ color: 'black', mt: 2 }}>{t('modal_text.time_window_expl')}</Typography>
-                <Typography id="time-window-label" sx={{ color: 'black', mt: 2 }}>{t('modal_text.time_window_label')}</Typography>
-                <Grid container spacing={2} alignItems={'center'} sx={{ width: 300, m: 'auto' }}>
-                  <Grid item xs={6}>
-                    <Slider
-                      aria-label={t('modal_text.time_window_label')}
-                      defaultValue={3}
-                      valueLabelDisplay="auto"
-                      onChange={(e, newValue) => setTimeWindow(newValue as number)}
-                      value={timeWindow}
-                      step={1}
-                      marks
-                      min={1}
-                      max={3}
-                      name="time_window"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography>{timeWindow} {t('modal_text.time_week')}{(timeWindow > 1)? 's': ''}</Typography>
-                  </Grid>
-                </Grid>
-              </FormControl>
-
-            </Grid>
-          </Grid>
-
-        </Modal.Text>
         <Divider />
-        <Modal.Actions handleClose={() => setState(false)}>
-          <Button variant="contained" type="submit"><AddIcon /> {t('add_ecos_btn')}</Button>
-          <Button variant="outlined" onClick={() => setState(false)}>{t('modal_text.cancel_btn')}</Button>
-        </Modal.Actions>
-      </form>
+
+        <MobileStepper
+          variant='progress'
+          steps={steps.length}
+          position='static'
+          activeStep={activeStep}
+          nextButton={
+            <Button size="small" onClick={handleNextBtn}>
+              {(activeStep === steps.length - 1) ? 'Criar nova pesquisa' : "Avançar"}
+            </Button>
+          }
+          backButton={
+            <Button size="small" onClick={handleBackBtn}>
+              {(activeStep === 0) ? 'Cancelar' : "Voltar"}
+            </Button>
+          }
+        />
+      </Container>
     </Modal.Root >
   );
 }

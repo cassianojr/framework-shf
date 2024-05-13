@@ -11,7 +11,6 @@ interface Ecosystem {
 
 interface Participant {
   id: string,
-  name: string,
   email: string
 }
 

@@ -9,7 +9,7 @@
     "i1": "Read the definition of the components and their respective items;",
     "i2": "Carefully analyze each statement associated with the components and items;",
     "i3": "Respond according to the reality of your organization (software ecosystem);",
-    "i4": "Mark your response among the options: (“Strongly Agree”, “Agree”, “Neither Agree nor Disagree”, “Disagree”, or “Strongly Disagree”)."
+    "i4": "Mark your response among the options: (“Agree” or “Disagree”)."
   },
   "consent_term": {
     "title": "Consent form",
@@ -18,11 +18,14 @@
     "p3": "By clicking “Agree”, you will agree to participate in the survey. If you have any questions, don't hesitate to contact the organization responsible for the survey.",
     "p4": "Do you agree to participate in the survey?"
   },
-  "fsh_affirmative": "The social and human factors listed below influence requirements management in software ecosystems.",
+  "fsh_affirmative": "In the {{ecos_name}} ecosystem in which you operate, the central organization pointed out some social and human factors, listed below, that may be influencing requirements management. For each factor, indicate whether you agree or disagree:",
+  "fsh_optional": "Listed below are some social and human factors that can influence requirements management in software ecosystems. If you consider any of these factors to be critical in the {{ecos_name}} ecosystem, please select them by clicking on each one.",
   "cc_affirmative": "The contextual characteristics of requirements management in software ecosystems listed below have an impact on the importance of considering social and human factors.",
-  "barriers_affirmative": "The barriers listed below hinder the improvement of social and human factors in requirements management in software ecosystems.",
-  "strategies_affirmative": "The improvement strategies listed below can be used to overcome barriers and enhance social and human factors.",
-  "coping_mec_affirmative": "The coping mechanisms listed below can be used when improvement strategies do not work.",
+  "barriers_affirmative": "The central organization pointed out some barriers, listed below, that may be preventing the improvement of social and human factors in requirements management in the {{ecos_name}} ecosystem. For each barrier, indicate whether you agree or disagree.",
+  "barriers_optional": "Listed below are some barriers that may prevent the improvement of social and human factors in requirements management in software ecosystems. If you consider any of these barriers to be critical in the {{ecos_name}} ecosystem, please select them by clicking on each one.",
+  "strategies_affirmative": "Given the strategies listed below, indicated by the central organization, indicate whether they helped improve social and human factors and overcome barriers in requirements management in the {{ecos_name}} ecosystem. For each strategy, indicate whether you agree or disagree.",
+  "strategies_optional": "Listed below are some strategies that can help improve FSH and overcome barriers in requirements management in software ecosystems. If you consider that any of these strategies can be used in the {{ecos_name}} ecosystem, please select them by clicking on each one of them.",
+  "coping_mec_affirmative": "Listed below are some coping mechanisms that can be used when strategies are not effective to improve social and human factors and overcome barriers in requirements management in software ecosystems.",
   "survey_options": {
     "strongly_agree": "Strongly Agree",
     "agree": "Agree",
@@ -46,5 +49,27 @@
     "textarea_label": "Leave your feedback here",
     "error": "For items where you selected 'Strongly Agree' or 'Strongly Disagree,' please provide a comment."
   },
-  "validation_error": "Please, answer all questions before moving on the next step."
+  "validation_error": "Please, answer all questions before moving on the next step.",
+  "view_answers": {
+    "title": "View your answers below",
+    "fsh_affirmative": {
+      "title": "Social and Human Factors",
+      "critical": "Critical Social and Human Factors"
+    },
+    "cc_affirmative": {
+      "title": "Contextual Characteristics",
+      "critical": "Critical Contextual Characteristics"
+    },
+    "barriers_affirmative": {
+      "title": "Barriers",
+      "critical": "Critical Barriers"
+    },
+    "strategies_affirmative": {
+      "title": "Improvement Strategies",
+      "critical": "Critical Strategies"
+    },
+    "name": "Name",
+    "answer": "Answer",
+    "feedback": "Feedback"
+  }
 }

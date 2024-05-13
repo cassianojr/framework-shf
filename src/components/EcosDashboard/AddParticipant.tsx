@@ -1,14 +1,14 @@
 import React from 'react'
-import { Ecosystem, Participant } from '../../types/Ecosystem.type'
 import ParticipantFormModal from './ParticipantFormModal'
-import EcosystemService from '../../services/EcosystemService';
+import { EcosProject, Participant } from '../../types/EcosProject.type';
+import EcosProjectService from '../../services/EcosProjectService';
 import { useTranslation } from 'react-i18next';
 
 interface AddParticipantProps {
   setAddParticipantModalState: React.Dispatch<React.SetStateAction<boolean>>,
   addParticipantModalState: boolean,
-  ecos: Ecosystem,
-  setEcos: React.Dispatch<React.SetStateAction<Ecosystem>>,
+  ecos: EcosProject,
+  setEcos: React.Dispatch<React.SetStateAction<EcosProject>>,
 }
 
 export default function AddParticipant({ addParticipantModalState, setAddParticipantModalState, ecos, setEcos }: AddParticipantProps) {
@@ -17,18 +17,17 @@ export default function AddParticipant({ addParticipantModalState, setAddPartici
 
   const [formState, setFormState] = React.useState({
     id: '',
-    name: '',
     email: ''
   });
 
 
   const handleSubmit = (newParticipant: Participant) => {
     const participants = ecos.participants || [] as Participant[];
-    const newEcos = { ...ecos, participants: [...participants, newParticipant] } as Ecosystem;
-
+    const newEcos = { ...ecos, participants: [...participants, newParticipant] } as EcosProject;
 
     setEcos(newEcos);
-    EcosystemService.updateEcosystem(newEcos);
+    //TODO handle errors
+    EcosProjectService.updateEcosProject(newEcos, ()=>console.log('ok'), ()=>console.log('error'));
 
     setAddParticipantModalState(false);
   }

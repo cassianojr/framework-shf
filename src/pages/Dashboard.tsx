@@ -11,10 +11,13 @@ import { AuthenticationContext, AuthenticationContextType } from '../context/aut
 import React from "react";
 import { Button, Link, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import EcosystemService from '../services/EcosystemService';
-import { Ecosystem } from '../types/Ecosystem.type';
 import { useTranslation } from "react-i18next";
 import NewProjectModal from '../components/Dashboard/NewProjectModal';
+import { FirebaseService } from '../services/FirebaseService';
+import { Framework } from '../types/Framework.type';
+import { EcosProject } from '../types/EcosProject.type';
+import EcosProjectService from '../services/EcosProjectService';
+import i18next from 'i18next';
 
 const btnStyle = {
   p: 1.5
@@ -24,12 +27,13 @@ export default function Dashboard() {
   const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
-  const [userEcos, setUserEcos] = React.useState([] as Ecosystem[]);
+  const [userEcos, setUserEcos] = React.useState([] as EcosProject[]);
   const [addEcosModalState, setAddEcosModalState] = React.useState(false);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
   const user = getUser();
+  const [frameworkData, setFrameworkData] = React.useState([] as Framework[]);
 
   React.useEffect(() => {
 
@@ -38,16 +42,48 @@ export default function Dashboard() {
     if (!signed) navigate('/sign-in');
     if (signed) setAppLoading(false);
 
-    EcosystemService.getEcosystems(user.uid, (ecos) => {
+    EcosProjectService.getEcosProjects(user.uid, (ecos) => {
       setUserEcos(ecos);
     });
 
-  }, [signed, navigate, loading, user.uid]);
+    const sortFrameworkItems = (data: Framework[]) => {
+      data.forEach((item) => {
+        item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])));
+      })
+      
+      return data;
+    }
+
+    const getFrameworkData = async () => {
+      const localStorageData = localStorage.getItem('frameworkData');
+
+      if (localStorageData) {
+        if (frameworkData.length === 0) {
+          const sortedData = sortFrameworkItems(JSON.parse(localStorageData) as Framework[]);
+          
+          setFrameworkData(sortedData)
+        }
+        return;
+      }
+
+      FirebaseService.getFrameworkData((data: Framework[]) => {
+        localStorage.setItem('frameworkData', JSON.stringify(data));
+        if (frameworkData.length === 0) {
+          const sortedData = sortFrameworkItems(data);
+
+          setFrameworkData(sortedData)
+        }
+      });
+    }
+
+    getFrameworkData();
+
+  }, [signed, navigate, loading, user.uid, frameworkData, setFrameworkData]);
 
   return (
     !appLoading &&
     <>
-      <NewProjectModal user={user} setState={setAddEcosModalState} state={addEcosModalState} />
+      <NewProjectModal frameworkData={frameworkData} user={user} setState={setAddEcosModalState} state={addEcosModalState} />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL} />
@@ -78,7 +114,7 @@ export default function Dashboard() {
                   <Stack direction="row" spacing={2}>
                     {userEcos.map((ecos) => {
                       return (
-                        <Button component={Link} variant='outlined' key={ecos.id} href={`/ecos-dashboard/${ecos.id}`} sx={btnStyle}>{ecos.organization_name}</Button>
+                        <Button component={Link} variant='outlined' key={ecos.id} href={`/ecos-dashboard/${ecos.id}`} sx={btnStyle}>{ecos.name}</Button>
                       );
                     })}
 

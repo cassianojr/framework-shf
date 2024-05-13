@@ -10,18 +10,23 @@ import { Framework, FrameworkItem } from "../types/Framework.type";
 import { AuthenticationContext, AuthenticationContextType } from "../context/authenticationContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import EcosystemService from "../services/EcosystemService";
-import { QuestionService } from "../services/QuestionService";
 import SnackBarComponent from "../components/SnackBarComponent";
-import SurveyStepper from "../components/SurveyStepper";
+import SurveyStepper from "../components/EcosSurvey/SurveyStepper";
 import { Modal } from "../components/Modal";
-import { Ecosystem } from "../types/Ecosystem.type";
+import EcosProjectService from "../services/EcosProjectService";
+import { EcosProject } from "../types/EcosProject.type";
+import i18next from "i18next";
+import { QuestionService } from "../services/QuestionService";
 
 interface SelectItemsProps {
   id: string,
   title: string,
   items: React.MutableRefObject<FrameworkItem[]>,
   changeItems: (value: FrameworkItem[]) => void,
+  optionalItems ?: React.MutableRefObject<FrameworkItem[]>,
+  changeOptionalItems ?: (value: FrameworkItem[]) => void,
+  optionalTitle ?: string
+  viewOnly?: boolean,
   order: number
 }
 
@@ -29,11 +34,6 @@ interface SelectItemsProps {
 export default function EcosSurvey() {
 
   const [appLoading, setAppLoading] = React.useState<boolean>(true);
-  const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
-  const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
-  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
-  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
-  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
   const [errorModalState, setErrorModalState] = React.useState(false);
   const [errorModalContent, setErrorModalContent] = React.useState({ title: "", description: "" } as { title: string, description: string });
@@ -51,9 +51,6 @@ export default function EcosSurvey() {
   const shfRef = React.useRef<FrameworkItem[]>([]);
   const changeShfRef = (items: FrameworkItem[]) => { shfRef.current = items };
 
-  const copingMechanismRef = React.useRef<FrameworkItem[]>([]);
-  const changeCopingMechanismRef = (items: FrameworkItem[]) => { copingMechanismRef.current = items };
-
   const contextualCharacteristicsRef = React.useRef<FrameworkItem[]>([]);
   const changeContextualCharacteristicsRef = (items: FrameworkItem[]) => { contextualCharacteristicsRef.current = items };
 
@@ -63,9 +60,23 @@ export default function EcosSurvey() {
   const strategiesRef = React.useRef<FrameworkItem[]>([]);
   const changeStrategiesRef = (items: FrameworkItem[]) => { strategiesRef.current = items };
 
+  const copingMechanismsRef = React.useRef<FrameworkItem[]>([]);
+  const changeCopingMechanismsRef = (items: FrameworkItem[]) => { copingMechanismsRef.current = items };
+
+
+  const optionalShfRef = React.useRef<FrameworkItem[]>([]);
+  const changeOptionalShfRef = (items: FrameworkItem[]) => { optionalShfRef.current = items };
+
+  const optionalBarriersToImprovingRef = React.useRef<FrameworkItem[]>([]);
+  const changeOptionalBarriersToImprovingRef = (items: FrameworkItem[]) => { optionalBarriersToImprovingRef.current = items };
+
+  const optionalStrategiesRef = React.useRef<FrameworkItem[]>([]);
+  const changeOptionalStrategiesRef = (items: FrameworkItem[]) => { optionalStrategiesRef.current = items };
+
+  
   const ecosId = useParams().ecosId;
 
-  const [ecos, setEcos] = React.useState<Ecosystem | undefined>(undefined);
+  const [ecos, setEcos] = React.useState<EcosProject | undefined>(undefined);
 
   const ErrorModal = () => {
     const handleClose = () => {
@@ -96,7 +107,7 @@ export default function EcosSurvey() {
 
       if (!ecosId) return;
 
-      const ecosData = await EcosystemService.getEcosystem(ecosId);
+      const ecosData = await EcosProjectService.getEcosProject(ecosId);
       setEcos(ecosData);
 
       if (ecosData.status !== "waiting-for-answers") {
@@ -105,36 +116,71 @@ export default function EcosSurvey() {
       return ecosData;
     }
 
-    const handleFrameworkItemsRef = (frameworkItem: Framework) => {
-      return frameworkItem.items.map((item) => {
-        return {
-          id: item.id,
-          ids: item.ids,
-          names: item.names,
-          descriptions: item.descriptions,
-          ratio: 0,
-        } as FrameworkItem;
+    const handleMandatoryItems = (frameworkData: Framework[], ecosData: EcosProject) => {
+      const mandatoryItems = ecosData.mandatory_items;
+
+      const shf = frameworkData.filter((item) => item.id === "social-human-factors")[0];
+      const cc = frameworkData.filter((item) => item.id === "contextual-characteristics")[0];
+      const barriers = frameworkData.filter((item) => item.id === "barriers-to-improving")[0];
+      const strategies = frameworkData.filter((item) => item.id === "strategies")[0];
+
+      shf.items.map((item) =>{
+        mandatoryItems.shf.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
       });
+
+      cc.items = mandatoryItems.cc;
+      
+
+      barriers.items.map((item) =>{
+        mandatoryItems.barriers.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
+      });
+
+      strategies.items.map((item) =>{
+        mandatoryItems.strategies.forEach((mandatoryItem) =>{
+          if(item.id === mandatoryItem.id){
+            item.selected = true;
+          }
+        })  
+      });      
+      
+      return {
+        socialHumanFactorsLocal :shf,
+        contextualCharacteristicsLocal: cc,
+        barriersToImprovingLocal: barriers,
+        strategiesLocal: strategies
+      }
+    }
+    const sortFrameworkItems = (data: Framework[]) => {
+      data.forEach((item) => {
+        item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])))
+      })
+      
+      return data;
     }
 
-    const handleFrameworkData = (data: Framework[]) => {
-      const socialHumanFactorsLocal = data.filter((item) => item.id === "social-human-factors")[0];
+    const handleFrameworkData = (data: Framework[], ecosData: EcosProject) => {
+
+      const { socialHumanFactorsLocal, contextualCharacteristicsLocal, barriersToImprovingLocal, strategiesLocal } = handleMandatoryItems(data, ecosData);
+      
       const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
-      const contextualCharacteristicsLocal = data.filter((item) => item.id === "contextual-characteristics")[0];
-      const barriersToImprovingLocal = data.filter((item) => item.id === "barriers-to-improving")[0];
-      const strategiesLocal = data.filter((item) => item.id === "strategies")[0];
 
-      changeShfRef(handleFrameworkItemsRef(socialHumanFactorsLocal));
-      changeCopingMechanismRef(handleFrameworkItemsRef(copingMechanismsLocal));
-      changeContextualCharacteristicsRef(handleFrameworkItemsRef(contextualCharacteristicsLocal));
-      changeBarriersToImprovingRef(handleFrameworkItemsRef(barriersToImprovingLocal));
-      changeStrategiesRef(handleFrameworkItemsRef(strategiesLocal));
+      changeShfRef(socialHumanFactorsLocal.items.filter((item) => item.selected));
+      changeContextualCharacteristicsRef(contextualCharacteristicsLocal.items);
+      changeBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => item.selected));
+      changeStrategiesRef(strategiesLocal.items.filter((item) => item.selected));
+      changeCopingMechanismsRef(copingMechanismsLocal.items);
 
-      setCopingMechanisms(copingMechanismsLocal);
-      setContextualCharacteristics(contextualCharacteristicsLocal);
-      setSocialHumanFactors(socialHumanFactorsLocal);
-      setBarriersToImproving(barriersToImprovingLocal);
-      setStrategies(strategiesLocal);
+      changeOptionalShfRef(socialHumanFactorsLocal.items.filter((item) => !item.selected));
+      changeOptionalBarriersToImprovingRef(barriersToImprovingLocal.items.filter((item) => !item.selected));
+      changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected));
 
       if (questions.length === 0) {
         setQuestions([
@@ -143,6 +189,9 @@ export default function EcosSurvey() {
             title: 'fsh_affirmative',
             items: shfRef,
             changeItems: changeShfRef,
+            optionalItems: optionalShfRef,
+            changeOptionalItems: changeOptionalShfRef,
+            optionalTitle: "fsh_optional",
             order: 1
           },
           {
@@ -150,6 +199,7 @@ export default function EcosSurvey() {
             title: 'cc_affirmative',
             items: contextualCharacteristicsRef,
             changeItems: changeContextualCharacteristicsRef,
+            viewOnly: true,
             order: 2
           },
           {
@@ -157,6 +207,9 @@ export default function EcosSurvey() {
             title: 'barriers_affirmative',
             items: barriersToImprovingRef,
             changeItems: changeBarriersToImprovingRef,
+            optionalItems: optionalBarriersToImprovingRef,
+            changeOptionalItems: changeOptionalBarriersToImprovingRef,
+            optionalTitle: "barriers_optional",
             order: 3
           },
           {
@@ -164,15 +217,19 @@ export default function EcosSurvey() {
             title: 'strategies_affirmative',
             items: strategiesRef,
             changeItems: changeStrategiesRef,
+            optionalItems: optionalStrategiesRef,
+            changeOptionalItems: changeOptionalStrategiesRef,
+            optionalTitle: "strategies_optional",
             order: 4
           },
           {
-            id: "coping-mechanisms",
+            id: "coping_mechanisms",
             title: 'coping_mec_affirmative',
-            items: copingMechanismRef,
-            changeItems: changeCopingMechanismRef,
+            items: copingMechanismsRef,
+            changeItems: changeCopingMechanismsRef,
+            viewOnly: true,
             order: 5
-          }
+          },
         ]);
       }
 
@@ -183,9 +240,9 @@ export default function EcosSurvey() {
 
       QuestionService.getAnswersByUserId(getUser().uid)
         .then((answers) => {
-          if (answers.find((answer) => answer.ecossystem_id == ecosId)?.round == ecosData.current_round) {
-            // setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
-            // setErrorModalState(true);
+          if (answers.find((answer) => answer.ecossystem_id == ecosId)) {
+            setErrorModalContent({ title: t('errors.title'), description: t('errors.already_answered') });
+            setErrorModalState(true);
             return;
           }
         });
@@ -193,14 +250,17 @@ export default function EcosSurvey() {
       const localStorageData = localStorage.getItem('frameworkData');
 
       if (localStorageData) {
-        handleFrameworkData(JSON.parse(localStorageData));
+        const sortedData = sortFrameworkItems(JSON.parse(localStorageData));
+        handleFrameworkData(sortedData, ecosData);
         return;
       }
 
       FirebaseService.getFrameworkData((data: Framework[]) => {
         localStorage.setItem('frameworkData', JSON.stringify(data));
-        handleFrameworkData(data);
+        const sortedData = sortFrameworkItems(data);
+        handleFrameworkData(sortedData, ecosData);
       });
+
     }).catch(() => {
       setErrorModalContent({ title: t('errors.title'), description: t('errors.not_accept_answers') });
       setErrorModalState(true);
@@ -208,7 +268,7 @@ export default function EcosSurvey() {
     });
 
     setAppLoading(false);
-  }, [setStrategies, setCopingMechanisms, setContextualCharacteristics, setSocialHumanFactors, setBarriersToImproving, questions, loading, signed, navigate, t, ecosId, getUser, ecos]);
+  }, [questions, loading, signed, navigate, t, ecosId, getUser, ecos]);
 
   return (
     <>
@@ -219,28 +279,13 @@ export default function EcosSurvey() {
         <Toolbar />
         <Container sx={{ minHeight: '100vh', background: '#f5f5f5' }} component={Paper} elevation={3} style={{ paddingTop: '1%' }} maxWidth={false}>
 
-          {!appLoading && <Typography variant='h4' sx={{ textAlign: 'center', marginBottom: '1rem' }}>{ecos?.organization_name??''}</Typography>}
-
           {(!appLoading && ecos) && <SurveyStepper
             stepsVote={questions}
-            frameworkItems={{
-              socialHumanFactors,
-              contextualCharacteristics,
-              barriersToImproving,
-              strategies,
-              copingMechanisms,
-              setSocialHumanFactors,
-              setContextualCharacteristics,
-              setBarriersToImproving,
-              setStrategies,
-              setCopingMechanisms
-            }}
             ecos={ecos}
             user_id={getUser().uid}
             user_email={getUser().email}
             setFeedBackSnackBar={setFeedBackSnackBar}
             setFeedBackSnackbarState={setFeedBackSnackbarState}
-            user_name={getUser().displayName??getUser().email}
           />}
         </Container>
         <Footer />
