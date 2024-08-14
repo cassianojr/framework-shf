@@ -13,6 +13,7 @@ import EcosProjectService from '../../services/EcosProjectService';
 import SurveyOptionalDataComponent from './SurveyOptionalDataComponent';
 import { SurveyViewOnly } from './SurveyViewOnly';
 import ViewAnswersComponent from './ViewAnswersComponent';
+import { SentimentAnalisysService } from '../../services/SentimentAnalysisService';
 
 
 interface SurveyStepperProps {
@@ -133,24 +134,44 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     EcosProjectService.updateEcosProject(newEcos, () => console.log('ok'), () => console.log('error'));
   }
 
+  const setSentimentOnAnswers = async (answers: NewAnswers) => {
+    let sentimentPromises = [] as Promise<void>[];
+    
+    answers.answers.map((answer) => {
+      const sentimentPromisesOnAnswer = answer.items.map(async (item) =>{
+        if (item.comment === '' || item.comment == undefined) return;
+
+        const sentiment = await SentimentAnalisysService.getSentimentAnalysis(item.comment);
+        item.sentiment = sentiment;
+      })
+
+      sentimentPromises = [...sentimentPromises, ...sentimentPromisesOnAnswer];
+    });
+
+    return await Promise.all(sentimentPromises);
+  }
+
   const handleSaveAnswers = () => {
     if (!answers) return;
 
-    QuestionService.saveAnswers(answers, () => {
+    setSentimentOnAnswers(answers).then(()=>{
+      QuestionService.saveAnswers(answers, () => {
 
-      handleParticipantOnEcos();
-
-      setFeedBackSnackBar({ severity: "success", text: t('answers_saved') });
-      setFeedBackSnackbarState(true);
-
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 3000);
-
-    }, () => {
-      setFeedBackSnackBar({ severity: "error", text: t('answers_not_saved') });
-      setFeedBackSnackbarState(true);
+        handleParticipantOnEcos();
+  
+        setFeedBackSnackBar({ severity: "success", text: t('answers_saved') });
+        setFeedBackSnackbarState(true);
+  
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+  
+      }, () => {
+        setFeedBackSnackBar({ severity: "error", text: t('answers_not_saved') });
+        setFeedBackSnackbarState(true);
+      });
     });
+
   }
 
   const validateFeedback = () => {

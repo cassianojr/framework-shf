@@ -24,7 +24,13 @@ interface Item {
     [key: string]: string
   }
   answer: number,
-  comment?: string
+  comment?: string,
+  sentiment?: SentimentComment
+}
+
+interface SentimentComment {
+  score: number,
+  magnitude: number,
 }
 
 interface DemoagraphicData {
@@ -34,4 +40,4 @@ interface DemoagraphicData {
 }
 
 
-export type {NewAnswers, NewAnswer, Item, DemoagraphicData};
+export type {NewAnswers, NewAnswer, Item, DemoagraphicData, SentimentComment};
