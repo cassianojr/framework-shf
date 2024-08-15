@@ -6,14 +6,14 @@ interface ResultChartProps {
 }
 export default function ResultChart({ frameworkItem }: ResultChartProps) {
 
-  const agree = frameworkItem.answer?.agree ?? 0;
-  const disagree = frameworkItem.answer?.disagree ?? 0;
+  const agree = (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.agree ?? 0 : frameworkItem.answer?.agree ?? 0;
+  const disagree = (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.disagree ?? 0 : frameworkItem.answer?.disagree ?? 0;
   
   const data = [
     {
       name: '% de concordância',
-      concordo: agree/(agree+disagree)*100,
-      discordo: disagree/(agree+disagree)*100
+      concordo: (agree/(agree+disagree)*100).toFixed(1),
+      discordo: (disagree/(agree+disagree)*100).toFixed(1)
     }
   ]
   

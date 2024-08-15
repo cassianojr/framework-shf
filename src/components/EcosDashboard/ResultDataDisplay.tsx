@@ -1,4 +1,4 @@
-import { Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { Badge, Button, Container, Divider, Grid, List, ListItem, ListItemText, Paper, Tab, Tabs, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { Framework, FrameworkItem } from '../../types/Framework.type';
 import { Box } from '@mui/system';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import SentimentChart from './SentimentChart';
 import ResultChart from './ResultChart';
 import Singularizer from '../../util/Singularizer';
+import { Modal } from '../Modal';
 
 
 interface ResultDataDisplayProps {
@@ -21,6 +22,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
   }
 
   const [tabValue, setTabValue] = React.useState(findFirstSelectedIndex(frameworkComponent.items));
+  const [commentModalState, setCommentModalState] = React.useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -68,6 +70,70 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
     mt: 2
   }
 
+  interface CommentsModalProps {
+    title: string,
+    frameworkItem: FrameworkItem,
+  }
+  const CommentsModal = ({ title, frameworkItem }: CommentsModalProps) => {
+    return (
+      <Modal.Root state={commentModalState} title={title} id={`comment-modal-${frameworkItem.id}`} handleClose={() => setCommentModalState(false)}>
+        <Container>
+          <List dense>
+            {frameworkItem.optionalAnswer ?
+              frameworkItem.optionalAnswer?.comments.map((comment, index) => (
+                <ListItem key={index} divider={true}>
+                  <ListItemText>{comment}</ListItemText>
+                </ListItem>
+              ))
+              :
+              frameworkItem.answer?.comments.map((comment, index) => (
+                <ListItem key={index} divider={true}>
+                  <ListItemText>{comment}</ListItemText>
+                </ListItem>
+              ))}
+          </List>
+        </Container>
+        <Modal.Actions handleClose={() => setCommentModalState(false)}>
+          <Button onClick={() => setCommentModalState(false)}>Fechar</Button>
+        </Modal.Actions>
+      </Modal.Root>
+    )
+  }
+
+  const handleViewComments = () => {
+    setCommentModalState(true);
+  }
+
+  frameworkComponent.items.sort((a, b) => (a.names[i18next.language] > b.names[i18next.language]) ? 1 : (b.names[i18next.language] > a.names[i18next.language]) ? -1 : 0);
+
+  interface DataTabPanelProps {
+    item: FrameworkItem,
+    index: number
+  }
+  const DataTabPanel = ({ item, index }: DataTabPanelProps) => {
+    return (
+      <TabPanel value={tabValue} index={index}>
+        <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para o {Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()} {item.names[i18next.language]}</Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <ResultChart frameworkItem={item} />
+          </Grid>
+          <Grid item xs={6}>
+            <SentimentChart frameworkItem={item} />
+          </Grid>
+        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <CommentsModal
+            title={`Comentários para o ${Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()}  ${item.names[i18next.language]}`}
+            frameworkItem={item}
+          />
+          <Button variant='contained' onClick={handleViewComments}>Visualizar comentários</Button>
+        </Box>
+      </TabPanel>
+    );
+  }
+
   return (
     !frameworkComponent ? <Typography>{t('no_data')}</Typography> :
       <Paper sx={defaultPaperStyle}>
@@ -81,26 +147,37 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
             sx={{ borderRight: 1, borderColor: 'divider', width: '20%' }}
           >
             {frameworkComponent.items.map((item, index) => (
-              item.selected ? (<Tab key={item.id} label={item.names[i18next.language]} {...a11yProps(index)} value={index}/>) : null
+              item.selected ? (<Tab
+                key={item.id}
+                label={item.names[i18next.language]}
+                {...a11yProps(index)}
+                value={index}
+              />) : null
+            ))}
+
+            <Divider>itens críticos</Divider>
+            {frameworkComponent.items.map((item, index) => (
+              item.optionalAnswer ? (<Tab
+                key={item.id}
+                label={item.names[i18next.language]}
+                {...a11yProps(index)}
+                value={index}
+                icon={<Badge badgeContent={item.optionalAnswer.agree + item.optionalAnswer.disagree} sx={{pl: 0.5}} color="primary"/>}
+                iconPosition='end'
+              />) : null
             ))}
           </Tabs>
 
           {frameworkComponent.items.map((item, index) => (
             item.selected ? (
-              <TabPanel key={item.id} value={tabValue} index={index}>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para o {Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()} {item.names[i18next.language]}</Typography>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <ResultChart frameworkItem={item} />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <SentimentChart frameworkItem={item} />
-                  </Grid>
-                </Grid>
-              </TabPanel>
+              <DataTabPanel key={item.id} item={item} index={index} />
             ) : null
+          ))}
 
+          {frameworkComponent.items.map((item, index) => (
+            item.optionalAnswer ? (
+              <DataTabPanel key={item.id} item={item} index={index} />
+            ) : null
           ))}
 
         </Box>
