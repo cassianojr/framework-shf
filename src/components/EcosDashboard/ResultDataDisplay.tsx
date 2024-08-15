@@ -1,29 +1,30 @@
-import { Accordion, AccordionDetails, AccordionSummary, Tab, Tabs, Typography } from '@mui/material';
+import { Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 import i18next from 'i18next';
-import { Framework } from '../../types/Framework.type';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ResultDataGrid } from '../ResultDataGrid/ResultDataGrid';
+import { Framework, FrameworkItem } from '../../types/Framework.type';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import SentimentChart from './SentimentChart';
+import ResultChart from './ResultChart';
+import Singularizer from '../../util/Singularizer';
 
 
 interface ResultDataDisplayProps {
-  frameworkComponent: Framework | undefined,
-  expanded?: boolean,
-  question: string
+  frameworkComponent: Framework,
 }
 
-export default function ResultDataDisplay({ frameworkComponent, expanded = false, question }: ResultDataDisplayProps) {
+export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisplayProps) {
   const { t } = useTranslation('ecos_dashboard');
 
+  const findFirstSelectedIndex = (items: Array<FrameworkItem>) => {
+    return items.findIndex(item => item.selected);
+  }
 
-  const [tabValue, setTabValue] = React.useState(0);
+  const [tabValue, setTabValue] = React.useState(findFirstSelectedIndex(frameworkComponent.items));
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   }
-
 
   interface TabPanelProps {
     children?: React.ReactNode;
@@ -40,10 +41,10 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
         {...other}
-
+        style={{ width: '100%' }}
       >
         {value === index && (
-          <Box sx={{ overflow: 'auto', height: 300 }}>
+          <Box sx={{ overflow: 'auto', height: 450 }}>
             {children}
           </Box>
         )}
@@ -51,34 +52,58 @@ export default function ResultDataDisplay({ frameworkComponent, expanded = false
     );
   }
 
-  return (
-    <Accordion defaultExpanded={expanded}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1-content"
-        id="panel1-header"
-      >
-        {frameworkComponent?.labels[i18next.language]}
-      </AccordionSummary>
-      <AccordionDetails>
-        <Box sx={{ height: 400 }}>
-          <Typography variant='h6'>{question}</Typography>
-          <Box >
-            <Tabs value={tabValue} onChange={handleTabChange} aria-label="data display tabs">
-              <Tab label={t('likert_scale_tab')} value={0} />
-              <Tab label={t('result_tab')} value={1} />
-            </Tabs>
-          </Box>
+  function a11yProps(index: number) {
+    return {
+      id: `vertical-tab-${index}`,
+      'aria-controls': `vertical-tabpanel-${index}`,
+    };
+  }
 
-          <TabPanel value={tabValue} index={0}>
-            <ResultDataGrid frameworkComponent={frameworkComponent} columnType='likert' />
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <ResultDataGrid frameworkComponent={frameworkComponent} columnType='result' showColors />
-          </TabPanel>
+  const defaultPaperStyle = {
+    p: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between',
+    mt: 2
+  }
+
+  return (
+    !frameworkComponent ? <Typography>{t('no_data')}</Typography> :
+      <Paper sx={defaultPaperStyle}>
+        <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 450 }}>
+          <Tabs
+            orientation="vertical"
+            variant='scrollable'
+            value={tabValue}
+            onChange={handleTabChange}
+            aria-label="result data tab"
+            sx={{ borderRight: 1, borderColor: 'divider', width: '20%' }}
+          >
+            {frameworkComponent.items.map((item, index) => (
+              item.selected ? (<Tab key={item.id} label={item.names[i18next.language]} {...a11yProps(index)} value={index}/>) : null
+            ))}
+          </Tabs>
+
+          {frameworkComponent.items.map((item, index) => (
+            item.selected ? (
+              <TabPanel key={item.id} value={tabValue} index={index}>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para o {Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()} {item.names[i18next.language]}</Typography>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <ResultChart frameworkItem={item} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <SentimentChart frameworkItem={item} />
+                  </Grid>
+                </Grid>
+              </TabPanel>
+            ) : null
+
+          ))}
 
         </Box>
-      </AccordionDetails>
-    </Accordion>
+      </Paper >
   )
 }
