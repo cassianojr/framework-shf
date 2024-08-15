@@ -126,21 +126,28 @@ export default function ECOSDashboard() {
       return data;
     }
 
-    const countAnswers = (item: NewAnswer, frameworkComponentToCount: Framework) => {
+    const countAnswers = (item: NewAnswer, frameworkComponentToCount: Framework, optionalAnswer?: boolean) => {
       item.items.forEach((itemAnswer) => {
         frameworkComponentToCount.items?.forEach((frameworkItem) => {
           if (itemAnswer.id !== frameworkItem.id) return;
 
           if (itemAnswer.sentiment?.score === undefined) return;
 
-          const frameworkItemAnswer = frameworkItem.answer ?? { agree: 0, disagree: 0, positiveSentiment: 0, negativeSentiment: 0, neutralSentiment: 0 };
-          
+          const defaultAnswer = { agree: 0, disagree: 0, positiveSentiment: 0, negativeSentiment: 0, neutralSentiment: 0, comments: [] };
+
+          const frameworkItemAnswer = (optionalAnswer) ? frameworkItem.optionalAnswer ?? defaultAnswer : frameworkItem.answer ?? defaultAnswer;
+
           if (itemAnswer.answer === 1) frameworkItemAnswer.agree++;
           if (itemAnswer.answer === 2) frameworkItemAnswer.disagree++;
           if (itemAnswer.sentiment?.score > 0.25) frameworkItemAnswer.positiveSentiment++;
           if (itemAnswer.sentiment?.score < -0.25) frameworkItemAnswer.negativeSentiment++;
           if (itemAnswer.sentiment?.score >= -0.25 && itemAnswer.sentiment?.score <= 0.25) frameworkItemAnswer.neutralSentiment++;
+          if (itemAnswer.comment !== "" && itemAnswer.comment != undefined) frameworkItemAnswer.comments.push(itemAnswer.comment);
 
+          if (optionalAnswer) {
+            frameworkItem.optionalAnswer = frameworkItemAnswer;
+            return;
+          }
           frameworkItem.answer = frameworkItemAnswer;
         });
       });
@@ -152,6 +159,14 @@ export default function ECOSDashboard() {
           frameworkItems.forEach((itemToCount) => {
             if (item.framework_item != itemToCount.id) return;
             countAnswers(item, itemToCount);
+          });
+        });
+
+        answer.optionalAnswers.forEach((item) => {
+          frameworkItems.forEach((itemToCount) => {
+            if (item.framework_item != itemToCount.id) return;
+
+            countAnswers(item, itemToCount, true);
           });
         });
       });
@@ -192,6 +207,8 @@ export default function ECOSDashboard() {
 
   }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState, answers]);
 
+  console.log(frameworkDataState);
+
 
   const handleStartSurvey = () => {
 
@@ -202,7 +219,6 @@ export default function ECOSDashboard() {
     const endAtString = new Date(endAt).toISOString();
 
     if (email === "" || ecosId == null) return;
-
 
     if (ecos.participants !== undefined && ecos.participants.length > 0) {
       ecos.participants.forEach((participant) => {

@@ -3,19 +3,18 @@ import { Box } from '@mui/system';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { FrameworkItem } from '../../types/Framework.type';
 
-interface SentiMentChartProps{
+interface SentiMentChartProps {
   frameworkItem: FrameworkItem,
 
 }
 export default function SentimentChart({ frameworkItem }: SentiMentChartProps) {
 
   const data = [
-    { name: 'Positivo', value: (frameworkItem.answer) ? frameworkItem.answer.positiveSentiment : 0 },
-    { name: 'Neutro', value: (frameworkItem.answer) ? frameworkItem.answer.neutralSentiment : 0 },
-    { name: 'Negativo', value: (frameworkItem.answer) ? frameworkItem.answer.negativeSentiment : 0 },
+    { name: 'Positivo', value: (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.positiveSentiment : (frameworkItem.answer) ? frameworkItem.answer.positiveSentiment : 0 },
+    { name: 'Neutro', value: (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.neutralSentiment : (frameworkItem.answer) ? frameworkItem.answer.neutralSentiment : 0 },
+    { name: 'Negativo', value: (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.negativeSentiment : (frameworkItem.answer) ? frameworkItem.answer.negativeSentiment : 0 },
   ];
   const COLORS = ['#388e3c', '#d1bc69', '#e53935'];
-
 
   return (
     <Box width={450}>
@@ -30,7 +29,12 @@ export default function SentimentChart({ frameworkItem }: SentiMentChartProps) {
           paddingAngle={5}
           dataKey="value"
           cy={200}
-          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+          label={({ name, percent, value }) => {
+           if(value === 0) return null;
+            return `${name} ${(percent * 100).toFixed(1)}%`
+          }}
+          labelLine={({value, stroke, points}) =>  (value != 0 ? <path stroke={stroke} d={`M${points[0].x},${points[0].y}L${points[1].x},${points[1].y}`} className="customized-label-line" /> : <polyline stroke={stroke} fill="none" />)    
+        }
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

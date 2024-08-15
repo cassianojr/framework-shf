@@ -23,6 +23,7 @@ interface FrameworkItem {
   feedbackValidationError?: boolean,
   selected?: boolean,
   answer?: FrameworkAnswer,
+  optionalAnswer?: FrameworkAnswer
 }
 
 interface FrameworkAnswer {
@@ -31,6 +32,7 @@ interface FrameworkAnswer {
   positiveSentiment: number,
   negativeSentiment: number,
   neutralSentiment: number,
+  comments: Array<string>
 }
 
 interface Framework {

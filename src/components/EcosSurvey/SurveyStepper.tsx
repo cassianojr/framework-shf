@@ -4,7 +4,7 @@ import { FrameworkItem } from '../../types/Framework.type';
 import { Box, Container } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { QuestionService } from '../../services/QuestionService';
-import { DemoagraphicData, NewAnswers } from '../../types/Answer.type';
+import { DemoagraphicData, NewAnswer, NewAnswers } from '../../types/Answer.type';
 import { useNavigate } from 'react-router-dom';
 import { SurveyOptionsDataTable } from './SurveyOptionsDataTable';
 import { v4 as uuid } from 'uuid';
@@ -134,18 +134,26 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     EcosProjectService.updateEcosProject(newEcos, () => console.log('ok'), () => console.log('error'));
   }
 
+  function getSentimentAnalisysPromise(answer: NewAnswer) {
+    const sentimentPromisesOnAnswer = answer.items.map(async (item) => {
+      if (item.comment === '' || item.comment == undefined) return;
+
+      const sentiment = await SentimentAnalisysService.getSentimentAnalysis(item.comment);
+      item.sentiment = sentiment;
+    });
+
+    return sentimentPromisesOnAnswer;
+  }
+
   const setSentimentOnAnswers = async (answers: NewAnswers) => {
     let sentimentPromises = [] as Promise<void>[];
     
     answers.answers.map((answer) => {
-      const sentimentPromisesOnAnswer = answer.items.map(async (item) =>{
-        if (item.comment === '' || item.comment == undefined) return;
+      sentimentPromises = [...sentimentPromises, ...getSentimentAnalisysPromise(answer)];
+    });
 
-        const sentiment = await SentimentAnalisysService.getSentimentAnalysis(item.comment);
-        item.sentiment = sentiment;
-      })
-
-      sentimentPromises = [...sentimentPromises, ...sentimentPromisesOnAnswer];
+    answers.optionalAnswers.map((answerToAnalyze) =>{
+      sentimentPromises = [...sentimentPromises, ...getSentimentAnalisysPromise(answerToAnalyze)];
     });
 
     return await Promise.all(sentimentPromises);
@@ -412,4 +420,5 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
       />
     </Paper>
   )
+
 }
