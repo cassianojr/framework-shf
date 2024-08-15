@@ -14,8 +14,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
 import { useTranslation } from "react-i18next";
 import Title from '../components/Dashboard/Title';
-// import { QuestionService } from '../services/QuestionService';
-import { NewAnswers } from '../types/Answer.type';
+import { QuestionService } from '../services/QuestionService';
+import { NewAnswer, NewAnswers } from '../types/Answer.type';
 import { FirebaseService } from '../services/FirebaseService';
 import { Framework } from '../types/Framework.type';
 import SurveyStatus from '../components/EcosDashboard/SurveyStatus';
@@ -25,11 +25,11 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import AddIcon from '@mui/icons-material/Add';
 
-// import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import ManageParticipantsModal from '../components/EcosDashboard/ManageParticipantsModal';
 import { EcosProject, MandatoryItems } from '../types/EcosProject.type';
 import EcosProjectService from '../services/EcosProjectService';
 import EditEcosProject from '../components/EcosDashboard/EditEcosProject';
+import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 
 export default function ECOSDashboard() {
 
@@ -42,11 +42,9 @@ export default function ECOSDashboard() {
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
-  // const [copingMechanisms, setCopingMechanisms] = React.useState<Framework | undefined>(undefined);
-  // const [contextualCharacteristics, setContextualCharacteristics] = React.useState<Framework | undefined>(undefined);
-  // const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
-  // const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
-  // const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
+  const [socialHumanFactors, setSocialHumanFactors] = React.useState<Framework | undefined>(undefined);
+  const [barriersToImproving, setBarriersToImproving] = React.useState<Framework | undefined>(undefined);
+  const [strategies, setStrategies] = React.useState<Framework | undefined>(undefined);
 
   const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
   const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
@@ -82,24 +80,7 @@ export default function ECOSDashboard() {
 
     if (!signed) navigate('/sign-in');
 
-    // const countAnswers = (answer: NewAnswer, frameworkComponentToCount: Framework) => {
-
-    //   answer.items.forEach((itemAnswer) => {
-
-    //     frameworkComponentToCount.items?.forEach((itemToCount) => {
-
-    //       if (itemAnswer.id == itemToCount.id) {
-    //         if (itemAnswer.answer === 1) itemToCount.totallyDisagree = itemToCount.totallyDisagree ? itemToCount.totallyDisagree + 1 : 1;
-    //         if (itemAnswer.answer === 2) itemToCount.disagree = itemToCount.disagree ? itemToCount.disagree + 1 : 1;
-    //         if (itemAnswer.answer === 3) itemToCount.neutral = itemToCount.neutral ? itemToCount.neutral + 1 : 1;
-    //         if (itemAnswer.answer === 4) itemToCount.agree = itemToCount.agree ? itemToCount.agree + 1 : 1;
-    //         if (itemAnswer.answer === 5) itemToCount.totallyAgree = itemToCount.totallyAgree ? itemToCount.totallyAgree + 1 : 1;
-    //       }
-    //     });
-    //   });
-    // }
-
-    const setFrameworkData = (data: Framework[], mandatory_items: MandatoryItems) => {
+    const getMandatoryFrameworkItems = (data: Framework[], mandatory_items: MandatoryItems) => {
       data.forEach((item) => {
         if (item.id === 'social-human-factors') {
           item.items.map((item) => {
@@ -141,69 +122,76 @@ export default function ECOSDashboard() {
           });
         }
       });
-      setFrameworkDataState(data);
 
-      // const copingMechanisms = data.filter((item) => item.id === "coping-mechanisms")[0]
-      // setCopingMechanisms(copingMechanisms);
-
-      // const contextualCharacteristics = data.filter((item) => item.id === "contextual-characteristics")[0];
-      // setContextualCharacteristics(contextualCharacteristics);
-
-      // const socialHumanFactors = data.filter((item) => item.id === "social-human-factors")[0];
-      // setSocialHumanFactors(socialHumanFactors);
-
-      // const barriersToImproving = data.filter((item) => item.id === "barriers-to-improving")[0];
-      // setBarriersToImproving(barriersToImproving);
-
-      // const strategies = data.filter((item) => item.id === "strategies")[0];
-      // setStrategies(strategies);
+      return data;
     }
 
-    // const handleFrameworkData = (answersData: NewAnswers[], data: Framework[], mandatory_items:MandatoryItems) => {
-    //   const rounds = answersData.map((answer) => answer.round);
-    //   const uniqueRounds = [...new Set(rounds)];
+    const countAnswers = (item: NewAnswer, frameworkComponentToCount: Framework) => {
+      item.items.forEach((itemAnswer) => {
+        frameworkComponentToCount.items?.forEach((frameworkItem) => {
+          if (itemAnswer.id !== frameworkItem.id) return;
 
-    //   uniqueRounds.forEach((round) => {
-    //     const answersPerRound = answersData.filter((answer) => answer.round === round);
+          if (itemAnswer.sentiment?.score === undefined) return;
 
-    //     answersPerRound.forEach((answer) => {
-    //       answer.answers.forEach((item) => {
+          const frameworkItemAnswer = frameworkItem.answer ?? { agree: 0, disagree: 0, positiveSentiment: 0, negativeSentiment: 0, neutralSentiment: 0 };
+          
+          if (itemAnswer.answer === 1) frameworkItemAnswer.agree++;
+          if (itemAnswer.answer === 2) frameworkItemAnswer.disagree++;
+          if (itemAnswer.sentiment?.score > 0.25) frameworkItemAnswer.positiveSentiment++;
+          if (itemAnswer.sentiment?.score < -0.25) frameworkItemAnswer.negativeSentiment++;
+          if (itemAnswer.sentiment?.score >= -0.25 && itemAnswer.sentiment?.score <= 0.25) frameworkItemAnswer.neutralSentiment++;
 
-    //         data.forEach((itemToCount) => {
-    //           if (item.framework_item != itemToCount.id) return;
-    //           countAnswers(item, itemToCount);
-    //         });
-    //       });
-    //     });
-    //   });
+          frameworkItem.answer = frameworkItemAnswer;
+        });
+      });
+    }
 
-    //   setFrameworkData(data, mandatory_items);
-    // }
+    const handleFrameworkData = (answersData: NewAnswers[], frameworkItems: Framework[]) => {
+      answersData.forEach((answer) => {
+        answer.answers.forEach((item) => {
+          frameworkItems.forEach((itemToCount) => {
+            if (item.framework_item != itemToCount.id) return;
+            countAnswers(item, itemToCount);
+          });
+        });
+      });
+
+      const socialHumanFactors = frameworkItems.filter((item) => item.id === "social-human-factors")[0];
+      setSocialHumanFactors(socialHumanFactors);
+
+      const barriersToImproving = frameworkItems.filter((item) => item.id === "barriers-to-improving")[0];
+      setBarriersToImproving(barriersToImproving);
+
+      const strategies = frameworkItems.filter((item) => item.id === "strategies")[0];
+      setStrategies(strategies);
+
+      setFrameworkDataState(frameworkItems);
+    }
 
     const fetchData = async () => {
       const ecosData = await EcosProjectService.getEcosProject(ecosId ?? "");
-      console.log();
-      
+
       if (ecos.id === undefined) setEcos(ecosData);
 
-      if (ecosData.id === undefined) return;
+      if (!frameworkDataState || frameworkDataState.length == 0) FirebaseService.getFrameworkData((data) => {
+        const mandatoryItems = getMandatoryFrameworkItems(data, ecosData.mandatory_items);
 
-      // try {
-      // const answersData = await QuestionService.getEcosAnswers(ecosData.id);
-      // setAnswers(answersData);
 
-      // FirebaseService.getFrameworkData((data) => setFrameworkData(data, ecos.mandatory_items));
-      // } catch {
+        if (ecosData.id === undefined) return;
+        if (!answers || answers.length == 0) QuestionService.getEcosAnswers(ecosData.id).then((dbAnswers) => {
 
-      if (!frameworkDataState) FirebaseService.getFrameworkData((data) => setFrameworkData(data, ecosData.mandatory_items));
+          handleFrameworkData(dbAnswers, mandatoryItems);
+          setAnswers(dbAnswers);
+        });
+      });
+
       setAppLoading(false);
-
-      // }
     }
 
     fetchData();
 
-  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState]);
+  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState, answers]);
+
 
   const handleStartSurvey = () => {
 
@@ -355,17 +343,16 @@ export default function ECOSDashboard() {
                 </Paper>
               </Grid>
 
-              <Grid item lg={12}>{/* Framework instance*/}
-                {/* <Title>{t('framework_results')}</Title> */}
-                {/* <div>
-                  <ResultDataDisplay question={t('ecos_survey:fsh_affirmative')} frameworkComponent={socialHumanFactors} expanded={true} />
-                  <ResultDataDisplay question={t('ecos_survey:cc_affirmative')} frameworkComponent={contextualCharacteristics} />
-                  <ResultDataDisplay question={t('ecos_survey:barriers_affirmative')} frameworkComponent={barriersToImproving} />
-                  <ResultDataDisplay question={t('ecos_survey:strategies_affirmative')} frameworkComponent={strategies} />
-                  <ResultDataDisplay question={t('ecos_survey:coping_mec_affirmative')} frameworkComponent={copingMechanisms} />
-                </div> */}
-              </Grid>
-
+              {answers.length === 0 ? <></> :
+                <Grid item lg={12}>
+                  <Title>{t('framework_results')}</Title>
+                  <div>
+                    {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />}
+                    {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />}
+                    {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />}
+                  </div>
+                </Grid>
+              }
             </Grid>
           </Container>
         </Box>

@@ -21,7 +21,16 @@ interface FrameworkItem {
   comment?: string,
   validationError?: boolean,
   feedbackValidationError?: boolean,
-  selected?: boolean
+  selected?: boolean,
+  answer?: FrameworkAnswer,
+}
+
+interface FrameworkAnswer {
+  agree: number,
+  disagree: number,
+  positiveSentiment: number,
+  negativeSentiment: number,
+  neutralSentiment: number,
 }
 
 interface Framework {
