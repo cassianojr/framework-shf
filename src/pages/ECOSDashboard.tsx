@@ -226,7 +226,7 @@ export default function ECOSDashboard() {
       });
     }
 
-    EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language);
+    if(ecos.id) EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language, ecos.id);
     const newEcosProject = { ...ecos, status: 'waiting-for-answers' } as EcosProject;
     setEcos(newEcosProject);
     EcosProjectService.updateEcosProject(newEcosProject, () => console.log("updated"), () => console.error("error updating"));
@@ -325,8 +325,8 @@ export default function ECOSDashboard() {
                   sx={defaultPaperStyle}
                 >
                   <Title>{t('start_survey')}</Title>
-                  <Button variant='contained' color='success' disabled={ecos.status === 'waiting-for-answers'} sx={{ p: 1.4 }} onClick={handleStartSurvey}>
-                    {(ecos.status === 'waiting-for-answers') ? t('survey_started') : t('start_survey')}
+                  <Button variant='contained' color='success' disabled={ecos.status !== 'not-started'} sx={{ p: 1.4 }} onClick={handleStartSurvey}>
+                    {(ecos.status === 'waiting-for-answers') ? t('survey_started') : (ecos.status === 'finished')?t('survey_status.finished'):t('start_survey')}
                   </Button>
                 </Paper>
               </Grid>
