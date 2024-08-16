@@ -74,7 +74,7 @@ export default class EmailService {
     });
   }
 
-  public static scheduleEndRound(email: string, endAt: string, ecosystemName: string, ecosystemId: string, language: string): void {
+  public static scheduleEndRound(email: string, endAt: string, ecosystemName: string, ecosystemId: string, language: string, ecosProjectId: string): void {
     fetch(`${this.API_URL}/api/schedule-end`, {
       method: 'POST',
       headers: {
@@ -85,6 +85,7 @@ export default class EmailService {
         to: email,
         message: endRoundEmailTemplate(ecosystemName, ecosystemId, language),
         endAt,
+        ecosProjectId
       }),
     }).then((data) => console.log(data.json())).catch((error) => console.log(error));
   }
