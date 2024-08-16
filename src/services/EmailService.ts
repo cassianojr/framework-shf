@@ -60,7 +60,7 @@ export default class EmailService {
   private static readonly API_URL = 'https://shf-tool-api.fly.dev';
 
   public static notifyStartSurvey(email: string, ecosystemName: string, ecosystemId: string, language: string): void {
-    fetch(`${this.API_URL}/delphi-round/notify-start`, {
+    fetch(`${this.API_URL}/api/notify-start`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export default class EmailService {
   }
 
   public static scheduleEndRound(email: string, endAt: string, ecosystemName: string, ecosystemId: string, language: string): void {
-    fetch(`${this.API_URL}/delphi-round/schedule-end`, {
+    fetch(`${this.API_URL}/api/schedule-end`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
