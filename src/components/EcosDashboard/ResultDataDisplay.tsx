@@ -162,7 +162,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
                 label={item.names[i18next.language]}
                 {...a11yProps(index)}
                 value={index}
-                icon={<Badge badgeContent={item.optionalAnswer.agree + item.optionalAnswer.disagree} sx={{pl: 0.5}} color="primary"/>}
+                icon={<Badge badgeContent={item.optionalAnswer.agree + item.optionalAnswer.disagree} sx={{ pl: 0.5 }} color="primary" />}
                 iconPosition='end'
               />) : null
             ))}

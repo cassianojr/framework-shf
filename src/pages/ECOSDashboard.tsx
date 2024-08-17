@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
-import React from "react";
+import React, { useCallback } from "react";
 import { Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
@@ -30,6 +30,7 @@ import { EcosProject, MandatoryItems } from '../types/EcosProject.type';
 import EcosProjectService from '../services/EcosProjectService';
 import EditEcosProject from '../components/EcosDashboard/EditEcosProject';
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
+import FilterResult, { FilterParams } from '../components/EcosDashboard/FilterResult';
 
 export default function ECOSDashboard() {
 
@@ -49,12 +50,16 @@ export default function ECOSDashboard() {
   const [manageParticipantsModalState, setManageParticipantsModalState] = React.useState(false);
   const [addParticipantModalState, setAddParticipantModalState] = React.useState(false);
   const [editEcosProjectModalState, setEditEcosProjectModalState] = React.useState(false);
+  const [mandatoryItemsState, setMandatoryItemsState] = React.useState([] as Framework[]);
 
   const [feedbackSnackBarState, setFeedbackSnackBarState] = React.useState(false);
   const [feedbackSnackBarText, setFeedbackSnackBarText] = React.useState('' as string);
   const [feedbackSnackBarSeverity, setFeedbackSnackBarSeverity] = React.useState('info' as 'success' | 'info' | 'warning' | 'error');
 
+
   const [frameworkDataState, setFrameworkDataState] = React.useState([] as Framework[]);
+
+  const [reload, setReload] = React.useState(false);
 
   const ecosId = useParams().ecosId;
 
@@ -75,11 +80,7 @@ export default function ECOSDashboard() {
     justifyContent: 'space-between'
   }
 
-  React.useEffect(() => {
-    if (loading) return;
-
-    if (!signed) navigate('/sign-in');
-
+  const processFrameworkData = useCallback(() => {
     const getMandatoryFrameworkItems = (data: Framework[], mandatory_items: MandatoryItems) => {
       data.forEach((item) => {
         if (item.id === 'social-human-factors') {
@@ -127,13 +128,14 @@ export default function ECOSDashboard() {
     }
 
     const countAnswers = (item: NewAnswer, frameworkComponentToCount: Framework, optionalAnswer?: boolean) => {
+
       item.items.forEach((itemAnswer) => {
         frameworkComponentToCount.items?.forEach((frameworkItem) => {
           if (itemAnswer.id !== frameworkItem.id) return;
 
           if (itemAnswer.sentiment?.score === undefined) return;
 
-          const defaultAnswer = { agree: 0, disagree: 0, positiveSentiment: 0, negativeSentiment: 0, neutralSentiment: 0, comments: [] };
+          const defaultAnswer = { agree: 0, disagree: 0, positiveSentiment: 0, negativeSentiment: 0, neutralSentiment: 0, comments: [] as string[] };
 
           const frameworkItemAnswer = (optionalAnswer) ? frameworkItem.optionalAnswer ?? defaultAnswer : frameworkItem.answer ?? defaultAnswer;
 
@@ -148,6 +150,7 @@ export default function ECOSDashboard() {
             frameworkItem.optionalAnswer = frameworkItemAnswer;
             return;
           }
+
           frameworkItem.answer = frameworkItemAnswer;
         });
       });
@@ -158,7 +161,7 @@ export default function ECOSDashboard() {
         answer.answers.forEach((item) => {
           frameworkItems.forEach((itemToCount) => {
             if (item.framework_item != itemToCount.id) return;
-            countAnswers(item, itemToCount);
+            countAnswers(item, itemToCount, false);
           });
         });
 
@@ -183,19 +186,28 @@ export default function ECOSDashboard() {
       setFrameworkDataState(frameworkItems);
     }
 
+    return { getMandatoryFrameworkItems, handleFrameworkData };
+  }, [setFrameworkDataState]);
+
+  React.useEffect(() => {
+    if (loading) return;
+
+    if (!signed) navigate('/sign-in');
+
+
     const fetchData = async () => {
       const ecosData = await EcosProjectService.getEcosProject(ecosId ?? "");
 
       if (ecos.id === undefined) setEcos(ecosData);
 
       if (!frameworkDataState || frameworkDataState.length == 0) FirebaseService.getFrameworkData((data) => {
-        const mandatoryItems = getMandatoryFrameworkItems(data, ecosData.mandatory_items);
-
+        const mandatoryItems = processFrameworkData().getMandatoryFrameworkItems(data, ecosData.mandatory_items);
+        setMandatoryItemsState(mandatoryItems);
 
         if (ecosData.id === undefined) return;
         if (!answers || answers.length == 0) QuestionService.getEcosAnswers(ecosData.id).then((dbAnswers) => {
 
-          handleFrameworkData(dbAnswers, mandatoryItems);
+          processFrameworkData().handleFrameworkData(dbAnswers, mandatoryItems);
           setAnswers(dbAnswers);
         });
       });
@@ -205,10 +217,7 @@ export default function ECOSDashboard() {
 
     fetchData();
 
-  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState, answers]);
-
-  console.log(frameworkDataState);
-
+  }, [signed, navigate, loading, user.uid, ecosId, setAnswers, setFrameworkDataState, ecos, frameworkDataState, answers, processFrameworkData]);
 
   const handleStartSurvey = () => {
 
@@ -226,7 +235,7 @@ export default function ECOSDashboard() {
       });
     }
 
-    if(ecos.id) EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language, ecos.id);
+    if (ecos.id) EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language, ecos.id);
     const newEcosProject = { ...ecos, status: 'waiting-for-answers' } as EcosProject;
     setEcos(newEcosProject);
     EcosProjectService.updateEcosProject(newEcosProject, () => console.log("updated"), () => console.error("error updating"));
@@ -236,6 +245,35 @@ export default function ECOSDashboard() {
     setFeedbackSnackBarText(text);
     setFeedbackSnackBarSeverity(severity);
     setFeedbackSnackBarState(true);
+  }
+
+  function filterAnswers(params: FilterParams): void {
+
+    const filteredAnswers = answers.filter((answer) => {
+      if (params.timeOnEcos !== 'Selecione' && answer.demographicData.timeOnEcos !== params.timeOnEcos) return false;
+      if (params.timeOnReqManagment !== 'Selecione' && answer.demographicData.timeOnReqManagment !== params.timeOnReqManagment) return false;
+      if (params.role !== 'Selecione' && answer.demographicData.role !== params.role) return false;
+
+      return true;
+    });
+
+    socialHumanFactors?.items.forEach((item) => {
+      item.optionalAnswer = undefined;
+      item.answer = undefined;
+    });
+
+    barriersToImproving?.items.forEach((item) => {
+      item.optionalAnswer = undefined;
+      item.answer = undefined;
+    });
+
+    strategies?.items.forEach((item) => {
+      item.optionalAnswer = undefined;
+      item.answer = undefined;
+    });
+
+    processFrameworkData().handleFrameworkData(filteredAnswers, mandatoryItemsState);
+    setReload(!reload);
   }
 
   return (
@@ -326,7 +364,7 @@ export default function ECOSDashboard() {
                 >
                   <Title>{t('start_survey')}</Title>
                   <Button variant='contained' color='success' disabled={ecos.status !== 'not-started'} sx={{ p: 1.4 }} onClick={handleStartSurvey}>
-                    {(ecos.status === 'waiting-for-answers') ? t('survey_started') : (ecos.status === 'finished')?t('survey_status.finished'):t('start_survey')}
+                    {(ecos.status === 'waiting-for-answers') ? t('survey_started') : (ecos.status === 'finished') ? t('survey_status.finished') : t('start_survey')}
                   </Button>
                 </Paper>
               </Grid>
@@ -363,6 +401,7 @@ export default function ECOSDashboard() {
                 <Grid item lg={12}>
                   <Title>{t('framework_results')}</Title>
                   <div>
+                    <FilterResult filterAnswers={filterAnswers} />
                     {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />}
                     {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />}
                     {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />}
