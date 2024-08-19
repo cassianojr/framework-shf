@@ -31,6 +31,7 @@ import EcosProjectService from '../services/EcosProjectService';
 import EditEcosProject from '../components/EcosDashboard/EditEcosProject';
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import FilterResult, { FilterParams } from '../components/EcosDashboard/FilterResult';
+import DemographicDataComponent from './DemographicDataComponent';
 
 export default function ECOSDashboard() {
 
@@ -40,6 +41,7 @@ export default function ECOSDashboard() {
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
   const [ecos, setEcos] = React.useState({} as EcosProject);
   const [answers, setAnswers] = React.useState([] as NewAnswers[]);
+  const [fixedAnswers, setFixedAnswers] = React.useState([] as NewAnswers[]);
 
   const { signed, signOutFromApp, getUser, loading } = React.useContext(AuthenticationContext) as AuthenticationContextType;
 
@@ -209,6 +211,7 @@ export default function ECOSDashboard() {
 
           processFrameworkData().handleFrameworkData(dbAnswers, mandatoryItems);
           setAnswers(dbAnswers);
+          setFixedAnswers(dbAnswers);
         });
       });
 
@@ -249,7 +252,7 @@ export default function ECOSDashboard() {
 
   function filterAnswers(params: FilterParams): void {
 
-    const filteredAnswers = answers.filter((answer) => {
+    const filteredAnswers = fixedAnswers.filter((answer) => {
       if (params.timeOnEcos !== 'Selecione' && answer.demographicData.timeOnEcos !== params.timeOnEcos) return false;
       if (params.timeOnReqManagment !== 'Selecione' && answer.demographicData.timeOnReqManagment !== params.timeOnReqManagment) return false;
       if (params.role !== 'Selecione' && answer.demographicData.role !== params.role) return false;
@@ -273,6 +276,7 @@ export default function ECOSDashboard() {
     });
 
     processFrameworkData().handleFrameworkData(filteredAnswers, mandatoryItemsState);
+    setAnswers(filteredAnswers);
     setReload(!reload);
   }
 
@@ -402,6 +406,7 @@ export default function ECOSDashboard() {
                   <Title>{t('framework_results')}</Title>
                   <div>
                     <FilterResult filterAnswers={filterAnswers} />
+                    {!answers ? <></> : <DemographicDataComponent answers={answers} />}
                     {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />}
                     {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />}
                     {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />}
