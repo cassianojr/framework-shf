@@ -6,7 +6,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import SentimentChart from './SentimentChart';
 import ResultChart from './ResultChart';
-import Singularizer from '../../util/Singularizer';
 import { Modal } from '../Modal';
 
 
@@ -113,7 +112,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
   const DataTabPanel = ({ item, index }: DataTabPanelProps) => {
     return (
       <TabPanel value={tabValue} index={index}>
-        <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para o {Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()} {item.names[i18next.language]}</Typography>
+        <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para {item.names[i18next.language]}</Typography>
 
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -125,7 +124,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
         </Grid>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <CommentsModal
-            title={`Comentários para o ${Singularizer.singularizeSentence(frameworkComponent.labels[i18next.language]).toLowerCase()}  ${item.names[i18next.language]}`}
+            title={`Comentários para ${item.names[i18next.language]}`}
             frameworkItem={item}
           />
           <Button variant='contained' onClick={handleViewComments}>Visualizar comentários</Button>

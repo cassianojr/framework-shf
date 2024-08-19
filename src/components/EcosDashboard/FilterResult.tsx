@@ -62,7 +62,7 @@ export default function FilterResult({ filterAnswers }: FilterResultProps) {
   }
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx={{ p: 3, mb:3 }}>
       <Title>Filtar respostas</Title>
       <Divider sx={{mb:2, mt:-1}}/>
       <Grid container spacing={2} justifyContent={'center'}>

@@ -4,12 +4,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Footer from '../components/Footer';
 import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React, { useCallback } from "react";
-import { Button, Link, Typography, } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Link, Typography, } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SnackBarComponent from '../components/SnackBarComponent';
 import { useTranslation } from "react-i18next";
@@ -32,6 +31,8 @@ import EditEcosProject from '../components/EcosDashboard/EditEcosProject';
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import FilterResult, { FilterParams } from '../components/EcosDashboard/FilterResult';
 import DemographicDataComponent from './DemographicDataComponent';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function ECOSDashboard() {
 
@@ -404,12 +405,72 @@ export default function ECOSDashboard() {
               {answers.length === 0 ? <></> :
                 <Grid item lg={12}>
                   <Title>{t('framework_results')}</Title>
+                  <FilterResult filterAnswers={filterAnswers} />
+
                   <div>
-                    <FilterResult filterAnswers={filterAnswers} />
-                    {!answers ? <></> : <DemographicDataComponent answers={answers} />}
-                    {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />}
-                    {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />}
-                    {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />}
+                    <Accordion defaultExpanded>
+                      <AccordionSummary
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                        expandIcon={<ExpandMoreIcon />}
+
+                      >
+                        <Typography>Resultados Demográficos</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <DemographicDataComponent answers={answers} />
+                      </AccordionDetails>
+                    </Accordion>
+
+                    {!socialHumanFactors ? <></> :
+                      <Accordion>
+                        <AccordionSummary
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
+                          expandIcon={<ExpandMoreIcon />}
+                        >
+                          <Typography>Fatores sociais e humanos</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <ResultDataDisplay frameworkComponent={socialHumanFactors} />
+                        </AccordionDetails>
+                      </Accordion>
+                    }
+                    {!barriersToImproving ? <></> :
+                      <Accordion>
+                        <AccordionSummary
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
+                          expandIcon={<ExpandMoreIcon />}
+                        >
+                          <Typography>Barreiras para a melhoria</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <ResultDataDisplay frameworkComponent={barriersToImproving} />
+                        </AccordionDetails>
+                      </Accordion>
+                    }
+
+                    {!strategies ? <></> :
+                      <Accordion sx={{mb:3}}>
+                        <AccordionSummary
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
+                          expandIcon={<ExpandMoreIcon />}
+                        >
+                          <Typography>Estratégias para a melhoria</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <ResultDataDisplay frameworkComponent={strategies} />
+                        </AccordionDetails>
+                      </Accordion>
+                    }
+
+
+                    {/* {!answers ? <></> : <DemographicDataComponent answers={answers} />} */}
+                    {/* {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />} */}
+                    {/* {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />} */}
+                    {/* {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />} */}
                   </div>
                 </Grid>
               }
@@ -417,7 +478,7 @@ export default function ECOSDashboard() {
           </Container>
         </Box>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
