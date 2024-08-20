@@ -1,6 +1,8 @@
 {
 	"back_button": "Voltar",
 	"close_button": "Fechar",
+  "next_btn": "Avançar",
+  "cancel_btn": "Cancelar",
 	"feedback_label": "Isso foi útil?",
 	"textarea_placeholder": "Digite a descrição da sua sugestão",
 	"save_btn": "Salvar"

@@ -12,7 +12,7 @@ import { Framework, FrameworkItem } from '../../types/Framework.type';
 import Title from './Title';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { v4 as uuid } from 'uuid';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { EcosProject, Participant } from '../../types/EcosProject.type';
 import EcosProjectService from '../../services/EcosProjectService';
 import FrameworkItemListSelect from './FrameworkItemListSelect';
@@ -28,7 +28,9 @@ interface NewProjectModalProps {
 export default function NewProjectModal({ user, setState, state, frameworkData }: NewProjectModalProps) {
 
   const navigate = useNavigate();
-  const { t } = useTranslation('dashboard');
+
+  const { t } = useTranslation(['dashboard', 'demographic_data', 'common']);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [orgNameError, setOrgNameError] = React.useState(false);
   const [endDateError, setEndDateError] = React.useState(false);
@@ -63,19 +65,19 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
 
     return (
       <Box>
-        <Title>Adicionar participantes</Title>
+        <Title>{t('modal_text.add_participants_tite')}</Title>
         <form onSubmit={handleAddParticipant}>
           <Grid container spacing={2}>
             <Grid item xs={9}>
-              <TextField value={participantEmail} type={'email'} onChange={handleParticipantEmailChange} fullWidth required id="participantEmail" name="participantEmail" label="email do participante" />
+              <TextField value={participantEmail} type={'email'} onChange={handleParticipantEmailChange} fullWidth required id="participantEmail" name="participantEmail" label={t('modal_text.email_label')} />
             </Grid>
             <Grid item xs={2}>
-              <Button type='submit' variant="contained" color="primary" sx={{ height: '3.5rem' }}>Adicionar</Button>
+              <Button type='submit' variant="contained" color="primary" sx={{ height: '3.5rem' }}>{t('modal_text.add_participant_btn')}</Button>
             </Grid>
           </Grid>
         </form>
 
-        <Title>Participantes</Title>
+        <Title>{t('modal_text.participants_list_title')}</Title>
         <List>
           {participants.map((participant) => {
             return (
@@ -125,20 +127,21 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
         </Grid>
 
         <Grid item xs={12} sx={{ marginTop: '1%', marginBottom: '2%' }}>
-          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>Selecione a data em que a pesquisa irá terminar:</Typography>
+          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>{t('modal_text.end_date_text')}</Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              label="Data de término da pesquisa*"
+              label={t('modal_text.end_date_label')}
               sx={{ width: '100%' }}
               value={endDate}
               format='DD/MM/YYYY'
               onChange={(newValue) => setEndDate(newValue)}
+              minDate={dayjs()}
               slotProps={{
                 textField: {
                   fullWidth: true,
                   variant: 'outlined',
                   error: endDateError,
-                  helperText: endDateError ? 'Por favor, selecione a data de término da pesquisa' : null
+                  helperText: endDateError ? t('modal_text.end_date_error') : null
                 }
               }}
             />
@@ -147,8 +150,8 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
       </Grid>
     </>,
     <>
-      <Title>Dados demográficos</Title>
-      <Typography> Esses dados são obrigatórios para a pesquisa, e serão coletados dos participantes.</Typography>
+      <Title>{t('modal_text.demographic_data_title')}</Title>
+      <Typography>{t('modal_text.demographic_data_expl')}</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
           <TextField
@@ -156,7 +159,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
             id="ecosTime"
             name="ecosTime"
             value={''}
-            label={'Quanto tempo trabalha no ecossistema?'}
+            label={t('demographic_data:demographic_questions.time_on_ecos')}
             disabled
           />
         </Grid>
@@ -166,7 +169,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
             id="reqTime"
             name="reqTime"
             value={''}
-            label={'Quanto tempo trabalha com gerenciamento de requisitos?'}
+            label={t('demographic_data:demographic_questions.time_with_requirements_mngm')}
             disabled
           />
         </Grid>
@@ -176,27 +179,27 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
             id="role"
             name="role"
             value={''}
-            label={'Qual o seu cargo no ecossistema?'}
+            label={t('demographic_data:demographic_questions.role')}
             disabled
           />
         </Grid>
       </Grid>
     </>,
     <>
-      <Title>Por favor, selecione os fatores sociais e humanos que serão obrigatórios na pesquisa:</Title>
+      <Title>{t('modal_text.shf_items')}</Title>
       <FrameworkItemListSelect items={shfItems} setItems={setShfItems} />
     </>,
     <>
-      <Title>Por favor, selecione as características contextuais da sua organização:</Title>
+      <Title>{t('modal_text.cc_items')}</Title>
 
       <FrameworkItemListSelect items={ccItems} setItems={setCcItems} />
     </>,
     <>
-      <Title>Por favor, selecione as barreiras para melhoria que serão obrigatórias na pesquisa:</Title>
+      <Title>{t('modal_text.barriers_items')}</Title>
       <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems} />
     </>,
     <>
-      <Title>Por favor, selecione as estratégias que serão obrigatórias na pesquisa:</Title>
+      <Title>{t('modal_text.strategies_items')}</Title>
       <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems} />
     </>,
     <>
@@ -278,12 +281,12 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
           activeStep={activeStep}
           nextButton={
             <Button size="small" onClick={handleNextBtn}>
-              {(activeStep === steps.length - 1) ? 'Criar nova pesquisa' : "Avançar"}
+              {(activeStep === steps.length - 1) ? t('modal_text.create_new_survey'): t('common:next_btn')}
             </Button>
           }
           backButton={
             <Button size="small" onClick={handleBackBtn}>
-              {(activeStep === 0) ? 'Cancelar' : "Voltar"}
+              {(activeStep === 0) ? t('common:cancel_btn') : t('common:back_button')}
             </Button>
           }
         />
