@@ -6,8 +6,21 @@
     "txt1": "This tool enables the organization to gain valuable insights through the perception of professionals (involved in requirements management) about the social and human factors that influence requirements management activities in their environment. The tool allows for feedback collection through a structured questionnaire in the form of organizational surveys and can also be used to gather feedback through unstructured methods (e.g., retrospectives and individual meetings). The results obtained with the tool can provide relevant information to support decision-making in improving the social and human factors that influence requirements management in their specific environment. ",
     "txt2": "Please provide the name of your organization:",
     "time_window_separator": "Time to take the survey",
-    "time_window_expl": "The duration of each survey may vary depending on the number of people involved. Typically, the greater the number of participants, the longer the response time required. ",
+    "end_date_text": "Select the date when the survey will end:",
     "time_window_label": "How much time will participants have to respond to the survey?",
-    "time_week": "week"
+    "end_date_label": "Survey end date*",
+    "time_week": "week",
+    "end_date_error": "Please select the survey end date",
+    "demographic_data_title": "Demographic Data",
+    "demographic_data_expl": "This data is mandatory for the survey and will be collected from participants.",
+    "create_new_survey": "Create new survey",
+    "shf_items": "Please select the social and human factors that will be mandatory in the survey:",
+    "cc_items": "Please select the contextual characteristics of your organization:",
+    "barriers_items": "Please select the barriers to improvement that will be mandatory in the survey:",
+    "strategies_items": "Please select the strategies that will be mandatory in the survey:",
+    "add_participants_tite": "Add participants",
+    "email_label": "Participant's email",
+    "add_participant_btn": "Add",
+    "participants_list_title": "Participants list"
   }
 }
