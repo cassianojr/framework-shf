@@ -18,7 +18,7 @@ interface RowType {
 
 export default function ViewAnswersComponent({ answers }: ViewAnswersComponentProps) {
 
-  const { t } = useTranslation('ecos_survey');
+  const { t } = useTranslation(['ecos_survey', 'demographic_data']);
 
   const AnswersDataGrid = (answer: NewAnswer) => {
     const columns: GridColDef[] = [
@@ -87,8 +87,8 @@ export default function ViewAnswersComponent({ answers }: ViewAnswersComponentPr
             fullWidth
             id="ecosTime"
             name="ecosTime"
-            value={answers.demographicData.timeOnEcos}
-            label={'Quanto tempo trabalha no ecossistema de software?'}
+            value={t(answers.demographicData.timeOnEcos)}
+            label={t('demographic_data:demographic_questions.time_on_ecos')}
             disabled
           />
         </Grid>
@@ -97,8 +97,8 @@ export default function ViewAnswersComponent({ answers }: ViewAnswersComponentPr
             fullWidth
             id="reqTime"
             name="reqTime"
-            value={answers.demographicData.timeOnReqManagment}
-            label={'Quanto tempo trabalha com gerência de requisitos?'}
+            value={t(answers.demographicData.timeOnReqManagment)}
+            label={t('demographic_data:demographic_questions.time_with_requirements_mngm')}
             disabled
           />
         </Grid>
@@ -107,8 +107,8 @@ export default function ViewAnswersComponent({ answers }: ViewAnswersComponentPr
             fullWidth
             id="role"
             name="role"
-            value={answers.demographicData.role}
-            label={'Qual o seu cargo no ecossistema de software?'}
+            value={t(answers.demographicData.role)}
+            label={t('demographic_data:demographic_questions.role')}
             disabled
           />
         </Grid>
@@ -121,7 +121,7 @@ export default function ViewAnswersComponent({ answers }: ViewAnswersComponentPr
       <Title>{t('view_answers.title')}</Title>
       <Divider sx={{m: '1.3rem'}} />
 
-      <Title>{'Dados demográficos'}</Title>
+      <Title>{t('demographic_data_veiw_label')}</Title>
 
       <DemographicDataComponent />
 

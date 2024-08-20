@@ -18,6 +18,8 @@
     "p3": "Ao clicar em “Concordo”, você estará concordando em participar da pesquisa. Caso tenha alguma dúvida, entre em contato com a organização responsável pela pesquisa.",
     "p4": "Você concorda em participar da pesquisa?"
   },
+  "demographic_data_label": "Por favor, preencha os seguintes dados demográficos antes de iniciar a pesquisa:",
+  "demographic_data_veiw_label": "Dados Demográficos",
   "fsh_affirmative": "No ecossistema {{ecos_name}} em que você atua, a organização central apontou alguns fatores sociais e humanos, listados abaixo, que podem estar influenciando a gerência de requisitos. Para cada fator, indique se concorda ou discorda:",
   "fsh_optional": "Abaixo estão listados alguns fatores sociais e humanos que podem influenciar a gerência de requisitos em ecossistemas de software. Se você considerar algum desses fatores como crítico no ecossistema {{ecos_name}}, por favor, selecione-os clicando em cada um deles.",
   "cc_affirmative": "As características contextuais da gerência de requisitos em ecossistemas de software abaixo listadas têm um impacto na importância de considerar os fatores sociais e humanos.",

@@ -381,7 +381,7 @@ const timeOptions = [
     },
     {
       id: 'demographic_data',
-      title: "Dados demográficos",
+      title: t('demographic_data_label'),
       component: <DemographicDataComponent />
     },
     ...stepperContents
