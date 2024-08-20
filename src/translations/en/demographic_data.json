@@ -26,7 +26,10 @@
   },
   "demographic_questions": {
     "time_on_ecos": "How long have you been working in the software ecosystem?",
+    "time_on_ecos_short": "Time working in the ecosystem",
     "time_with_requirements_mngm": "How long have you been working with requirements management?",
-    "role": "What is your role in the ecosystem?"
+    "time_with_requirements_mngm_short": "Time with requirements management",
+    "role": "What is your role in the ecosystem?",
+    "role_short": "Role in the ecosystem"
   }
 }

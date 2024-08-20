@@ -36,7 +36,6 @@ export default function DemographicDataBar({ data, title }: GraphicProps) {
         }} />
         <Bar
           dataKey={'value'}
-          name={'Respostas'}
         >
           {
             data.map((item, index) => (

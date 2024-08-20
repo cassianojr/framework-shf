@@ -9,9 +9,6 @@
   "time_window": "Response time window",
   "time_window_unit": "week",
   "amout_of_rounds": "Number of rounds",
-  "amout_of_rounds_unit": "round",
-  "current_round": "Current Round",
-  "current_round_unit": "round",
   "survey_status_label": "Survey status",
   "survey_status": {
     "not_started": "Not started",
@@ -29,10 +26,20 @@
     "name_label": "Name",
     "edit_title": "Edit participant"
   },
-  "interpretation": "Interpretation",
-  "consensus": "Consensus",
-  "strong_consensus": "Strong Consensus",
-  "consesnus_not_reached": "Consensus not reached",
+  "filter_btn": "Filter answers",
+  "demographic_results": "Demographic Results",
   "result_tab": "Results",
-  "likert_scale_tab": "Likert Scale"
+  "view_comments": "View comments",
+  "comments_modal_tite": "Comments for",
+  "critical_items": "Critical items",
+  "results_for": "Results for",
+  "percent_of_concordance": "% of concordance",
+  "agree": "Agree",
+  "disagree": "Disagree",
+  "feedback_sentiment_analysis": "Feedback sentiment analysis",
+  "positive": "Positive",
+  "negative": "Negative",
+  "neutral": "Neutral",
+  "end_date": "End date",
+  "edit_survey": "Edit survey"
 }

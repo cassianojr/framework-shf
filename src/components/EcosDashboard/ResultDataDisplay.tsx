@@ -14,7 +14,7 @@ interface ResultDataDisplayProps {
 }
 
 export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisplayProps) {
-  const { t } = useTranslation('ecos_dashboard');
+  const { t } = useTranslation(['ecos_dashboard', 'common']);
 
   const findFirstSelectedIndex = (items: Array<FrameworkItem>) => {
     return items.findIndex(item => item.selected);
@@ -93,7 +93,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
           </List>
         </Container>
         <Modal.Actions handleClose={() => setCommentModalState(false)}>
-          <Button onClick={() => setCommentModalState(false)}>Fechar</Button>
+          <Button onClick={() => setCommentModalState(false)}>{t('common:close_button')}</Button>
         </Modal.Actions>
       </Modal.Root>
     )
@@ -112,7 +112,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
   const DataTabPanel = ({ item, index }: DataTabPanelProps) => {
     return (
       <TabPanel value={tabValue} index={index}>
-        <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>Resultados para {item.names[i18next.language]}</Typography>
+        <Typography component="h2" variant="h6" color="primary" gutterBottom sx={{ textAlign: 'center', width: '100%' }}>{t('results_for')} {item.names[i18next.language]}</Typography>
 
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -124,10 +124,10 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
         </Grid>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <CommentsModal
-            title={`Comentários para ${item.names[i18next.language]}`}
+            title={`${t('comments_modal_tite')} ${item.names[i18next.language]}`}
             frameworkItem={item}
           />
-          <Button variant='contained' onClick={handleViewComments}>Visualizar comentários</Button>
+          <Button variant='contained' onClick={handleViewComments}>{t('view_comments')}</Button>
         </Box>
       </TabPanel>
     );
@@ -154,7 +154,7 @@ export default function ResultDataDisplay({ frameworkComponent }: ResultDataDisp
               />) : null
             ))}
 
-            <Divider>itens críticos</Divider>
+            <Divider>{t('critical_items')}</Divider>
             {frameworkComponent.items.map((item, index) => (
               item.optionalAnswer ? (<Tab
                 key={item.id}

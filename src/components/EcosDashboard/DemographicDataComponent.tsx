@@ -1,12 +1,17 @@
-import { NewAnswers } from '../types/Answer.type'
+import { NewAnswers } from '../../types/Answer.type'
 import { Grid, Paper } from '@mui/material'
 import DemographicDataBar from './DemographicDataBar'
+import { useTranslation } from 'react-i18next';
+import { timeOptions, ecosRoles } from '../../util/DemographicOptions';
+
 
 interface DemographicDataProps {
   answers: NewAnswers[]
 }
 
 export default function DemographicDataComponent({ answers }: DemographicDataProps) {
+
+  const { t } = useTranslation(['ecos_dashboard', 'demographic_data']);
 
   const defaultPaperStyle = {
     p: 1,
@@ -28,19 +33,19 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     answers.forEach((answer) => {
       switch (answer.demographicData.timeOnEcos) {
-        case "Menos de 1 ano":
+        case timeOptions[1]:
           scale.lessThanOneYear += 1;
           break;
-        case "De 1 a 2 anos":
+        case timeOptions[2]:
           scale.oneToTwoYears += 1;
           break;
-        case "De 2 a 5 anos":
+        case timeOptions[3]:
           scale.twoToFiveYears += 1;
           break;
-        case "De 5 a 10 anos":
+        case timeOptions[4]:
           scale.fiveToTenYears += 1;
           break;
-        case "Mais de 10 anos":
+        case timeOptions[5]:
           scale.moreThanTenYears += 1;
           break;
       }
@@ -48,27 +53,27 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     const timeOnEcosData = [
       {
-        name: 'Menos de 1 ano',
+        name: t(timeOptions[1]),
         value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
         color: '#003f5c'
       },
       {
-        name: 'De 1 a 2 anos',
+        name: t(timeOptions[2]),
         value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
         color: '#58508d'
       },
       {
-        name: 'De 2 a 5 anos',
+        name: t(timeOptions[3]),
         value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
         color: '#bc5090'
       },
       {
-        name: 'De 5 a 10 anos',
+        name: t(timeOptions[4]),
         value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Mais de 10 anos',
+        name: t(timeOptions[5]),
         value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
         color: '#ffa600'
       }
@@ -88,19 +93,19 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     answers.forEach((answer) => {
       switch (answer.demographicData.timeOnReqManagment) {
-        case "Menos de 1 ano":
+        case timeOptions[1]:
           scale.lessThanOneYear += 1;
           break;
-        case "De 1 a 2 anos":
+        case timeOptions[2]:
           scale.oneToTwoYears += 1;
           break;
-        case "De 2 a 5 anos":
+        case timeOptions[3]:
           scale.twoToFiveYears += 1;
           break;
-        case "De 5 a 10 anos":
+        case timeOptions[4]:
           scale.fiveToTenYears += 1;
           break;
-        case "Mais de 10 anos":
+        case timeOptions[5]:
           scale.moreThanTenYears += 1;
           break;
       }
@@ -109,27 +114,27 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     const timeOnReqManagmentData = [
       {
-        name: 'Menos de 1 ano',
+        name: t(timeOptions[1]),
         value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
         color: '#488f31'
       },
       {
-        name: 'De 1 a 2 anos',
+        name: t(timeOptions[2]),
         value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
         color: '#88a037'
       },
       {
-        name: 'De 2 a 5 anos',
+        name: t(timeOptions[3]),
         value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
         color: '#c0af4a'
       },
       {
-        name: 'De 5 a 10 anos',
+        name: t(timeOptions[4]),
         value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Mais de 10 anos',
+        name: t(timeOptions[5]),
         value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
         color: '#ef9556'
       }
@@ -159,46 +164,46 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     answers.forEach((answer) => {
       switch (answer.demographicData.role) {
-        case 'Fornecedor comercial independente':
+        case ecosRoles[1]:
           scale.independentCommercialSupplier += 1;
           break;
-        case 'Fabricante de design original':
+        case ecosRoles[2]:
           scale.originalDesignManufacturer += 1;
           break;
-        case 'Provedor de plataforma/SaaS':
+        case ecosRoles[3]:
           scale.platformProvider += 1;
           break;
-        case 'Fornecedor de SaaS':
+        case ecosRoles[4]:
           scale.saasProvider += 1;
           break;
-        case 'Distribuidor de produtos':
+        case ecosRoles[5]:
           scale.productDistributor += 1;
           break;
-        case 'Desenvolvedor de software':
+        case ecosRoles[6]:
           scale.softwareDeveloper += 1;
           break;
-        case 'Designer de software':
+        case ecosRoles[7]:
           scale.softwareDesigner += 1;
           break;
-        case 'Provedor de serviços de aplicativos':
+        case ecosRoles[8]:
           scale.applicationServiceProvider += 1;
           break;
-        case 'Engenheiro de requisitos':
+        case ecosRoles[9]:
           scale.requirementsEngineer += 1;
           break;
-        case 'Integrador':
+        case ecosRoles[10]:
           scale.integrator += 1;
           break;
-        case 'Fornecedor de conteúdo':
+        case ecosRoles[11]:
           scale.contentProvider += 1;
           break;
-        case 'Revendedor de valor agregado':
+        case ecosRoles[12]:
           scale.valueAddedReseller += 1;
           break;
-        case 'Cliente/usuário final':
+        case ecosRoles[13]:
           scale.endUser += 1;
           break;
-        case 'Outro':
+        case ecosRoles[14]:
           scale.other += 1;
           break;
       }
@@ -206,72 +211,72 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     const roleData = [
       {
-        name: 'Fornecedor comercial independente',
+        name: t(ecosRoles[1]),
         value: ((scale.independentCommercialSupplier / answers.length) * 100).toFixed(0),
         color: '#003f5c'
       },
       {
-        name: 'Fabricante de design original',
+        name: t(ecosRoles[2]),
         value: ((scale.originalDesignManufacturer / answers.length) * 100).toFixed(0),
         color: '#58508d'
       },
       {
-        name: 'Provedor de plataforma/SaaS',
+        name: t(ecosRoles[3]),
         value: ((scale.platformProvider / answers.length) * 100).toFixed(0),
         color: '#bc5090'
       },
       {
-        name: 'Fornecedor de SaaS',
+        name: t(ecosRoles[4]),
         value: ((scale.saasProvider / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Distribuidor de produtos',
+        name: t(ecosRoles[5]),
         value: ((scale.productDistributor / answers.length) * 100).toFixed(0),
         color: '#ffa600'
       },
       {
-        name: 'Desenvolvedor de software',
+        name: t(ecosRoles[6]),
         value: ((scale.softwareDeveloper / answers.length) * 100).toFixed(0),
         color: '#488f31'
       },
       {
-        name: 'Designer de software',
+        name: t(ecosRoles[7]),
         value: ((scale.softwareDesigner / answers.length) * 100).toFixed(0),
         color: '#88a037'
       },
       {
-        name: 'Provedor de serviços de aplicativos',
+        name: t(ecosRoles[8]),
         value: ((scale.applicationServiceProvider / answers.length) * 100).toFixed(0),
         color: '#c0af4a'
       },
       {
-        name: 'Engenheiro de requisitos',
+        name: t(ecosRoles[9]),
         value: ((scale.requirementsEngineer / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Integrador',
+        name: t(ecosRoles[10]),
         value: ((scale.integrator / answers.length) * 100).toFixed(0),
         color: '#ef9556'
       },
       {
-        name: 'Fornecedor de conteúdo',
+        name: t(ecosRoles[11]),
         value: ((scale.contentProvider / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Revendedor de valor agregado',
+        name: t(ecosRoles[12]),
         value: ((scale.valueAddedReseller / answers.length) * 100).toFixed(0),
         color: '#ef9556'
       },
       {
-        name: 'Cliente/usuário final',
+        name: t(ecosRoles[13]),
         value: ((scale.endUser / answers.length) * 100).toFixed(0),
         color: '#ff6361'
       },
       {
-        name: 'Outro',
+        name: t(ecosRoles[14]),
         value: ((scale.other / answers.length) * 100).toFixed(0),
         color: '#ef9556'
       }
@@ -286,15 +291,15 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       <Grid container spacing={3}>
 
         <Grid item xs={4} sx={{marginLeft: '-35px'}}>
-          <DemographicDataBar data={timeOnEcos()} title='Tempo que trabalha no ecossistema'/>
+          <DemographicDataBar data={timeOnEcos()} title={t("demographic_data:demographic_questions.time_on_ecos_short")}/>
         </Grid>
 
         <Grid item xs={4}>
           {/* <Typography></Typography> */}
-          <DemographicDataBar data={timeOnReqManagment()} title='Tempo que trabalha com gerência de requisitos'/>
+          <DemographicDataBar data={timeOnReqManagment()} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")}/>
         </Grid>
         <Grid item xs={4}>
-          <DemographicDataBar data={role()} title="Papel no ecossistema"/>
+          <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role")}/>
           {/* <TestBarPlot /> */}
         </Grid> 
 

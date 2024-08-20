@@ -14,6 +14,7 @@ import SurveyOptionalDataComponent from './SurveyOptionalDataComponent';
 import { SurveyViewOnly } from './SurveyViewOnly';
 import ViewAnswersComponent from './ViewAnswersComponent';
 import { SentimentAnalisysService } from '../../services/SentimentAnalysisService';
+import { timeOptions, ecosRoles } from '../../util/DemographicOptions';
 
 
 interface SurveyStepperProps {
@@ -47,33 +48,6 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const [reqTimeError, setReqTimeError] = React.useState(false);
   const [timeOnReqManagmentError, setTimeOnReqManagmentError] = React.useState(false);
   const [roleError, setRoleError] = React.useState(false);
-
-const timeOptions = [
-    'demographic_data:time_options.none',
-    "demographic_data:time_options.less_than_year",
-    "demographic_data:time_options.one_to_two_years",
-    "demographic_data:time_options.two_to_five_years",
-    "demographic_data:time_options.five_to_ten_years",
-    "demographic_data:time_options.more_than_ten_years"
-]
-
-  const ecosRoles = [
-    'demographic_data:roles.none',
-    'demographic_data:roles.independent_commercial_supplier',
-    'demographic_data:roles.original_design_manufacturer',
-    'demographic_data:roles.platform_provider',
-    'demographic_data:roles.saas_provider',
-    'demographic_data:roles.product_distributor',
-    'demographic_data:roles.software_developer',
-    'demographic_data:roles.software_designer',
-    'demographic_data:roles.app_service_provider',
-    'demographic_data:roles.requirements_engineer',
-    'demographic_data:roles.integrator',
-    'demographic_data:roles.content_provider',
-    'demographic_data:roles.aggregated_value_reseller',
-    'demographic_data:roles.end_user',
-    'demographic_data:roles.other'
-  ]
 
   const [demographicData, setDemographicData] = React.useState({timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0]} as DemoagraphicData);
 
@@ -285,7 +259,7 @@ const timeOptions = [
             value={demographicData.timeOnEcos}
             onChange={(_, newValue: string | null) => {
               setReqTimeError(false);
-              setDemographicData({ ...demographicData, timeOnEcos: newValue ?? '' });
+              setDemographicData({ ...demographicData, timeOnEcos: newValue ?? timeOptions[0] });
             }}
             inputValue={timeOnEcosInputValue}
             onInputChange={(_, newInputValue) => {
@@ -305,7 +279,7 @@ const timeOptions = [
             value={demographicData.timeOnReqManagment}
             onChange={(_, newValue: string | null) => {
               setTimeOnReqManagmentError(false);
-              setDemographicData({ ...demographicData, timeOnReqManagment: newValue ?? '' });
+              setDemographicData({ ...demographicData, timeOnReqManagment: newValue ?? timeOptions[0] });
             }}
             inputValue={timeOnReqManagmentInputValue}
             onInputChange={(_, newInputValue) => {
@@ -325,7 +299,7 @@ const timeOptions = [
             value={demographicData.role}
             onChange={(_, newValue: string | null) => {
               setRoleError(false);
-              setDemographicData({ ...demographicData, role: newValue ?? '' });
+              setDemographicData({ ...demographicData, role: newValue ?? ecosRoles[0] });
             }}
             inputValue={roleInputValue}
             onInputChange={(_, newInputValue) => {

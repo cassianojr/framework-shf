@@ -30,13 +30,13 @@ import EcosProjectService from '../services/EcosProjectService';
 import EditEcosProject from '../components/EcosDashboard/EditEcosProject';
 import ResultDataDisplay from '../components/EcosDashboard/ResultDataDisplay';
 import FilterResult, { FilterParams } from '../components/EcosDashboard/FilterResult';
-import DemographicDataComponent from './DemographicDataComponent';
+import DemographicDataComponent from '../components/EcosDashboard/DemographicDataComponent';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function ECOSDashboard() {
 
-  const { t } = useTranslation(['ecos_dashboard', 'ecos_survey']);
+  const { t } = useTranslation(['ecos_dashboard', 'ecos_survey', 'demographic_data']);
   const navigate = useNavigate();
   const [appLoading, setAppLoading] = React.useState(true);
   const [copySnackBarState, setCopySnackBarState] = React.useState(false);
@@ -254,9 +254,9 @@ export default function ECOSDashboard() {
   function filterAnswers(params: FilterParams): void {
 
     const filteredAnswers = fixedAnswers.filter((answer) => {
-      if (params.timeOnEcos !== 'Selecione' && answer.demographicData.timeOnEcos !== params.timeOnEcos) return false;
-      if (params.timeOnReqManagment !== 'Selecione' && answer.demographicData.timeOnReqManagment !== params.timeOnReqManagment) return false;
-      if (params.role !== 'Selecione' && answer.demographicData.role !== params.role) return false;
+      if (params.timeOnEcos !== 'demographic_data:time_options.none' && answer.demographicData.timeOnEcos !== params.timeOnEcos) return false;
+      if (params.timeOnReqManagment !== 'demographic_data:time_options.none' && answer.demographicData.timeOnReqManagment !== params.timeOnReqManagment) return false;
+      if (params.role !== 'demographic_data:roles.none' && answer.demographicData.role !== params.role) return false;
 
       return true;
     });
@@ -328,7 +328,7 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Data de término</Title>
+                      <Title>{t('end_date')}</Title>
                       <Button variant='contained' color='info' sx={{ cursor: 'default', p: 1.4 }}>{(!loading) ? new Date(ecos.end_date).toLocaleDateString() : ''}</Button>
                     </Paper>
                   </Grid>
@@ -346,8 +346,8 @@ export default function ECOSDashboard() {
                     <Paper
                       sx={defaultPaperStyle}
                     >
-                      <Title>Editar pesquisa</Title>
-                      <Button variant='contained' disabled={ecos.status !== 'not-started'} onClick={() => setEditEcosProjectModalState(true)} color='warning' sx={{ p: 1.4 }} startIcon={<EditIcon />}> Editar Pesquisa</Button>
+                      <Title>{t('edit_survey')}</Title>
+                      <Button variant='contained' disabled={ecos.status !== 'not-started'} onClick={() => setEditEcosProjectModalState(true)} color='warning' sx={{ p: 1.4 }} startIcon={<EditIcon />}>{t('edit_survey')}</Button>
                     </Paper>
                   </Grid>
 
@@ -413,9 +413,8 @@ export default function ECOSDashboard() {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                         expandIcon={<ExpandMoreIcon />}
-
                       >
-                        <Typography>Resultados Demográficos</Typography>
+                        <Typography>{t('demographic_results')}</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <DemographicDataComponent answers={answers} />
@@ -429,7 +428,7 @@ export default function ECOSDashboard() {
                           id="panel1a-header"
                           expandIcon={<ExpandMoreIcon />}
                         >
-                          <Typography>Fatores sociais e humanos</Typography>
+                          <Typography>{socialHumanFactors.labels[i18next.language]}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                           <ResultDataDisplay frameworkComponent={socialHumanFactors} />
@@ -443,7 +442,7 @@ export default function ECOSDashboard() {
                           id="panel1a-header"
                           expandIcon={<ExpandMoreIcon />}
                         >
-                          <Typography>Barreiras para a melhoria</Typography>
+                          <Typography>{barriersToImproving.labels[i18next.language]}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                           <ResultDataDisplay frameworkComponent={barriersToImproving} />
@@ -458,7 +457,7 @@ export default function ECOSDashboard() {
                           id="panel1a-header"
                           expandIcon={<ExpandMoreIcon />}
                         >
-                          <Typography>Estratégias para a melhoria</Typography>
+                          <Typography>{strategies.labels[i18next.language]}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                           <ResultDataDisplay frameworkComponent={strategies} />
