@@ -7,11 +7,6 @@
   "start_survey": "Iniciar pesquisa",
   "survey_started": "Pesquisa iniciada",
   "time_window": "Tempo para a resposta",
-  "time_window_unit": "semana",
-  "amout_of_rounds": "Quantidade de rodadas",
-  "amout_of_rounds_unit": "rodada",
-  "current_round": "Rodada atual",
-  "current_round_unit": "rodada",
   "survey_status_label": "Status da pesquisa",
   "survey_status": {
     "not_started": "Não iniciada",
@@ -29,10 +24,20 @@
     "name_label": "Nome",
     "edit_title": "Editar participante"
   },
-  "interpretation": "Interpretação",
-  "consensus": "Consenso",
-  "strong_consensus": "Consenso forte",
-  "consesnus_not_reached": "Consenso não alcançado",
+  "filter_btn": "Filtrar respostas",
+  "demographic_results": "Resultados demográficos",
   "result_tab": "Resultados",
-  "likert_scale_tab": "Escala likert"
+  "view_comments": "Visualizar comentários",
+  "comments_modal_tite": "Comentários para",
+  "critical_items": "Itens críticos",
+  "results_for": "Resultados para",
+  "percent_of_concordance": "% de concordância",
+  "agree": "Concordo",
+  "disagree": "Discordo",
+  "feedback_sentiment_analysis": "Análise de sentimento do feedback",
+  "positive": "Positivo",
+  "negative": "Negativo",
+  "neutral": "Neutro",
+  "end_date": "Data de término",
+  "edit_survey": "Editar pesquisa"
 }

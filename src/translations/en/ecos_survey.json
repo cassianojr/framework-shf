@@ -18,6 +18,8 @@
     "p3": "By clicking “Agree”, you will agree to participate in the survey. If you have any questions, don't hesitate to contact the organization responsible for the survey.",
     "p4": "Do you agree to participate in the survey?"
   },
+  "demographic_data_label": "Please, fill in the following demographic data before starting the survey:",
+  "demographic_data_veiw_label": "Demographic data",
   "fsh_affirmative": "In the {{ecos_name}} ecosystem in which you operate, the central organization pointed out some social and human factors, listed below, that may be influencing requirements management. For each factor, indicate whether you agree or disagree:",
   "fsh_optional": "Listed below are some social and human factors that can influence requirements management in software ecosystems. If you consider any of these factors to be critical in the {{ecos_name}} ecosystem, please select them by clicking on each one.",
   "cc_affirmative": "The contextual characteristics of requirements management in software ecosystems listed below have an impact on the importance of considering social and human factors.",

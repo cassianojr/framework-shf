@@ -1,17 +1,20 @@
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts'
 import { FrameworkItem } from '../../types/Framework.type'
+import { useTranslation } from 'react-i18next';
 
 interface ResultChartProps {
   frameworkItem: FrameworkItem,
 }
 export default function ResultChart({ frameworkItem }: ResultChartProps) {
 
+  const {t} = useTranslation('ecos_dashboard');
+
   const agree = (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.agree ?? 0 : frameworkItem.answer?.agree ?? 0;
   const disagree = (frameworkItem.optionalAnswer) ? frameworkItem.optionalAnswer.disagree ?? 0 : frameworkItem.answer?.disagree ?? 0;
   
   const data = [
     {
-      name: '% de concordância',
+      name: t('percent_of_concordance'),
       concordo: (agree/(agree+disagree)*100).toFixed(1),
       discordo: (disagree/(agree+disagree)*100).toFixed(1)
     }
@@ -36,8 +39,8 @@ export default function ResultChart({ frameworkItem }: ResultChartProps) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="concordo" fill="green" />
-        <Bar dataKey="discordo" fill="#f02213" />
+        <Bar dataKey="concordo" fill="green" name={t('agree')} />
+        <Bar dataKey="discordo" fill="#f02213" name={t('disagree')}/>
       </BarChart>
     </>
   )
