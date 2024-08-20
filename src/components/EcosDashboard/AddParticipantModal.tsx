@@ -47,8 +47,6 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
 
     const newEcos = { ...ecos, participants: [...participants, newParticipant] } as Ecosystem;
 
-    console.log(newEcos);
-    
     setEcos(newEcos);
     EcosystemService.updateEcosystem(newEcos);
 

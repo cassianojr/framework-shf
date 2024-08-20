@@ -465,12 +465,6 @@ export default function ECOSDashboard() {
                         </AccordionDetails>
                       </Accordion>
                     }
-
-
-                    {/* {!answers ? <></> : <DemographicDataComponent answers={answers} />} */}
-                    {/* {!socialHumanFactors ? <></> : <ResultDataDisplay frameworkComponent={socialHumanFactors} />} */}
-                    {/* {!barriersToImproving ? <></> : <ResultDataDisplay frameworkComponent={barriersToImproving} />} */}
-                    {/* {!strategies ? <></> : <ResultDataDisplay frameworkComponent={strategies} />} */}
                   </div>
                 </Grid>
               }

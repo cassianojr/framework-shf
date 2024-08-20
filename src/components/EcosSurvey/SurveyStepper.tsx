@@ -36,7 +36,7 @@ interface SurveyStepperProps {
 }
 
 export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, setFeedBackSnackBar, setFeedBackSnackbarState }: SurveyStepperProps) {
-  const { t } = useTranslation('ecos_survey');
+  const { t } = useTranslation(['ecos_survey', 'demographic_data']);
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -48,32 +48,31 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const [timeOnReqManagmentError, setTimeOnReqManagmentError] = React.useState(false);
   const [roleError, setRoleError] = React.useState(false);
 
-  //TODO create translations
-  const timeOptions = [
-    'Selecione',
-    "Menos de 1 ano",
-    "De 1 a 2 anos",
-    "De 2 a 5 anos",
-    "De 5 a 10 anos",
-    "Mais de 10 anos"
-  ]
+const timeOptions = [
+    'demographic_data:time_options.none',
+    "demographic_data:time_options.less_than_year",
+    "demographic_data:time_options.one_to_two_years",
+    "demographic_data:time_options.two_to_five_years",
+    "demographic_data:time_options.five_to_ten_years",
+    "demographic_data:time_options.more_than_ten_years"
+]
 
   const ecosRoles = [
-    'Selecione',
-    'Fornecedor comercial independente',
-    'Fabricante de design original',
-    'Provedor de plataforma/SaaS',
-    'Fornecedor de SaaS',
-    'Distribuidor de produtos',
-    'Desenvolvedor de software',
-    'Designer de software',
-    'Provedor de serviços de aplicativos',
-    'Engenheiro de requisitos',
-    'Integrador',
-    'Fornecedor de conteúdo',
-    'Revendedor de valor agregado',
-    'Cliente/usuário final',
-    'Outro'
+    'demographic_data:roles.none',
+    'demographic_data:roles.independent_commercial_supplier',
+    'demographic_data:roles.original_design_manufacturer',
+    'demographic_data:roles.platform_provider',
+    'demographic_data:roles.saas_provider',
+    'demographic_data:roles.product_distributor',
+    'demographic_data:roles.software_developer',
+    'demographic_data:roles.software_designer',
+    'demographic_data:roles.app_service_provider',
+    'demographic_data:roles.requirements_engineer',
+    'demographic_data:roles.integrator',
+    'demographic_data:roles.content_provider',
+    'demographic_data:roles.aggregated_value_reseller',
+    'demographic_data:roles.end_user',
+    'demographic_data:roles.other'
   ]
 
   const [demographicData, setDemographicData] = React.useState({timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0]} as DemoagraphicData);
@@ -292,7 +291,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setTimeOnEcosInputValue(newInputValue);
             }}
-            renderInput={(params) => <TextField {...params} label={'Quanto tempo trabalha no ecossistema de software?'} InputLabelProps={{shrink: true}} error={reqTimeError} />}
+            getOptionLabel={(option) => t(option)}    
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_on_ecos')} InputLabelProps={{shrink: true}} error={reqTimeError} />}
           />
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -311,8 +311,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setTimeOnReqManagmentInputValue(newInputValue);
             }}
-            
-            renderInput={(params) => <TextField {...params} label={'Quanto tempo trabalha com gerência de requisitos?'} InputLabelProps={{shrink: true}} error={timeOnReqManagmentError}/>}
+            getOptionLabel={(option) => t(option)}    
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_with_requirements_mngm')} InputLabelProps={{shrink: true}} error={timeOnReqManagmentError}/>}
           />
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -331,7 +331,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setRoleInputValue(newInputValue);
             }}
-            renderInput={(params) => <TextField {...params} label={'Qual o seu papel no ecossistema?'} InputLabelProps={{shrink: true}} error={roleError} />}
+            getOptionLabel={(option) => t(option)}    
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.role')} InputLabelProps={{shrink: true}} error={roleError} />}
           />
 
         </Grid>

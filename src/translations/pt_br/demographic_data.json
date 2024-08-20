@@ -1,0 +1,32 @@
+{
+  "time_options":{
+    "none": "Selecione",
+    "less_than_year": "Menos de 1 ano",
+    "one_to_two_years": "De 1 a 2 anos",
+    "two_to_five_years": "De 2 a 5 anos",
+    "five_to_ten_years": "De 5 a 10 anos",
+    "more_than_ten_years": "Mais de 10 anos"
+  },
+  "roles":{
+      "none": "Selecione",
+      "independent_commercial_supplier":"Fornecedor comercial independente",
+      "original_design_manufacturer":"Fabricante de design original",
+      "platform_provider":"Provedor de plataforma/SaaS",
+      "saas_provider":"Fornecedor de SaaS",
+      "product_distributor":"Distribuidor de produtos",
+      "software_developer":"Desenvolvedor de software",
+      "software_designer":"Designer de software",
+      "app_service_provider":"Provedor de serviços de aplicativos",
+      "requirements_engineer":"Engenheiro de requisitos",
+      "intagrator":"Integrador",
+      "content_provider":"Fornecedor de conteúdo",
+      "aggregated_value_reseller":"Revendedor de valor agregado",
+      "end_user":"Cliente/usuário final",
+      "other":"Outro"
+  },
+  "demographic_questions":{
+    "time_on_ecos": "Quanto tempo trabalha no ecossistema de software?",
+    "time_with_requirements_mngm": "Quanto tempo trabalha com gerência de requisitos?",
+    "role": "Qual é o seu papel no ecossistema?"
+  }
+}

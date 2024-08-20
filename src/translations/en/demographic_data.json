@@ -1,0 +1,32 @@
+{
+  "time_options": {
+    "none": "Select",
+    "less_than_year": "Less than 1 year",
+    "one_to_two_years": "1 to 2 years",
+    "two_to_five_years": "2 to 5 years",
+    "five_to_ten_years": "5 to 10 years",
+    "more_than_ten_years": "More than 10 years"
+  },
+  "roles": {
+    "none": "Select",
+    "independent_commercial_supplier": "Independent commercial supplier",
+    "original_design_manufacturer": "Original design manufacturer",
+    "platform_provider": "Platform/SaaS provider",
+    "saas_provider": "SaaS provider",
+    "product_distributor": "Product distributor",
+    "software_developer": "Software developer",
+    "software_designer": "Software designer",
+    "app_service_provider": "Application service provider",
+    "requirements_engineer": "Requirements engineer",
+    "integrator": "Integrator",
+    "content_provider": "Content provider",
+    "aggregated_value_reseller": "Value-added reseller",
+    "end_user": "Customer/end user",
+    "other": "Other"
+  },
+  "demographic_questions": {
+    "time_on_ecos": "How long have you been working in the software ecosystem?",
+    "time_with_requirements_mngm": "How long have you been working with requirements management?",
+    "role": "What is your role in the ecosystem?"
+  }
+}
