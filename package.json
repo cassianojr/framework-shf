@@ -20,7 +20,7 @@
     "@mui/x-date-pickers": "^7.2.0",
     "@types/uuid": "^9.0.8",
     "dayjs": "^1.11.10",
-    "firebase": "^9.23.0",
+    "firebase": "^10.13.0",
     "i18next": "^23.5.1",
     "react": "^18.2.0",
     "react-archer": "^4.2.3",
