@@ -9,7 +9,7 @@ import DashboardAppbar from '../components/Dashboard/DashboardAppbar';
 import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext, AuthenticationContextType } from '../context/authenticationContext';
 import React from "react";
-import { Button, Link, Stack } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from "react-i18next";
 import NewProjectModal from '../components/Dashboard/NewProjectModal';
@@ -18,6 +18,8 @@ import { Framework } from '../types/Framework.type';
 import { EcosProject } from '../types/EcosProject.type';
 import EcosProjectService from '../services/EcosProjectService';
 import i18next from 'i18next';
+import EcosCard from '../components/Dashboard/EcosCard';
+import { QuestionService } from '../services/QuestionService';
 
 const btnStyle = {
   p: 1.5
@@ -43,14 +45,31 @@ export default function Dashboard() {
     if (signed) setAppLoading(false);
 
     EcosProjectService.getEcosProjects(user.uid, (ecos) => {
-      setUserEcos(ecos);
+      
+      const promises = ecos.map(async (ecos) => {
+
+        if(ecos.id === undefined) return;
+
+        try{
+          const answers = await QuestionService.getEcosAnswers(ecos.id);
+          
+          ecos.answers = answers.length;
+        }catch(e){
+          ecos.answers = 0;
+        }
+      });
+      
+      Promise.all(promises).then(() => {
+        setUserEcos(ecos);
+      });
+      
     });
 
     const sortFrameworkItems = (data: Framework[]) => {
       data.forEach((item) => {
         item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])));
       })
-      
+
       return data;
     }
 
@@ -60,7 +79,7 @@ export default function Dashboard() {
       if (localStorageData) {
         if (frameworkData.length === 0) {
           const sortedData = sortFrameworkItems(JSON.parse(localStorageData) as Framework[]);
-          
+
           setFrameworkData(sortedData)
         }
         return;
@@ -111,15 +130,24 @@ export default function Dashboard() {
                     height: '75vh',
                   }}
                 >
-                  <Stack direction="row" spacing={2}>
+                  <Grid container spacing={3} justifyContent={'space-between'}>
+                    <Grid item xs sx={{ display: 'flex' }} >
+                      <Typography component="h1" sx={{ fontSize: '1.5rem' }} variant="h6" color="primary" gutterBottom>{t('my_searchs')}</Typography>
+                    </Grid>
+                    <Grid item xs sx={{ display: 'flex' }} justifyContent={'flex-end'}>
+                      <Button variant='contained' onClick={() => setAddEcosModalState(true)} sx={btnStyle}><AddIcon /> {t('add_ecos_btn')}</Button>
+                    </Grid>
+                  </Grid>
+                  <Divider sx={{ mt: 2 }} />
+                  <Grid container spacing={2} alignItems={'stretch'} mt={1}>
                     {userEcos.map((ecos) => {
-                      return (
-                        <Button component={Link} variant='outlined' key={ecos.id} href={`/ecos-dashboard/${ecos.id}`} sx={btnStyle}>{ecos.name}</Button>
+                      return ((ecos.id)  &&
+                        <Grid key={ecos.id} item xs sx={{ display: 'flex' }}>
+                          <EcosCard ecosName={ecos.name} ecosStatus={ecos.status} ecosId={ecos.id} ecosAnswers={ecos.answers} />
+                        </Grid>
                       );
                     })}
-
-                    <Button variant='contained' onClick={() => setAddEcosModalState(true)} sx={btnStyle}><AddIcon /> {t('add_ecos_btn')}</Button>
-                  </Stack>
+                  </Grid>
                 </Paper>
               </Grid>
             </Grid>

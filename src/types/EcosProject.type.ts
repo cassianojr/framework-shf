@@ -7,7 +7,8 @@ interface EcosProject {
   participants: Participant[],
   admin_id: string,
   mandatory_items: MandatoryItems,
-  status: 'not-started' | 'waiting-for-answers' | 'in-analysis' | 'finished' 
+  status: 'not-started' | 'waiting-for-answers' | 'in-analysis' | 'finished',
+  answers?:number
 }
 interface MandatoryItems {
   shf: FrameworkItem[],

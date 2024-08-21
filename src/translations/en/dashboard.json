@@ -1,5 +1,7 @@
 {
   "add_ecos_btn": "New survey",
+  "my_searchs": "My surveys",
+  "view_search": "View",
   "modal_text": {
     "cancel_btn": "Cancel",
     "label_name": "Organization name",
