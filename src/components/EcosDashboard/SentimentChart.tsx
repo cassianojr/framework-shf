@@ -3,6 +3,8 @@ import { Box } from '@mui/system';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { FrameworkItem } from '../../types/Framework.type';
 import { useTranslation } from 'react-i18next';
+import HelpIcon from '@mui/icons-material/Help';
+import { Tooltip as TooltipMui } from '@mui/material';
 
 interface SentiMentChartProps {
   frameworkItem: FrameworkItem,
@@ -46,7 +48,12 @@ export default function SentimentChart({ frameworkItem }: SentiMentChartProps) {
         </Pie>
         <Tooltip />
       </PieChart>
-      <Typography variant="h6" align="center">{t('feedback_sentiment_analysis')}</Typography>
+      <Box display="flex" justifyContent="center">
+        <Typography variant="h6" align="center">{t('feedback_sentiment_analysis')}</Typography>
+        <TooltipMui title={t('feedback_sentiment_analysis_tooltip')} arrow>
+          <HelpIcon color='warning' />
+        </TooltipMui>
+      </Box>
     </Box>
   )
 }
