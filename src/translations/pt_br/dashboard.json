@@ -22,6 +22,7 @@
     "add_participants_tite": "Adicionar participantes",
     "email_label": "E-mail do participante",
     "add_participant_btn": "Adicionar",
-    "participants_list_title": "Lista de participantes"
+    "participants_list_title": "Lista de participantes",
+    "edit_survey": "Editar pesquisa"
   }
 }

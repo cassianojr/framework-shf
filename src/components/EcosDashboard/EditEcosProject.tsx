@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from '../Modal'
-import { t } from 'i18next'
+import i18next from 'i18next'
 import { Framework, FrameworkItem } from '../../types/Framework.type'
 import { EcosProject } from '../../types/EcosProject.type'
 import { Button, Divider, Grid, MobileStepper, TextField, Typography } from '@mui/material'
@@ -12,6 +12,7 @@ import { Box, Container } from '@mui/system'
 import Title from '../Dashboard/Title'
 import FrameworkItemListSelect from '../Dashboard/FrameworkItemListSelect'
 import EcosProjectService from '../../services/EcosProjectService'
+import { useTranslation } from 'react-i18next'
 
 interface EditEcosProjectProps {
   state: boolean,
@@ -26,10 +27,10 @@ interface EditEcosProjectProps {
 export default function EditEcosProject(props: EditEcosProjectProps) {
   const { state, setState, frameworkData } = props;
 
-  const [shfItems, setShfItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'social-human-factors')[0].items);
-  const [ccItems, setCcItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'contextual-characteristics')[0].items);
-  const [barriersItems, setBarriersItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'barriers-to-improving')[0].items);
-  const [strategiesItems, setStrategiesItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'strategies')[0].items);
+  const [shfItems, setShfItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'social-human-factors')[0].items.sort((a,b) => a.names[i18next.language] > b.names[i18next.language] ? 1 : -1));
+  const [ccItems, setCcItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'contextual-characteristics')[0].items.sort((a,b) => a.names[i18next.language] > b.names[i18next.language] ? 1 : -1));
+  const [barriersItems, setBarriersItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'barriers-to-improving')[0].items.sort((a,b) => a.names[i18next.language] > b.names[i18next.language] ? 1 : -1));
+  const [strategiesItems, setStrategiesItems] = React.useState<FrameworkItem[]>(frameworkData.filter((item) => item.id === 'strategies')[0].items.sort((a,b) => a.names[i18next.language] > b.names[i18next.language] ? 1 : -1));
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -38,6 +39,8 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
 
   const [orgNameError, setOrgNameError] = React.useState(false);
   const [endDateError, setEndDateError] = React.useState(false);
+
+  const { t } = useTranslation(['dashboard', 'demographic_data', 'common']);
 
   const steps = [
     <>
@@ -57,20 +60,21 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
         </Grid>
 
         <Grid item xs={12} sx={{ marginTop: '1%', marginBottom: '2%' }}>
-          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>Selecione a data em que a pesquisa irá terminar:</Typography>
+          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>{t('modal_text.end_date_text')}</Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              label="Data de término da pesquisa*"
+              label={t('modal_text.end_date_label')}
               sx={{ width: '100%' }}
               value={endDate}
               onChange={(newValue) => setEndDate(newValue)}
               format='DD/MM/YYYY'
+              minDate={dayjs()}
               slotProps={{
                 textField: {
                   fullWidth: true,
                   variant: 'outlined',
                   error: endDateError,
-                  helperText: endDateError ? 'Por favor, selecione a data de término da pesquisa' : null
+                  helperText: endDateError ? t('modal_text.end_date_error') : null
                 }
               }}
             />
@@ -79,20 +83,20 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
       </Grid>
     </>,
     <>
-      <Title>Por favor, selecione os fatores sociais e humanos que serão obrigatórios na pesquisa:</Title>
+      <Title>{t('modal_text.shf_items')}</Title>
       <FrameworkItemListSelect items={shfItems} setItems={setShfItems} />
     </>,
     <>
-      <Title>Por favor, selecione as características contextuais da sua organização:</Title>
+      <Title>{t('modal_text.cc_items')}</Title>
 
       <FrameworkItemListSelect items={ccItems} setItems={setCcItems} />
     </>,
     <>
-      <Title>Por favor, selecione as barreiras para melhoria que serão obrigatórias na pesquisa:</Title>
+      <Title>{t('modal_text.barriers_items')}</Title>
       <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems} />
     </>,
     <>
-      <Title>Por favor, selecione as estratégias que serão obrigatórias na pesquisa:</Title>
+      <Title>{t('modal_text.strategies_items')}</Title>
       <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems} />
     </>
   ];
@@ -161,7 +165,7 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
   }
 
   return (
-    <Modal.Root state={state} id="addNewEcos" title={'Editar pesquisa'} handleClose={() => setState(false)}>
+    <Modal.Root state={state} id="addNewEcos" title={t('modal_text.edit_survey')} handleClose={() => setState(false)}>
       <Container>
         <Box sx={{ mt: '2rem' }}>
           {steps[activeStep]}
@@ -175,12 +179,12 @@ export default function EditEcosProject(props: EditEcosProjectProps) {
           activeStep={activeStep}
           nextButton={
             <Button size="small" onClick={handleNextBtn}>
-              {(activeStep === steps.length - 1) ? 'Salvar' : "Avançar"}
+              {(activeStep === steps.length - 1) ?  t('common:save_btn') : t('common:next_btn')}
             </Button>
           }
           backButton={
             <Button size="small" onClick={handleBackBtn}>
-              {(activeStep === 0) ? 'Cancelar' : "Voltar"}
+              {(activeStep === 0) ? t('common:cancel_btn') :  t('common:back_button')}
             </Button>
           }
         />
