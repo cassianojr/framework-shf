@@ -63,7 +63,7 @@ export default function SignIn() {
           {t('survey_instructions:paragraph1')}
         </Modal.Text>
         <Modal.Text>
-          {t('survey_instructions:paragraph2')}
+          {t('survey_instructions:paragraph2')}<Link href={`sign-up?${queryParams}`}>{t('survey_instructions:here')}</Link>{t('survey_instructions:create_account')}
         </Modal.Text>
         <Divider />
         <Modal.Actions handleClose={() => setModalState(false)} />
