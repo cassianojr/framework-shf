@@ -15,6 +15,7 @@ import dashboard_en from './en/dashboard.json';
 import ecos_dashboard_en from './en/ecos_dashboard.json';
 import ecos_survey_en from './en/ecos_survey.json';
 import demogrpahic_data_en from './en/demographic_data.json';
+import survey_instructions_en from './en/survey_instructions.json';
 
 import home_pt_br from './pt_br/home.json';
 import menu_pt_br from './pt_br/menu.json';
@@ -31,6 +32,7 @@ import dashboard_pt_br from './pt_br/dashboard.json';
 import ecos_dashboard_pt_br from './pt_br/ecos_dashboard.json';
 import ecos_survey_pt_br from './pt_br/ecos_survey.json';
 import demogrpahic_data_pt_br from './pt_br/demographic_data.json';
+import survey_instructions_pt_br from './pt_br/survey_instructions.json';
 
 
 const navigatorLanguage = navigator.language.toLocaleLowerCase().replace('-', '_');
@@ -54,6 +56,7 @@ i18next.init({
       ecos_dashboard: ecos_dashboard_en,
       ecos_survey: ecos_survey_en,
       demographic_data: demogrpahic_data_en,
+      survey_instructions: survey_instructions_en,
     },
     pt_br: {
       home: home_pt_br,
@@ -71,6 +74,7 @@ i18next.init({
       ecos_dashboard: ecos_dashboard_pt_br,
       ecos_survey: ecos_survey_pt_br,
       demographic_data: demogrpahic_data_pt_br,
+      survey_instructions: survey_instructions_pt_br,
     },
   },
 });
