@@ -102,7 +102,7 @@ export default function Dashboard() {
   return (
     !appLoading &&
     <>
-      <NewProjectModal frameworkData={frameworkData} user={user} setState={setAddEcosModalState} state={addEcosModalState} />
+      {frameworkData.length!==0&&<NewProjectModal frameworkData={frameworkData} user={user} setState={setAddEcosModalState} state={addEcosModalState} />}
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppbar displayName={user.displayName} handleSignOut={signOutFromApp} photoURL={user.photoURL} />
