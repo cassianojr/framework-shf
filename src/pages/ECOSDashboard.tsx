@@ -213,6 +213,8 @@ export default function ECOSDashboard() {
           processFrameworkData().handleFrameworkData(dbAnswers, mandatoryItems);
           setAnswers(dbAnswers);
           setFixedAnswers(dbAnswers);
+        }).catch(() => {
+          setFrameworkDataState(mandatoryItems);
         });
       });
 
@@ -451,7 +453,7 @@ export default function ECOSDashboard() {
                     }
 
                     {!strategies ? <></> :
-                      <Accordion sx={{mb:3}}>
+                      <Accordion sx={{ mb: 3 }}>
                         <AccordionSummary
                           aria-controls="panel1a-content"
                           id="panel1a-header"
