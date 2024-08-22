@@ -39,5 +39,6 @@
   "negative": "Negativo",
   "neutral": "Neutro",
   "end_date": "Data de término",
-  "edit_survey": "Editar pesquisa"
+  "edit_survey": "Editar pesquisa",
+  "feedback_sentiment_analysis_tooltip":"Análise de Sentimento: Este indicador classifica os comentários em três categorias—positivos, negativos e neutros—para entender melhor as emoções e opiniões expressas."
 }
