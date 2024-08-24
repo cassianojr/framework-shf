@@ -13,12 +13,13 @@ interface EcosCardProps {
   ecosName: string,
   ecosStatus: 'not-started' | 'waiting-for-answers' | 'in-analysis' | 'finished',
   ecosAnswers: number | undefined,
-  ecosId: string
+  ecosId: string,
+  endDate: string
 }
 
 
 
-function EcosCard({ ecosName, ecosStatus, ecosAnswers, ecosId }: EcosCardProps) {
+function EcosCard({ ecosName, ecosStatus, ecosAnswers, ecosId, endDate }: EcosCardProps) {
 
   const { t } = useTranslation(['ecos_dashboard', 'dashboard']);
 
@@ -49,6 +50,7 @@ function EcosCard({ ecosName, ecosStatus, ecosAnswers, ecosId }: EcosCardProps) 
             </Badge>
           </Grid>
         </Grid>
+        <Typography sx={{fontSize: 13}} color="text.secondary" gutterBottom>Data de término: {new Date(endDate).toLocaleDateString()}</Typography>
         <Divider />
         <Typography variant="h6" component="div" sx={{ minHeight: '2rem' }} mt={1}>
           {ecosName}

@@ -3,8 +3,8 @@
     "none": "Select",
     "less_than_year": "Less than 1 year",
     "one_to_two_years": "1 to 2 years",
-    "two_to_five_years": "2 to 5 years",
-    "five_to_ten_years": "5 to 10 years",
+    "two_to_five_years": "3 to 5 years",
+    "five_to_ten_years": "6 to 10 years",
     "more_than_ten_years": "More than 10 years"
   },
   "roles": {

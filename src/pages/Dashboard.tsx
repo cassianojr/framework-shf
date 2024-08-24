@@ -143,7 +143,7 @@ export default function Dashboard() {
                     {userEcos.map((ecos) => {
                       return ((ecos.id)  &&
                         <Grid key={ecos.id} item xs sx={{ display: 'flex' }}>
-                          <EcosCard ecosName={ecos.name} ecosStatus={ecos.status} ecosId={ecos.id} ecosAnswers={ecos.answers} />
+                          <EcosCard ecosName={ecos.name} ecosStatus={ecos.status} ecosId={ecos.id} ecosAnswers={ecos.answers} endDate={ecos.end_date}/>
                         </Grid>
                       );
                     })}
