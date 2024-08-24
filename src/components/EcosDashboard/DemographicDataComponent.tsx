@@ -55,27 +55,32 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       {
         name: t(timeOptions[1]),
         value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
-        color: '#003f5c'
+        color: '#003f5c',
+        rawValue: scale.lessThanOneYear
       },
       {
         name: t(timeOptions[2]),
         value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
-        color: '#58508d'
+        color: '#58508d',
+        rawValue: scale.oneToTwoYears
       },
       {
         name: t(timeOptions[3]),
         value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
-        color: '#bc5090'
+        color: '#bc5090',
+        rawValue: scale.twoToFiveYears
       },
       {
         name: t(timeOptions[4]),
         value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.fiveToTenYears
       },
       {
         name: t(timeOptions[5]),
         value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
-        color: '#ffa600'
+        color: '#ffa600',
+        rawValue: scale.moreThanTenYears
       }
     ]
 
@@ -116,27 +121,32 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       {
         name: t(timeOptions[1]),
         value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
-        color: '#488f31'
+        color: '#488f31',
+        rawValue: scale.lessThanOneYear
       },
       {
         name: t(timeOptions[2]),
         value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
-        color: '#88a037'
+        color: '#88a037',
+        rawValue: scale.oneToTwoYears
       },
       {
         name: t(timeOptions[3]),
         value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
-        color: '#c0af4a'
+        color: '#c0af4a',
+        rawValue: scale.twoToFiveYears
       },
       {
         name: t(timeOptions[4]),
         value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.fiveToTenYears
       },
       {
         name: t(timeOptions[5]),
         value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
-        color: '#ef9556'
+        color: '#ef9556',
+        rawValue: scale.moreThanTenYears
       }
     ]
 
@@ -213,72 +223,86 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       {
         name: t(ecosRoles[1]),
         value: ((scale.independentCommercialSupplier / answers.length) * 100).toFixed(0),
-        color: '#003f5c'
+        color: '#003f5c',
+        rawValue: scale.independentCommercialSupplier
       },
       {
         name: t(ecosRoles[2]),
         value: ((scale.originalDesignManufacturer / answers.length) * 100).toFixed(0),
-        color: '#58508d'
+        color: '#58508d',
+        rawValue: scale.originalDesignManufacturer
       },
       {
         name: t(ecosRoles[3]),
         value: ((scale.platformProvider / answers.length) * 100).toFixed(0),
-        color: '#bc5090'
+        color: '#bc5090',
+        rawValue: scale.platformProvider
       },
       {
         name: t(ecosRoles[4]),
         value: ((scale.saasProvider / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.saasProvider
       },
       {
         name: t(ecosRoles[5]),
         value: ((scale.productDistributor / answers.length) * 100).toFixed(0),
-        color: '#ffa600'
+        color: '#ffa600',
+        rawValue: scale.productDistributor
       },
       {
         name: t(ecosRoles[6]),
         value: ((scale.softwareDeveloper / answers.length) * 100).toFixed(0),
-        color: '#488f31'
+        color: '#488f31',
+        rawValue: scale.softwareDeveloper
       },
       {
         name: t(ecosRoles[7]),
         value: ((scale.softwareDesigner / answers.length) * 100).toFixed(0),
-        color: '#88a037'
+        color: '#88a037',
+        rawValue: scale.softwareDesigner
       },
       {
         name: t(ecosRoles[8]),
         value: ((scale.applicationServiceProvider / answers.length) * 100).toFixed(0),
-        color: '#c0af4a'
+        color: '#c0af4a',
+        rawValue: scale.applicationServiceProvider
       },
       {
         name: t(ecosRoles[9]),
         value: ((scale.requirementsEngineer / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.requirementsEngineer
       },
       {
         name: t(ecosRoles[10]),
         value: ((scale.integrator / answers.length) * 100).toFixed(0),
-        color: '#ef9556'
+        color: '#ef9556',
+        rawValue: scale.integrator
       },
       {
         name: t(ecosRoles[11]),
         value: ((scale.contentProvider / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.contentProvider
       },
       {
         name: t(ecosRoles[12]),
         value: ((scale.valueAddedReseller / answers.length) * 100).toFixed(0),
-        color: '#ef9556'
+        color: '#ef9556',
+        rawValue: scale.valueAddedReseller
       },
       {
         name: t(ecosRoles[13]),
         value: ((scale.endUser / answers.length) * 100).toFixed(0),
-        color: '#ff6361'
+        color: '#ff6361',
+        rawValue: scale.endUser
       },
       {
         name: t(ecosRoles[14]),
         value: ((scale.other / answers.length) * 100).toFixed(0),
-        color: '#ef9556'
+        color: '#ef9556',
+        rawValue: scale.other
       }
     ]
 
@@ -290,18 +314,18 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
     <Paper sx={defaultPaperStyle}>
       <Grid container spacing={3}>
 
-        <Grid item xs={4} sx={{marginLeft: '-35px'}}>
-          <DemographicDataBar data={timeOnEcos()} title={t("demographic_data:demographic_questions.time_on_ecos_short")}/>
+        <Grid item xs={4} sx={{ marginLeft: '-35px' }}>
+          <DemographicDataBar data={timeOnEcos()} title={t("demographic_data:demographic_questions.time_on_ecos_short")} />
         </Grid>
 
         <Grid item xs={4}>
           {/* <Typography></Typography> */}
-          <DemographicDataBar data={timeOnReqManagment()} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")}/>
+          <DemographicDataBar data={timeOnReqManagment()} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")} />
         </Grid>
         <Grid item xs={4}>
-          <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role")}/>
+          <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role")} />
           {/* <TestBarPlot /> */}
-        </Grid> 
+        </Grid>
 
       </Grid>
     </Paper>

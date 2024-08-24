@@ -8,12 +8,31 @@ interface GraphicProps {
 interface GraphicData {
   name: string,
   value: string,
-  color: string
+  color: string,
+  rawValue: number
 }
 
 
-
 export default function DemographicDataBar({ data, title }: GraphicProps) {
+
+  interface CustomLabelProps {
+    x: number,
+    y: number,
+    width: number,
+    index: number
+  }
+  const customLabel = (props: CustomLabelProps) => {
+    const { x, y, width, index } = props;
+    const rawValue = data[index].rawValue;
+    
+    return (
+      <text x={x + width / 2} y={y}  textAnchor="middle" dy={-6}>
+        {`${rawValue}`}
+      </text>
+    );
+  };
+
+
   return (
     <>
       <BarChart
@@ -31,11 +50,15 @@ export default function DemographicDataBar({ data, title }: GraphicProps) {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey='name' tick={false} label={title} />
         <YAxis />
-        <Tooltip formatter={(value)=>{
-          return `${value}%`
-        }} />
+        <Tooltip formatter={(value, _, item)=>{
+          return [`${value}%`, item.payload.name]
+        }}
+        labelFormatter={()=>title}
+        />
         <Bar
           dataKey={'value'}
+          label={customLabel}
+          
         >
           {
             data.map((item, index) => (
