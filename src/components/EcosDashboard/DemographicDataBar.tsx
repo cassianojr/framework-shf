@@ -27,7 +27,7 @@ export default function DemographicDataBar({ data, title }: GraphicProps) {
     
     return (
       <text x={x + width / 2} y={y}  textAnchor="middle" dy={-6}>
-        {`${rawValue}`}
+        {`${rawValue !== 0 ? rawValue : ''}`}
       </text>
     );
   };
