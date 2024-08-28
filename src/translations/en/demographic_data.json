@@ -2,10 +2,12 @@
   "time_options": {
     "none": "Select",
     "less_than_year": "Less than 1 year",
-    "one_to_two_years": "1 to 2 years",
-    "two_to_five_years": "3 to 5 years",
-    "five_to_ten_years": "6 to 10 years",
-    "more_than_ten_years": "More than 10 years"
+    "one_to_three_years": "1 to 3 years",
+    "four_to_six_years": "4 to 6 years",
+    "seven_to_nine_years": "7 to 9 years",
+    "ten_to_twelve_years": "10 to 12 years",
+    "thirteen_to_sixteen_years": "13 to 16 years",
+    "more_than_sixteen_years": "More than 16 years"
   },
   "roles": {
     "none": "Select",

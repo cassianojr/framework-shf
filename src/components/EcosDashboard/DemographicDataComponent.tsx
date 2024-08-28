@@ -1,4 +1,4 @@
-import { NewAnswers } from '../../types/Answer.type'
+import { DemoagraphicData, NewAnswers } from '../../types/Answer.type'
 import { Grid, Paper } from '@mui/material'
 import DemographicDataBar from './DemographicDataBar'
 import { useTranslation } from 'react-i18next';
@@ -22,36 +22,44 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
     mt: 2
   }
 
-  const timeOnEcos = () => {
+  const processTimeData = (key: keyof DemoagraphicData) => {
     const scale = {
       lessThanOneYear: 0,
-      oneToTwoYears: 0,
-      twoToFiveYears: 0,
-      fiveToTenYears: 0,
-      moreThanTenYears: 0
+      oneToThreeYears: 0,
+      fourToSixYears: 0,
+      sevenToNineYears: 0,
+      tenToTwelveYears: 0,
+      thirteenToSixteenYears: 0,
+      moreThanSixteenYears: 0
     }
 
     answers.forEach((answer) => {
-      switch (answer.demographicData.timeOnEcos) {
+      switch (answer.demographicData[key]) {
         case timeOptions[1]:
           scale.lessThanOneYear += 1;
           break;
         case timeOptions[2]:
-          scale.oneToTwoYears += 1;
+          scale.oneToThreeYears += 1;
           break;
         case timeOptions[3]:
-          scale.twoToFiveYears += 1;
+          scale.fourToSixYears += 1;
           break;
         case timeOptions[4]:
-          scale.fiveToTenYears += 1;
+          scale.sevenToNineYears += 1;
           break;
         case timeOptions[5]:
-          scale.moreThanTenYears += 1;
+          scale.tenToTwelveYears += 1;
+          break;
+        case timeOptions[6]:
+          scale.thirteenToSixteenYears += 1;
+          break
+        case timeOptions[7]:
+          scale.moreThanSixteenYears += 1;
           break;
       }
     });
 
-    const timeOnEcosData = [
+    const timeData = [
       {
         name: t(timeOptions[1]),
         value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
@@ -60,97 +68,43 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       },
       {
         name: t(timeOptions[2]),
-        value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
+        value: ((scale.oneToThreeYears / answers.length) * 100).toFixed(0),
         color: '#58508d',
-        rawValue: scale.oneToTwoYears
+        rawValue: scale.oneToThreeYears
       },
       {
         name: t(timeOptions[3]),
-        value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
+        value: ((scale.fourToSixYears / answers.length) * 100).toFixed(0),
         color: '#bc5090',
-        rawValue: scale.twoToFiveYears
+        rawValue: scale.fourToSixYears
       },
       {
         name: t(timeOptions[4]),
-        value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
+        value: ((scale.sevenToNineYears / answers.length) * 100).toFixed(0),
         color: '#ff6361',
-        rawValue: scale.fiveToTenYears
+        rawValue: scale.sevenToNineYears
       },
       {
         name: t(timeOptions[5]),
-        value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
+        value: ((scale.tenToTwelveYears / answers.length) * 100).toFixed(0),
         color: '#ffa600',
-        rawValue: scale.moreThanTenYears
-      }
-    ]
-
-    return timeOnEcosData;
-  }
-
-  const timeOnReqManagment = () => {
-    const scale = {
-      lessThanOneYear: 0,
-      oneToTwoYears: 0,
-      twoToFiveYears: 0,
-      fiveToTenYears: 0,
-      moreThanTenYears: 0
-    }
-
-    answers.forEach((answer) => {
-      switch (answer.demographicData.timeOnReqManagment) {
-        case timeOptions[1]:
-          scale.lessThanOneYear += 1;
-          break;
-        case timeOptions[2]:
-          scale.oneToTwoYears += 1;
-          break;
-        case timeOptions[3]:
-          scale.twoToFiveYears += 1;
-          break;
-        case timeOptions[4]:
-          scale.fiveToTenYears += 1;
-          break;
-        case timeOptions[5]:
-          scale.moreThanTenYears += 1;
-          break;
-      }
-    }
-    );
-
-    const timeOnReqManagmentData = [
+        rawValue: scale.tenToTwelveYears
+      },
       {
-        name: t(timeOptions[1]),
-        value: ((scale.lessThanOneYear / answers.length) * 100).toFixed(0),
+        name: t(timeOptions[6]),
+        value: ((scale.thirteenToSixteenYears / answers.length) * 100).toFixed(0),
         color: '#488f31',
-        rawValue: scale.lessThanOneYear
+        rawValue: scale.thirteenToSixteenYears
       },
       {
-        name: t(timeOptions[2]),
-        value: ((scale.oneToTwoYears / answers.length) * 100).toFixed(0),
+        name: t(timeOptions[7]),
+        value: ((scale.moreThanSixteenYears / answers.length) * 100).toFixed(0),
         color: '#88a037',
-        rawValue: scale.oneToTwoYears
-      },
-      {
-        name: t(timeOptions[3]),
-        value: ((scale.twoToFiveYears / answers.length) * 100).toFixed(0),
-        color: '#c0af4a',
-        rawValue: scale.twoToFiveYears
-      },
-      {
-        name: t(timeOptions[4]),
-        value: ((scale.fiveToTenYears / answers.length) * 100).toFixed(0),
-        color: '#ff6361',
-        rawValue: scale.fiveToTenYears
-      },
-      {
-        name: t(timeOptions[5]),
-        value: ((scale.moreThanTenYears / answers.length) * 100).toFixed(0),
-        color: '#ef9556',
-        rawValue: scale.moreThanTenYears
+        rawValue: scale.moreThanSixteenYears
       }
     ]
 
-    return timeOnReqManagmentData;
+    return timeData;
   }
 
   const role = () => {
@@ -315,16 +269,14 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       <Grid container spacing={3}>
 
         <Grid item xs={4} sx={{ marginLeft: '-35px' }}>
-          <DemographicDataBar data={timeOnEcos()} title={t("demographic_data:demographic_questions.time_on_ecos_short")} />
+          <DemographicDataBar data={processTimeData('timeOnEcos')} title={t("demographic_data:demographic_questions.time_on_ecos_short")} />
         </Grid>
 
         <Grid item xs={4}>
-          {/* <Typography></Typography> */}
-          <DemographicDataBar data={timeOnReqManagment()} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")} />
+          <DemographicDataBar data={processTimeData('timeOnReqManagment')} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")} />
         </Grid>
         <Grid item xs={4}>
           <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role")} />
-          {/* <TestBarPlot /> */}
         </Grid>
 
       </Grid>
