@@ -1,10 +1,12 @@
 export const timeOptions = [
   'demographic_data:time_options.none',
   "demographic_data:time_options.less_than_year",
-  "demographic_data:time_options.one_to_two_years",
-  "demographic_data:time_options.two_to_five_years",
-  "demographic_data:time_options.five_to_ten_years",
-  "demographic_data:time_options.more_than_ten_years"
+  "demographic_data:time_options.one_to_three_years",
+  "demographic_data:time_options.four_to_six_years",
+  "demographic_data:time_options.seven_to_nine_years",
+  "demographic_data:time_options.ten_to_twelve_years",
+  "demographic_data:time_options.thirteen_to_sixteen_years",
+  "demographic_data:time_options.more_than_sixteen_years"
 ];
 
 export const ecosRoles = [
