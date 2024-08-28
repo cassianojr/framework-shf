@@ -20,7 +20,7 @@ interface FrameworkComponentProps {
   showSurveyOptions?: boolean
 }
 
-const FrameworkComponent = React.memo(function FrameworkComponent({ showSurveyOptions = false, showSuggestions = true, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
+const FrameworkComponent = React.memo(function FrameworkComponent({ showSurveyOptions = false, showSuggestions = false, copingMechanisms, contextualCharacteristics, socialHumanFactors, barriersToImproving, strategies }: FrameworkComponentProps = {}) {
 
   const { t } = useTranslation('framework');
 

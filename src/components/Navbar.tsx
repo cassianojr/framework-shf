@@ -51,11 +51,11 @@ export default function DrawerAppBar(props: Props) {
     {
       name: 'Framework',
       path: '/framework'
-    },
-    {
-      name: t('view_suggestions'),
-      path: '/view-feedback'
     }
+    // {
+    //   name: t('view_suggestions'),
+    //   path: '/view-feedback'
+    // }
   ];
 
   const notLoggedLinks = [
