@@ -196,6 +196,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
     </>,
     <>
       <Title>{t('modal_text.shf_items')}</Title>
+      <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{t('modal_text.shf_items_expl')}</Typography>
       <FrameworkItemListSelect items={shfItems} setItems={setShfItems} />
     </>,
     <>
@@ -205,10 +206,12 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
     </>,
     <>
       <Title>{t('modal_text.barriers_items')}</Title>
+      <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{t('modal_text.barriers_items_expl')}</Typography>
       <FrameworkItemListSelect items={barriersItems} setItems={setBarriersItems} />
     </>,
     <>
       <Title>{t('modal_text.strategies_items')}</Title>
+      <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{t('modal_text.strategies_items_expl')}</Typography>
       <FrameworkItemListSelect items={strategiesItems} setItems={setStrategiesItems} />
     </>,
     <>
