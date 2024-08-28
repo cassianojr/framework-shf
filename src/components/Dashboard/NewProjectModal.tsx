@@ -16,7 +16,10 @@ import dayjs, { Dayjs } from 'dayjs';
 import { EcosProject, Participant } from '../../types/EcosProject.type';
 import EcosProjectService from '../../services/EcosProjectService';
 import FrameworkItemListSelect from './FrameworkItemListSelect';
-
+import { ptBR, enUS } from '@mui/x-date-pickers/locales';
+import "dayjs/locale/pt-br";
+import "dayjs/locale/en";
+import i18next from 'i18next';
 
 interface NewProjectModalProps {
   user: User,
@@ -101,6 +104,8 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
     )
   }
 
+  const dtPickerLocaleText = (i18next.language === 'pt_br') ? ptBR : enUS;
+
   const steps = [
     <>
       <Grid container spacing={2}>
@@ -128,7 +133,11 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
 
         <Grid item xs={12} sx={{ marginTop: '1%', marginBottom: '2%' }}>
           <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>{t('modal_text.end_date_text')}</Typography>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale={(i18next.language === 'pt_br') ? 'pt-br' : 'en'}
+            localeText={dtPickerLocaleText.components.MuiLocalizationProvider.defaultProps.localeText}
+          >
             <DatePicker
               label={t('modal_text.end_date_label')}
               sx={{ width: '100%' }}
@@ -281,7 +290,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
           activeStep={activeStep}
           nextButton={
             <Button size="small" onClick={handleNextBtn}>
-              {(activeStep === steps.length - 1) ? t('modal_text.create_new_survey'): t('common:next_btn')}
+              {(activeStep === steps.length - 1) ? t('modal_text.create_new_survey') : t('common:next_btn')}
             </Button>
           }
           backButton={

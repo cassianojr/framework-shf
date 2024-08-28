@@ -223,11 +223,12 @@ export default function AccordionComponent(props: AccordionComponentProps) {
     </Modal.Root>
   );
 
+  const showEvaluation = false;
   const itemDescriptionModal = (
     <Modal.Root state={itemDescriptionModalState} handleClose={handleClose} id={itemDescriptionModalContent.id} title={itemDescriptionModalContent.title}>
       <Modal.Text content={itemDescriptionModalContent.body} />
       <Divider />
-      <Modal.Actions handleClose={handleClose}>
+      {showEvaluation ?(<Modal.Actions handleClose={handleClose}>
 
         <Modal.EvaluateAction id={itemDescriptionModalContent.id} handleClose={() => {
           setItemDescriptionModalState(false);
@@ -251,7 +252,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
             : <></>}
 
         </Modal.EvaluateAction>
-      </Modal.Actions>
+      </Modal.Actions>) : <Modal.Actions handleClose={handleClose}/>}
     </Modal.Root>
   );
 
@@ -316,7 +317,7 @@ export default function AccordionComponent(props: AccordionComponentProps) {
 
         </AccordionSummary>
         <AccordionDetails sx={{ padding: '0' }}>
-          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} showSurveyOptions={showSurveyOptions}/>}
+          {childWithHandleItemClick ?? <VirtualizedList items={data.items} handleListItemClick={handleListItemClick} height={75} showVotes={showVotes} showSurveyOptions={showSurveyOptions} />}
         </AccordionDetails>
       </Accordion>
       <AccordionSummary
