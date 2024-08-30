@@ -33,6 +33,7 @@ import FilterResult, { FilterParams } from '../components/EcosDashboard/FilterRe
 import DemographicDataComponent from '../components/EcosDashboard/DemographicDataComponent';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Modal } from '../components/Modal';
 
 export default function ECOSDashboard() {
 
@@ -58,7 +59,7 @@ export default function ECOSDashboard() {
   const [feedbackSnackBarState, setFeedbackSnackBarState] = React.useState(false);
   const [feedbackSnackBarText, setFeedbackSnackBarText] = React.useState('' as string);
   const [feedbackSnackBarSeverity, setFeedbackSnackBarSeverity] = React.useState('info' as 'success' | 'info' | 'warning' | 'error');
-
+  const [beforeStartModalState, setBeforeStartModalState] = React.useState(false);
 
   const [frameworkDataState, setFrameworkDataState] = React.useState([] as Framework[]);
 
@@ -227,6 +228,7 @@ export default function ECOSDashboard() {
 
   const handleStartSurvey = () => {
 
+    setBeforeStartModalState(false);
     const email = user.email ?? "";
 
     const endAt = new Date().getTime();
@@ -283,9 +285,24 @@ export default function ECOSDashboard() {
     setReload(!reload);
   }
 
+  const BeforeStartModal = () => {
+    return (
+      <Modal.Root title={t('before_start_modal_title')} id="before-start-modal" state={beforeStartModalState} handleClose={() => setBeforeStartModalState(false)}>
+        <Modal.Text>
+          <Typography>{t('before_start_modal_text')}</Typography>
+        </Modal.Text>
+        <Modal.Actions handleClose={()=>setBeforeStartModalState(false)}>
+          <Button variant='contained' color='success' onClick={handleStartSurvey}>{t('before_start_modal_confirm')}</Button>
+          <Button onClick={() => setBeforeStartModalState(false)}>{t("before_start_modal_cancel")}</Button>
+        </Modal.Actions>
+      </Modal.Root>
+    )
+  } 
+
   return (
     !appLoading &&
     <>
+      <BeforeStartModal />
       {frameworkDataState.length > 0 && <EditEcosProject onError={() => pushFeedbackSnackbar("Erro ao salvar alterações", 'error')} onSuccess={() => pushFeedbackSnackbar("Alterações salvas com sucesso", 'success')} setEcosProject={setEcos} ecosProject={ecos} frameworkData={frameworkDataState} setState={setEditEcosProjectModalState} state={editEcosProjectModalState} />}
       <ManageParticipantsModal modalState={manageParticipantsModalState} setModalState={setManageParticipantsModalState} ecos={ecos} setEcos={setEcos} addParticipantModalState={addParticipantModalState} setAddParticipantModalState={setAddParticipantModalState} />
       <SnackBarComponent snackBarState={copySnackBarState} setSnackBarState={setCopySnackBarState} text={t('snackbar_link_copied')} severity='success' />
@@ -370,7 +387,7 @@ export default function ECOSDashboard() {
                   sx={defaultPaperStyle}
                 >
                   <Title>{t('start_survey')}</Title>
-                  <Button variant='contained' color='success' disabled={ecos.status !== 'not-started'} sx={{ p: 1.4 }} onClick={handleStartSurvey}>
+                  <Button variant='contained' color='success' disabled={ecos.status !== 'not-started'} sx={{ p: 1.4 }} onClick={()=>setBeforeStartModalState(true)}>
                     {(ecos.status === 'waiting-for-answers') ? t('survey_started') : (ecos.status === 'finished') ? t('survey_status.finished') : t('start_survey')}
                   </Button>
                 </Paper>
