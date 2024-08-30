@@ -4,12 +4,11 @@
   "snackbar_text": "Obrigado pela sua resposta!",
   "welcome_text": "Seja bem-vindo à pesquisa sobre os fatores sociais e humanos na gerência de requisitos em ecossistemas de software!",
   "instructions": {
-    "p1": "Os componentes e itens aqui apresentados representam a visão de um framework conceitual de ação para entender e melhorar fatores sociais e humanos que influenciam a gerência de requisitos em ecossistemas de software. Identificou-se esses componentes e seus itens em um estudo de rapid review sobre fatores sociais e humanos na engenharia de requisitos em ecossistemas de software (Citação da rapid review) e em um estudo de campo sobre fatores sociais e humanos na gerência de requisitos em ecossistemas de software (Citação do estudo de campo). Cada um dos componentes e itens é acompanhado de sua definição derivados de estudos relacionados a fatores sociais e humanos na gerência de requisitos em ecossistemas de software. ",
+    "p1": "Esta pesquisa apresenta dados que refletem a visão de um framework conceitual de ação voltado lidar com fatores sociais e humanos visando melhorar as atividades da gerência de requisitos em ecossistemas de software. Cada item abordado é acompanhado por uma definição, derivada de estudos sobre os fatores sociais e humanos na gerência de requisitos em ecossistemas de software.",
     "p2": "Instruções para responder a pesquisa:",
-    "i1": "Leia a definição dos componentes e seus respectivos itens;",
-    "i2": "Analise cuidadosamente cada afirmação associada aos componentes e itens;",
-    "i3": "Responda de acordo com a realidade da sua organização (ecossistema de software);",
-    "i4": "Marque sua resposta entre as opções: (“Concordo” ou “Discordo”)."
+    "i1": "Leia a definição dos itens;",
+    "i2": "Analise cuidadosamente cada afirmação aos itens;",
+    "i3": "Por favor, responda de acordo com a realidade da sua organização;"
    },
    "consent_term": {
     "title": "Termo de consentimento livre e esclarecido",

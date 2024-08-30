@@ -338,7 +338,6 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             <li>{t('instructions.i1')}</li>
             <li>{t('instructions.i2')}</li>
             <li>{t('instructions.i3')}</li>
-            <li>{t('instructions.i4')}</li>
           </ul>
         </>
     },
