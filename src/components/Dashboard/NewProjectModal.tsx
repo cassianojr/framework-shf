@@ -58,6 +58,9 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
       e.preventDefault();
       const email = e.currentTarget.participantEmail.value as string;
 
+      const alreadyAdded = participants.find((participant) => participant.email === email);
+      if (alreadyAdded) return;
+
       setParticipants([...participants, { id: uuid(), email }]);
       setParticipantEmail('');
     }
