@@ -5,8 +5,9 @@
   "modal_text": {
     "cancel_btn": "Cancelar",
     "label_name": "Nome da organização",
-    "txt1": "Esta ferramenta permite que a organização obtenha insights valiosos por meio da percepção dos profissionais (envolvidos na gerência de requisitos) sobre os fatores sociais e humanos que influenciam as atividades da gerência de requisitos em seu ambiente. A ferramenta permite a coleta de feedback por meio de questionário estruturado em formato de pesquisa organizacional e também pode ser utilizada para coletar feedback por meio de métodos não estruturados (por exemplo, retrospectivas, reuniões individuais). Os resultados obtidos com a ferramenta podem fornecer informações relevantes para embasar a tomada de decisão na melhoria dos fatores sociais e humanos que influenciam a gerência de requisitos em seu ambiente específico. ",
-    "txt2": "Informe o nome da sua organização:",
+    "txt1": "Esta ferramenta permite à organização obter insights valiosos por meio da análise dos sentimentos dos profissionais envolvidos na gerência de requisitos sobre os fatores sociais e humanos que influenciam suas atividades no ambiente de trabalho. A ferramenta permite a coleta de feedback por meio de questionário estruturado em formato de pesquisa organizacional. Os resultados obtidos com a pesquisa organizacional podem fornecer informações relevantes para apoiar a tomada de decisões relacionadas aos fatores sociais e humanos, visando melhorar as atividades de gerência de requisitos.",
+    "txt2": "Atenção: É necessário configurar a pesquisa adequadamente para capturar com precisão a percepção dos participantes. Por favor, preencha os dados solicitados em cada seção.",
+    "txt3": "Informe o nome da sua organização:",
     "time_window_separator": "Tempo para responder a pesquisa",
     "end_date_text": "Selecione a data em que a pesquisa irá terminar:",
     "end_date_label": "Data de término da pesquisa*",
