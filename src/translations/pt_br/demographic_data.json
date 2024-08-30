@@ -31,7 +31,7 @@
     "time_on_ecos_short": "Tempo que trabalha no ecossistema",
     "time_with_requirements_mngm": "Quanto tempo trabalha com gerência de requisitos?",
     "time_with_requirements_mngm_short": "Tempo com gerência de requisitos",
-    "role": "Qual é o seu papel no ecossistema?",
+    "role": "Qual é o seu papel no ecossistema de software?",
     "role_short": "Papel no ecossistema"
   }
 }

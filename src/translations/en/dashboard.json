@@ -5,8 +5,9 @@
   "modal_text": {
     "cancel_btn": "Cancel",
     "label_name": "Organization name",
-    "txt1": "This tool enables the organization to gain valuable insights through the perception of professionals (involved in requirements management) about the social and human factors that influence requirements management activities in their environment. The tool allows for feedback collection through a structured questionnaire in the form of organizational surveys and can also be used to gather feedback through unstructured methods (e.g., retrospectives and individual meetings). The results obtained with the tool can provide relevant information to support decision-making in improving the social and human factors that influence requirements management in their specific environment. ",
-    "txt2": "Please provide the name of your organization:",
+    "txt1": "This tool allows the organization to obtain valuable insights through the analysis of the feelings of professionals involved in requirements management about the social and human factors that influence their activities in the work environment. The tool allows feedback collection through a structured questionnaire in the form of an organizational survey. The results obtained with the organizational survey can provide relevant information to support decision-making related to social and human factors, aiming to improve requirements management activities.",
+    "txt2": "Attention: It is necessary to configure the survey properly to accurately capture the participants' perception. Please fill in the requested data in each section.",
+    "txt3": "Enter your organization's name:",
     "time_window_separator": "Time to take the survey",
     "end_date_text": "Select the date when the survey will end:",
     "time_window_label": "How much time will participants have to respond to the survey?",

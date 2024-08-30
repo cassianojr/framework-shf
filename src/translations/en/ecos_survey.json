@@ -4,12 +4,11 @@
   "snackbar_text": "Thanks for your answer!",
   "welcome_text": "Welcome to the survey on social and human factors in requirements management in software ecosystems!",
   "instructions": {
-    "p1": "The components and items presented here represent the vision of a conceptual framework actionable for understanding and improving social and human factors influencing requirements management in software ecosystems. These components and their items were identified in a rapid review study on social and human factors in requirements engineering in software ecosystems (citation of the rapid review) and a field study on social and human factors in requirements management in software ecosystems (citation of the field study). Each component and item is accompanied by its definition derived from studies related to social and human factors in requirements management in software ecosystems.",
+    "p1": "This survey presents data that reflects the vision of a conceptual action framework aimed at dealing with social and human factors to improve requirements management activities in software ecosystems. Each item addressed is accompanied by a definition, derived from studies on social and human factors in requirements management in software ecosystems.",
     "p2": "Instructions for answer the survey:",
-    "i1": "Read the definition of the components and their respective items;",
-    "i2": "Carefully analyze each statement associated with the components and items;",
-    "i3": "Respond according to the reality of your organization (software ecosystem);",
-    "i4": "Mark your response among the options: (“Agree” or “Disagree”)."
+    "i1": "Read the definition of the items;",
+    "i2": "Carefully analyze each statement of the items;",
+    "i3": "Please, respond according to the reality of your organization;"
   },
   "consent_term": {
     "title": "Consent form",

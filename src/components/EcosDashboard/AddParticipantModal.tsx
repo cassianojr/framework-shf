@@ -42,7 +42,9 @@ export default function AddParticipantModal({ addParticipantModalState, setAddPa
       email: formState.email
     } as Participant;
 
-
+    const alreadyExists = ecos.participants?.find(participant => participant.email === newParticipant.email);
+    if (alreadyExists) return;
+    
     const participants = (participantId) ? ecos.participants.map((participant) => participant.id !== participantId) : ecos.participants || [] as Participant[];
 
     const newEcos = { ...ecos, participants: [...participants, newParticipant] } as Ecosystem;

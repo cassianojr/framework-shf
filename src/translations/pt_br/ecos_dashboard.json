@@ -40,5 +40,9 @@
   "neutral": "Neutro",
   "end_date": "Data de término",
   "edit_survey": "Editar pesquisa",
-  "feedback_sentiment_analysis_tooltip":"Análise de Sentimento: Este indicador classifica os comentários em três categorias—positivos, negativos e neutros—para entender melhor as emoções e opiniões expressas."
+  "feedback_sentiment_analysis_tooltip":"Análise de Sentimento: Este indicador classifica os comentários em três categorias—positivos, negativos e neutros—para entender melhor as emoções e opiniões expressas.",
+  "before_start_modal_title": "Atenção!",	
+  "before_start_modal_text": "Ao iniciar a pesquisa, não será possível editar as informações. Deseja continuar?",
+  "before_start_modal_confirm": "Confirmar",
+  "before_start_modal_cancel": "Cancelar"
 }

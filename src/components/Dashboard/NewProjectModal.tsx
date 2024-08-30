@@ -58,6 +58,9 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
       e.preventDefault();
       const email = e.currentTarget.participantEmail.value as string;
 
+      const alreadyAdded = participants.find((participant) => participant.email === email);
+      if (alreadyAdded) return;
+
       setParticipants([...participants, { id: uuid(), email }]);
       setParticipantEmail('');
     }
@@ -110,11 +113,14 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
     <>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
-          <Typography>
+          <Typography textAlign={'justify'}>
             {t('modal_text.txt1')}
           </Typography>
-          <Typography>
+          <Typography textAlign={'justify'}>
             {t('modal_text.txt2')}
+          </Typography>
+          <Typography textAlign={'justify'}>
+            {t('modal_text.txt3')}
           </Typography>
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>

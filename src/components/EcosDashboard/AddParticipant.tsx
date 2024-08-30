@@ -22,6 +22,10 @@ export default function AddParticipant({ addParticipantModalState, setAddPartici
 
 
   const handleSubmit = (newParticipant: Participant) => {
+
+    const alreadyExists = ecos.participants?.find(participant => participant.email === newParticipant.email);
+    if(alreadyExists) return;
+
     const participants = ecos.participants || [] as Participant[];
     const newEcos = { ...ecos, participants: [...participants, newParticipant] } as EcosProject;
 

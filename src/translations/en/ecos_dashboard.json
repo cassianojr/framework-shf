@@ -42,5 +42,9 @@
   "neutral": "Neutral",
   "end_date": "End date",
   "edit_survey": "Edit survey",
-  "feedback_sentiment_analysis_tooltip":"Sentiment Analysis: This indicator classifies comments into three categories — positive, negative, and neutral — to better understand the emotions and opinions expressed."
+  "feedback_sentiment_analysis_tooltip":"Sentiment Analysis: This indicator classifies comments into three categories — positive, negative, and neutral — to better understand the emotions and opinions expressed.",
+  "before_start_modal_title": "Attention!",
+  "before_start_modal_text": "Once the survey is started, it will not be possible to edit the information. Do you want to continue?",
+  "before_start_modal_confirm": "Confirm",
+  "before_start_modal_cancel": "Cancel"
 }

@@ -159,10 +159,10 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     let noErrors = true;
     if (activeStep <= 2) return true;
 
-    const verifyableItems = ['SHF01', 'ST01']
+    const verifyableItems = ['CC01', 'CM01']
     const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 3].items.current[0].ids['en']) !== undefined);
 
-    if (!shouldValidateForComments) return noErrors;
+    if (shouldValidateForComments) return noErrors;
 
     stepsVote[activeStep - 3].items.current.forEach((item) => {
 
@@ -338,7 +338,6 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             <li>{t('instructions.i1')}</li>
             <li>{t('instructions.i2')}</li>
             <li>{t('instructions.i3')}</li>
-            <li>{t('instructions.i4')}</li>
           </ul>
         </>
     },
