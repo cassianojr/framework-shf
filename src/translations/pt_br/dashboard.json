@@ -29,5 +29,14 @@
     "participants_list_title": "Lista de participantes",
     "edit_survey": "Editar pesquisa",
     "end_date_obs": "Observação: A pesquisa irá encerrar na data de término às 18h."
+  },
+  "delete_project": {
+    "success": "Projeto excluído com sucesso!",
+    "error": "Erro ao excluir projeto!",
+    "confirm_title": "Excluir projeto",
+    "confirm_text": "Tem certeza que deseja excluir o projeto ",
+    "confirm_text2": "Isso irá deletar para sempre o projeto e todas as respostas associadas a ele!",
+    "cancel_btn": "Cancelar",
+    "delete_btn": "Excluir"
   }
 }

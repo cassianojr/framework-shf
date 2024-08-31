@@ -1,8 +1,8 @@
-import { DocumentData, DocumentReference, addDoc, collection, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import { DocumentData, DocumentReference, addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { EcosProject } from "../types/EcosProject.type";
 import { db } from "./firebaseConfig";
 
-export default class EcosProjectService{
+export default class EcosProjectService {
 
   static ecosProjectCollection = "ecos_project";
 
@@ -18,13 +18,13 @@ export default class EcosProjectService{
   }
 
   public static createEcosProject(ecosProject: EcosProject, successCallback: (docRef: DocumentReference<DocumentData>) => void, errorCallback: () => void): void {
-    const { name, admin_id, end_date, participants, mandatory_items  } = ecosProject;
+    const { name, admin_id, end_date, participants, mandatory_items } = ecosProject;
 
     addDoc(collection(db, EcosProjectService.ecosProjectCollection), {
       name,
       admin_id,
       end_date,
-      participants: participants||[],
+      participants: participants || [],
       mandatory_items,
       status: 'not-started',
     }).then((docRef) => {
@@ -35,11 +35,11 @@ export default class EcosProjectService{
     });
   }
 
-  public static updateEcosProject(ecosProject: EcosProject,  successCallback: (newData: EcosProject) => void, errorCallback: () => void): void {
+  public static updateEcosProject(ecosProject: EcosProject, successCallback: (newData: EcosProject) => void, errorCallback: () => void): void {
 
-    const {id, name, admin_id, end_date, participants, mandatory_items, status  } = ecosProject;
- 
-    if(id === undefined) throw new Error("EcosProject id is undefined");
+    const { id, name, admin_id, end_date, participants, mandatory_items, status } = ecosProject;
+
+    if (id === undefined) throw new Error("EcosProject id is undefined");
 
     updateDoc(doc(db, EcosProjectService.ecosProjectCollection, id), {
       name,
@@ -47,7 +47,7 @@ export default class EcosProjectService{
       end_date,
       status,
       mandatory_items,
-      participants: participants||[]
+      participants: participants || []
     }).then(() => {
       console.log("Document written with ID: ", id);
       successCallback(ecosProject);
@@ -55,7 +55,7 @@ export default class EcosProjectService{
       console.error("Error adding document: ", error);
       errorCallback();
     });
-   
+
   }
 
   public static getEcosProject(ecosId: string): Promise<EcosProject> {
@@ -78,6 +78,10 @@ export default class EcosProjectService{
       });
 
     });
+  }
+
+  public static deleteEcosProject(ecosId: string) {
+    return deleteDoc(doc(db, EcosProjectService.ecosProjectCollection, ecosId));
   }
 
 }
