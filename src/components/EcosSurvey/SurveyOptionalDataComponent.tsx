@@ -45,7 +45,7 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
             <Tooltip
               arrow
               key={`item-${index}`}
-              title={<p style={{ fontSize: '1rem', }}>{item.descriptions[i18next.language]}</p>}
+              title={<p style={{ fontSize: '1rem', textAlign: 'justify' }}>{item.descriptions[i18next.language]}</p>}
             >
               <ToggleButton
                 value="check"

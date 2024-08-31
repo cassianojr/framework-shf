@@ -57,7 +57,7 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
         return (
           <>
             <Typography sx={(item.validationError || item.feedbackValidationError) ? { ...errorStyle, marginLeft: '.3rem', fontWeight: (item.selected) ? 'bold': '' } : { marginLeft: '.3rem'}}>{item.names[i18next.language]}</Typography>
-            <Tooltip arrow title={<p style={{ fontSize: '1rem' }}>{item.descriptions[i18next.language]}</p>} >
+            <Tooltip arrow title={<p style={{ fontSize: '1rem', textAlign: 'justify' }}>{item.descriptions[i18next.language]}</p>} >
               <InfoRounded sx={{ color: 'primary.main', cursor: 'pointer' }} fontSize="small" />
             </Tooltip>
           </>)
