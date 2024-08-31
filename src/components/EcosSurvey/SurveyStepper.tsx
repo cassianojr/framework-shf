@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
+import { Autocomplete, Backdrop, Button, CircularProgress, Grid, MobileStepper, Paper, TextField, Typography } from '@mui/material';
 import React from 'react'
 import { FrameworkItem } from '../../types/Framework.type';
 import { Box, Container } from '@mui/system';
@@ -49,7 +49,9 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const [timeOnReqManagmentError, setTimeOnReqManagmentError] = React.useState(false);
   const [roleError, setRoleError] = React.useState(false);
 
-  const [demographicData, setDemographicData] = React.useState({timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0]} as DemoagraphicData);
+  const [backDropState, setBackDropState] = React.useState(false);
+
+  const [demographicData, setDemographicData] = React.useState({ timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0] } as DemoagraphicData);
 
   const createAnswersObject = () => {
     const answers = {
@@ -120,12 +122,12 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
   const setSentimentOnAnswers = async (answers: NewAnswers) => {
     let sentimentPromises = [] as Promise<void>[];
-    
+
     answers.answers.map((answer) => {
       sentimentPromises = [...sentimentPromises, ...getSentimentAnalisysPromise(answer)];
     });
 
-    answers.optionalAnswers.map((answerToAnalyze) =>{
+    answers.optionalAnswers.map((answerToAnalyze) => {
       sentimentPromises = [...sentimentPromises, ...getSentimentAnalisysPromise(answerToAnalyze)];
     });
 
@@ -135,18 +137,19 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const handleSaveAnswers = () => {
     if (!answers) return;
 
-    setSentimentOnAnswers(answers).then(()=>{
+    setBackDropState(true);
+    setSentimentOnAnswers(answers).then(() => {
       QuestionService.saveAnswers(answers, () => {
 
         handleParticipantOnEcos();
-  
+
         setFeedBackSnackBar({ severity: "success", text: t('answers_saved') });
         setFeedBackSnackbarState(true);
-  
+
         setTimeout(() => {
           navigate('/dashboard');
         }, 3000);
-  
+
       }, () => {
         setFeedBackSnackBar({ severity: "error", text: t('answers_not_saved') });
         setFeedBackSnackbarState(true);
@@ -187,11 +190,11 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
     if (activeStep <= 1) return true;
 
-    if (activeStep === 2){
+    if (activeStep === 2) {
       setReqTimeError(demographicData.timeOnEcos === timeOptions[0]);
       setTimeOnReqManagmentError(demographicData.timeOnReqManagment === timeOptions[0]);
       setRoleError(demographicData.role === ecosRoles[0]);
-      if (demographicData.timeOnEcos === timeOptions[0] || demographicData.timeOnReqManagment === timeOptions[0] || demographicData.role === ecosRoles[0]){
+      if (demographicData.timeOnEcos === timeOptions[0] || demographicData.timeOnReqManagment === timeOptions[0] || demographicData.role === ecosRoles[0]) {
         noErrors = false;
       }
       return noErrors;
@@ -230,6 +233,7 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
       if (errorOnAnswers) setFeedBackSnackBar({ severity: "error", text: t('validation_error') });
 
       setFeedBackSnackbarState(true);
+      setBackDropState(false);
       return;
     }
 
@@ -265,8 +269,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setTimeOnEcosInputValue(newInputValue);
             }}
-            getOptionLabel={(option) => t(option)}    
-            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_on_ecos')} InputLabelProps={{shrink: true}} error={reqTimeError} />}
+            getOptionLabel={(option) => t(option)}
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_on_ecos')} InputLabelProps={{ shrink: true }} error={reqTimeError} />}
           />
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -285,8 +289,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setTimeOnReqManagmentInputValue(newInputValue);
             }}
-            getOptionLabel={(option) => t(option)}    
-            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_with_requirements_mngm')} InputLabelProps={{shrink: true}} error={timeOnReqManagmentError}/>}
+            getOptionLabel={(option) => t(option)}
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.time_with_requirements_mngm')} InputLabelProps={{ shrink: true }} error={timeOnReqManagmentError} />}
           />
         </Grid>
         <Grid item xs={12} sx={{ marginTop: '1%' }}>
@@ -305,8 +309,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
             onInputChange={(_, newInputValue) => {
               setRoleInputValue(newInputValue);
             }}
-            getOptionLabel={(option) => t(option)}    
-            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.role')} InputLabelProps={{shrink: true}} error={roleError} />}
+            getOptionLabel={(option) => t(option)}
+            renderInput={(params) => <TextField {...params} label={t('demographic_data:demographic_questions.role')} InputLabelProps={{ shrink: true }} error={roleError} />}
           />
 
         </Grid>
@@ -361,38 +365,54 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   ]
 
 
+  const LoadingBackdrop = () => {
+    return (
+      <Backdrop
+        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+        open={backDropState}
+        onClick={() => setBackDropState(false)}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    )
+  }
+
+
   return (
-    <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '65%', margin: 'auto' }}>
-      <Container sx={{ p: '1rem' }}>
-        {activeStep === steps.length ? (
-          <Box>
-            {answers && <ViewAnswersComponent answers={answers} />}
-          </Box>)
-          : <></>}
+    <>
+      <LoadingBackdrop />
+      <Paper elevation={3} sx={{ padding: '2rem', width: (activeStep === steps.length) ? '85%' : '65%', margin: 'auto' }}>
+        <Container sx={{ p: '1rem' }}>
+          {activeStep === steps.length ? (
+            <Box>
+              {answers && <ViewAnswersComponent answers={answers} />}
+            </Box>)
+            : <></>}
 
-        {steps[activeStep] && (
-          <>
-            <Typography variant='h6' sx={{ textAlign: 'justify' }}>{steps[activeStep]?.title ?? ''}</Typography>
-            {steps[activeStep].component}
-          </>
-        )}
-      </Container>
-      <MobileStepper
-        variant="progress"
-        steps={steps.length + 1}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          (activeStep === 1) ? <Button variant='contained' onClick={handleNext}>{t('agree_btn')}</Button> : (
-            <Button variant='contained' onClick={handleNext}>{(activeStep !== steps.length) ? (activeStep !== steps.length - 1) ? t('next_btn') : t('view_answer_btn') : t('save_btn')}</Button>
-          )
-        }
+          {steps[activeStep] && (
+            <>
+              <Typography variant='h6' sx={{ textAlign: 'justify' }}>{steps[activeStep]?.title ?? ''}</Typography>
+              {steps[activeStep].component}
+            </>
+          )}
+        </Container>
+        <MobileStepper
+          variant="progress"
+          steps={steps.length + 1}
+          position="static"
+          activeStep={activeStep}
+          nextButton={
+            (activeStep === 1) ? <Button variant='contained' onClick={handleNext}>{t('agree_btn')}</Button> : (
+              <Button variant='contained' onClick={handleNext}>{(activeStep !== steps.length) ? (activeStep !== steps.length - 1) ? t('next_btn') : t('view_answer_btn') : t('save_btn')}</Button>
+            )
+          }
 
-        backButton={
-          <Button variant='outlined' onClick={handleBack}>{t('back_btn')}</Button>
-        }
-      />
-    </Paper>
+          backButton={
+            <Button variant='outlined' onClick={handleBack}>{t('back_btn')}</Button>
+          }
+        />
+      </Paper>
+    </>
   )
 
 }

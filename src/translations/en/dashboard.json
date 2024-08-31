@@ -28,6 +28,16 @@
     "email_label": "Participant's email",
     "add_participant_btn": "Add",
     "participants_list_title": "Participants list",
-    "edit_survey": "Edit survey"
+    "edit_survey": "Edit survey",
+    "end_date_obs": "Note: The survey will end on the end date at 6:00 p.m."
+  },
+  "delete_project": {
+    "success": "Project successfully deleted!",
+    "error": "Error deleting project!",
+    "confirm_title": "Delete project",
+    "confirm_text": "Are you sure you want to delete the project ",
+    "confirm_text2": "This will permanently delete the project and all associated responses!",
+    "cancel_btn": "Cancel",
+    "delete_btn": "Delete"
   }
 }

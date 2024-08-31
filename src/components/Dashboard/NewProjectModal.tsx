@@ -119,6 +119,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
           <Typography textAlign={'justify'}>
             {t('modal_text.txt2')}
           </Typography>
+          <Divider sx={{marginTop: '1%'}}/>
           <Typography textAlign={'justify'}>
             {t('modal_text.txt3')}
           </Typography>
@@ -161,6 +162,7 @@ export default function NewProjectModal({ user, setState, state, frameworkData }
               }}
             />
           </LocalizationProvider>
+          <Typography sx={{ marginTop: '1%', marginBottom: '2%' }}>{t('modal_text.end_date_obs')}</Typography>
         </Grid>
       </Grid>
     </>,
