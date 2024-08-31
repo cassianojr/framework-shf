@@ -161,6 +161,7 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const validateFeedback = () => {
     let noErrors = true;
     if (activeStep <= 2) return true;
+    if(stepsVote[activeStep - 3].items.current.length == 0) return true;
 
     const cc = [];
     for(let i = 1; i<=18; i++){
@@ -331,10 +332,10 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
   const stepperContents = stepsVote.map((step) => {
     return {
       id: step.id,
-      title: t(step.title, { ecos_name: ecos.name }),
+      title: step.items.current.length > 0 ? t(step.title, { ecos_name: ecos.name }): '',
       component:
         <>
-          {step.viewOnly ? <SurveyViewOnly items={step.items} /> : <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />}
+          {step.items.current.length > 0 &&(step.viewOnly ? <SurveyViewOnly items={step.items} /> : <SurveyOptionsDataTable key={step.id} items={step.items} changeItems={step.changeItems} />)}
           {step.optionalItems && step.changeOptionalItems ? <SurveyOptionalDataComponent key={`optional-${step.id}`} title={t(step.optionalTitle ?? '', { ecos_name: ecos.name })} items={step.optionalItems} changeItems={step.changeOptionalItems} /> : <></>}
         </>
     }
