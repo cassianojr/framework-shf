@@ -13,6 +13,7 @@ import { QuestionService } from '../../services/QuestionService';
 import EcosProjectService from '../../services/EcosProjectService';
 import SnackBarComponent from '../SnackBarComponent';
 import { NewAnswers } from '../../types/Answer.type';
+import EmailService from '../../services/EmailService';
 
 interface EcosCardProps {
   ecosName: string,
@@ -101,6 +102,9 @@ function EcosCard({ ecosName, ecosStatus, ecosAnswers, ecosId, endDate }: EcosCa
       if (answers.length !== 0) {
         const answersPromises = await deleteAnswers(answers);
         await Promise.all(answersPromises);
+      }
+      if(ecosStatus === 'waiting-for-answers'){
+        EmailService.cancelScheduledEmail(ecosId);
       }
 
       await EcosProjectService.deleteEcosProject(ecosId);

@@ -162,9 +162,19 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     let noErrors = true;
     if (activeStep <= 2) return true;
 
-    const verifyableItems = ['CC01', 'CM01']
-    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 3].items.current[0].ids['en']) !== undefined);
+    const cc = [];
+    for(let i = 1; i<=18; i++){
+      cc.push(`CC${i.toString().padStart(2, '0')}`);
+    }
 
+    const cm = [];
+    for(let i = 1; i<=4; i++){
+      cm.push(`CC${i.toString().padStart(2, '0')}`);
+    }
+
+    const verifyableItems = [...cc, ...cm];
+    const shouldValidateForComments = (verifyableItems.find((verifyableItem) => verifyableItem == stepsVote[activeStep - 3].items.current[0].ids['en']) !== undefined);
+    
     if (shouldValidateForComments) return noErrors;
 
     stepsVote[activeStep - 3].items.current.forEach((item) => {

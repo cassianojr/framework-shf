@@ -89,4 +89,14 @@ export default class EmailService {
       }),
     }).then((data) => console.log(data.json())).catch((error) => console.log(error));
   }
+
+  public static cancelScheduledEmail(ecosProjectId: string): void {
+    fetch(`${this.API_URL}/api/cancel-schedule/${ecosProjectId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
+    }).then((data) => console.log(data.json())).catch((error) => console.log(error));
+  }
 }
