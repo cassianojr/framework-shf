@@ -19,6 +19,7 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
 
   const [commentModalState, setCommentModalState] = React.useState(false);
   const [commentModalItem, setCommentModalItem] = React.useState<FrameworkItem | undefined>(undefined);
+  const [commentModalError, setCommentModalError] = React.useState(false);
 
   const { t } = useTranslation(['ecos_survey', 'common']);
 
@@ -100,13 +101,22 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
   const openCommentModal = (item: FrameworkItem | undefined) => {
     const commentItem = items.current.find((i) => i.id === item?.id);
     
+    if(!commentItem) setCommentModalError(false);
     setCommentModalItem(commentItem);
     setCommentModalState(true);
   }
 
   return (
     <>
-      <SurveyCommentModal setModalState={setCommentModalState} modalState={commentModalState} items={items} changeItems={changeItems} commentModalItem={commentModalItem} />
+      <SurveyCommentModal
+       setModalState={setCommentModalState} 
+      modalState={commentModalState}
+       items={items} 
+      changeItems={changeItems} 
+      commentModalItem={commentModalItem} 
+      commentModalError={commentModalError}
+      setCommentModalError={setCommentModalError}
+      />
       <DataGrid
         rows={rows}
         columns={columns}

@@ -16,6 +16,7 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
   const [commentModalState, setCommentModalState] = React.useState(false);
   const [commentModalItem, setCommentModalItem] = React.useState<FrameworkItem | undefined>(undefined);
   const [reload, setReload] = React.useState(false);
+  const [commentModalError, setCommentModalError] = React.useState(false);
 
   const handleToggleButtonClick = (item: FrameworkItem) => {
     if (item.comment !== undefined && item.comment !== '') {
@@ -36,7 +37,15 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
 
   return (
     <>
-      <SurveyCommentModal items={items} changeItems={changeItems} commentModalItem={commentModalItem} modalState={commentModalState} setModalState={setCommentModalState} />
+      <SurveyCommentModal
+       items={items}
+       changeItems={changeItems}
+       commentModalItem={commentModalItem} 
+      modalState={commentModalState} 
+      setModalState={setCommentModalState} 
+      commentModalError={commentModalError}
+      setCommentModalError={setCommentModalError}
+      />
       <Box sx={{ mt: '1rem' }}>
         <Typography variant='h6' sx={{ textAlign: 'justify' }}>{title}</Typography>
 
