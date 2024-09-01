@@ -1,7 +1,7 @@
 {
 	"list": {
 		"1": {
-			"description": " The first step is to identify the problems. The initial approach to evaluating the social and human factors influencing requirements management in software ecosystems is to understand the day-to-day factors encountered by professionals involved in requirements management activities and to uncover the contextual characteristics of requirements management. Consequently, inquire with team professionals about the factors they have encountered, present a list of barriers hindering the improvement of social and human factors, and ascertain if they have encountered any of these barriers in their requirements management activities in software ecosystems. Inquire about the improvement strategies and coping mechanisms professionals believe could be utilized to overcome these barriers and enhance social and human factors. The tool enables the collection of feedback through a structured questionnaire in the form of organizational research and can also be used to gather feedback through unstructured methods (e.g., retrospectives and individual meetings). This step must be conducted individually. ",
+			"description": " The first step is to identify the problems. The initial step in assessing the social and human factors influencing requirements management in software ecosystems is to understand the day-to-day factors of professionals engaged in requirements management activities and to discover the contextual characteristics of requirements management. Ask team professionals which factors they have encountered, present the list of barriers that prevent professionals from dealing with social and human factors, and understand if they have encountered any in their requirements management activities in software ecosystems. Inquire about the improvement strategies and coping mechanisms professionals believe can be used to address social and human factors and overcome barriers. The tool allows feedback collection through a structured questionnaire in organizational research format and can also be used to collect feedback through unstructured methods (e.g., retrospectives, individual meetings). It is essential that this step be done individually.",
       "title": "Ask: "
 		},
 		"2": {
@@ -9,7 +9,7 @@
       "title": "Plan: "
 		},
 		"3": {
-			"description": "Continuous and iterative small improvements are crucial. Gradually implement improvement strategies and assess whether they effectively address the barriers and social and human factors. Monitoring the success of improvement strategies is essential for overcoming barriers and improving social and human factors. Once planned improvements are implemented, repeat this three-step process iteratively to sustain progress and address factors and barriers, thereby maintaining a process of continuous improvement.",
+			"description": " Small, continuous, and iterative improvements are crucial. Gradually implement improvement strategies and evaluate whether they effectively address social and human factors and barriers. Monitoring the success of improvement strategies is essential for dealing with social and human factors and overcoming barriers. After planned improvements have been implemented, repeat this three-step process iteratively to sustain progress and address factors and barriers, thereby maintaining a process of continuous improvement.",
       "title": "Act: "
 		}
 	},
