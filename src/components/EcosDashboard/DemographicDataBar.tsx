@@ -39,7 +39,7 @@ export default function DemographicDataBar({ data, title }: GraphicProps) {
         width={450}
         height={350}
         margin={{
-          top: 10,
+          top: 25,
           right: 50,
           left: 0,
           bottom: 5,
