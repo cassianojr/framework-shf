@@ -48,7 +48,7 @@
   "feedback": {
     "title": "Deixe seu feedback para ",
     "textarea_label": "Deixe seu feedback aqui",
-    "error": "Para os itens em que você respondeu \"Concordo Totalmente\" ou \"Discordo Totalmente\", por favor, escreva um comentário."
+    "error": "Para o(s) item sinalizado em vermelho, o usuário deve obrigatoriamente indicar se concorda ou discorda, além de deixar um feedback."
   },
   "validation_error": "Por favor, responda a todas as perguntas antes de passar para o próximo passo.",
   "view_answers": {

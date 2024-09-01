@@ -23,9 +23,9 @@ interface SelectItemsProps {
   title: string,
   items: React.MutableRefObject<FrameworkItem[]>,
   changeItems: (value: FrameworkItem[]) => void,
-  optionalItems ?: React.MutableRefObject<FrameworkItem[]>,
-  changeOptionalItems ?: (value: FrameworkItem[]) => void,
-  optionalTitle ?: string
+  optionalItems?: React.MutableRefObject<FrameworkItem[]>,
+  changeOptionalItems?: (value: FrameworkItem[]) => void,
+  optionalTitle?: string
   viewOnly?: boolean,
   order: number
 }
@@ -73,7 +73,7 @@ export default function EcosSurvey() {
   const optionalStrategiesRef = React.useRef<FrameworkItem[]>([]);
   const changeOptionalStrategiesRef = (items: FrameworkItem[]) => { optionalStrategiesRef.current = items };
 
-  
+
   const ecosId = useParams().ecosId;
 
   const [ecos, setEcos] = React.useState<EcosProject | undefined>(undefined);
@@ -103,7 +103,7 @@ export default function EcosSurvey() {
     if (!signed) navigate(`/sign-in?redirect=${window.location.pathname}`);
 
     const getEcosData = async () => {
-      if(ecos) return ecos;
+      if (ecos) return ecos;
 
       if (!ecosId) return;
 
@@ -124,35 +124,35 @@ export default function EcosSurvey() {
       const barriers = frameworkData.filter((item) => item.id === "barriers-to-improving")[0];
       const strategies = frameworkData.filter((item) => item.id === "strategies")[0];
 
-      shf.items.map((item) =>{
-        mandatoryItems.shf.forEach((mandatoryItem) =>{
-          if(item.id === mandatoryItem.id){
+      shf.items.map((item) => {
+        mandatoryItems.shf.forEach((mandatoryItem) => {
+          if (item.id === mandatoryItem.id) {
             item.selected = true;
           }
-        })  
+        })
       });
 
       cc.items = mandatoryItems.cc;
-      
 
-      barriers.items.map((item) =>{
-        mandatoryItems.barriers.forEach((mandatoryItem) =>{
-          if(item.id === mandatoryItem.id){
+
+      barriers.items.map((item) => {
+        mandatoryItems.barriers.forEach((mandatoryItem) => {
+          if (item.id === mandatoryItem.id) {
             item.selected = true;
           }
-        })  
+        })
       });
 
-      strategies.items.map((item) =>{
-        mandatoryItems.strategies.forEach((mandatoryItem) =>{
-          if(item.id === mandatoryItem.id){
+      strategies.items.map((item) => {
+        mandatoryItems.strategies.forEach((mandatoryItem) => {
+          if (item.id === mandatoryItem.id) {
             item.selected = true;
           }
-        })  
-      });      
-      
+        })
+      });
+
       return {
-        socialHumanFactorsLocal :shf,
+        socialHumanFactorsLocal: shf,
         contextualCharacteristicsLocal: cc,
         barriersToImprovingLocal: barriers,
         strategiesLocal: strategies
@@ -162,14 +162,14 @@ export default function EcosSurvey() {
       data.forEach((item) => {
         item.items.sort((a, b) => (a.names[i18next.language].localeCompare(b.names[i18next.language])))
       })
-      
+
       return data;
     }
 
     const handleFrameworkData = (data: Framework[], ecosData: EcosProject) => {
 
       const { socialHumanFactorsLocal, contextualCharacteristicsLocal, barriersToImprovingLocal, strategiesLocal } = handleMandatoryItems(data, ecosData);
-      
+
       const copingMechanismsLocal = data.filter((item) => item.id === "coping-mechanisms")[0];
 
       changeShfRef(socialHumanFactorsLocal.items.filter((item) => item.selected));
@@ -183,7 +183,8 @@ export default function EcosSurvey() {
       changeOptionalStrategiesRef(strategiesLocal.items.filter((item) => !item.selected));
 
       if (questions.length === 0) {
-        setQuestions([
+
+        const questions = [
           {
             id: "social-human-factors",
             title: 'fsh_affirmative',
@@ -230,7 +231,16 @@ export default function EcosSurvey() {
             viewOnly: true,
             order: 5
           },
-        ]);
+        ];
+
+        const filteredQuestions = questions.filter(question => {
+          if (question.id === 'contextual-characteristics' && question.items.current.length === 0) {
+            return false;
+          }
+          return true;
+        });
+
+        setQuestions(filteredQuestions);
       }
 
     }

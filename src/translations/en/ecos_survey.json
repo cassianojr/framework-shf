@@ -48,7 +48,7 @@
   "feedback": {
     "title": "Leave your feedback for ",
     "textarea_label": "Leave your feedback here",
-    "error": "For items where you selected 'Strongly Agree' or 'Strongly Disagree,' please provide a comment."
+    "error": "For the item(s) flagged in red, the user must indicate whether they agree or disagree, as well as leave feedback."
   },
   "validation_error": "Please, answer all questions before moving on the next step.",
   "view_answers": {
