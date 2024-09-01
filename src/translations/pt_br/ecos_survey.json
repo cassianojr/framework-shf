@@ -72,5 +72,6 @@
     "name": "Nome",
     "answer": "Resposta",
     "feedback": "Feedback"
-  }
+  },
+  "invalid_comment": "Por favor, insira um comentário válido."
 }

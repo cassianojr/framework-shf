@@ -72,5 +72,6 @@
     "name": "Name",
     "answer": "Answer",
     "feedback": "Feedback"
-  }
+  },
+  "invalid_comment": "Please, enter a valid comment."
 }
