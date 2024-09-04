@@ -231,10 +231,6 @@ export default function ECOSDashboard() {
     setBeforeStartModalState(false);
     const email = user.email ?? "";
 
-    const endAt = new Date().getTime();
-
-    const endAtString = new Date(endAt).toISOString();
-
     if (email === "" || ecosId == null) return;
 
     if (ecos.participants !== undefined && ecos.participants.length > 0) {
@@ -243,7 +239,7 @@ export default function ECOSDashboard() {
       });
     }
 
-    if (ecos.id) EmailService.scheduleEndRound(email, endAtString, ecos.name, ecosId, i18next.language, ecos.id);
+    if (ecos.id) EmailService.scheduleEndRound(email, ecos.end_date, ecos.name, ecosId, i18next.language, ecos.id);
     const newEcosProject = { ...ecos, status: 'waiting-for-answers' } as EcosProject;
     setEcos(newEcosProject);
     EcosProjectService.updateEcosProject(newEcosProject, () => console.log("updated"), () => console.error("error updating"));
