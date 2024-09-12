@@ -51,7 +51,10 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
   const [backDropState, setBackDropState] = React.useState(false);
 
-  const [demographicData, setDemographicData] = React.useState({ timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0] } as DemoagraphicData);
+  const sortedEcosRoles = ecosRoles.sort((a, b) => t(a).localeCompare(t(b)));
+
+  const [demographicData, setDemographicData] = React.useState({ timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')] } as DemoagraphicData);
+
 
   const createAnswersObject = () => {
     const answers = {
@@ -204,8 +207,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     if (activeStep === 2) {
       setReqTimeError(demographicData.timeOnEcos === timeOptions[0]);
       setTimeOnReqManagmentError(demographicData.timeOnReqManagment === timeOptions[0]);
-      setRoleError(demographicData.role === ecosRoles[0]);
-      if (demographicData.timeOnEcos === timeOptions[0] || demographicData.timeOnReqManagment === timeOptions[0] || demographicData.role === ecosRoles[0]) {
+      setRoleError(demographicData.role === sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')]);
+      if (demographicData.timeOnEcos === timeOptions[0] || demographicData.timeOnReqManagment === timeOptions[0] || demographicData.role === sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')]) {
         noErrors = false;
       }
       return noErrors;
@@ -260,7 +263,7 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
 
     const [timeOnEcosInputValue, setTimeOnEcosInputValue] = React.useState(timeOptions[0]);
     const [timeOnReqManagmentInputValue, setTimeOnReqManagmentInputValue] = React.useState(timeOptions[0]);
-    const [roleInputValue, setRoleInputValue] = React.useState(ecosRoles[0]);
+    const [roleInputValue, setRoleInputValue] = React.useState(sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')]);
 
     return (
       <Grid container spacing={2}>
@@ -308,13 +311,13 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
           <Autocomplete
             disablePortal
             id="role"
-            options={ecosRoles}
+            options={sortedEcosRoles}
             onKeyDown={(e) => e.preventDefault()}
             sx={{ caretColor: 'transparent' }}
             value={demographicData.role}
             onChange={(_, newValue: string | null) => {
               setRoleError(false);
-              setDemographicData({ ...demographicData, role: newValue ?? ecosRoles[0] });
+              setDemographicData({ ...demographicData, role: newValue ?? sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')] });
             }}
             inputValue={roleInputValue}
             onInputChange={(_, newInputValue) => {

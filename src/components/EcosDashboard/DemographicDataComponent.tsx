@@ -111,18 +111,33 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
 
     const scale = {
       independentCommercialSupplier: 0,
-      originalDesignManufacturer: 0,
-      platformProvider: 0,
-      saasProvider: 0,
-      productDistributor: 0,
-      softwareDeveloper: 0,
-      softwareDesigner: 0,
-      applicationServiceProvider: 0,
-      requirementsEngineer: 0,
-      integrator: 0,
-      contentProvider: 0,
-      valueAddedReseller: 0,
+      client: 0,
       endUser: 0,
+      reseller: 0,
+      internalSoftwareDeveloper: 0,
+      externalSoftwareDeveloper: 0,
+      keystone: 0,
+      uiUxDesigners: 0,
+      requirementsEngineer: 0,
+      serviceProvider: 0,
+      softwareArchitect: 0,
+      evangelist: 0,
+      dataAnalyst: 0,
+      productManager: 0,
+      projectManager: 0,
+      partnershipManager: 0,
+      maeketAnalyst: 0,
+      testQualityAnalyst: 0,
+      devopsEngineer: 0,
+      scrumMaster: 0,
+      productOwner: 0,
+      securityEngineer: 0,
+      dataSpecialist: 0,
+      buisnessAnalyst: 0,
+      softwarEngineer: 0,
+      externalConsultant: 0,
+      databaseAnalyst: 0,
+      dataScientist: 0,
       other: 0
     }
 
@@ -132,42 +147,87 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
           scale.independentCommercialSupplier += 1;
           break;
         case ecosRoles[2]:
-          scale.originalDesignManufacturer += 1;
+          scale.client += 1;
           break;
         case ecosRoles[3]:
-          scale.platformProvider += 1;
+          scale.endUser += 1;
           break;
         case ecosRoles[4]:
-          scale.saasProvider += 1;
+          scale.reseller += 1;
           break;
         case ecosRoles[5]:
-          scale.productDistributor += 1;
+          scale.internalSoftwareDeveloper += 1;
           break;
         case ecosRoles[6]:
-          scale.softwareDeveloper += 1;
+          scale.externalSoftwareDeveloper += 1;
           break;
         case ecosRoles[7]:
-          scale.softwareDesigner += 1;
+          scale.keystone += 1;
           break;
         case ecosRoles[8]:
-          scale.applicationServiceProvider += 1;
+          scale.uiUxDesigners += 1;
           break;
         case ecosRoles[9]:
           scale.requirementsEngineer += 1;
           break;
         case ecosRoles[10]:
-          scale.integrator += 1;
+          scale.serviceProvider += 1;
           break;
         case ecosRoles[11]:
-          scale.contentProvider += 1;
+          scale.softwareArchitect += 1;
           break;
         case ecosRoles[12]:
-          scale.valueAddedReseller += 1;
+          scale.evangelist += 1;
           break;
         case ecosRoles[13]:
-          scale.endUser += 1;
+          scale.dataAnalyst += 1;
           break;
         case ecosRoles[14]:
+          scale.productManager += 1;
+          break;
+        case ecosRoles[15]:
+          scale.projectManager += 1;
+          break;
+        case ecosRoles[16]:
+          scale.partnershipManager += 1;
+          break;
+        case ecosRoles[17]:
+          scale.maeketAnalyst += 1;
+          break;
+        case ecosRoles[18]:
+          scale.testQualityAnalyst += 1;
+          break;
+        case ecosRoles[19]:
+          scale.devopsEngineer += 1;
+          break;
+        case ecosRoles[20]:
+          scale.scrumMaster += 1;
+          break;
+        case ecosRoles[21]:
+          scale.productOwner += 1;
+          break;
+        case ecosRoles[22]:
+          scale.securityEngineer += 1;
+          break;
+        case ecosRoles[23]:
+          scale.dataSpecialist += 1;
+          break;
+        case ecosRoles[24]:
+          scale.buisnessAnalyst += 1;
+          break;
+        case ecosRoles[25]:
+          scale.softwarEngineer += 1;
+          break;
+        case ecosRoles[26]:
+          scale.externalConsultant += 1;
+          break;
+        case ecosRoles[27]:
+          scale.databaseAnalyst += 1;
+          break;
+        case ecosRoles[28]:
+          scale.dataScientist += 1;
+          break;
+        case ecosRoles[29]:
           scale.other += 1;
           break;
       }
@@ -182,80 +242,170 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
       },
       {
         name: t(ecosRoles[2]),
-        value: ((scale.originalDesignManufacturer / answers.length) * 100).toFixed(0),
+        value: ((scale.client / answers.length) * 100).toFixed(0),
         color: '#58508d',
-        rawValue: scale.originalDesignManufacturer
+        rawValue: scale.client
       },
       {
         name: t(ecosRoles[3]),
-        value: ((scale.platformProvider / answers.length) * 100).toFixed(0),
+        value: ((scale.endUser / answers.length) * 100).toFixed(0),
         color: '#bc5090',
-        rawValue: scale.platformProvider
+        rawValue: scale.endUser
       },
       {
         name: t(ecosRoles[4]),
-        value: ((scale.saasProvider / answers.length) * 100).toFixed(0),
+        value: ((scale.reseller / answers.length) * 100).toFixed(0),
         color: '#ff6361',
-        rawValue: scale.saasProvider
+        rawValue: scale.reseller
       },
       {
         name: t(ecosRoles[5]),
-        value: ((scale.productDistributor / answers.length) * 100).toFixed(0),
+        value: ((scale.internalSoftwareDeveloper / answers.length) * 100).toFixed(0),
         color: '#ffa600',
-        rawValue: scale.productDistributor
+        rawValue: scale.internalSoftwareDeveloper
       },
       {
         name: t(ecosRoles[6]),
-        value: ((scale.softwareDeveloper / answers.length) * 100).toFixed(0),
+        value: ((scale.externalSoftwareDeveloper / answers.length) * 100).toFixed(0),
         color: '#488f31',
-        rawValue: scale.softwareDeveloper
+        rawValue: scale.externalSoftwareDeveloper
       },
       {
         name: t(ecosRoles[7]),
-        value: ((scale.softwareDesigner / answers.length) * 100).toFixed(0),
+        value: ((scale.keystone / answers.length) * 100).toFixed(0),
         color: '#88a037',
-        rawValue: scale.softwareDesigner
+        rawValue: scale.keystone
       },
       {
         name: t(ecosRoles[8]),
-        value: ((scale.applicationServiceProvider / answers.length) * 100).toFixed(0),
-        color: '#c0af4a',
-        rawValue: scale.applicationServiceProvider
+        value: ((scale.uiUxDesigners / answers.length) * 100).toFixed(0),
+        color: '#003f5c',
+        rawValue: scale.uiUxDesigners
       },
       {
         name: t(ecosRoles[9]),
         value: ((scale.requirementsEngineer / answers.length) * 100).toFixed(0),
-        color: '#ff6361',
+        color: '#58508d',
         rawValue: scale.requirementsEngineer
       },
       {
         name: t(ecosRoles[10]),
-        value: ((scale.integrator / answers.length) * 100).toFixed(0),
-        color: '#ef9556',
-        rawValue: scale.integrator
+        value: ((scale.serviceProvider / answers.length) * 100).toFixed(0),
+        color: '#bc5090',
+        rawValue: scale.serviceProvider
       },
       {
         name: t(ecosRoles[11]),
-        value: ((scale.contentProvider / answers.length) * 100).toFixed(0),
+        value: ((scale.softwareArchitect / answers.length) * 100).toFixed(0),
         color: '#ff6361',
-        rawValue: scale.contentProvider
+        rawValue: scale.softwareArchitect
       },
       {
         name: t(ecosRoles[12]),
-        value: ((scale.valueAddedReseller / answers.length) * 100).toFixed(0),
-        color: '#ef9556',
-        rawValue: scale.valueAddedReseller
+        value: ((scale.evangelist / answers.length) * 100).toFixed(0),
+        color: '#ffa600',
+        rawValue: scale.evangelist
       },
       {
         name: t(ecosRoles[13]),
-        value: ((scale.endUser / answers.length) * 100).toFixed(0),
-        color: '#ff6361',
-        rawValue: scale.endUser
+        value: ((scale.dataAnalyst / answers.length) * 100).toFixed(0),
+        color: '#488f31',
+        rawValue: scale.dataAnalyst
       },
       {
         name: t(ecosRoles[14]),
+        value: ((scale.productManager / answers.length) * 100).toFixed(0),
+        color: '#88a037',
+        rawValue: scale.productManager
+      },
+      {
+        name: t(ecosRoles[15]),
+        value: ((scale.projectManager / answers.length) * 100).toFixed(0),
+        color: '#003f5c',
+        rawValue: scale.projectManager
+      },
+      {
+        name: t(ecosRoles[16]),
+        value: ((scale.partnershipManager / answers.length) * 100).toFixed(0),
+        color: '#58508d',
+        rawValue: scale.partnershipManager
+      },
+      {
+        name: t(ecosRoles[17]),
+        value: ((scale.maeketAnalyst / answers.length) * 100).toFixed(0),
+        color: '#bc5090',
+        rawValue: scale.maeketAnalyst
+      },
+      {
+        name: t(ecosRoles[18]),
+        value: ((scale.testQualityAnalyst / answers.length) * 100).toFixed(0),
+        color: '#ff6361',
+        rawValue: scale.testQualityAnalyst
+      },
+      {
+        name: t(ecosRoles[19]),
+        value: ((scale.devopsEngineer / answers.length) * 100).toFixed(0),
+        color: '#ffa600',
+        rawValue: scale.devopsEngineer
+      },
+      {
+        name: t(ecosRoles[20]),
+        value: ((scale.scrumMaster / answers.length) * 100).toFixed(0),
+        color: '#488f31',
+        rawValue: scale.scrumMaster
+      },
+      {
+        name: t(ecosRoles[21]),
+        value: ((scale.productOwner / answers.length) * 100).toFixed(0),
+        color: '#88a037',
+        rawValue: scale.productOwner
+      },
+      {
+        name: t(ecosRoles[22]),
+        value: ((scale.securityEngineer / answers.length) * 100).toFixed(0),
+        color: '#003f5c',
+        rawValue: scale.securityEngineer
+      },
+      {
+        name: t(ecosRoles[23]),
+        value: ((scale.dataSpecialist / answers.length) * 100).toFixed(0),
+        color: '#58508d',
+        rawValue: scale.dataSpecialist
+      },
+      {
+        name: t(ecosRoles[24]),
+        value: ((scale.buisnessAnalyst / answers.length) * 100).toFixed(0),
+        color: '#bc5090',
+        rawValue: scale.buisnessAnalyst
+      },
+      {
+        name: t(ecosRoles[25]),
+        value: ((scale.softwarEngineer / answers.length) * 100).toFixed(0),
+        color: '#ff6361',
+        rawValue: scale.softwarEngineer
+      },
+      {
+        name: t(ecosRoles[26]),
+        value: ((scale.externalConsultant / answers.length) * 100).toFixed(0),
+        color: '#ffa600',
+        rawValue: scale.externalConsultant
+      },
+      {
+        name: t(ecosRoles[27]),
+        value: ((scale.databaseAnalyst / answers.length) * 100).toFixed(0),
+        color: '#488f31',
+        rawValue: scale.databaseAnalyst
+      },
+      {
+        name: t(ecosRoles[28]),
+        value: ((scale.dataScientist / answers.length) * 100).toFixed(0),
+        color: '#88a037',
+        rawValue: scale.dataScientist
+      },
+      {
+        name: t(ecosRoles[29]),
         value: ((scale.other / answers.length) * 100).toFixed(0),
-        color: '#ef9556',
+        color: '#003f5c',
         rawValue: scale.other
       }
     ]
@@ -276,7 +426,7 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
           <DemographicDataBar data={processTimeData('timeOnReqManagment')} title={t("demographic_data:demographic_questions.time_with_requirements_mngm_short")} />
         </Grid>
         <Grid item xs={4}>
-          <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role")} />
+          <DemographicDataBar data={role()} title={t("demographic_data:demographic_questions.role_short")} />
         </Grid>
 
       </Grid>
