@@ -19,15 +19,18 @@ interface FilterResultProps {
 
 
 export default function FilterResult({ filterAnswers }: FilterResultProps) {
-
-  const [demographicData, setDemographicData] = React.useState({ timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: ecosRoles[0] } as DemoagraphicData);
-
   const { t } = useTranslation(['ecos_dashboard', 'demographic_data']);
+
+
+  const sortedEcosRoles = ecosRoles.sort((a, b) => t(a).localeCompare(t(b)));
+
+  const [demographicData, setDemographicData] = React.useState({ timeOnEcos: timeOptions[0], timeOnReqManagment: timeOptions[0], role: sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')] } as DemoagraphicData);
+
 
 
   const [timeOnEcosInputValue, setTimeOnEcosInputValue] = React.useState(timeOptions[0]);
   const [timeOnReqManagmentInputValue, setTimeOnReqManagmentInputValue] = React.useState(timeOptions[0]);
-  const [roleInputValue, setRoleInputValue] = React.useState(ecosRoles[0]);
+  const [roleInputValue, setRoleInputValue] = React.useState(sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')]);
 
   function setFilterParams(): void {
     filterAnswers({
@@ -89,12 +92,12 @@ export default function FilterResult({ filterAnswers }: FilterResultProps) {
           <Autocomplete
             disablePortal
             id="role"
-            options={ecosRoles}
+            options={sortedEcosRoles}
             onKeyDown={(e) => e.preventDefault()}
             sx={{ caretColor: 'transparent' }}
             value={demographicData.role}
             onChange={(_, newValue: string | null) => {
-              setDemographicData({ ...demographicData, role: newValue ?? ecosRoles[0] });
+              setDemographicData({ ...demographicData, role: newValue ?? sortedEcosRoles[sortedEcosRoles.findIndex((role)=>role==='demographic_data:roles.none')] });
             }}
             inputValue={roleInputValue}
             onInputChange={(_, newInputValue) => {
