@@ -75,20 +75,20 @@ export default class RandomStringDetector {
   }
 
   private removeSpecialCharacters(text: string): string {
-    return text.replace(/[^a-zA-Z0-9]/g, '');
-  } 
+    return text.replace(/[^\w\s]/gi, '');
+  }
 
   public isRandomText(text: string, threshold = 0.5): boolean {
     let counter = 0;
     text = this.removeSpecialCharacters(text);
-    const words = text.split(' ');
-    for(const word of words){
-      if(this.isRandomWord(word)){
+    const words = text.split(/(\s+)/);
+    for (const word of words) {
+      if (this.isRandomWord(word)) {
         counter++;
       }
     }
 
-    if(counter / words.length > threshold) return true;
+    if (counter / words.length > threshold) return true;
 
     return false;
   }
