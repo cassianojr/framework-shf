@@ -408,9 +408,11 @@ export default function DemographicDataComponent({ answers }: DemographicDataPro
         color: '#003f5c',
         rawValue: scale.other
       }
-    ]
+    ];
 
-    return roleData;
+    const filteredRoleData = roleData.filter((item) => item.rawValue > 0);
+
+    return filteredRoleData;
   }
 
 

@@ -30,7 +30,7 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
   const UnmarkItem = (item: FrameworkItem) => {
     const newItem = { ...item, comment: '' };
     const newItems = items.current.map((i) => i.ids[i18next.language] === item.ids[i18next.language] ? newItem : i);
-    
+
     changeItems(newItems);
     setReload(!reload);
   }
@@ -38,13 +38,13 @@ export default function SurveyOptionalDataComponent({ items, changeItems, title 
   return (
     <>
       <SurveyCommentModal
-       items={items}
-       changeItems={changeItems}
-       commentModalItem={commentModalItem} 
-      modalState={commentModalState} 
-      setModalState={setCommentModalState} 
-      commentModalError={commentModalError}
-      setCommentModalError={setCommentModalError}
+        items={items}
+        changeItems={changeItems}
+        commentModalItem={commentModalItem}
+        modalState={commentModalState}
+        setModalState={setCommentModalState}
+        commentModalError={commentModalError}
+        setCommentModalError={setCommentModalError}
       />
       <Box sx={{ mt: '1rem' }}>
         <Typography variant='h6' sx={{ textAlign: 'justify' }}>{title}</Typography>

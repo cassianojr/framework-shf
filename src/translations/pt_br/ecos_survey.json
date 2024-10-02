@@ -1,5 +1,6 @@
 {
 	"back_btn": "Voltar",
+  "cancel_btn": "Cancelar",
 	"next_btn": "Próximo",
   "snackbar_text": "Obrigado pela sua resposta!",
   "welcome_text": "Seja bem-vindo à pesquisa sobre os fatores sociais e humanos na gerência de requisitos em ecossistemas de software!",
