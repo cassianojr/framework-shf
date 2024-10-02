@@ -1,6 +1,7 @@
 {
   "back_btn": "Back",
   "next_btn": "Next",
+  "cancel_btn": "Cancel",
   "snackbar_text": "Thanks for your answer!",
   "welcome_text": "Welcome to the survey on social and human factors in requirements management in software ecosystems!",
   "instructions": {

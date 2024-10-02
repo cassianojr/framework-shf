@@ -391,6 +391,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
     )
   }
 
+  console.log(activeStep);
+  
 
   return (
     <>
@@ -420,9 +422,8 @@ export default function SurveyStepper({ stepsVote, ecos, user_id, user_email, se
               <Button variant='contained' onClick={handleNext}>{(activeStep !== steps.length) ? (activeStep !== steps.length - 1) ? t('next_btn') : t('view_answer_btn') : t('save_btn')}</Button>
             )
           }
-
           backButton={
-            <Button variant='outlined' onClick={handleBack}>{t('back_btn')}</Button>
+           (activeStep > 0) ? <Button variant='outlined' onClick={handleBack}>{t('back_btn')}</Button> : <Button variant='outlined' onClick={()=> navigate('/')}>{t('cancel_btn')}</Button>
           }
         />
       </Paper>
