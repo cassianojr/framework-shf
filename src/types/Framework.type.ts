@@ -23,7 +23,10 @@ interface FrameworkItem {
   feedbackValidationError?: boolean,
   selected?: boolean,
   answer?: FrameworkAnswer,
-  optionalAnswer?: FrameworkAnswer
+  optionalAnswer?: FrameworkAnswer,
+  order?: {
+    [key: string]: number
+  },
 }
 
 interface FrameworkAnswer {

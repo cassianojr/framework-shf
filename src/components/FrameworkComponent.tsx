@@ -9,6 +9,7 @@ import React from 'react';
 import { Modal } from './Modal';
 import SkeletonComponent from './SkeletonComponent';
 import { useTranslation } from "react-i18next";
+import i18next from 'i18next';
 
 interface FrameworkComponentProps {
   showSuggestions?: boolean,
@@ -28,6 +29,19 @@ const FrameworkComponent = React.memo(function FrameworkComponent({ showSurveyOp
   const personalGroupItems = socialHumanFactors?.items?.slice(17);
 
   const [centerModalState, setCenterModalState] = React.useState(false);
+
+  const orderItem = (item:Framework | undefined) =>{
+    if(item == null || item == undefined) return;
+
+    item.items.sort((a,b)=> {
+      if(a.order == undefined || b.order == undefined) return 0;
+
+      return a.order[i18next.language] - b.order[i18next.language]
+    });
+  }
+
+  orderItem(barriersToImproving);
+  orderItem(strategies);
 
   const centerModalContent = {
     id: 'requirements-management in SECO',
