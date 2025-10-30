@@ -34,7 +34,9 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
     setListItems(newItems);
     changeItems(newItems);
     const item = newItems[itemIndex];
-    openCommentModal(item)
+    console.log(item);
+    
+    openCommentModal(item);
   }
 
   const createRadioButton = (value: number, params: GridRenderEditCellParams<FrameworkItem, number>) => {
@@ -99,9 +101,9 @@ export function SurveyOptionsDataTable({ items, changeItems }: SurveyOptionsData
   })
 
   const openCommentModal = (item: FrameworkItem | undefined) => {
-    const commentItem = items.current.find((i) => i.id === item?.id);
+    const commentItem = (item?.ids) ? items.current.find(i => i.ids[i18next.language] === item?.ids[i18next.language]) : items.current.find((i) => i.ids[i18next.language] === item?.id);
     
-    if(!commentItem) setCommentModalError(false);
+    if(!item) setCommentModalError(false);
     setCommentModalItem(commentItem);
     setCommentModalState(true);
   }
